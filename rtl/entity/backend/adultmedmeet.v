@@ -1007,6 +1007,16 @@ module smallInstr_decoder(
        trien[9]=magic[0] & isBasicALU & ~isBasicALUExcept;
 	       puseBConst[9]=1'b1;
 	       poperation[9][2:0]=opcode_main[2:0];
+	       poperation[9][7:3]=&instr[2:0] ? instr[14:10] : 0;
+	       poperation[9][10:9]=instr[9:8];
+	       pcalu[9]={1'b1,instr[6:3]};
+	       prA[9]=instr[14:10];
+	       prB[9]=instr[24:20];
+	       prT[9]=instr[19:15];
+	       if (opreg(poperation[7:0])) begin
+		       prA[9]=instr[29:25];
+		       poperation[9][1:0]=instr[31:30];
+	       end
        if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
        pflags_write[9]=1'b1;
        if (magic[1:0]==2'b01) begin
