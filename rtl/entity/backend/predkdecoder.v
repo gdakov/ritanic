@@ -558,7 +558,7 @@ module predecoder_get(
       {instrEnd[15:0],bstop[3:0],instrEnd[-1]},instrEnd);
     //veritlator lint_on WIDTH
 
-    assign bundle0={bnext,bundle};
+                            assign bundle0=is_fxd_isa ?{bnext,bundle}:{16'b0,bnext,bundle[239:0]};
     
     assign FMAmul[-1]=bFMA_mul;
 
