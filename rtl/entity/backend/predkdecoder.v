@@ -377,7 +377,7 @@ endmodule
 module predecoder_get(
     clk,
     rst,
-    thread,
+    thread,is_fxd_pg,
     bundle,btail,bstop,bFMA_mul,
     bnext,bnext_tail,has_next,
     startOff,
@@ -404,6 +404,7 @@ module predecoder_get(
     input clk;
     input rst;
     input thread;
+    input is_fxd_pg;
     input [255:0] bundle;
     input [64:0] btail;
     input [3:0] bstop;
@@ -575,7 +576,7 @@ module predecoder_get(
     
     always @*
       begin
-        instrEnd={2'b0,bnext_stop,bundle[254:240],1'b1};
+          instrEnd={2'b0,is_fxd_isa? 8'b10101010:bnext_stop,is_fxd_isa ? 15'b110101010101010 :bundle[254:240],1'b1};
         error=cntEnd3[13]&~cntEnd3_15[13] || startOff==15;
         _splitinsn=bundle[255];
         jerror=~lcnt_or_less[4] || ~jcnt_or_less[4]&~jcnt_or_less_15[4];
