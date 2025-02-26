@@ -577,6 +577,7 @@ module predecoder_get(
     always @*
       begin
           instrEnd={2'b0,is_fxd_isa? 8'b10101010:bnext_stop,is_fxd_isa ? 15'b110101010101010 :bundle[254:240],1'b1};
+          instrEndY={1'b0,is_fxd_isa? 7'b1010101:bnext_stop[7:1],is_fxd_isa ? 16'b1010101010101010 :{bnext_stop[0],bundle[254:240]},1'b1};
         error=cntEnd3[13]&~cntEnd3_15[13] || startOff==15;
         _splitinsn=bundle[255];
         jerror=~lcnt_or_less[4] || ~jcnt_or_less[4]&~jcnt_or_less_15[4];
