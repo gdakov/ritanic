@@ -74,6 +74,7 @@ limitations under the License.
 `define page_wr 12:9
 `define page_na 3:0
 `define page_ne 59
+`define page_fxdsubisa 13
 `define page_COW_ignored 58
 `define page_rd_perm_ignored 63
 `define page_wr_perm_ignored 62
