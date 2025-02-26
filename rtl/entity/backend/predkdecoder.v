@@ -514,21 +514,21 @@ module predecoder_get(
             for(subloop_jump=0;subloop_jump<4;subloop_jump=subloop_jump+1) begin : jmp_gen
                 assign {lnkLink0[subloop_jump],lnkOff0[subloop_jump],lnkMagic0[subloop_jump],
                     lnkRet0[subloop_jump]}=lcnt[k][subloop_jump+1] & lcnt[k-1][subloop_jump] ? 
-                    {LNK[k],kk[4:0],instrEnd[k+:4],is_ret[k]} : 15'bz;
+                {LNK[k],kk[4:0],instrEndY[k+:4],is_ret[k]} : 15'bz;
                 assign lnkJumps0[subloop_jump]=lcnt[k][subloop_jump+1] & lcnt[k-1][subloop_jump] ? cntJEnd[k][4:0] : 5'bz;
             
                 if (k==0) assign {Jclass0[subloop_jump],Jmagic0[subloop_jump],Jinstr0[subloop_jump],Joff0[subloop_jump]}= 
-                    (mask[k] & ~mask[k-1]) ? {class_[k], instrEnd[k+:4],bundle[k*16+:80],kk[4:0]} : 102'bz;
+                    (mask[k] & ~mask[k-1]) ? {class_[k], instrEndY[k+:4],bundle[k*16+:80],kk[4:0]} : 102'bz;
                 else assign {Jclass0[subloop_jump],Jmagic0[subloop_jump],Jinstr0[subloop_jump],Joff0[subloop_jump]}= 
-                    cntJEnd[k-1][subloop_jump] & cntJEnd[k-2][subloop_jump-1] ? {class_[k], instrEnd[k+:4],bundle0[k*16+:80],k[4:0]} : 102'bz;
+                    cntJEnd[k-1][subloop_jump] & cntJEnd[k-2][subloop_jump-1] ? {class_[k], instrEndY[k+:4],bundle0[k*16+:80],k[4:0]} : 102'bz;
                 assign {lnkLink0[subloop_jump],lnkOff0[subloop_jump],lnkMagic0[subloop_jump],lnkRet0[subloop_jump]}=lcnt_or_less[subloop_jump] ? 15'b1110_10000_0001_0 : 15'bz; //note - overhang cannot contain link instructions
                 assign lnkJumps0[subloop_jump]=lcnt_or_less[subloop_jump] ?  5'd1 : 5'bz;
             end
             for(subloop_insn=0;subloop_insn<16;subloop_insn=subloop_insn+1) begin : insn_gen
                 if (k==0) assign {FMAmulI[0],class0[0],magic0[0],instr0[0],off0[0]}=(mask[k] & ~mask[k-1]) ?
-                    {FMAmulI[k],class_[k],instrEnd[k+:4],bundle[k*16+:80],kk[4:0]} : 102'bz;
+                {FMAmulI[k],class_[k],instrEndY[k+:4],bundle[k*16+:80],kk[4:0]} : 102'bz;
                 else assign {FMAmulI[subloop_insn],class0[subloop_insn],magic0[subloop_insn],instr0[subloop_insn],off0[subloop_insn]}=mask[k] & 
-                    cntEnd[k-1][subloop_insn] & cntEnd[k-2][subloop_insn-1] ? {FMAmulI[k],class_[k], instrEnd[k+:4],bundle0[k*16+:80],k[4:0]} : 102'bz;
+                    cntEnd[k-1][subloop_insn] & cntEnd[k-2][subloop_insn-1] ? {FMAmulI[k],class_[k], instrEndY[k+:4],bundle0[k*16+:80],k[4:0]} : 102'bz;
             end
         end
     endgenerate
