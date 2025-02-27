@@ -1055,7 +1055,7 @@ module smallInstr_decoder(
                prT[10]=instr[16:12];
                prB[10]=5'd31;
                puseBConst[10]=1'b1;
-		       pconstant[10]={52'b0,ssh2(ssh(instr[26]^1^&opcode_main[3:1],instr[31:29]),ssh(instr[26]^&opcode_main[3:1],instr[28:26]),instr[26]&~&opcode_main[3:1]),3'b0,1'b0,instr[25:20]};
+		       pconstant[10]={52'b0,ssh2(ssh(instr[23]^1^&opcode_main[3:1],instr[31:29]),ssh(instr[23]^&opcode_main[3:1],instr[28:26]),instr[23]&~&opcode_main[3:1]),3'b0,1'b0,instr[25:20]};
 		  // prmode[10]=instr[29:27];
                pflags_use[10]=1'b0;
 		       pflags_write[10]=1'b0;
