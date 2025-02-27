@@ -1038,13 +1038,13 @@ module smallInstr_decoder(
        puseRs[10]=1'b1;
        prAlloc[10]=1'b1;
        pport[10]=PORT_SHIFT;
-       case (opcode_main[7:0])
-       40: poperation[10]=`op_shl64;
-       41: poperation[10]=`op_sar64;
-       42: poperation[10]=`op_shr64;
-       43: poperation[10]=`op_shl32;
-       44: poperation[10]=`op_sar32;
-       45: poperation[10]=`op_shr32;
+	       case (opcode_main[3:1])
+       0: poperation[10]=`op_shl64;
+       1: poperation[10]=`op_sar64;
+       2: poperation[10]=`op_shr64;
+       3: poperation[10]=`op_shl32;
+       4: poperation[10]=`op_sar32;
+       5: poperation[10]=`op_shr32;
        endcase
             
        if (magic[1:0]==2'b01) begin
@@ -1053,32 +1053,32 @@ module smallInstr_decoder(
                prT[10]=instr[16:12];
                prB[10]=5'd31;
                puseBConst[10]=1'b1;
-               pconstant[10]={52'b0,instr[29:28],3'b0,1'b0,instr[23:18]};
-               prmode[10]=instr[27:25];
+		   pconstant[10]={52'b0,instr[29:28],3'b0,1'b0,instr[25:20]};
+		   prmode[10]=instr[29:27];
                pflags_use[10]=1'b0;
-               pflags_write[10]=~instr[24];
-               poperation[10][12]=instr[24];
+		   pflags_write[10]=~instr[26];
+		   poperation[10][12]=instr[26];
            end else begin
                prA[10]={instr[17],instr[11:8]};
                prT[10]=instr[16:12];
-               prB[10]=instr[22:18];
+		   prB[10]=instr[24:20];
                puseBConst[10]=1'b0;
                pflags_use[10]=1'b0;
-               pflags_write[10]=~instr[24];
-               poperation[10][12]=instr[24];
-               prmode[10]=instr[27:25];
+		   pflags_write[10]=~instr[26];
+		   poperation[10][12]=instr[26];
+		   prmode[10]=instr[29:27];
            end
            poperation[10][12]=instr[24];              
        end else begin
-               prA[10]={1'b0,instr[11:8]};
-               prT[10]={1'b0,instr[15:12]};
+	       prA[10]={instr[17],instr[11:8]};
+	       prT[10]={instr[16],instr[15:12]};
                prB[10]=5'd31;
                puseBConst[10]=1'b1;
                pflags_use[10]=1'b0;
                pflags_write[10]=~instr[22];
                poperation[10][12]=instr[22];
-               pconstant[10]={instr[47:25],3'b0,instr[21:16]};
-               prmode[10]=instr[24:22];
+	       pconstant[10]={instr[47;32],3'b0,instr[23:20],instr[28:27]};
+	       prmode[10]=instr[31:29];
        end
 
        trien[11]=~magic[0] & subIsFPUE;
