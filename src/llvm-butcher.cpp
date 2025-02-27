@@ -34,7 +34,9 @@ std::vector<insn> read_block( FILE * f, bool &last) {
       I.oper=predoptab[name];
       ret.push_back(i);   
     } else if (3==n=fscanf(f," br %%%s %%%s %%%s \n",rA,l1,l2)) {
-      last=true;
+      if (!atomtbl.count(rA)) {
+      }
+        last=true;
     } else if (n==1) {
       last=true;
     } else if (6==fscanf(f," %%%s = i%i phi [ %%%s , %%%s ] [ %%%s , %%%s ] \n",rt,isz,l1,rA,l2,rB)) {
