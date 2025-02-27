@@ -2,7 +2,7 @@ struct insn { int opA; int opB; int opT;
 int oper; int widthi; int labl1; int labl2; };
 
 std::vector<insn> read_block( FILE * f) {
-    if (5==n=fscanf("[ \t]*%%%s[ \t]*=[ \t]i%i[ \t]*%s[ \t]* %%%s[ \t]* %%%s\n",rt,name,isz,ra,rb)){
+    if (5==n=fscanf(" %%%s = i%i %s %%%s %%%s\n",rt,name,isz,ra,rb)){
       if (atomtbl.count(rt)) {
       };
       atomtbl[rt]=idxautoinc();
@@ -32,5 +32,8 @@ std::vector<insn> read_block( FILE * f) {
       I.widthi=isz;
       I.oper=predoptab[name];
       ret.push_back(i);   
+    } else if (3==n=fscanf(f," br %%%s %%%s %%%s \n",rA,l1,l2)) {
+    } else if (n==1) {
+    } else if (6==fscanf(f," %%%s = i%i phi [ %%%s , %%%s ] [ %%%s , %%%s ] \n")) {
     }
 }
