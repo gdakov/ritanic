@@ -1000,52 +1000,29 @@ module smallInstr_decoder(
 		       5: poperation[9][8]=1'b1;
 		       default: begin poperation[9][7:0]=`op_sub64; poperation[9][8]=1'b1; end
 	       endcase
-       poperation[9][7:0]={3'b0,opcode_main[5:3],~opcode_main[0] && ~&magic[1:0] && instr[26] ,opcode_main[1]};
-       if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
-       pflags_write[9]=1'b1;
+      // poperation[9][7:0]={3'b0,opcode_main[5:3],~opcode_main[0] && ~&magic[1:0] && instr[26] ,opcode_main[1]};
+       //if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
+	       pflags_write[9]=&instr[16:12];
+	       poperation[9]=~&instr[16:12];
        if (magic[1:0]==2'b01) begin
-           poperation[9][12]=instr[31];
-           pflags_write[9]=~instr[31];
-           pconstant[9]={{51{instr[30]}},instr[30:18]};
-           if (~opcode_main[0] && magic[1:0]!=2'b11) begin
-               prndmode[9]=instr[25:23];
-               pcalu[9]=instr[30:26];
-           end
+	       pconstant[9]={{52{instr[31]]}},instr[31:20]};
        end
-          
+	       poperation[9][10:9]= instr[19:18];   
        prA_use[9]=1'b1;
        prB_use[9]=1'b1;
        prT_use[9]=1'b1;
        puseRs[9]=1'b1;
        prAlloc[9]=1'b1;
-       pport[9]=isBasicXOR|~&prndmode[9] ? PORT_SHIFT : PORT_ALU;
+       pport[9]= PORT_ALU;
           
-       if (opcode_main[0]||magic[1:0]==2'b11) begin
-           if (magic[1:0]==2'b01) begin
-               prA[9]={instr[17],instr[11:8]};
-               prT[9]=instr[16:12];
-               prB[9]=5'd31;
-           end else if (magic[3:0]==4'b0111) begin
-               prA[9]={instr[48],instr[11:8]};
-               prT[9]={instr[49],instr[15:12]};
-               prB[9]=5'd31;
-               perror[9]=0;
-	       if (~opcode_main[0]) pconstant[9]={32'b0,instr[47:16]};
-           end else begin
-               prA[9]={1'b0,instr[11:8]};
-               prT[9]={1'b0,instr[15:12]};
-               prB[9]=5'd31;
-	       if (~opcode_main[0]) pconstant[9]={32'b0,instr[47:16]};
-           end
-       end else begin
-           if (magic[1:0]==2'b01) begin
-               prA[9]={instr[17],instr[11:8]};
-               prT[9]=instr[16:12];
-               prB[9]=instr[22:18];
-           end else begin
-               perror[9]=1;
-           end
-       end
+       //if (magic[1:0]==2'b11) begin
+        //   if (magic[1:0]==2'b01) begin
+        prA[9]={instr[17],instr[11:8]};
+        prT[9]=instr[16:12];
+        prB[9]=5'd31;
+	       if (magic[2:0]==3'b11) pconstant[9]={36'b0,instr[47:20]};
+           
+       
         //  if (rT==6'd16) thisSpecAlu=1'b1;
       
        trien[10]=magic[0] & isBasicShift;
