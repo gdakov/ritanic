@@ -46,7 +46,14 @@ std::vector<insn> read_block( FILE * f, bool &last) {
       ret.push_back(i);  
       last=true;
     } else if (n==1) {
-      last=true;
+      if (!atomtbl.count(rA)) {
+      }
+     // I.rA=atomtbl[rA];
+      I.label1=atomtbl[rA];
+     // I.label2=atomtbl[l2];
+     // I.widthi=isz;
+      I.oper=brnc_op;//autoincdec detected in second pass; accumulate detected in second pass; if both label uncond it is covered, else loop. both label cond not supported.
+      ret.push_back(i);  last=true;
     } else if (6==fscanf(f," %%%s = i%i phi [ %%%s , %%%s ] [ %%%s , %%%s ] \n",rt,isz,l1,rA,l2,rB)) {
       if (atomtbl.count(rt)) {
       };
