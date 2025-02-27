@@ -378,22 +378,10 @@ module smallInstr_decoder(
   assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100);
 
   assign isBasicALU=(opcode_main[7:5]==3'b0 || opcode_main[7:3]==5'b00100) & ~opcode_main[2];
-  assign isBasicXOR=(opcode_main[7:3]==5'b00100) & ~opcode_main[2];//not a seprarate class
-  assign isBasicMUL=(opcode_main[7:5]==3'b0 || opcode_main[7:3]==5'b00100) & opcode_main[2];
-  assign isBasicALUExcept=~opcode_main[0] && (magic[1:0]==2'b01 && instr[28:26]!=3'b0);  
-  assign isBasicShift=opcode_main[7:1]==7'd20 || opcode_main[7:1]==7'd21 ||
-      opcode_main[7:1]==7'd22;      
-  assign isBasicShiftExcept=magic[1:0]==2'b01 && instr[29:25]!=5'b0;
   
-  assign isBasicCmpTest=opcode_main[7:1]==7'd23 || opcode_main[7:2]==6'd12 ||
-    opcode_main[7:1]==7'd26 || opcode_main[7:2]==6'd54 || opcode_main[7:2]==6'd56;
-
-  assign isBaseSpecLoad=(opcode_main==8'd54 || opcode_main==8'd202) && magic[1:0]==2'b01;
-  assign isBaseIndexSpecLoad=(opcode_main==8'd55 || opcode_main==8'd203) && magic[2:0]!=3'b111;
   
   assign isImmLoadStore=(opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000;
-  assign isBaseLoadStore=((opcode_main[7:5]==3'b010) || opcode_main[7:4]==4'b0110) && magic[1:0]==2'b01;
-  assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) || opcode_main[7:4]==4'b0111) || magic[2:0]==3'b111;
+	assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) ) || magic[2:0]==3'b111;
 
   assign isBasicCJump=opcode_main[7:4]==4'b1010;
   //gap 176-177 for imm load.
