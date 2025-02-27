@@ -14,9 +14,9 @@ std::vector<insn> read_block( FILE * f, bool &last) {
       if (!infoptab.count(name)) {
       }
       insn i;
-      i.rT=rt;
-      I.rA=rA;
-      I.rB=rB;
+      i.rT=atomtbl[rt];
+      I.rA=atomtbl[rA];
+      I.rB=atomtbl[rB];
       I.widthi=isz;
       I.oper=infoptab[name];
       ret.push_back(i);
@@ -29,8 +29,8 @@ std::vector<insn> read_block( FILE * f, bool &last) {
       if (!predoptab.count(name)) {
       }
       insn i;
-      i.rT=rt;
-      I.rA=rA;
+      i.rT=atomtbl[rt];
+      I.rA=atomtbl[rA];
      // I.rB=rB;
       I.widthi=isz;
       I.oper=predoptab[name];
@@ -38,7 +38,13 @@ std::vector<insn> read_block( FILE * f, bool &last) {
     } else if (3==n=fscanf(f," br %%%s %%%s %%%s \n",rA,l1,l2)) {
       if (!atomtbl.count(rA)) {
       }
-        last=true;
+      I.rA=atomtbl[rA];
+      I.label1=atomtbl[l1];
+      I.label2=atomtbl[l2];
+      I.widthi=isz;
+      I.oper=brc_op;//autoincdec detected in second pass; accumulate detected in second pass; if both label uncond it is covered, else loop. both label cond not supported.
+      ret.push_back(i);  
+      last=true;
     } else if (n==1) {
       last=true;
     } else if (6==fscanf(f," %%%s = i%i phi [ %%%s , %%%s ] [ %%%s , %%%s ] \n",rt,isz,l1,rA,l2,rB)) {
@@ -57,11 +63,11 @@ std::vector<insn> read_block( FILE * f, bool &last) {
       else atomtbl[l2]=idxautoinc();
 
       insn i;
-      i.rT=rt;
-      I.rA=rA;
-      I.rB=rB;
-      I.label1=l1;
-      I.label2=l2;
+      i.rT=atomtbl[rt];
+      I.rA=atomtbl[rA];
+      I.rB=atomtbl[rB];
+      I.label1=atomtbl[l1];
+      I.label2=atomtbl[l2];
       I.widthi=isz;
       I.oper=phi_op;//autoincdec detected in second pass; accumulate detected in second pass; if both label uncond it is covered, else loop. both label cond not supported.
       ret.push_back(i);
