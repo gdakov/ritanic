@@ -3,6 +3,8 @@ int oper; int widthi; int labl1; int labl2; };
 
 std::vector<insn> read_block( FILE * f, bool &last) {
     last=false;
+    std::vector<insn> ret;
+    while(!last)
     if (5==n=fscanf(" %%%s = i%i %s %%%s %%%s\n",rt,name,isz,ra,rb)){
       if (atomtbl.count(rt)) {
       };
