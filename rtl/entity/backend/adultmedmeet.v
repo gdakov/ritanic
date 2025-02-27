@@ -379,6 +379,8 @@ module smallInstr_decoder(
 
 	assign isBasicALU=(!opcode_main[7] && opcode_main[6:4]!=7);
 	assign isBasicMUL=(!opcode_main[7] && opcode_main[6:4]==7 && instr[19:18]==0);
+	assign isBasicShift=(!opcode_main[7] && opcode_main[6:4]==7 && instr[19:18]==2);
+  assign isBasicAdd32=(!opcode_main[7] && opcode_main[6:4]==7 && instr[18]);
   
   
 	assign isImmLoadStore=(opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000; 
