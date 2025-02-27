@@ -1039,34 +1039,29 @@ module smallInstr_decoder(
        prAlloc[10]=1'b1;
        pport[10]=PORT_SHIFT;
 	       case (opcode_main[3:1])
-       0: poperation[10]=`op_shl64;
+       0,6: poperation[10]=`op_shl64;
        1: poperation[10]=`op_sar64;
-       2: poperation[10]=`op_shr64;
+       2,7: poperation[10]=`op_shr64;
        3: poperation[10]=`op_shl32;
        4: poperation[10]=`op_sar32;
        5: poperation[10]=`op_shr32;
        endcase
-            
+
+	       if (opcode_main[3:1]==7) prndmode[10]=1;
+	       if (opcode_main[3:1]==6) prndmode[10]=1+instr[25:23];
        if (magic[1:0]==2'b01) begin
-           if (instr[30]) begin
+	       if (1) begin
                prA[10]={instr[17],instr[11:8]};
                prT[10]=instr[16:12];
                prB[10]=5'd31;
                puseBConst[10]=1'b1;
-		   pconstant[10]={52'b0,instr[29:28],3'b0,1'b0,instr[25:20]};
-		   prmode[10]=instr[29:27];
+		       pconstant[10]={52'b0,ssh(instr[23]^1,instr[31:29]),ssh(instr[23],instr[28:26]),3'b0,1'b0,instr[25:20]};
+		  // prmode[10]=instr[29:27];
                pflags_use[10]=1'b0;
-		   pflags_write[10]=~instr[26];
-		   poperation[10][12]=instr[26];
+		       pflags_write[10]=1'b0;
+		       poperation[10][12]=1'b1;
            end else begin
-               prA[10]={instr[17],instr[11:8]};
-               prT[10]=instr[16:12];
-		   prB[10]=instr[24:20];
-               puseBConst[10]=1'b0;
-               pflags_use[10]=1'b0;
-		   pflags_write[10]=~instr[26];
-		   poperation[10][12]=instr[26];
-		   prmode[10]=instr[29:27];
+               
            end
            poperation[10][12]=instr[24];              
        end else begin
