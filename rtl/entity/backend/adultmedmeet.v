@@ -377,7 +377,8 @@ module smallInstr_decoder(
   assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100);
   assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100);
 
-  assign isBasicALU=(opcode_main[7:5]==3'b0 || opcode_main[7:3]==5'b00100) & ~opcode_main[2];
+	assign isBasicALU=(!opcode_main[7] && opcode_main[6:4]!=7);
+	assign isBasicMUL=(!opcode_main[7] && opcode_main[6:4]==7 && instr[19:18]==0);
   
   
 	assign isImmLoadStore=(opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000; 
