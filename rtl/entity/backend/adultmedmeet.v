@@ -1712,7 +1712,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prAlloc[30]=1'b1;
       puseBConst[30]=opcode_main[0];
       poperation[30][12]=1'b1;
-      case({opcode_main[6:3],opcode_main[1]})
+	       case({opcode_main[3:1]})
 	      0: poperation[30]=`op_mul32;
 	      1: poperation[30]=`op_mul32_64;
 	      2: poperation[30]=`op_mul64;
@@ -1721,8 +1721,8 @@ opcode_main[0] ? `op_add64 : `op_add32;
 	      5: poperation[30]=`op_imul32_64;
 	      6: poperation[30]=`op_imul64;
 	     // 7: poperation[30]=`op_limul64;
-	      8: begin poperation[30]=`op_enptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; if (oddmode[3]) perror[30]=2'b1; end
-	      9: begin poperation[30]=`op_unptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; end
+	      3: begin poperation[30]=`op_enptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; if (oddmode[3]) perror[30]=2'b1; end
+	      7: begin poperation[30]=`op_unptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; end
 	      default: perror[30]=2'b1;
       endcase
       if (opcode_main[0]) begin
