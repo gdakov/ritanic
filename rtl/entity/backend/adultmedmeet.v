@@ -377,17 +377,23 @@ module smallInstr_decoder(
   assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100);
   assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100);
 
-	assign isBasicALU=(!opcode_main[7] && opcode_main[6:4]!=7);
-	assign isBasicMUL=(!opcode_main[7] && opcode_main[6:4]==7 && instr[19:18]==0);
-	assign isBasicShift=(!opcode_main[7] && opcode_main[6:4]==7 && instr[19:18]==2);
-  assign isBasicAdd32=(!opcode_main[7] && opcode_main[6:4]==7 && instr[18]);
+  assign isBasicALU=(opcode_main[7:5]==3'b0 || opcode_main[7:3]==5'b00100) & ~opcode_main[2];
+  assign isBasicXOR=(opcode_main[7:3]==5'b00100) & ~opcode_main[2];//not a seprarate class
+  assign isBasicMUL=(opcode_main[7:5]==3'b0 || opcode_main[7:3]==5'b00100) & opcode_main[2];
+  assign isBasicALUExcept=~opcode_main[0] && (magic[1:0]==2'b01 && instr[28:26]!=3'b0);  
+  assign isBasicShift=opcode_main[7:1]==7'd20 || opcode_main[7:1]==7'd21 ||
+      opcode_main[7:1]==7'd22;      
+  assign isBasicShiftExcept=magic[1:0]==2'b01 && instr[29:25]!=5'b0;
   
+  assign isBasicCmpTest=opcode_main[7:1]==7'd23 || opcode_main[7:2]==6'd12 ||
+    opcode_main[7:1]==7'd26 || opcode_main[7:2]==6'd54 || opcode_main[7:2]==6'd56;
+
+  assign isBaseSpecLoad=(opcode_main==8'd54 || opcode_main==8'd202) && magic[1:0]==2'b01;
+  assign isBaseIndexSpecLoad=(opcode_main==8'd55 || opcode_main==8'd203) && magic[2:0]!=3'b111;
   
-	assign isImmLoadStore=(opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000; 
-	assign isBaseIndexLoadStoreALU=((opcode_main[7:4]==4'b1000) ) || magic[2:0]==3'b111;
-	assign isBaseIndexLoadStoreFPUA=((opcode_main[7:4]==4'b1001) && instr[31:30]==0) || magic[2:0]==3'b111;
-	assign isBaseIndexLoadStoreFPUB=((opcode_main[7:4]==4'b1001) && instr[31:30]==2) || magic[2:0]==3'b111;
-	assign isBaseIndexLoadStoreFPUC=((opcode_main[7:4]==4'b1001) && instr[31:30]==3) || magic[2:0]==3'b111;
+  assign isImmLoadStore=(opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000;
+  assign isBaseLoadStore=((opcode_main[7:5]==3'b010) || opcode_main[7:4]==4'b0110) && magic[1:0]==2'b01;
+  assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) || opcode_main[7:4]==4'b0111) || magic[2:0]==3'b111;
 
   assign isBasicCJump=opcode_main[7:4]==4'b1010;
   //gap 176-177 for imm load.
@@ -998,37 +1004,54 @@ module smallInstr_decoder(
            puseRs[8]=1'b1;
        end
 
-	       trien[9]=magic[0] & isBasicALU;
-	       puseBConst[9]=1'b1;
-	       pcalu[9]={~&instr[3:0],instr[3:0]};
-	       case(instr[6:4])
-		       0..4: poperation[9][7:0]={3'b0,instr[6:4],2'b0};
-		       5: poperation[9][8]=1'b1;
-		       default: begin poperation[9][7:0]=`op_sub64; poperation[9][8]=1'b1; end
-	       endcase
-      // poperation[9][7:0]={3'b0,opcode_main[5:3],~opcode_main[0] && ~&magic[1:0] && instr[26] ,opcode_main[1]};
-       //if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
-	       pflags_write[9]=&instr[16:12];
-	       poperation[9]=~&instr[16:12];
+       trien[9]=magic[0] & isBasicALU & ~isBasicALUExcept;
+       puseBConst[9]=opcode_main[0]||magic[1:0]==2'b11;
+       poperation[9][7:0]={3'b0,opcode_main[5:3],~opcode_main[0] && ~&magic[1:0] && instr[26] ,opcode_main[1]};
+       if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
+       pflags_write[9]=1'b1;
        if (magic[1:0]==2'b01) begin
-	       pconstant[9]={{52{instr[31]]}},instr[31:20]};
+           poperation[9][12]=instr[31];
+           pflags_write[9]=~instr[31];
+           pconstant[9]={{51{instr[30]}},instr[30:18]};
+           if (~opcode_main[0] && magic[1:0]!=2'b11) begin
+               prndmode[9]=instr[25:23];
+               pcalu[9]=instr[30:26];
+           end
        end
-	       poperation[9][10:9]= instr[19:18];   
+          
        prA_use[9]=1'b1;
        prB_use[9]=1'b1;
        prT_use[9]=1'b1;
        puseRs[9]=1'b1;
        prAlloc[9]=1'b1;
-       pport[9]= PORT_ALU;
+       pport[9]=isBasicXOR|~&prndmode[9] ? PORT_SHIFT : PORT_ALU;
           
-       //if (magic[1:0]==2'b11) begin
-        //   if (magic[1:0]==2'b01) begin
-        prA[9]={instr[17],instr[11:8]};
-        prT[9]=instr[16:12];
-        prB[9]=5'd31;
-	       if (magic[2:0]==3'b11) pconstant[9]={36'b0,instr[47:20]};
-           
-       
+       if (opcode_main[0]||magic[1:0]==2'b11) begin
+           if (magic[1:0]==2'b01) begin
+               prA[9]={instr[17],instr[11:8]};
+               prT[9]=instr[16:12];
+               prB[9]=5'd31;
+           end else if (magic[3:0]==4'b0111) begin
+               prA[9]={instr[48],instr[11:8]};
+               prT[9]={instr[49],instr[15:12]};
+               prB[9]=5'd31;
+               perror[9]=0;
+	       if (~opcode_main[0]) pconstant[9]={32'b0,instr[47:16]};
+           end else begin
+               prA[9]={1'b0,instr[11:8]};
+               prT[9]={1'b0,instr[15:12]};
+               prB[9]=5'd31;
+	       if (~opcode_main[0]) pconstant[9]={32'b0,instr[47:16]};
+           end
+       end else begin
+           if (magic[1:0]==2'b01) begin
+               prA[9]={instr[17],instr[11:8]};
+               prT[9]=instr[16:12];
+               prB[9]=instr[22:18];
+           end else begin
+               perror[9]=1;
+           end
+       end
         //  if (rT==6'd16) thisSpecAlu=1'b1;
       
        trien[10]=magic[0] & isBasicShift;
@@ -1038,42 +1061,47 @@ module smallInstr_decoder(
        puseRs[10]=1'b1;
        prAlloc[10]=1'b1;
        pport[10]=PORT_SHIFT;
-	       case (opcode_main[3:1])
-       0,6: poperation[10]=`op_shl64;
-       1: poperation[10]=`op_sar64;
-       2,7: poperation[10]=`op_shr64;
-       3: poperation[10]=`op_shl32;
-       4: poperation[10]=`op_sar32;
-       5: poperation[10]=`op_shr32;
+       case (opcode_main[7:0])
+       40: poperation[10]=`op_shl64;
+       41: poperation[10]=`op_sar64;
+       42: poperation[10]=`op_shr64;
+       43: poperation[10]=`op_shl32;
+       44: poperation[10]=`op_sar32;
+       45: poperation[10]=`op_shr32;
        endcase
-
-	       if (opcode_main[3:1]==7) prndmode[10]=1;
-	       if (opcode_main[3:1]==6) prndmode[10]=1+instr[25:23];
+            
        if (magic[1:0]==2'b01) begin
-	       if (1) begin
+           if (instr[30]) begin
                prA[10]={instr[17],instr[11:8]};
                prT[10]=instr[16:12];
                prB[10]=5'd31;
                puseBConst[10]=1'b1;
-		       pconstant[10]={52'b0,ssh2(ssh(instr[23]^1^&opcode_main[3:1],instr[31:29]),ssh(instr[23]^&opcode_main[3:1],instr[28:26]),instr[23]&~&opcode_main[3:1]),3'b0,1'b0,instr[25:20]};
-		  // prmode[10]=instr[29:27];
+               pconstant[10]={52'b0,instr[29:28],3'b0,1'b0,instr[23:18]};
+               prmode[10]=instr[27:25];
                pflags_use[10]=1'b0;
-		       pflags_write[10]=1'b0;
-		       poperation[10][12]=1'b1;
+               pflags_write[10]=~instr[24];
+               poperation[10][12]=instr[24];
            end else begin
-               
+               prA[10]={instr[17],instr[11:8]};
+               prT[10]=instr[16:12];
+               prB[10]=instr[22:18];
+               puseBConst[10]=1'b0;
+               pflags_use[10]=1'b0;
+               pflags_write[10]=~instr[24];
+               poperation[10][12]=instr[24];
+               prmode[10]=instr[27:25];
            end
-          // poperation[10][12]=instr[24];              
+           poperation[10][12]=instr[24];              
        end else begin
-	       prA[10]={instr[17],instr[11:8]};
-	       prT[10]={instr[16],instr[15:12]};
+               prA[10]={1'b0,instr[11:8]};
+               prT[10]={1'b0,instr[15:12]};
                prB[10]=5'd31;
                puseBConst[10]=1'b1;
                pflags_use[10]=1'b0;
                pflags_write[10]=~instr[22];
                poperation[10][12]=instr[22];
-	       pconstant[10]={instr[47;32],3'b0,instr[23:20],instr[28:27]};
-	       prmode[10]=instr[31:29];
+               pconstant[10]={instr[47:25],3'b0,instr[21:16]};
+               prmode[10]=instr[24:22];
        end
 
        trien[11]=~magic[0] & subIsFPUE;
@@ -1709,7 +1737,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prAlloc[30]=1'b1;
       puseBConst[30]=opcode_main[0];
       poperation[30][12]=1'b1;
-	       case({opcode_main[3:1]})
+      case({opcode_main[6:3],opcode_main[1]})
 	      0: poperation[30]=`op_mul32;
 	      1: poperation[30]=`op_mul32_64;
 	      2: poperation[30]=`op_mul64;
@@ -1718,8 +1746,8 @@ opcode_main[0] ? `op_add64 : `op_add32;
 	      5: poperation[30]=`op_imul32_64;
 	      6: poperation[30]=`op_imul64;
 	     // 7: poperation[30]=`op_limul64;
-	      3: begin poperation[30]=`op_enptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; if (oddmode[3]) perror[30]=2'b1; end
-	      7: begin poperation[30]=`op_unptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; end
+	      8: begin poperation[30]=`op_enptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; if (oddmode[3]) perror[30]=2'b1; end
+	      9: begin poperation[30]=`op_unptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; end
 	      default: perror[30]=2'b1;
       endcase
       if (opcode_main[0]) begin
