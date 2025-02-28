@@ -1168,7 +1168,7 @@ module smallInstr_decoder(
           end else begin
 		  prC[13]={instr[16],instr[11:8]};
 		  prB[13]={1'b0,instr[15:12]};
-		  prA[13]=31;
+		  prA[13]=5'd17;
           end 
         //  if (prevSpecAlu) rC=6'd16;
       end else begin
@@ -1180,7 +1180,7 @@ module smallInstr_decoder(
           end else begin
 		  prT[13]={instr[16],instr[11:8]};
 		  prB[13]={1'b0,instr[15:12]};
-		  prA[13]=31;
+		  prA[13]=5'd17;
           end
       end
       prB_use[13]=1'b1;
