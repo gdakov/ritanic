@@ -1096,25 +1096,25 @@ module smallInstr_decoder(
        end
 
       trien[12]=magic[0] & isBaseLoadStore;
-      poperation[12][5:0]=(opcode_main[5:2]==4'b1010) ? 6'h22 : opcode_main[5:0];
-      poperation[12][12:6]=opcode_main[5:0]==4'b101010;
+	       poperation[12][5:0]={instr[4:0],instr[30]};
+    //  poperation[12][12:6]=opcode_main[5:0]==4'b101010;
       prA_use[12]=1'b0;
       prB_use[12]=1'b1;
-      prT_use[12]=~opcode_main[0] & opcode_main[5] && opcode_main[5:2]!=4'b1010;
-      prC_use[12]=opcode_main[0] & opcode_main[5];
-      prT_useF[12]=~opcode_main[0] & ~opcode_main[5];
-      prC_useF[12]=opcode_main[0] & ~opcode_main[5];
-      prT_isV[12]=~opcode_main[0] & ~opcode_main[5] & fop_v(opcode_main[4:0]);
+	       prT_use[12]=~opcode_main[30] & opcode_main[4];
+	       prC_use[12]=opcode_main[30] & opcode_main[4];
+	       prT_useF[12]=~opcode_main[30] & ~opcode_main[4];
+	       prC_useF[12]=opcode_main[30] & ~opcode_main[4];
+     // prT_isV[12]=~opcode_main[0] & ~opcode_main[5] & fop_v(opcode_main[4:0]);
       puseRs[12]=1'b1;
-      prAlloc[12]=~opcode_main[0] && opcode_main[5:3]!=3'b101;
+	       prAlloc[12]=~opcode_main[30] && opcode_main[4:2]!=3'b101;
       puseBConst[12]=1'b0;
-      pport[12]=opcode_main[0] ? PORT_STORE : PORT_LOAD;
+	       pport[12]=opcode_main[30] ? PORT_STORE : PORT_LOAD;
       poperation[12][12]=instr[16:12]==15;
       if (instr[16:12]==15) begin
            prA[12]=14;
            prA_use[12]=1'b1;
       end
-      if (opcode_main[0]) begin //store
+	       if (opcode_main[30]) begin //store
           if (magic[1:0]==2'b01) begin
               prB[12]={instr[17],instr[11:8]};
               prC[12]=instr[16:12];
@@ -1133,7 +1133,7 @@ module smallInstr_decoder(
       end
       if (poperation[12][5:1]==5'h16) begin poperation[12][7:0]=`op_cax; poperation[12][9:8]=2'b0; pport[12]=PORT_ALU; end
       if (poperation[12][5:1]==5'h17 && poperation[12][0]) perror[19]=1'b1;
-
+	       pconstant[12]={52'b0,instr[29:18]};
 
       trien[13]=magic[0] & isBaseIndexLoadStore;
       poperation[13][7]=1'b0;
