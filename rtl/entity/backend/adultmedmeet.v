@@ -386,7 +386,11 @@ module smallInstr_decoder(
 	assign isImmLoadStore=(opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000; 
 	assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) && instr[31]==1) && !&instr[4:3];
 	assign isBaseLoadStore=((opcode_main[7:5]==3'b100) && instr[31]==0) && !&instr[4:3];
-	
+	assign isBaseSpecLoad=((opcode_main[7:3]==5'b10011) && opcode_main[2:0]==0);
+	assign isBaseSpecStore=((opcode_main[7:3]==5'b10011) && opcode_main[2:0]==1);
+	assign isBaseIndexSpecLoad=((opcode_main[7:3]==5'b10011) && opcode_main[2:0]==2);
+	assign isBaseIndexSpecStore=((opcode_main[7:3]==5'b10011) && opcode_main[2:0]==3);
+
   assign isBasicCJump=opcode_main[7:4]==4'b1010;
   //gap 176-177 for imm load.
   assign isSelfTestCJump=opcode_main==8'd178 || opcode_main==8'd179;
