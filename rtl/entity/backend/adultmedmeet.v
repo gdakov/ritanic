@@ -1137,39 +1137,34 @@ module smallInstr_decoder(
 
       trien[13]=magic[0] & isBaseIndexLoadStore;
       poperation[13][7]=1'b0;
-      if (opcode_main[7:4]==4'b0111 && opcode_main[3:2]==2'b10 && !opcode_main[0])
-          poperation[13][5:0]=6'd22;
-          poperation[13][7]=opcode_main[1];
-      else
-          poperation[13][5:0]=(opcode_main[7:4]==4'b0111) ? {2'b10,opcode_main[3:0]} : {1'b0,opcode_main[4:0]};
-      poperation[13][6]=~(magic==4'b0111 && instr[57]);
+	       poperation[13][5:0]={instr[4:0], instr[30]};
+     // poperation[13][6]=~(magic==4'b0111 && instr[57]);
       poperation[13][11:8]=
-        magic[2:0]==3'b111 ? instr[55:52] : ( magic[1:0]==2'b01 ?
-        instr[22:19] : instr[24:21]);
+	       magic[2:0]==( magic[1:0]==2'b01 ?
+			    instr[20:17] : instr[24:21]);
       poperation[13][12]=1'b0;
-      poof[0]=((poperation[13][5:3]==3'h7 && ~poperation[13][0]) ||( poperation[13][5:3]==3'h4 &&
-        poperation[13][0]));
-      prA_use[13]=~(magic==4'b0111 && instr[57]);
-      prT_use[13]=~opcode_main[0] && opcode_main[7:4]==4'b0111 && ~opcode_main[3]|opcode_main[2];
-      prC_use[13]=opcode_main[0] && opcode_main[7:4]==4'b0111;
-      prT_useF[13]=~opcode_main[0] && opcode_main[7:4]!=4'b0111;
-      prT_isV[13]=~opcode_main[0] && opcode_main[7:4]!=4'b0111 && fop_v(opcode_main[4:0]);
-      prC_useF[13]=opcode_main[0] && opcode_main[7:4]!=4'b0111;
+     // poof[0]=((poperation[13][5:3]==3'h7 && ~poperation[13][0]) ||( poperation[13][5:3]==3'h4 &&
+	       prA_use[13]=1'b1;
+	       prT_use[13]=~opcode_main[30] &&  opcode_main[4];
+	       prC_use[13]=opcode_main[30] && opcode_main[4];
+	       prT_useF[13]=~opcode_main[30] && !opcode_main[4];
+     // prT_isV[13]=~opcode_main[0] && opcode_main[7:4]!=4'b0111 && fop_v(opcode_main[4:0]);
+	       prC_useF[13]=opcode_main[30] && !opcode_main[4];
       puseRs[13]=1'b1;
-      prAlloc[13]=~opcode_main[0] && !(opcode_main[7:4]==4'b0111 && opcode_main[3:2]==2'b10);// & opcode_main[7:4]==4'b0111;
-      puseBConst[13]=magic==4'b0111 && instr[58];
-      pport[13]=opcode_main[0] ? PORT_STORE : PORT_LOAD;
-      if (magic[2:0]!=3'b111) pconstant[13]=(magic[1:0]==2'b11) ? {{18+32{instr[47]}},instr[38:25]} : {{23+32{instr[31]}},instr[31:23]};
-      if (opcode_main[0]) begin //store
+	       prAlloc[13]=~opcode_main[30];// & opcode_main[7:4]==4'b0111;
+	       puseBConst[13]=1'b1;
+	       pport[13]=opcode_main[30] ? PORT_STORE : PORT_LOAD;
+	       if (magic[2:0]!=3'b111) pconstant[13]=(magic[1:0]==2'b11) ? {{18+32{instr[47]}},instr[38:25]} : {{25+32{instr[29]}},instr[29:21]};
+	       if (opcode_main[30]) begin //store
           if (magic==4'b0111) begin 
               prC[13]={instr[57],instr[11:8]};
               prB[13]={instr[58],instr[15:12]};
               prA[13]={instr[56],instr[51:48]};
               perror[13]=0;
           end else begin
-              prC[13]={instr[18],instr[11:8]};
-              prB[13]={instr[21]&&magic[1:0]!=2'b01,instr[15:12]};
-              prA[13]={2'b0,instr[22]||magic[1:0]==2'b01,instr[17:16]};
+		  prC[13]={instr[16],instr[11:8]};
+		  prB[13]={1'b0,instr[15:12]};
+		  prA[13]=31;
           end 
         //  if (prevSpecAlu) rC=6'd16;
       end else begin
@@ -1179,17 +1174,17 @@ module smallInstr_decoder(
               prA[13]={instr[56],instr[51:48]};
               perror[13]=0;
           end else begin
-              prT[13]={instr[18],instr[11:8]};
-              prB[13]={instr[21]&&magic[1:0]!=2'b01,instr[15:12]};
-              prA[13]={2'b0,instr[22]||magic[1:0]==2'b01,instr[17:16]};
+		  prT[13]={instr[16],instr[11:8]};
+		  prB[13]={1'b0,instr[15:12]};
+		  prA[13]=31;
           end
       end
       prB_use[13]=1'b1;
-      prA_use[13]=~(magic==4'b0111 && instr[57]);
+	       prA_use[13]=1'b1;
       pisIPRel[13]=1'b0;//magic==4'b0111 && instr[59];
-      if (|poperation[13][9:8] && ~poperation[13][6]) perror[13]=1;
-      if (magic[2:0]==3'b111 && instr[59] && ~instr[58]) perror[13]=1;
-      if (magic[2:0]==3'b111 && instr[63:60]!=0) perror[13]=1;
+     // if (|poperation[13][9:8] && ~poperation[13][6]) perror[13]=1;
+    //  if (magic[2:0]==3'b111 && instr[59] && ~instr[58]) perror[13]=1;
+    //  if (magic[2:0]==3'b111 && instr[63:60]!=0) perror[13]=1;
       if (poperation[13][5:1]==5'h16) begin poperation[13][7:0]=`op_cax; pport[13]=PORT_ALU; end
       if (poperation[13][5:1]==5'h17 && poperation[13][0]) perror[19]=1'b1;
       if (riscmove) perror[13]=1;
