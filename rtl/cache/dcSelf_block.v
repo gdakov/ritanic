@@ -278,7 +278,7 @@ module dcache1_way(
   localparam ADDR_WIDTH=37;
   localparam DATA_WIDTH=`dcache1_data_width;
   localparam TAG_WIDTH=`dc1Tag_width;
-  localparam BANK_COUNT=32;
+  localparam BANK_COUNT=16;
   localparam LINE_WIDTH=DATA_WIDTH*BANK_COUNT;
   localparam RAM_ADDR_WIDTH=`dcache1_addr_width;
   parameter [2:0] INDEX=0;
@@ -483,7 +483,7 @@ module dcache1_way(
     end
     for (b=0;b<BANK_COUNT;b=b+1) begin : banks
 
-       if (b<16) begin : banks_low
+       if (b<8) begin : banks_low
 /* verilator lint_off WIDTH */
           dcache1_bank #(b,INDEX[0]) bank_mod(
           clk,
@@ -805,116 +805,50 @@ module dcache1(
   input clk;
   input rst;
   
-  input [ADDR_WIDTH-2:0] read_addrE0;
-  input [ADDR_WIDTH-2:0] read_addrO0;
-  input [BANK_COUNT-1:0] read_bank0;
-  input read_clkEn0;
-  output reg read_hit0;
-  output reg [1:0] read_hitCl0;
-  input read_odd0;
-  input read_split0;
-  output [127+8:0] read_dataA0;
-  output [127+8:0] read_dataX0;
-  output [1:0] read_pbit0;
-  input [4:0] read_beginA0;
-  input [1:0] read_low0;
-  input [4:0] read_sz0;
+  input [3:0][ADDR_WIDTH-2:0] read_addrE0;
+  input [3:0][ADDR_WIDTH-2:0] read_addrO0;
+  input [3:0][BANK_COUNT-1:0] read_bank0;
+  input [3:0]read_clkEn0;
+  output reg [3:0] read_hit0;
+  output reg [3:0] [1:0] read_hitCl0;
+  input [3:0]read_odd0;
+  input [3:0]read_split0;
+  output [3:0][127+8:0] read_dataA0;
+  output [3:0][1:0] read_pbit0;
+  input [3:0][4:0] read_beginA0;
+  input [3:0][1:0] read_low0;
+  input [3:0][4:0] read_sz0;
 
-  input [ADDR_WIDTH-2:0] read_addrE1;
-  input [ADDR_WIDTH-2:0] read_addrO1;
-  input [BANK_COUNT-1:0] read_bank1;
-  input read_clkEn1;
-  output reg read_hit1;
-  output reg [1:0] read_hitCl1;
-  input read_odd1;
-  input read_split1;
-  output [127+8:0] read_dataA1;
-  output [127+8:0] read_dataX1;
-  output [1:0] read_pbit1;
-  input [4:0] read_beginA1;
-  input [1:0] read_low1;
-  input [4:0] read_sz1;
+  input  [3:0]  read_pf3;
 
   
-  input [ADDR_WIDTH-2:0] read_addrE2;
-  input [ADDR_WIDTH-2:0] read_addrO2;
-  input [BANK_COUNT-1:0] read_bank2;
-  input read_clkEn2;
-  output reg read_hit2;
-  output reg [1:0] read_hitCl2;
-  input read_odd2;
-  input read_split2;
-  output [127+8:0] read_dataA2;
-  output [127+8:0] read_dataX2;
-  output [1:0] read_pbit2;
-  input [4:0] read_beginA2;
-  input [1:0] read_low2;
-  input [4:0] read_sz2;
-
-
-  input [ADDR_WIDTH-2:0] read_addrE3;
-  input [ADDR_WIDTH-2:0] read_addrO3;
-  input [BANK_COUNT-1:0] read_bank3;
-  input read_clkEn3;
-  output reg read_hit3;
-  output reg [1:0] read_hitCl3;
-  input read_odd3;
-  input read_split3;
-  output [127+8:0] read_dataX3;
-  output [127+8:0] read_dataX3;
-  output [1:0] read_pbit3;
-  input [4:0] read_beginA3;
-  input [1:0] read_low3;
-  input [4:0] read_sz3;
-  input       read_pf3;
-
-  
-  input [BANK_COUNT-1:0] read_bankNoRead;//bits are 1 if other bank reads are 0
+  input [BANK_COUNT-1:0] read_bankNoRead;
   
   input read_invalidate; 
 
-  input [ADDR_WIDTH-2:0] write_addrE0;
-  input [ADDR_WIDTH-2:0] write_addrO0;
-  input [BANK_COUNT-1:0] write_bank0;
-  input write_clkEn0;
-  output reg write_hit0;
-  output reg [1:0] write_hitCl0;
-  output reg [1:0] write_dupl0;
-  input write_split0;
-  input write_odd0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bgnBen0;
-  input [3:0] write_endBen0;
-  input [5*32-1:0] write_data0;
-  input [5*32-1:0] write_dataM0;
-  input [1:0] write_pbit0;
-  input write_d128_0;
-  input [ADDR_WIDTH-2:0] write_addrE1;
-  input [ADDR_WIDTH-2:0] write_addrO1;
-  input [BANK_COUNT-1:0] write_bank1;
-  input write_clkEn1;
-  output reg write_hit1;
-  output reg [1:0] write_hitCl1;
-  output reg [1:0] write_dupl1;
-  input write_split1;
-  input write_odd1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bgnBen1;
-  input [3:0] write_endBen1;
-  input [5*32-1:0] write_data1;
-  input [5*32-1:0] write_dataM1;
-  input [1:0] write_pbit1;
-  input write_d128_1;
+  input [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0;
+  input [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
+  input [`wport-1:0][BANK_COUNT-1:0] write_bank0;
+  input [`wport-1:0]write_clkEn0;
+  output reg [`wport-1:0]write_hit0;
+  output reg [`wport-1:0][1:0] write_hitCl0;
+  output reg [`wport-1:0][1:0] write_dupl0;
+  input [`wport-1:0]write_split0;
+  input [`wport-1:0]write_odd0;
+  input [`wport-1:0][4:0] write_begin0;
+  input [`wport-1:0][4:0] write_end0;
+  input [`wport-1:0][3:0] write_bgnBen0;
+  input [`wport-1:0][3:0] write_endBen0;
+  input [`wport-1:0][5*32-1:0] write_data0;
+  input [`wport-1:0][5*32-1:0] write_dataM0;
+  input [`wport-1:0][1:0] write_pbit0;
+  input [`wport-1:0]write_d128_0;
   input write_clear;
   
   input insert_en;    
   input insert_from_ram;
   input insert_exclusive;
   input insert_dirty;
-//  output reg wb_en;
-//  output [LINE_WIDTH/4-1:0] busWb_data;
   input [511:0] busIns_data;
   input [7:0] busIns_dataPTR;
   input insbus_A,insbus_B;
