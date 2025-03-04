@@ -19,3 +19,7 @@ limitations under the License.
 `define wport 12
 //but really 9 cores, + 3 port insert/write coalescing
 
+//iraloka lvl 2 gold silicon, 2x lvl 1 unused, 1/3rd utilisation:
+//`define wport 144
+//but cores are 108
+//only possible in fully conductive box with hardly any plastic windows given inraloka uses gold radiator free energy devices

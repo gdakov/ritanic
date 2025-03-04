@@ -803,7 +803,11 @@ module stq(
   assign WLN0_en=WLN0_en0 && ret_II==WLN0_adata[`lsaddr_II+4] && 
 	  ~ret_xbreak[WLN0_adata[-6+`lsaddr_II]];
   
-  
+  assign WLN0_LSQ=chk0_LSQ+24;
+  assign WLN1_LSQ=chk0_LSQ+48;
+  assign wbRADDR0=chk0_LSQ+24;
+  assign wbRADDR1=chk0_LSQ+24;
+
   stq_adata bgn_mod(
   clk,
   rst,
