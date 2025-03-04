@@ -14,12 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-//uncomment for goldium_edition
-//note simulator hacks for running on compliant verilog simulator aren't implemented on it!
-//`define goldium_edition 1
-`define goldium_edition 0
 
-`define wport 60
-//`define wport 120 //earth level + on same cpu
-//`define wport 27 //no part matter / goldium. allows high core count without too much expenses
-//`define wport 37 // part matter laptop
+//large core max dual display, works everywhere, no signal splitting the core
+`define wport 12
+//but really 9 cores, + 3 port insert/write coalescing
+

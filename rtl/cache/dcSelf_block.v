@@ -238,12 +238,6 @@ module dcache1_way(
   rst,
   read_addrE0, read_addrO0, read_bank0, read_clkEn0, read_hit0, 
     read_odd0, read_split0, read_pbit0, read_pbit0_in, read0_err,
-  read_addrE1, read_addrO1, read_bank1, read_clkEn1, read_hit1,   
-    read_odd1, read_split1, read_pbit1, read_pbit1_in, read1_err,
-  read_addrE2, read_addrO2, read_bank2, read_clkEn2, read_hit2,   
-    read_odd2, read_split2, read_pbit2, read_pbit2_in, read2_err,
-  read_addrE3, read_addrO3, read_bank3, read_clkEn3, read_hit3,   
-    read_odd3, read_split3, read_pbit3, read_pbit3_in, read3_err,
   read_bankNoRead,
   read_invalidate,
   read_bankHit,
@@ -252,9 +246,6 @@ module dcache1_way(
   read_err,
   read_err_in,
   read_begin0,read_low0,
-  read_begin1,read_low1,
-  read_begin2,read_low2,
-  read_begin3,read_low3,
   read_hitEi,read_hitOi,
   write_addrE0,
   write_addrO0,
@@ -295,70 +286,33 @@ module dcache1_way(
   input clk;
   input rst;
   
-  input [ADDR_WIDTH-2:0] read_addrE0;
-  input [ADDR_WIDTH-2:0] read_addrO0;
-  input [BANK_COUNT-1:0] read_bank0;
-  input read_clkEn0;
-  output [1:0] read_hit0;
-  input read_odd0;
-  input read_split0;
-  output [1:0] read_pbit0;
-  input [1:0] read_pbit0_in;
-  output read0_err;
+  input [3:0][ADDR_WIDTH-2:0] read_addrE0;
+  input [3:0][ADDR_WIDTH-2:0] read_addrO0;
+  input [3:0][BANK_COUNT-1:0] read_bank0;
+  input [3:0]read_clkEn0;
+  output [3:0][1:0] read_hit0;
+  input [3:0]read_odd0;
+  input [3:0]read_split0;
+  output [3:0][1:0] read_pbit0;
+  input [3:0][1:0] read_pbit0_in;
+  output [3:0] read0_err;
   
-  input [ADDR_WIDTH-2:0] read_addrE1;
-  input [ADDR_WIDTH-2:0] read_addrO1;
-  input [BANK_COUNT-1:0] read_bank1;
-  input read_clkEn1;
-  output [1:0] read_hit1;
-  input read_odd1;
-  input read_split1;
-  output [1:0] read_pbit1;
-  input [1:0] read_pbit1_in;
-  output read1_err;
-  
-  input [ADDR_WIDTH-2:0] read_addrE2;
-  input [ADDR_WIDTH-2:0] read_addrO2;
-  input [BANK_COUNT-1:0] read_bank2;
-  input read_clkEn2;
-  output [1:0] read_hit2;
-  input read_odd2;
-  input read_split2;
-  output [1:0] read_pbit2;
-  input [1:0] read_pbit2_in;
-  output read2_err;
 
-  input [ADDR_WIDTH-2:0] read_addrE3;
-  input [ADDR_WIDTH-2:0] read_addrO3;
-  input [BANK_COUNT-1:0] read_bank3;
-  input read_clkEn3;
-  output [1:0] read_hit3;
-  input read_odd3;
-  input read_split3;
-  output [1:0] read_pbit3;
-  input [1:0] read_pbit3_in;
-  output read3_err;
-  
   input [BANK_COUNT-1:0] read_bankNoRead;//bits are 1 if other bank reads are 0
   
   input read_invalidate; 
 
   output [BANK_COUNT-1:0] read_bankHit;
   
-  output [LINE_WIDTH-1:0] read_data;
-  input [LINE_WIDTH-1:0] read_data_in;
-  output [31:0] read_err;
-  input [31:0] read_err_in;
+  output [3:0][1:0][76:0] read_data;
+  input [3:0][1:0][76:0] read_data_in;
+  output [3:0] read_err;
+  input [3:0] read_err_in;
  
-  input [4:0] read_begin0; 
-  input [4:0] read_begin1; 
-  input [4:0] read_begin2; 
-  input [4:0] read_begin3; 
-  
-  input [1:0] read_low0;
-  input [1:0] read_low1;
-  input [1:0] read_low2;
-  input [1:0] read_low3;
+  input [3:0][4:0] read_begin0;
+
+
+  input [3:0][1:0] read_low0;
 
   inout [7:0] read_hitEi;
   inout [7:0] read_hitOi;
@@ -534,22 +488,13 @@ module dcache1_way(
           dcache1_bank #(b,INDEX[0]) bank_mod(
           clk,
           rst,
-          read_addrE0[6:0], read_hitEL[0], 
-          read_addrO0[6:0], read_hitOL[0], 
-          read_bank0[b],read_odd0,
-          read_addrE1[6:0], read_hitEL[1], 
-          read_addrO1[6:0], read_hitOL[1], 
-          read_bank1[b],read_odd1,
-          read_addrE2[6:0], read_hitEL[2], 
-          read_addrO2[6:0], read_hitOL[2], 
-          read_bank2[b],read_odd2,
-          read_addrE3[6:0], read_hitEL[3], 
-          read_addrO3[6:0], read_hitOL[3], 
-          read_bank3[b],read_odd3,
+          read_addrE0[3:0][6:0], read_hitEL[3:0][0],
+          read_addrO0[3:0][6:0], read_hitOL[3:0][0],
+          read_bank0[3:0][b],read_odd0,
           read_bankNoRead[b],
           read_bankHit[b],
-          read_data[DATA_WIDTH*b+:DATA_WIDTH],
-          read_data_in[DATA_WIDTH*b+:DATA_WIDTH],
+          read_data,
+          read_data_in,
           write_addrE0_reg[6:0], write_hitEL[`wport-1:0][0] && write_hit0,
           write_addrO0_reg[6:0], write_hitOL[`wport-1:0][0] && write_hit0,
           write_bank0[b], 
@@ -565,18 +510,9 @@ module dcache1_way(
           dcache1_bank #(b,INDEX[0]) bank_mod(
           clk,
           rst,
-          read_addrE0[6:0], read_hitEH[0], 
-          read_addrO0[6:0], read_hitOH[0], 
-          read_bank0[b],read_odd0,
-          read_addrE1[6:0], read_hitEH[1], 
-          read_addrO1[6:0], read_hitOH[1], 
-          read_bank1[b],read_odd1,
-          read_addrE2[6:0], read_hitEH[2], 
-          read_addrO2[6:0], read_hitOH[2], 
-          read_bank2[b],read_odd2,
-          read_addrE3[6:0], read_hitEH[3], 
-          read_addrO3[6:0], read_hitOH[3], 
-          read_bank3[b],read_odd3,
+          read_addrE0[3:0][6:0], read_hitEH[3:0][0],
+          read_addrO0[3:0][6:0], read_hitOH[3:0][0],
+          read_bank0[3:0][b],~read_odd0,
           read_bankNoRead[b],
           read_bankHit[b],
           read_data[DATA_WIDTH*b+:DATA_WIDTH],
@@ -621,13 +557,13 @@ module dcache1_way(
         dcache1_tag #(INDEX) tagR_mod(
         .clk(clk),
         .rst(rst),
-        .read_clkEn(read_clkEn[r] | write_insert),
-        .read_en(read_clkEn[r]),
-        .read_addrOdd(read_addrO[r]),.read_addrEven(read_addrE[r]),
-        .read_odd(read_odd[r]), .read_split(read_split[r]), .read_invl(read_invalidate), 
-        .read_hitL_odd(read_hitOL[r]),.read_hitL_even(read_hitEL[r]),
-        .read_hitH_odd(read_hitOH[r]),.read_hitH_even(read_hitEH[r]),
-        .read_hit_odd(read_hitO[r]),.read_hit_even(read_hitE[r]),
+        .read_clkEn(read_clkEn0[r] | write_insert),
+        .read_en(read_clkEn0[r]),
+        .read_addrOdd(read_addrO0[r]),.read_addrEven(read_addrE0[r]),
+        .read_odd(read_odd0[r]), .read_split(read_split0[r]), .read_invl(read_invalidate0),
+        .read_hitL_odd(read_hitOL0[r]),.read_hitL_even(read_hitEL0[r]),
+        .read_hitH_odd(read_hitOH0[r]),.read_hitH_even(read_hitEH0[r]),
+        .read_hit_odd(read_hitO0[r]),.read_hit_even(read_hitE0[r]),
         .read_exclOut0(),.read_exclOut1(),//.read_excl(),
         .errH(errH[r]),.errL(errL[r]),
         .write_exclusive(write_insertExclusive),
@@ -644,13 +580,13 @@ module dcache1_way(
         dcache1_tag #(INDEX) tagR_mod(
         .clk(clk),
         .rst(rst),
-        .read_clkEn(read_clkEn[r] | write_insert),
-        .read_en(read_clkEn[r]),
-        .read_addrOdd(read_addrO[r]),.read_addrEven(read_addrE[r]),
-        .read_odd(read_odd[r]), .read_split(read_split[r]), .read_invl(read_invalidate), 
-        .read_hitL_odd(read_hitOL[r]),.read_hitL_even(read_hitEL[r]),
-        .read_hitH_odd(read_hitOH[r]),.read_hitH_even(read_hitEH[r]),
-        .read_hit_odd(read_hitO[r]),.read_hit_even(read_hitE[r]),
+        .read_clkEn(read_clkEn0[r] | write_insert),
+        .read_en(read_clkEn0[r]),
+        .read_addrOdd(read_addrO0[r]),.read_addrEven(read_addrE0[r]),
+        .read_odd(read_odd0[r]), .read_split(read_split0[r]), .read_invl(read_invalidate),
+        .read_hitL_odd(read_hitOL0[r]),.read_hitL_even(read_hitEL0[r]),
+        .read_hitH_odd(read_hitOH0[r]),.read_hitH_even(read_hitEH0[r]),
+        .read_hit_odd(read_hitO0[r]),.read_hit_even(read_hitE0[r]),
         .read_exclOut0(),.read_exclOut1(),//.read_excl(),
         .errH(errH[r]),.errL(errL[r]),
         .write_exclusive(write_insertExclusive),
@@ -665,7 +601,7 @@ module dcache1_way(
         );  
     end
 
-    for (w=0;w<60;w=w+1) begin : tagW_gen
+    for (w=0;w<`wport;w=w+1) begin : tagW_gen
         dcache1_tag #(INDEX) tagW_mod(
         .clk(clk),
         .rst(rst),
@@ -696,54 +632,25 @@ module dcache1_way(
 
   adder_inc #(6) initAdd_mod(initCount,initCount_d,1'b1,);
 
-  assign read_addrO[0]=read_addrO0;
-  assign read_addrO[1]=read_addrO1;
-  assign read_addrO[2]=read_addrO2;
-  assign read_addrO[3]=read_addrO3;
 
-  assign read_addrE[0]=read_addrE0;
-  assign read_addrE[1]=read_addrE1;
-  assign read_addrE[2]=read_addrE2;
-  assign read_addrE[3]=read_addrE3;
- 
-  assign write_addrO[0]=write_addrO0;
-  assign write_addrE[0]=write_addrE0;
-  assign write_addrO[1]=write_addrO1;
-  assign write_addrE[1]=write_addrE1;
-  
   assign err_tag=errH|errL;  
 
-  assign read_hit0={read_hitO[0],read_hitE[0]};
-  assign read_hit1={read_hitO[1],read_hitE[1]};
-  assign read_hit2={read_hitO[2],read_hitE[2]};
-  assign read_hit3={read_hitO[3],read_hitE[3]};
- 
-  assign read0_err=errH[0]|errL[0];   
-  assign read1_err=errH[1]|errL[1];   
-  assign read2_err=errH[2]|errL[2];   
-  assign read3_err=errH[3]|errL[3];   
-  assign write0_err=errH[4]|errL[4];   
-  assign write1_err=errH[5]|errL[5];   
+  assign read0_err=errH[3:0]|errL[3:0];
+  assign write0_err=errH[4+:`wport]|errL[4+:`wport];
 
-  assign write_dupl0=~write_dupl[0] & {write_hitO[0],write_hitE[0]};
-  assign write_dupl1=~write_dupl[1] & {write_hitO[1],write_hitE[1]};
 
-  assign write_hitCl0[0]=write_hitE[0] & write_reqE0;
-  assign write_hitCl0[1]=write_hitO[0] & write_reqO0;
-  assign write_hitCl1[0]=write_hitE[1] & write_reqE1;
-  assign write_hitCl1[1]=write_hitO[1] & write_reqO1;
+  assign write_dupl0=~write_dupl & {write_hitO,write_hitE};
+
+  assign write_hitCl0[`wport-1:0][0]=write_hitE0[`wport-1:0][0] & write_reqE0;
+  assign write_hitCl0[`wport-1:0][1]=write_hitO0[`wport-1:0][0] & write_reqO0;
   
   assign write_reqE0=(~write_odd0_reg | write_split0_reg) & write_clkEn0_reg;
   assign write_reqO0=(write_odd0_reg | write_split0_reg) & write_clkEn0_reg;
-  assign write_reqE1=(~write_odd1_reg | write_split1_reg) & write_clkEn1_reg;
-  assign write_reqO1=(write_odd1_reg | write_split1_reg) & write_clkEn1_reg;
   
   assign insert_hit=ins_hit[0];
   
   assign recent_out=|recent[2:0];
   
-//  assign write_back=ins_hit[0] && (dirtyE & ~read_odd0_reg || dirtyO & read_odd0_reg);
-//  assign write_back2=(|read_hit0) && read_invalidate_reg && dirtyE | dirtyO;
   
   always @(negedge clk) begin
       if (rst) begin
@@ -854,15 +761,6 @@ module dcache1(
   read_addrE0, read_addrO0, read_bank0, read_clkEn0, read_hit0, read_hitCl0, 
     read_odd0, read_split0, read_dataA0, read_dataX0, read_pbit0,
     read_beginA0, read_low0, read_sz0,
-  read_addrE1, read_addrO1, read_bank1, read_clkEn1, read_hit1, read_hitCl1,   
-    read_odd1, read_split1, read_dataA1, read_dataX1, read_pbit1,
-    read_beginA1, read_low1, read_sz1,
-  read_addrE2, read_addrO2, read_bank2, read_clkEn2, read_hit2, read_hitCl2,   
-    read_odd2, read_split2, read_dataA2, read_dataX2, read_pbit2,
-    read_beginA2,  read_low2, read_sz2,
-  read_addrE3, read_addrO3, read_bank3, read_clkEn3, read_hit3, read_hitCl3,   
-    read_odd3, read_split3, read_dataA3, read_dataX3, read_pbit3,
-    read_beginA3, read_low3, read_sz3, read_pf3,
   read_bankNoRead,
   read_invalidate,
   write_addrE0,
