@@ -425,49 +425,8 @@ module dcache1_way(
   reg init_dirty;
   reg [5:0] initCount;
   wire [5:0] initCount_d;
-  //verilator lint_off WIDTH
-  dc1_xbit pbit_mod(
-  .clk(clk),
-  .rst(rst),
-  .read0_clkEn(1'b1),.read0_addrO({read_addrO0[6:0],read_begin0[4:1]}),
-  .read0_addrE({read_addrE0[6:0],read_begin0[4:1]}),.read0_odd(read_odd0),.read0_pbit(read0_pbitP),
-  .read1_clkEn(1'b1),.read1_addrO({read_addrO1[6:0],read_begin1[4:1]}),
-  .read1_addrE({read_addrE1[6:0],read_begin1[4:1]}),.read1_odd(read_odd1),.read1_pbit(read1_pbitP),
-  .read2_clkEn(1'b1),.read2_addrO({read_addrO2[6:0],read_begin2[4:1]}),
-  .read2_addrE({read_addrE2[6:0],read_begin2[4:1]}),.read2_odd(read_odd2),.read2_pbit(read2_pbitP),
-  .read3_clkEn(1'b1),.read3_addrO({read_addrO3[6:0],read_begin3[4:1]}),
-  .read3_addrE({read_addrE3[6:0],read_begin3[4:1]}),.read3_odd(read_odd3),.read3_pbit(read3_pbitP),
-  .write0_clkEn(write_clkEn0),.write0_addrO({write_addrO0_reg,write_begin0x_reg}),
-  .write0_addrE({write_addrE0_reg,write_begin0x_reg}),.write0_odd(write_odd0_reg),.write0_pbit(write_pbit0_reg),
-  .write0_d128(write_d128_0_reg),
-  .write_ins(ins_hit),.write_data(write_dataPTR));
-  //verilator lint_on WIDTH
   generate
     genvar b,r,w;
-    if (~INDEX[0]) begin
-        assign read_pbit0=~(read_pbit0P|read_pbit0_in);  
-        assign read_pbit1=~(read_pbit1P|read_pbit1_in);  
-        assign read_pbit2=~(read_pbit2P|read_pbit2_in);  
-        assign read_pbit3=~(read_pbit3P|read_pbit3_in);  
-        
-        assign read_pbit0P=read0_pbitP&{2{(read_hitE[0]&~read_odd0_reg||read_hitO[0]&read_odd0_reg)&~read_begin0_reg[0]&~|read_low0_reg}};
-        assign read_pbit1P=read1_pbitP&{2{(read_hitE[1]&~read_odd1_reg||read_hitO[1]&read_odd1_reg)&~read_begin1_reg[0]&~|read_low1_reg}};
-        assign read_pbit2P=read2_pbitP&{2{(read_hitE[2]&~read_odd2_reg||read_hitO[2]&read_odd2_reg)&~read_begin2_reg[0]&~|read_low2_reg}};
-        assign read_pbit3P=read3_pbitP&{2{(read_hitE[3]&~read_odd3_reg||read_hitO[3]&read_odd3_reg)&~read_begin3_reg[0]&~|read_low3_reg}};
-
-	assign read_data=~((read_data)&read_data_in);
-    end else begin
-        assign read_pbit0=~(read_pbit0P&read_pbit0_in);  
-        assign read_pbit1=~(read_pbit1P&read_pbit1_in);  
-        assign read_pbit2=~(read_pbit2P&read_pbit2_in);  
-        assign read_pbit3=~(read_pbit3P&read_pbit3_in);  
-
-        assign read_pbit0P=~read0_pbitP|{2{~((read_hitE[0]&~read_odd0_reg||read_hitO[0]&read_odd0_reg)&~read_begin0_reg[0]&~|read_low0_reg)}};
-        assign read_pbit1P=~read1_pbitP|{2{~((read_hitE[1]&~read_odd1_reg||read_hitO[1]&read_odd1_reg)&~read_begin1_reg[0]&~|read_low1_reg)}};
-        assign read_pbit2P=~read2_pbitP|{2{~((read_hitE[2]&~read_odd2_reg||read_hitO[2]&read_odd2_reg)&~read_begin2_reg[0]&~|read_low2_reg)}};
-        assign read_pbit3P=~read3_pbitP|{2{~((read_hitE[3]&~read_odd3_reg||read_hitO[3]&read_odd3_reg)&~read_begin3_reg[0]&~|read_low3_reg)}};
-	assign read_data=~((read_data)|read_data_in);
-    end
     for (b=0;b<BANK_COUNT;b=b+1) begin : banks
 
        if (b<8) begin : banks_low
