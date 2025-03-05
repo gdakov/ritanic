@@ -382,28 +382,21 @@ module dcache1_way(
   wire [1:0] write_hitEH;
   wire [1:0] write_hitOH;
 
-  wire [3:0] read_clkEn={read_clkEn3,read_clkEn2,read_clkEn1,read_clkEn0};
-  wire [3:0] read_odd={read_odd3,read_odd2,read_odd1,read_odd0};
-  wire [3:0] read_split={read_split3,read_split2,read_split1,read_split0};
+//  wire [3:0] read_clkEn={read_clkEn3,read_clkEn2,read_clkEn1,read_clkEn0};
+//  wire [3:0] read_odd={read_odd3,read_odd2,read_odd1,read_odd0};
+//  wire [3:0] read_split={read_split3,read_split2,read_split1,read_split0};
   
-  wire [ADDR_WIDTH-2:0] read_addrE[3:0];
-  wire [ADDR_WIDTH-2:0] read_addrO[3:0];
+//  wire [ADDR_WIDTH-2:0] read_addrE[3:0];
+//  wire [ADDR_WIDTH-2:0] read_addrO[3:0];
  
 
-  reg [4:0] read_begin0_reg;
-  reg [4:0] read_begin1_reg;
-  reg [4:0] read_begin2_reg;
-  reg [4:0] read_begin3_reg;
-
-  reg [1:0] read_low0_reg;
-  reg [1:0] read_low1_reg;
-  reg [1:0] read_low2_reg;
-  reg [1:0] read_low3_reg;
+  reg [3:0][4:0] read_begin0_reg;
+  reg [3:0][1:0] read_low0_reg;
   
-  reg read_odd0_reg,read_odd1_reg,read_odd2_reg,read_odd3_reg;
-  reg read_split0_reg,read_split1_reg,read_split2_reg,read_split3_reg;
-  reg [`wport-1:0] write_odd0_reg,write_odd1_reg;
-  reg [`wport-1:0] write_split0_reg,write_split1_reg;
+  reg [3:0] read_odd0_reg;
+  reg [3:0] read_split0_reg;
+  reg [`wport-1:0] write_odd0_reg;
+  reg [`wport-1:0] write_split0_reg;
   reg write_insert_reg;
   
   reg read_invalidate_reg;
@@ -415,24 +408,18 @@ module dcache1_way(
 
   reg [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0_reg;
   reg [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0_reg;
-  reg [ADDR_WIDTH-2:0] read_addrE0_reg;
-  reg [ADDR_WIDTH-2:0] read_addrO0_reg;
-  reg read_clkEn0_reg;
+  reg [3:0][ADDR_WIDTH-2:0] read_addrE0_reg;
+  reg [3:0][ADDR_WIDTH-2:0] read_addrO0_reg;
+  reg [3:0]read_clkEn0_reg;
   wire [`wport-1:0][1:0] write_hitO;
   wire [`wport-1:0][1:0] write_hitE;
   reg ins_hit_reg;
  
   wire [1:0] write_dupl[1:0][`wport-1:0];
   
-  wire [1:0] read_pbit0P;
-  wire [1:0] read_pbit1P;
-  wire [1:0] read_pbit2P;
-  wire [1:0] read_pbit3P;
+  wire [3:0][1:0] read_pbit0P;
   
-  wire [1:0] read0_pbitP;
-  wire [1:0] read1_pbitP;
-  wire [1:0] read2_pbitP;
-  wire [1:0] read3_pbitP;
+  wire [3:0][1:0] read0_pbitP;
  
   reg init;
   reg init_dirty;
