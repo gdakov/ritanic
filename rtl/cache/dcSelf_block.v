@@ -507,9 +507,9 @@ module dcache1_way(
         .read_en(read_clkEn0[r]),
         .read_addrOdd(read_addrO0[r]),.read_addrEven(read_addrE0[r]),
         .read_odd(read_odd0[r]), .read_split(read_split0[r]), .read_invl(read_invalidate0),
-        .read_hitL_odd(read_hitOL0[r]),.read_hitL_even(read_hitEL0[r]),
-        .read_hitH_odd(read_hitOH0[r]),.read_hitH_even(read_hitEH0[r]),
-        .read_hit_odd(read_hitO0[r]),.read_hit_even(read_hitE0[r]),
+        .read_hitL_odd(read_hitOL[r]),.read_hitL_even(read_hitEL[r]),
+        .read_hitH_odd(read_hitOH[r]),.read_hitH_even(read_hitEH[r]),
+        .read_hit_odd(read_hitO[r]),.read_hit_even(read_hitE[r]),
         .read_exclOut0(),.read_exclOut1(),//.read_excl(),
         .errH(errH[r]),.errL(errL[r]),
         .write_exclusive(write_insertExclusive),
@@ -530,9 +530,9 @@ module dcache1_way(
         .read_en(read_clkEn0[r]),
         .read_addrOdd(read_addrO0[r]),.read_addrEven(read_addrE0[r]),
         .read_odd(read_odd0[r]), .read_split(read_split0[r]), .read_invl(read_invalidate),
-        .read_hitL_odd(read_hitOL0[r]),.read_hitL_even(read_hitEL0[r]),
-        .read_hitH_odd(read_hitOH0[r]),.read_hitH_even(read_hitEH0[r]),
-        .read_hit_odd(read_hitO0[r]),.read_hit_even(read_hitE0[r]),
+        .read_hitL_odd(read_hitOL[r]),.read_hitL_even(read_hitEL[r]),
+        .read_hitH_odd(read_hitOH[r]),.read_hitH_even(read_hitEH[r]),
+        .read_hit_odd(read_hitO[r]),.read_hit_even(read_hitE[r]),
         .read_exclOut0(),.read_exclOut1(),//.read_excl(),
         .errH(errH[r]),.errL(errL[r]),
         .write_exclusive(write_insertExclusive),
@@ -587,8 +587,8 @@ module dcache1_way(
 
   assign write_dupl0=~write_dupl & {write_hitO,write_hitE};
 
-  assign write_hitCl0[`wport-1:0][0]=write_hitE0[`wport-1:0][0] & write_reqE0;
-  assign write_hitCl0[`wport-1:0][1]=write_hitO0[`wport-1:0][0] & write_reqO0;
+  assign write_hitCl0[`wport-1:0][0]=write_hitE[`wport-1:0][0] & write_reqE0;
+  assign write_hitCl0[`wport-1:0][1]=write_hitO[`wport-1:0][0] & write_reqO0;
   
   assign write_reqE0=(~write_odd0_reg | write_split0_reg) & write_clkEn0_reg;
   assign write_reqO0=(write_odd0_reg | write_split0_reg) & write_clkEn0_reg;
@@ -601,33 +601,16 @@ module dcache1_way(
   always @(negedge clk) begin
       if (rst) begin
           read_odd0_reg<=1'b0;
-          read_odd1_reg<=1'b0;
-          read_odd2_reg<=1'b0;
-          read_odd3_reg<=1'b0;
           read_begin0_reg<=5'b0;
-          read_begin1_reg<=5'b0;
-          read_begin2_reg<=5'b0;
-          read_begin3_reg<=5'b0;
           read_low0_reg<=2'b0;
-          read_low1_reg<=2'b0;
-          read_low2_reg<=2'b0;
-          read_low3_reg<=2'b0;
           write_odd0_reg<=1'b0;
-          write_odd1_reg<=1'b0;
           read_split0_reg<=1'b0;
-          read_split1_reg<=1'b0;
-          read_split2_reg<=1'b0;
-          read_split3_reg<=1'b0;
           write_split0_reg<=1'b0;
-          write_split1_reg<=1'b0;
           write_insert_reg<=1'b0;
           read_invalidate_reg<=1'b0;
           write_clkEn0_reg<=1'b0;
-          write_clkEn1_reg<=1'b0;
           write_addrE0_reg<=36'b0;
           write_addrO0_reg<=36'b0;
-          write_addrE1_reg<=36'b0;
-          write_addrO1_reg<=36'b0;
           read_addrE0_reg<=36'b0;
           read_addrO0_reg<=36'b0;
           read_clkEn0_reg<=1'b0;
@@ -635,41 +618,22 @@ module dcache1_way(
           write_end0_reg<=5'b0;
           write_bBen0_reg<=4'b0;
           write_enBen0_reg<=4'b0;
-          write_begin1_reg<=5'b0;
-          write_end1_reg<=5'b0;
-          write_bBen1_reg<=4'b0;
-          write_enBen1_reg<=4'b0;
           ins_hit_reg<=1'b0;
       end else begin
           if (read_clkEn0) read_odd0_reg<=read_odd0;
-          if (read_clkEn1) read_odd1_reg<=read_odd1;
-          if (read_clkEn2) read_odd2_reg<=read_odd2;
-          if (read_clkEn3) read_odd3_reg<=read_odd3;
           if (read_clkEn0) read_begin0_reg<=read_begin0;
-          if (read_clkEn1) read_begin1_reg<=read_begin1;
-          if (read_clkEn2) read_begin2_reg<=read_begin2;
-          if (read_clkEn3) read_begin3_reg<=read_begin3;
           if (read_clkEn0) read_low0_reg<=read_low0;
-          if (read_clkEn1) read_low1_reg<=read_low1;
-          if (read_clkEn2) read_low2_reg<=read_low2;
-          if (read_clkEn3) read_low3_reg<=read_low3;
           if (write_clkEn0) write_odd0_reg<=write_odd0;
-          if (write_clkEn1) write_odd1_reg<=write_odd1;
           if (read_clkEn0) read_split0_reg<=read_split0;
-          if (read_clkEn1) read_split1_reg<=read_split1;
-          if (read_clkEn2) read_split2_reg<=read_split2;
-          if (read_clkEn3) read_split3_reg<=read_split3;
           if (write_clkEn0) write_split0_reg<=write_split0;
-          if (write_clkEn1) write_split1_reg<=write_split1;
           write_insert_reg<=write_insert;
           read_invalidate_reg<=read_invalidate;
           write_clkEn0_reg<=write_clkEn0;
-          write_clkEn1_reg<=write_clkEn1;
           for(p=0;p<60;p=p+1) begin
               write_addrE0_reg[p]<=write_addrE0[p][6:0];
               write_addrO0_reg[p]<=write_addrO0[p][6:0];
-              write_begin0x_reg[p]<=write_begin0[p][4:1];
-              write_end0x_reg[p]<=write_end0[p][4:1];
+              write_begin0_reg[p]<=write_begin0[p][4:1];
+              write_end0_reg[p]<=write_end0[p][4:1];
           end
           read_addrE0_reg<=read_addrE0;
           read_addrO0_reg<=read_addrO0;
