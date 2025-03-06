@@ -1,1 +1,0 @@
-please note that in the UK if i search for housing while being on disability 100% of letting agents say they have nothing available and also it caint be thakken seriusly that i can move out of my mothers place and my right if any don't matter because there is exemption of rights for people like me
