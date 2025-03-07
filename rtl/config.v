@@ -23,3 +23,5 @@ limitations under the License.
 //`define wport 144
 //but cores are 108
 //only possible in fully conductive box with hardly any plastic windows given inraloka uses gold radiator free energy devices
+//10 way split for non usa like and 12 for usa like
+//so for Europe / UK most of will reduce to 90 vector and ram capacity could be greater than advertized to allow for transparent reduction or it can be reduced by os or user.
