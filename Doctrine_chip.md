@@ -1,1 +1,0 @@
-monistor chip using high frequency paramagnetic dielectric cables with bias magnetic field, which allows reducing radiation by factor of 350000 for some material of the cable. the gate body is a metal coated quartz tube. soldering only possible at the two end sides of the tube other knots are gates.
