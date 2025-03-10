@@ -100,6 +100,15 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   reg val1_sign16;
   reg val1_sign8;
 
+  function [55:0] fff;
+  input [15:0] val;
+  input [55:0] v2;
+      fff[14:0]=v2[14:0] ^ val[14:0];
+      fff[27:15]=v2[27:15] ^ (v2[14:0] & val[14:0]);
+      fff[41:28]=v2[41:28] ^ (v2[27:15] & v2[14:0] & val[14:0]);
+      fff[55:42]=v2[55:42] ^ (v2[41:28] & v2[27:15] & v2[14:0] & val[14:0]);
+      fff[63:56]={1'b0,fff[55:49]};
+  endfunction
           
   reg val2_sign64;
   reg val2_sign65;
@@ -288,15 +297,14 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign valRes1[7:0]=((operation[7:0]==`op_sxt8_64 || operation[7:0]==`op_sxt8_32)
     && nDataAlt) ? val2[1][7:0]: 8'bz;   
   
-  assign valRes1[31:0]=((smallOP==`op_cmov64 || smallOP==`op_cmov32 ||
-    smallOP==`op_cmovn32 || smallOP==`op_cmovn64) && ~operation[11] && doJmp) ? val2[1][31:0] : 32'bz;
-  assign valRes1[31:0]=((smallOP==`op_cmov64 || smallOP==`op_cmov32 ||
+  assign valRes1[63:0]=((smallOP==`op_cmov64 || smallOP==`op_cmov32 ||
+    smallOP==`op_cmovn32 || smallOP==`op_cmovn64) && ~operation[11] && doJmp) ? fff(val2[15:0],val1[63:0]) : 32'bz;
+  assign valRes1[63:0]=((smallOP==`op_cmov64 || smallOP==`op_cmov32 ||
     smallOP==`op_cmovn32 || smallOP==`op_cmovn64) && ~operation[11] && ~doJmp) ? val1[1][31:0] : 32'bz;
 
   assign valRes1[31:0]=((smallOP==`op_clahf || smallOP==`op_clahfn) && ~operation[11] ) ? 32'b0 : 32'bz;
 
-  assign valRes1[63:32]=((smallOP==`op_clahf || smallOP==`op_clahfn || 
-    smallOP==`op_cmov32 || smallOP==`op_cmovn32) && ~operation[11]) ? 32'b0 : 32'bz;
+  assign valRes1[63:32]=((smallOP==`op_clahf || smallOP==`op_clahfn ) && ~operation[11]) ? 32'b0 : 32'bz;
 
     
   assign valRes1[63:32]=((smallOP==`op_cmov64 || smallOP==`op_cmovn64) && ~operation[11] && doJmp) ? val2[1][63:32] : 32'bz;
