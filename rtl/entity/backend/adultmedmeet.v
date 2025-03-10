@@ -1747,16 +1747,16 @@ opcode_main[0] ? `op_add64 : `op_add32;
 	      0: poperation[30]=`op_mul32;
 	      1: poperation[30]=`op_mul32_64;
 	      2: poperation[30]=`op_mul64;
-	     // 3: poperation[30]=`op_lmul64;
+	      3: begin poperation[30]=`op_mov64; pport[30]=PORT_ALU; palucond[30]={1'b1,instr[15:12]}; prA[30]={2'b0,instr[10:8]}; prT[30]={2'b0,instr[11],instr[17:16]}; end
 	      4: poperation[30]=`op_imul32;
 	      5: poperation[30]=`op_imul32_64;
 	      6: poperation[30]=`op_imul64;
-	     // 7: poperation[30]=`op_limul64;
+	      7: begin poperation[30]=`op_mov64; pport[30]=PORT_ALU; palucond[30]={1'b1,instr[15:12]}; poperation[30][10:9]=instr[10:9]; prT[30]={1'b0,instr[12:11],instr[17:16]}; end
 	      8: begin poperation[30]=`op_enptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; if (oddmode[3]) perror[30]=2'b1; end
 	      9: begin poperation[30]=`op_unptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; end
 	      default: perror[30]=2'b1;
       endcase
-      if (opcode_main[0]) begin
+      if (opcode_main[0] && poperation[30][7:0]!=`op_mov64) begin
            if (magic[1:0]==2'b01) begin
                prA[30]={instr[17],instr[11:8]};
                prT[30]=instr[16:12];
