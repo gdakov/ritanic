@@ -1675,7 +1675,8 @@ module smallInstr_decoder(
 	  prT[28]={4'h7,instr[8]};
 	  //prA[28]=5'd13;
           poperation[28][12]=1'b1;
-	      pconstant[28]={8'b0,7'h7f,5'd23,{9{instr[31]}},instr[31:9],13'b0};
+	      if (magic[1:0]==2'b01) pconstant[28]={8'b0,7'h7f,5'd23,{9{instr[31]}},instr[31:9],13'b0};
+	      else pconstant[28]={8'b0,7'h7f,5'd23,{9{instr[44]}},instr[44:9]};
           pIPRel[28]=1'b1;
       end else begin
           poperation[28][7:0]=instr[12] ? `op_csetn : `op_cset;
