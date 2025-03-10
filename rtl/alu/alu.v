@@ -324,7 +324,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
     .cin(~rmode[0]),
     .en(add_en),
     .sxtEn(operation[8]|rmode[1]),
-    .pooh(rmode[2]),
+	  .pooh(1'b0),
     .ben({(operation[7:0]==`op_add64 || operation[7:0]==`op_sub64 || operation[7:1]==7'd30 || operation[7:1]==7'd1 || operation[7:1]==7'd23) && 
     ~is_ptr && ~(val1[0][64]&val2[0][64]&is_sub||val2[0][64]&is_sub),
     (operation[7:0]==`op_add64 || operation[7:0]==`op_sub64 || operation[7:1]==7'd30 || operation[7:1]==7'd1 || operation[7:1]==7'd23),operation[7:3]==5'd0 && ~operation[1] || 
