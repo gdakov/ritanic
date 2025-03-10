@@ -1482,14 +1482,18 @@ module dcache1(
        //verilator lint_on CASEINCOMPLETE
               read_beginA_reg[v]<=read_beginA[v];
               pwndata[v]<=0;
+           if (read3_pf[v][0]) begin
+               pwndata[v][55:0]<=read3_addrMain[v][43:0];
+               pwndata[v][`ptr_low]<={~read3_addrMain[v][`ptr_hi+5],read_sz[v]};
+               pwndata[v][`ptr_on_low]=read3_pf[v][2]; //out of range bit
            end
-           if (read3_pf) begin
-               pwndata[3][43:0]<=read3_addrMain[43:0];
-               pwndata[3][`ptr_exp]<=read_sz[3];
-               pwndata[3][`ptr_low]<=0;
-               pwndata[3][`ptr_hi]<=7'h7f;
+           if (read3_pf[v][1]) begin
+               pwndata[v][3][43:0]<=read3_addrMain[v][43:0];
+               pwndata[v][3][63:48]<={15'h7fff,read3_pf[v][2]};//note: this signalling NaN shouldn't be produced by computation; also  includes out of bound indicator
+               pwndata[v][3][47:43]<=read_sz[3];
            end
-           read3_pf_reg<=read3_pf;
+           read3_pf_reg[v]<=read3_pf[v];
+           end
            if (msrss_en && msrss_addr[14:0]==`csr_embedded_mode) emsr<=msrss_data;
       end
   end
