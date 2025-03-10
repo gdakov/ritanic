@@ -1442,7 +1442,7 @@ module smallInstr_decoder(
       
       trien[20]=magic[0] & isBasicCJump;
       puseBConst[20]=magic[1:0]!=2'b01 && instr[18] || magic[1:0]==2'b01 
-&& &opcode_main[3:1];
+	       && &opcode_main[3:1] || &magic;
       poperation[20][7:0]=opcode_main[0] ? `op_sub32 : `op_sub64;
       poperation[20][12:8]=5'b0;
       pflags_write[20]=1'b1;
@@ -1451,7 +1451,8 @@ module smallInstr_decoder(
       prT_use[20]=1'b0;
       puseRs[20]=1'b1;
       prAlloc[20]=1'b1;
-      if (magic[1:0]!=2'b01) pconstant[20]={{51{instr[31]}},instr[31:19]};
+      if (&magic) pconstant[20]={{32{instr[47]}}instr[47:16]};
+      else if (magic[1:0]!=2'b01) pconstant[20]={{51{instr[31]}},instr[31:19]};
          // flags_use=1'b1;          
       pport[20]=PORT_ALU;
           
