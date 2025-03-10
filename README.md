@@ -16,3 +16,4 @@ if you implement it with static logic it will be low clock but not very low.
 please note you are not required to obey ITAR to use this chip source code.
 also the 56 vector is only usable with multi tile chip+memory set, if used with external ram its better to use 12 vector as it is bc 56 vector would stall for memory at all time unless only 1-2 cores are in the chip.
 please note it is not in my culture to be owned as slave
+isa freeze as of 10.03.2025 unless bugs found in decoder.
