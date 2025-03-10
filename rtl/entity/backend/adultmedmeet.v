@@ -1459,14 +1459,18 @@ module smallInstr_decoder(
       prA[20]={instr[17],instr[11:8]};
       prB[20]={instr[16],instr[15:12]};
       prT[20]=5'd31;
-      pjumpType[20]={1'b0,(magic[1:0]==2'b01) ? instr[18] : instr[32],opcode_main[3:1]};  
+	       if (&magic) begin
+		       prA[20]=instr[12:8];
+		       perror[20]=2'b0;
+	       end
+	       pjumpType[20]={1'b0,&magic ? instr[13] : (magic[1:0]==2'b01) ? instr[18] : instr[32],opcode_main[3:1]};  
       if (magic[1:0]==2'b01 && &opcode_main[3:1]) begin
           pconstant[20]=instr[31:24];
           pjumpType[20]={1'b0,instr[16:13]};
           prA[20]=instr[12:8];
           //constant_offset=23:17,1'b0
       end
-      if (puseBConst[20] && prB[20]!=0) perror[20]=1;
+	       if (puseBConst[20] && prB[20]!=0 && ~&magic) perror[20]=1;
 
       trien[21]=magic[0] & isLongCondJump|isCLeave;
       puseRs[21]=1'b0;
