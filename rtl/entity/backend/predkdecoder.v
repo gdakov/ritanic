@@ -248,6 +248,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   
   assign clsALU=|{
   isBasicALU & ~isBasicALUExcept & ~isBasicXOR,
+  isBasicMUL && ({opcode_main[6:3],opcode_main[1]}==3 || {opcode_main[6:3],opcode_main[1]}==7),
   isPtrBump_other_domain,
   isCexALU & ~instr[12] & ~instr[10],
   isBasicCmpTest,
@@ -334,7 +335,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   };
   
   assign clsMul=|{
-    isBasicMUL,
+    isBasicMUL && ({opcode_main[6:3],opcode_main[1]}!=3 && {opcode_main[6:3],opcode_main[1]}!=7),
     magic[0] && opcode_main==8'd234,
     isGA,
     isPtrSec,
