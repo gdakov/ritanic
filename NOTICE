@@ -5,14 +5,13 @@ Please note manufacturing requires not increasing vector size beyound 56
 also you will be expected to use fully paired dynamic 
 logic rather than use e.g. mono rail logic except for rgister files and memories which can be mono rail.
 for most of the ALU and other parts of it to achieve >6 GHz frequency.
-Please note that the 3x3 encoder decoder logic cannot be done unless the 
-whole of the design is transient which means that it cannot lower its 
-frequency while it is in low power mode.
-Also in prectice you'd 3 way split the alu,fpu,data scheduler on the lower 
+Also in prectice you'd 3 way split or 4 way split or as Inraloka chip 12 way split the alu,fpu,data scheduler on the lower
 encoder decoder to make them one row but this is not shown in the source.
 Using P&R tools, even after debugging the verilog, will definitely result in error 
 if you don't specify a floorplan!!!
 In order to get a permission to manufacture a derived chip or this chip you need permission from
 Goran Dakov, who lived on 58 Garnet Street, Bristol, UK on 3 Nov 2023.
 If you get permission to manufacture the chip you also get permission to use code derrived from the ISA spec to correct and implement features in this chip and in any software.
+The apache 2.0 license is for the code as simulation software, not as hardware, and so, manufacturing is not covered.
+manufacture is distinct from distribution.
 
