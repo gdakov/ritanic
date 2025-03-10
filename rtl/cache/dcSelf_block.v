@@ -1484,7 +1484,7 @@ module dcache1(
               pwndata[v]<=0;
            if (read3_pf[v][0]) begin
                pwndata[v][55:0]<=read3_addrMain[v][43:0];
-               pwndata[v][`ptr_low]<={~read3_addrMain[v][`ptr_hi+5],read_sz[v]};
+               pwndata[v][`ptr_low]<={read3_addrMain[v][`ptr_hi+5]-2'b3,read_sz[v]};
                pwndata[v][`ptr_on_low]=read3_pf[v][2]; //out of range bit
            end
            if (read3_pf[v][1]) begin
