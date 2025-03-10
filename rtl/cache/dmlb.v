@@ -159,7 +159,7 @@ module dmlb_way(
   input read_clkEn;
   input [20:0] sproc;
   input R0_sec_wren;
-  input [5:0][VADDR_WIDTH-16:0]   addr;
+  input [5:0][VADDR_WIDTH-18:0]   addr;
   input [5:0][3:0] attr;
   output [5:0][OUTDATA_WIDTH-1:0] read_data0;
   output [5:0][OUTDATA_WIDTH-1:0] read_data1;
@@ -169,7 +169,7 @@ module dmlb_way(
   output [2:0] read_lruW;
   output [5:0] read_hit;
   output [5:0] read_hitL;
-  input [VADDR_WIDTH-15:0] write_addr;
+  input [VADDR_WIDTH-17:0] write_addr;
   input [OUTDATA_WIDTH-1:0] write_data0;
   input [OUTDATA_WIDTH-1:0] write_data1;
   input [OUTDATA_WIDTH-1:0] write_data2;
@@ -184,11 +184,18 @@ module dmlb_way(
   
   wire valid[5:0];
   wire shared[5:0];
-  wire [VADDR_WIDTH-15:0] vaddr[5:0];
+  wire [VADDR_WIDTH-17:0] vaddr[5:0];
+  wire validh[5:0];
+  wire sharedh[5:0];
+  wire [VADDR_WIDTH-30:0] vaddrh[5:0];
   wire write_wen_ram;
+  wire write_wen_ramH;
   wire [DATA_WIDTH-1:0] read_data_ram[5:0];
+  wire [DATAH_WIDTH-1:0] read_data_haram[5:0];
   wire [DATA_WIDTH-1:0] write_data_ram;
   wire [DATA_WIDTH-1:0] write_data_new;
+  wire [DATAH_WIDTH-1:0] write_data_hram;
+  wire [DATAH_WIDTH-1:0] write_data_hnew;
 
   wire [2:0] write_lru;
   
@@ -201,14 +208,25 @@ module dmlb_way(
         assign valid[p]=read_data_ram[p][`dmlb_valid];
         assign shared[p]=read_data_ram[p][`dmlb_shr];
 
-        assign read_hitL[p]=valid[p] && addr[p][VADDR_WIDTH-18+:3]!=3'b111 && 
-          (vaddr[p]==addr[p] || ({sproc,addr[p][29:0]}==vaddr[p] && 
+        assign vaddrh[p]=read_data_haram[p][`dmxlb_vaddr];
+        assign validh[p]=read_data_haram[p][`dmxlb_valid];
+        assign sharedh[p]=read_data_haram[p][`dmxlb_shr];
+
+        assign read_hitL[p]=valid[p] && addr[p][VADDR_WIDTH-20+:3]!=3'b111 && 
+          (vaddr[p]==addr[p] || ({sproc,addr[p][27:0]}==vaddr[p] && 
           shared[p]));
-        assign read_hit[p]=read_hitL[p] || addr[p][VADDR_WIDTH-18+:3]==3'b111 || ~addr[p][VADDR_WIDTH-18] & ~attr[p][`attr_um];
+        assign read_hitLH[p]=validh[p] && addr[p][VADDR_WIDTH-20+:3]!=3'b111 && 
+          (vaddrh[p]==addr[p][13+:15] || ({sproc,addr[p][27:13]}==vaddrh[p] && 
+          sharedh[p]));
+        assign read_hit[p]=read_hitL[p] || read_hitH[p] || addr[p][VADDR_WIDTH-20+:3]==3'b111 || ~addr[p][VADDR_WIDTH-20] & ~attr[p][`attr_um];
   
         assign read_data0[p]=read_hitL[p] ? read_data_ram[p][`dmlb_data1] : 'z;
         assign read_data1[p]=read_hitL[p] ? read_data_ram[p][`dmlb_data2] : 'z;
         assign read_data2[p]=read_hitL[p] ? read_data_ram[p][`dmlb_data3] : 'z;
+
+        assign read_data0[p]=read_hitLH[p] ? read_data_haram[p][`dmxlb_data0] : 'z;
+        assign read_data1[p]=read_hitLH[p] ? read_data_haram[p][`dmxlb_data0]|ux2 : 'z;
+        assign read_data2[p]=read_hitLH[p] ? read_data_haram[p][`dmxlb_data0]|ux3 : 'z;
 
         assign read_way[p]=read_hit[p] ? WAYNO[2:0] : 3'bz;
 
@@ -235,20 +253,21 @@ module dmlb_way(
   .clk(clk),
   .rst(rst),
   .read0_addr(addr[0][3:0]),
-  .read0_data(read_data_ram[0]),
+  .read0_data({read_data_haram[0],read_data_ram[0]}),
   .read1_addr(addr[1][3:0]),
-  .read1_data(read_data_ram[1]),
+  .read1_data({read_data_haram[1],read_data_ram[1]}),
   .read2_addr(addr[2][3:0]),
-  .read2_data(read_data_ram[2]),
+  .read2_data({read_data_haram[2],read_data_ram[2]}),
   .read3_addr(addr[3][3:0]),
-  .read3_data(read_data_ram[3]),
+  .read3_data({read_data_haram[3],read_data_ram[3]}),
   .read4_addr(addr[4][3:0]),
-  .read4_data(read_data_ram[4]),
+  .read4_data({read_data_haram[4],read_data_ram[4]}),
   .read5_addr(addr[5][3:0]),
-  .read5_data(read_data_ram[5]),
+  .read5_data({read_data_haram[5],read_data_ram[5]}),
   .write_addr(init ? initCount : write_addr[3:0]),
   .write_data(write_data_ram),
-  .write_wen(write_wen_ram)
+  .write_wen(write_wen_ram),
+  .write_wenH(write_wen_ramH)
   );
 
   dmlb_lru_ram ramr_mod(
