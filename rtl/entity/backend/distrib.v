@@ -467,22 +467,21 @@ module distrib(
 
 
 //shift   
-  assign posA8=shift_cnt_or_more[1] ? shift_index[0] : 'z;
+  assign posA6=shift_cnt_or_more[1] ? shift_index[0] : 'z;
   assign posA7=shift_cnt_or_more[2] ? shift_index[1] : 'z;
-  assign posA6=shift_cnt_or_more[3] ? shift_index[2] : 'z;
+  assign posA8=shift_cnt_or_more[3] ? shift_index[2] : 'z;
   assign posA5=shift_cnt_or_more[4] ? shift_index[3] : 'z;
   assign posA4=shift_cnt_or_more[5] ? shift_index[4] : 'z;
   assign posA3=shift_cnt_or_more[6] ? shift_index[5] : 'z;
 
-  assign posB8=shift_cnt_or_more[1] ? shift_index[0] : 'z;
-  assign posB7=shift_cnt_or_more[2] ? shift_index[1] : 'z;
-  assign posB6=shift_cnt_or_more[3] ? shift_index[2] : 'z;
+  assign posB7=shift_cnt_or_more[1] ? shift_index[0] : 'z;
+  assign posB8=shift_cnt_or_more[2] ? shift_index[1] : 'z;
+
   assign posB5=shift_cnt_or_more[4] ? shift_index[3] : 'z;
   assign posB4=shift_cnt_or_more[5] ? shift_index[4] : 'z;
   assign posB3=shift_cnt_or_more[6] ? shift_index[5] : 'z;
 
-  assign posC7=shift_cnt_or_more[1] ? shift_index[0] : 'z;
-  assign posC6=shift_cnt_or_more[2] ? shift_index[1] : 'z;
+  assign posC8=shift_cnt_or_more[1] ? shift_index[0] : 'z;
   assign posC4=shift_cnt_or_more[3] ? shift_index[2] : 'z;
   assign posC3=shift_cnt_or_more[4] ? shift_index[3] : 'z;
 

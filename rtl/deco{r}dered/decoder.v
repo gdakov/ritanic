@@ -99,9 +99,10 @@ module decoder_permitted_i(
           popcnt10_or_less alu_shift_mod((alu|shift) & ((10'd2<<k)-10'd1),alu_shift_cnt[k]);
           popcnt10_or_less store_mod(store & ((10'd2<<k)-10'd1),store_cnt[k]);
           popcnt10_or_less ldst_mod((store|load) & ((10'd2<<k)-10'd1),ldst_cnt[k]);
-          popcnt10 mul_mod(mul & ((10'd2<<k)-10'd1),mul_cnt[k]);
+          popcnt10 mul_mod(mul&~shift & ((10'd2<<k)-10'd1),mul_cnt[k]);
           popcnt10 mul_mod(fma & ((10'd2<<k)-10'd1),fma_dke[k]);
-          popcnt10_or_more mul_more_mod(mul & ((10'd2<<k)-10'd1),mul_more_cnt[k]);
+          popcnt10_or_more mul_more_mod(mul&~shift & ((10'd2<<k)-10'd1),mul_more_cnt[k]);
+          popcnt10_or_more mulx_more_mod(mul&shift & ((10'd2<<k)-10'd1),mulx_more_cnt[k]);
           popcnt10_or_less lsas_mod((load|shift|alu|store) & ((10'd2<<k)-10'd1),lsas_cnt[k]);
 
           assign has_vec=|(vec & ((10'd2<<k)-10'd1))) || vec_mode;
@@ -119,7 +120,7 @@ module decoder_permitted_i(
             store_cnt[k][{has_vec,~has_vec}] & lsas_cnt[k][6] & alu_shift_cnt[k][4] & ldst_cnt[k][1]: 1'bz; 
           assign permA[k]=mul_more_cnt[k][2] ? 1'b0 : 1'bz;
           
-          assign permB[k]=branch_cnt[k][2] & taken_cnt[k][1] & indir_cnt[k][1];
+          assign permB[k]=branch_cnt[k][2] & taken_cnt[k][1] & indir_cnt[k][1] & ~mulx_more_cnt[3];
 
           if (k<9) assign perm[k]=permX[k] && (fma_dke[k][0] | (permX[k+1] && fma_dke[k+1][2]) | fma_dke[k][2] | (k==0)) &&
               !spec[k] | permX[k+1];
