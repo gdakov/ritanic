@@ -344,51 +344,36 @@ module distrib(
 
   popcnt3 shpos_mod({&posH8[1:0],&posH7[1:0],&posH6[1:0]},shpos_cnt);
 
-  assign posH0=(~stol & nmul ) ? posA0 : 'z;
-  assign posH0=(stol & nmul  ) ? posB0 : 'z;
-  assign posH0=(~stol & ~nmul) ? posC0 : 'z;
-  assign posH0=(stol & ~nmul ) ? posD0 : 'z;
+  assign posH0=posA0;
 
-  assign posH1=(~stol & nmul ) ? posA1 : 'z;
-  assign posH1=(stol & nmul  ) ? posB1 : 'z;
-  assign posH1=(~stol & ~nmul) ? posC1 : 'z;
-  assign posH1=(stol & ~nmul ) ? posD1 : 'z;
+  assign posH1=posA1;
 
-  assign posH2=(~stol & nmul ) ? posA2 : 'z;
-  assign posH2=(stol & nmul  ) ? posB2 : 'z;
-  assign posH2=(~stol & ~nmul) ? posC2 : 'z;
-  assign posH2=(stol & ~nmul ) ? posD2 : 'z;
+  assign posH2=posA2 : 'z;
 
-  assign posH3=(~stol & nmul ) ? posA3 : 'z;
-  assign posH3=(stol & nmul  ) ? posB3 : 'z;
-  assign posH3=(~stol & ~nmul) ? posC3 : 'z;
-  assign posH3=(stol & ~nmul ) ? posD3 : 'z;
+  assign posH3=mulx[0] ? posA3 : 'z;
+  assign posH3=mulx[1] ? posB3 : 'z;
+  assign posH3=mulx[2] ? posC3 : 'z;
 
-  assign posH4=(~stol & nmul ) ? posA4 : 'z;
-  assign posH4=(stol & nmul  ) ? posB4 : 'z;
-  assign posH4=(~stol & ~nmul) ? posC4 : 'z;
-  assign posH4=(stol & ~nmul ) ? posD4 : 'z;
+  assign posH4=mulx[0] ? posA4 : 'z;
+  assign posH4=mulx[1] ? posB4 : 'z;
+  assign posH4=mulx[2] ? posC4 : 'z;
 
-  assign posH5=(~stol & nmul ) ? posA5 : 'z;
-  assign posH5=(stol & nmul  ) ? posB5 : 'z;
-  assign posH5=(~stol & ~nmul) ? posC5 : 'z;
-  assign posH5=(stol & ~nmul ) ? posD5 : 'z;
+  assign posH5=mulx[0] ? posA5 : 'z;
+  assign posH5=mulx[1] ? posB5 : 'z;
+  assign posH5=mulx[2] ? posC5 : 'z;
 
-  assign posH6=(~stol & nmul ) ? posA6 : 'z;
-  assign posH6=(stol & nmul  ) ? posB6 : 'z;
-  assign posH6=(~stol & ~nmul) ? posC6 : 'z;
-  assign posH6=(stol & ~nmul ) ? posD6 : 'z;
+  assign posH6=mulx[0] ? posA6 : 'z;
+  assign posH6=mulx[1] ? posB6 : 'z;
+  assign posH6=mulx[2] ? posC6 : 'z;
 
-  assign posH7=(~stol & nmul ) ? posA7 : 'z;
-  assign posH7=(stol & nmul  ) ? posB7 : 'z;
-  assign posH7=(~stol & ~nmul) ? posC7 : 'z;
-  assign posH7=(stol & ~nmul ) ? posD7 : 'z;
+  assign posH7=mulx[0] ? posA7 : 'z;
+  assign posH7=mulx[1] ? posB7 : 'z;
+  assign posH7=mulx[2] ? posC7 : 'z;
 
-  assign posH8=(~stol & nmul ) ? posA8 : 'z;
-  assign posH8=(stol & nmul  ) ? posB8 : 'z;
-  assign posH8=(~stol & ~nmul) ? posC8 : 'z;
-  assign posH8=(stol & ~nmul ) ? posD8 : 'z;
-  
+  assign posH8=mulx[0] ? posA8 : 'z;
+  assign posH8=mulx[1] ? posB8 : 'z;
+  assign posH8=mulx[2] ? posC8 : 'z;
+
 
   assign posA0=store_cnt_or_more[1] ? store_index[0] : 'z;
   assign posA1=store_cnt_or_more[2] ? store_index[1] : 'z;
@@ -420,132 +405,74 @@ module distrib(
   assign posD1=posB1;
   assign posD2=posB2;
 
-  assign posA3=(store_cnt[0] & load_cnt_or_more[4]) ? load_index[3] : 'z;
-  assign posA4=(store_cnt[0] & load_cnt_or_more[5]) ? load_index[4] : 'z;
-  assign posA5=(store_cnt[0] & load_cnt_or_more[6]) ? load_index[5] : 'z;
+  assign posA3=(load_cnt_or_more[4]) ? load_index[3] : 'z;
+  assign posA4=(load_cnt_or_more[5]) ? load_index[4] : 'z;
+  assign posA5=(load_cnt_or_more[6]) ? load_index[5] : 'z;
 
-  assign posA3=(store_cnt[1] & load_cnt_or_more[3]) ? load_index[2] : 'z;
-  assign posA4=(store_cnt[1] & load_cnt_or_more[4]) ? load_index[3] : 'z;
-  assign posA5=(store_cnt[1] & load_cnt_or_more[5]) ? load_index[4] : 'z;
+  assign posB4=(load_cnt_or_more[4]) ? load_index[3] : 'z;
+  assign posB5=(load_cnt_or_more[5]) ? load_index[4] : 'z;
 
-  assign posA3=(store_cnt[2] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-  assign posA4=(store_cnt[2] & load_cnt_or_more[3]) ? load_index[2] : 'z;
-  assign posA5=(store_cnt[2] & load_cnt_or_more[4]) ? load_index[3] : 'z;
 
-  assign posA3=(store_cnt[3] & load_cnt_or_more[1]) ? load_index[0] : 'z;
-  assign posA4=(store_cnt[3] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-  assign posA5=(store_cnt[3] & load_cnt_or_more[3]) ? load_index[2] : 'z;
 
-//  assign posC3=(store_cnt[0] & load_cnt_or_more[4]) ? load_index[3] : 'z;
-//  assign posC4=(store_cnt[0] & load_cnt_or_more[5]) ? load_index[4] : 'z;
-//  assign posC5=(store_cnt[0] & load_cnt_or_more[6]) ? load_index[5] : 'z;
-
-  assign posC3=(store_cnt[1] & load_cnt_or_more[3]) ? load_index[2] : 'z;
-//  assign posC4=(store_cnt[1] & load_cnt_or_more[4]) ? load_index[3] : 'z;
-//  assign posC5=(store_cnt[1] & load_cnt_or_more[5]) ? load_index[4] : 'z;
-
-  assign posC3=(store_cnt[2] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-  assign posC4=(store_cnt[2] & load_cnt_or_more[3]) ? load_index[2] : 'z;
-//  assign posC5=(store_cnt[2] & load_cnt_or_more[4]) ? load_index[3] : 'z;
-
-  assign posC3=(store_cnt[3] & load_cnt_or_more[1]) ? load_index[0] : 'z;
-  assign posC4=(store_cnt[3] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-//  assign posC5=(store_cnt[3] & load_cnt_or_more[3]) ? load_index[2] : 'z;
 
 
   
-  assign posB3=(store_cnt[1] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-  assign posB4=(store_cnt[1] & load_cnt_or_more[3]) ? load_index[2] : 'z;
-  assign posB5=(store_cnt[1] & load_cnt_or_more[4]) ? load_index[3] : 'z;
 
-  assign posB3=(store_cnt[2] & load_cnt_or_more[1]) ? load_index[0] : 'z;
-  assign posB4=(store_cnt[2] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-  assign posB5=(store_cnt[2] & load_cnt_or_more[3]) ? load_index[2] : 'z;
 
-  assign posD3=(store_cnt[1] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-  assign posD4=(store_cnt[1] & load_cnt_or_more[3]) ? load_index[2] : 'z;
-//  assign posD5=(store_cnt[1] & load_cnt_or_more[4]) ? load_index[3] : 'z;
-
-  assign posD3=(store_cnt[2] & load_cnt_or_more[1]) ? load_index[0] : 'z;
-  assign posD4=(store_cnt[2] & load_cnt_or_more[2]) ? load_index[1] : 'z;
-//  assign posD5=(store_cnt[2] & load_cnt_or_more[3]) ? load_index[2] : 'z;
 //alu
-  assign posA3=(ldst_cnt_or_less[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posA4=(ldst_cnt_or_less[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posA5=(ldst_cnt_or_less[3] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
-  assign posA6=(ldst_cnt_or_less[3] & alu_cnt_or_more[4]) ? alu_index[3] : 'z; 
-  assign posA7=(ldst_cnt_or_less[3] & alu_cnt_or_more[5]) ? alu_index[4] : 'z; 
-  assign posA8=(ldst_cnt_or_less[3] & alu_cnt_or_more[6]) ? alu_index[5] : 'z; 
+  assign posA3=(load_cnt_or_less[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posA4=(load_cnt_or_less[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
+  assign posA5=(load_cnt_or_less[3] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
+  assign posA6=(load_cnt_or_less[3] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
+  assign posA7=(load_cnt_or_less[3] & alu_cnt_or_more[5]) ? alu_index[4] : 'z;
+  assign posA8=(load_cnt_or_less[3] & alu_cnt_or_more[6]) ? alu_index[5] : 'z;
 
-  assign posC3=(ldst_cnt_or_less[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posC4=(ldst_cnt_or_less[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
+  assign posC5=(load_cnt_or_less[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
 
-  assign posA4=(ldst_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posA5=(ldst_cnt[4] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posA6=(ldst_cnt[4] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
-  assign posA7=(ldst_cnt[4] & alu_cnt_or_more[4]) ? alu_index[3] : 'z; 
-  assign posA8=(ldst_cnt[4] & alu_cnt_or_more[5]) ? alu_index[4] : 'z; 
+  assign posA4=(load_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posA5=(load_cnt[4] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
+  assign posA6=(load_cnt[4] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
+  assign posA7=(load_cnt[4] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
+  assign posA8=(load_cnt[4] & alu_cnt_or_more[5]) ? alu_index[4] : 'z;
 
-  assign posC4=(ldst_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
+  assign posC5=(load_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
 
-  assign posA5=(ldst_cnt[5] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posA6=(ldst_cnt[5] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posA7=(ldst_cnt[5] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
-  assign posA8=(ldst_cnt[5] & alu_cnt_or_more[4]) ? alu_index[3] : 'z; 
+  assign posA5=(load_cnt[5] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posA6=(load_cnt[5] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
+  assign posA7=(load_cnt[5] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
+  assign posA8=(load_cnt[5] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
 
-  assign posA6=(ldst_cnt[6] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posA7=(ldst_cnt[6] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posA8=(ldst_cnt[6] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
+  assign posA6=(load_cnt[6] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posA7=(load_cnt[6] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
+  assign posA8=(load_cnt[6] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
 
-  assign posB3=(ldst_cnt_or_less[2] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posB4=(ldst_cnt_or_less[2] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posB5=(ldst_cnt_or_less[2] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
-  assign posB6=(ldst_cnt_or_less[2] & alu_cnt_or_more[4]) ? alu_index[3] : 'z; 
-  assign posB7=(ldst_cnt_or_less[2] & alu_cnt_or_more[5]) ? alu_index[4] : 'z; 
-  assign posB8=(ldst_cnt_or_less[2] & alu_cnt_or_more[6]) ? alu_index[5] : 'z; 
+  assign posB4=(load_cnt_or_less[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posB5=(load_cnt_or_less[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
 
-  assign posD3=(ldst_cnt_or_less[2] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posD4=(ldst_cnt_or_less[2] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
+  assign posB7=(load_cnt_or_less[3] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
+  assign posB8=(load_cnt_or_less[3] & alu_cnt_or_more[5]) ? alu_index[4] : 'z;
 
-  assign posB4=(ldst_cnt[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posB5=(ldst_cnt[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posB6=(ldst_cnt[3] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
-  assign posB7=(ldst_cnt[3] & alu_cnt_or_more[4]) ? alu_index[3] : 'z; 
-  assign posB8=(ldst_cnt[3] & alu_cnt_or_more[5]) ? alu_index[4] : 'z; 
 
-  assign posD4=(ldst_cnt[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
+  assign posB4=(load_cnt[3] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posB5=(load_cnt[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
+  assign posB7=(load_cnt[3] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
+  assign posB8=(load_cnt[3] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
 
-  assign posB5=(ldst_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posB6=(ldst_cnt[4] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posB7=(ldst_cnt[4] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
-  assign posB8=(ldst_cnt[4] & alu_cnt_or_more[4]) ? alu_index[3] : 'z; 
 
-  assign posB6=(ldst_cnt[5] & alu_cnt_or_more[1]) ? alu_index[0] : 'z; 
-  assign posB7=(ldst_cnt[5] & alu_cnt_or_more[2]) ? alu_index[1] : 'z; 
-  assign posB8=(ldst_cnt[5] & alu_cnt_or_more[3]) ? alu_index[2] : 'z; 
+  assign posB5=(load_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posB7=(load_cnt[4] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
+  assign posB8=(load_cnt[4] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
+
+  assign posB7=(load_cnt[5] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
+  assign posB8=(load_cnt[5] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
   
-  assign posC5={POS_WIDTH{1'B1}}; 
-  assign posC8=mul; 
-  assign posD5={POS_WIDTH{1'B1}}; 
-  assign posD8=mul; 
+  assign posB3={POS_WIDTH{1'B1}};
+  assign posB6=mul_index[0];
+  assign posC3={POS_WIDTH{1'B1}};
+  assign posC4={POS_WIDTH{1'B1}};
+  assign posC6=mul_index[0];
+  assign posC7=mul_index[1];
 
-  assign posC6=(ldst_cnt[3] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
-  assign posC7=(ldst_cnt[3] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
-
-  assign posC6=(ldst_cnt[4] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
-  assign posC7=(ldst_cnt[4] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
-
-  assign posC6=(ldst_cnt[5] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
-  assign posC7=(ldst_cnt[5] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
-
-  assign posD6=(ldst_cnt[2] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
-  assign posD7=(ldst_cnt[2] & alu_cnt_or_more[4]) ? alu_index[3] : 'z;
-
-  assign posD6=(ldst_cnt[3] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
-  assign posD7=(ldst_cnt[3] & alu_cnt_or_more[3]) ? alu_index[2] : 'z;
-
-  assign posD6=(ldst_cnt[4] & alu_cnt_or_more[1]) ? alu_index[0] : 'z;
-  assign posD7=(ldst_cnt[4] & alu_cnt_or_more[2]) ? alu_index[1] : 'z;
 
 //shift   
   assign posA8=shift_cnt_or_more[1] ? shift_index[0] : 'z;
@@ -573,7 +500,7 @@ module distrib(
   assign posD3=shift_cnt_or_more[4] ? shift_index[3] : 'z;
   
 
-//holes
+//holes -- needs total rewrite
   assign posA8=(fmem & lsa_cnt_or_less[8] & ~shift_cnt_or_more[1]) ? {POS_WIDTH{1'B1}} : 'z;
   assign posB8=(fmem & lsa_cnt_or_less[7] & ~shift_cnt_or_more[1]) ? {POS_WIDTH{1'B1}} : 'z;
 
@@ -625,11 +552,11 @@ module distrib(
   assign posB3=(~fmem & alu_cnt[0] & ~shift_cnt_or_more[6]) ? {POS_WIDTH{1'B1}} : 'z;
   assign posC3=(~fmem & alu_cnt[0] & ~shift_cnt_or_more[4]) ? {POS_WIDTH{1'B1}} : 'z;
   assign posD3=(~fmem & alu_cnt[0] & ~shift_cnt_or_more[4]) ? {POS_WIDTH{1'B1}} : 'z;
-
+//end holes and total rewrite section
   assign fmem=stol ? ldst_cnt_or_more[2] : ldst_cnt_or_more[3];
   assign stol=|{storeL,storeI};
   assign nmul=0==mul;
-
+//sto and lsi needs total rewrite
   assign sto0H=stol ? 1'b0 : store_cnt_or_more[1];
   assign sto1H=stol ? store_cnt_or_more[1] : store_cnt_or_more[2];
   assign sto2H=stol ? store_cnt_or_more[2] : store_cnt_or_more[3];
