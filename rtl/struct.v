@@ -80,20 +80,20 @@ limitations under the License.
 `define page_acc_ignored 61
 `define page_dirty_ignored 60
 
-`define page16_addr0 33:0
-`define page16_addr1 67:34
-`define page16_perm_ex 84:68
-`define page16_perm_wr 101:85
-`define page16_perm_rd 118:102
-`define page16_wc 119
-`define page16_wt 120
-`define page16_nc 121
-`define page16_sys 122
-`define page16_na 123
-`define page16_dirty 124
-`define page16_accessed 125
-`define page16_global 126
-`define page16_huge 127
+`define page16_addr0 39:0
+`define page16_addr1 79:40
+`define page16_perm_wr 95:80
+`define page16_perm_ne 96
+`define page16_perm_rd 127:112
+`define page16_wc 97
+`define page16_wt 98
+`define page16_nc 99
+`define page16_sys 100
+`define page16_na 101
+`define page16_dirty 102
+`define page16_accessed 103
+`define page16_global 104
+`define page16_huge 105
 
 `define bob_ipOff0_9 89:0
 `define bob_j0GHT2 105:90
