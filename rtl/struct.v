@@ -319,17 +319,17 @@ limitations under the License.
 
 
 
-`define dmlbData_phys 28:0
-`define dmlbData_user 29
-`define dmlbData_wp 33:30
-`define dmlbData_na 37:34
-`define dmlbData_type 39:38
-`define dmlbData_glo 40
-`define dmlbData_semaphore_area 41
-`define dmlbData_semaphore 41
-`define dmlbData_subpage 42
-`define dmlbData_ne 43
-`define dmlbData_width 44
+`define dmlbData_phys 39:0
+`define dmlbData_user 40
+`define dmlbData_wp 41
+`define dmlbData_na 57:42
+`define dmlbData_type 59:58
+`define dmlbData_glo 60
+`define dmlbData_semaphore_area 61
+`define dmlbData_semaphore 61
+`define dmlbData_subpage 62
+`define dmlbData_ne 63
+`define dmlbData_width 64
 
 
 `define dmlb_vaddr 49:0
