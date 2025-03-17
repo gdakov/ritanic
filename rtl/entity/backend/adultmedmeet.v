@@ -684,6 +684,8 @@ module smallInstr_decoder(
         stsz_out=4'h11;
     end else if (isBasicMUL) begin
         stsz_out=4'h10;
+     end else if (isBasicFPUScalarB && instr[5:3]==3'b0 || instr[6:3]==4'd13) begin
+        stsz_out=5'he;
      end else if (isBasicFPUScalarB) begin
         stsz_out=5'h2;
     end else if (subIsMovOrExt) begin
@@ -1740,9 +1742,9 @@ opcode_main[0] ? `op_add64 : `op_add32;
       puseBConst[30]=opcode_main[0];
       poperation[30][12]=1'b1;
       case({opcode_main[6:3],opcode_main[1]})
-	      0: poperation[30]=`op_mul32;
+	      //0: poperation[30]=`op_mul32;
 	      1: poperation[30]=`op_mul32_64;
-	      2: poperation[30]=`op_mul64;
+	      2: poperation[30]=`op_lmul64; //16 bit fixed precition multiply accumulate
 	      3: begin poperation[30]=`op_mov64; pport[30]=PORT_ALU; palucond[30]={1'b1,instr[15:12]}; prA[30]={2'b0,instr[10:8]}; prT[30]={2'b0,instr[11],instr[17:16]}; end
 	      4: poperation[30]=`op_imul32;
 	      5: poperation[30]=`op_imul32_64;
@@ -1993,9 +1995,9 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prAlloc[34]=1'b1;
       {poperation[34][10],poperation[34][9:8]}=instr[16:14];
       case(instr[13:8])
-          6'd16: begin poperation[34][7:0]=`fop_movSPH; pport[34]=PORT_FADD; end
-          6'd17: begin poperation[34][7:0]=`fop_movSPH; pport[34]=PORT_FADD; end
-          6'd18: begin poperation[34][7:0]=`fop_movSPL; pport[34]=PORT_FMUL; end
+          6'd16: begin poperation[34][7:0]=`fop_addSP; pport[34]=PORT_FANY; end
+          6'd17: begin poperation[34][7:0]=`fop_subSP; pport[34]=PORT_FANY; end
+          6'd18: begin poperation[34][7:0]=`fop_mulSP; pport[34]=PORT_FANY; end
           6'd19: begin poperation[34][7:0]=`fop_addSPL; pport[34]=PORT_FADD; end
           6'd20: begin poperation[34][7:0]=`fop_subSPL; pport[34]=PORT_FADD; end
           6'd21: begin poperation[34][7:0]=`fop_mulSPL; pport[34]=PORT_FADD; end
