@@ -386,11 +386,11 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   
   wire pre_error;
   
-  reg [7:0] dreq; 
-  reg [7:0] dreq_reg; 
-  reg [7:0] dreq_reg2; 
-  reg [7:0] dreq_reg3; 
-  reg [7:0] dreq_reg4; 
+  reg [15:0] dreq; 
+  reg [15:0] dreq_reg; 
+  reg [15:0] dreq_reg2; 
+  reg [15:0] dreq_reg3; 
+  reg [15:0] dreq_reg4; 
 
   reg except_save;
   reg except_indir_save;
@@ -1660,10 +1660,10 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   always @(posedge clk) 
   begin
       if (rst) begin
-          dreq<=8'b0;
-      end else for (m=0;m<8;m=m+1) begin
-          if (req_en && req_slot[2:0]==m[2:0]) dreq[m]<=1'b1;
-          if (bus_en && bus_slot[2:0]==m[2:0] && bus_match) dreq[m]<=1'b0;
+          dreq<=16'b0;
+      end else for (m=0;m<16;m=m+1) begin
+          if (req_en && req_slot[3:0]==m[3:0]) dreq[m]<=1'b1;
+          if (bus_en && bus_slot[3:0]==m[3:0] && bus_match) dreq[m]<=1'b0;
           if (sched_rst) dreq[m]<=1'b0;
       end
       if (rst) begin
@@ -1700,10 +1700,10 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
          end
       end
       if (rst) begin
-          dreq_reg<=8'b0;
-          dreq_reg2<=8'b0;
-          dreq_reg3<=8'b0;
-          dreq_reg4<=8'b0;
+          dreq_reg<=16'b0;
+          dreq_reg2<=16'b0;
+          dreq_reg3<=16'b0;
+          dreq_reg4<=16'b0;
           btbFStall_save<=1'b0;
           btbFStall_reg<=1'b0;
           btbFStall_reg2<=1'b0;
@@ -2196,17 +2196,17 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           if ((~cc_read_hit|~mlb_match) & ~miss_now & instrEn_reg3) begin
               miss_IP<=cc_read_IP_reg3;
 	      //proturberan<=cc_base_tick|cc_base_tick_reg|cc_base_tick_reg2|cc_base_tick_reg3;
-              miss_phys<=IP_phys_reg3[43:13];
+              miss_phys<=IP_phys_reg3[55:16];
               miss_now<=1'b1;
               mlbMiss_now<=~mlb_match;
               miss_cnt<=0;
-              miss_slot<=3'b0;
+              miss_slot<=4'b0;
               miss_seq<=1'b1;
               instrEn<=1'b0;
-	          instrEn_reg<=1'b0;
-	          instrEn_reg2<=1'b0;
-	          instrEn_reg3<=1'b0;
-	          if (~btbFStall_recover_reg2) instrFed_reg<=1'b0;
+	      instrEn_reg<=1'b0;
+	      instrEn_reg2<=1'b0;
+	      instrEn_reg3<=1'b0;
+	      if (~btbFStall_recover_reg2) instrFed_reg<=1'b0;
               bus_match0_reg<=1'b0;
               bus_match0_reg2<=1'b0;
               bus_match0_reg3<=1'b0;
@@ -2222,11 +2222,11 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               mlbMiss_now<=1'b0;
               instrEn<=1'b1;
               miss_cnt<=5'b0;
-              miss_slot<=3'b0;
+              miss_slot<=4'b0;
 	      //proturberan<=1'b0;
           end
-          if (miss_cnt==15) miss_seq<=1'b0;
-          if (miss_slot==7 || mlbMiss_now) miss_seq<=1'b0;
+          if (miss_cnt==32) miss_seq<=1'b0;
+          if (miss_slot==15 || mlbMiss_now) miss_seq<=1'b0;
           if (miss_seq) miss_cnt<=miss_cnt_next;
           if (miss_seq && ~cc_read_hit && IP_chg_reg3) miss_slot<=miss_slot_next;
    //       link_IP<=link_IP_d;

@@ -1,8 +1,0 @@
-
-You can have a private copy of the ritanic cpu source code and manufacture copies of it, as long as 
-the following conditions are met:
-1. It is not modified so much it is a completely different project
-2. Portions of it are not used in a different project
-3. Payment of the license fee for the duration of maintaining the private copy which can vary from 
-year to year to Goran Dakov, D O B 11/01/1983, UK
-
