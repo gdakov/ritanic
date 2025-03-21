@@ -779,7 +779,8 @@ module smallInstr_decoder(
       puseRs[0]=1'b1;
       prAlloc[0]=1'b1;
       pport[0]=subIsBasicShift|subIsBasicXOR ? PORT_SHIFT : PORT_ALU;
-      pflags_write[0]=1'b1;
+      pflags_write[0]=1'b0;
+      poperation[0][12]=1'b1;
       if (~prevSpecLoad && opcode_sub[0]|subIsBasicShift) begin
           prA[0]={1'b0,instr[11:8]};
           prT[0]={1'b0,instr[11:8]};
@@ -1006,14 +1007,13 @@ module smallInstr_decoder(
        puseBConst[9]=opcode_main[0]||magic[1:0]==2'b11;
        poperation[9][7:0]={3'b0,opcode_main[5:3],~opcode_main[0] && ~&magic[1:0] && instr[26] ,opcode_main[1]};
        if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
-       pflags_write[9]=1'b1;
+       pflags_write[9]=1'b0;
+       poperation[9][12]=1'b1;
        if (magic[1:0]==2'b01) begin
-           poperation[9][12]=instr[31];
-           pflags_write[9]=~instr[31];
-           pconstant[9]={{51{instr[30]}},instr[30:18]};
            if (~opcode_main[0] && magic[1:0]!=2'b11) begin
                prndmode[9]=instr[25:23];
                pcalu[9]=instr[30:26];
+               popcode[9][5]=instr[30];
            end
        end
           
@@ -1022,24 +1022,18 @@ module smallInstr_decoder(
        prT_use[9]=1'b1;
        puseRs[9]=1'b1;
        prAlloc[9]=1'b1;
-       pport[9]=isBasicXOR|~&prndmode[9] ? PORT_SHIFT : PORT_ALU;
+       pport[9]=PORT_ALU;
           
        if (opcode_main[0]||magic[1:0]==2'b11) begin
+           prA[9]={instr[17],instr[11:8]};
+           prT[9]=instr[16:12];
+           prB[9]=5'd31;
            if (magic[1:0]==2'b01) begin
-               prA[9]={instr[17],instr[11:8]};
-               prT[9]=instr[16:12];
-               prB[9]=5'd31;
            end else if (magic[3:0]==4'b0111) begin
-               prA[9]={instr[48],instr[11:8]};
-               prT[9]={instr[49],instr[15:12]};
-               prB[9]=5'd31;
                perror[9]=0;
-	       if (~opcode_main[0]) pconstant[9]={32'b0,instr[47:16]};
+	       pconstant[9]={{18{instr[63]}},instr[63:18]};
            end else begin
-               prA[9]={1'b0,instr[11:8]};
-               prT[9]={1'b0,instr[15:12]};
-               prB[9]=5'd31;
-	       if (~opcode_main[0]) pconstant[9]={32'b0,instr[47:16]};
+	       pconstant[9]={{33{instr[47]}},instr[47:18],instr[0]};
            end
        end else begin
            if (magic[1:0]==2'b01) begin
@@ -1050,7 +1044,11 @@ module smallInstr_decoder(
                perror[9]=1;
            end
        end
-        //  if (rT==6'd16) thisSpecAlu=1'b1;
+       if (prT[9]==31) begin
+           prT_use[9]=1'b0;
+           poperation[9][12]=1'b0;
+           pflags_write[9]=1'b1;
+       end
       
        trien[10]=magic[0] & isBasicShift;
        prA_use[10]=1'b1;
@@ -1112,10 +1110,10 @@ module smallInstr_decoder(
        prB_useF[11]=1'b1;
        prT_useF[11]=1'b1;
        case(opcode_main[7:6])
-     2'd0: begin pport[11]=PORT_FADD; poperation[11]=`fop_mulS; poperation[11][10]=1'b1; end
-     2'd1: begin pport[11]=PORT_FMUL; poperation[11]=`fop_mulS; poperation[11][10]=1'b1; end
-     2'd2: begin pport[11]=PORT_FMUL; poperation[11]=`fop_addS; poperation[11][10]=prevClsFma; end
-     2'd3: begin pport[11]=PORT_FMUL; poperation[11]=`fop_subS; poperation[11][10]=prevClsFma; end
+     2'd0: begin pport[11]=PORT_FADD; poperation[11]=`fop_mulSPL; poperation[11][10]=1'b1; end
+     2'd1: begin pport[11]=PORT_FMUL; poperation[11]=`fop_mulSPH; poperation[11][10]=1'b1; end
+     2'd2: begin pport[11]=PORT_FMUL; poperation[11]=`fop_addSPH; poperation[11][10]=prevClsFma; end
+     2'd3: begin pport[11]=PORT_FMUL; poperation[11]=`fop_subSPH; poperation[11][10]=prevClsFma; end
        endcase
        if (class[`iclass_FMA] ) begin
                prT[11]=5'd16;
