@@ -399,7 +399,7 @@ module smallInstr_decoder(
   assign isIndirJump=opcode_main==8'd182 && instr[15:13]==3'd0;
   assign isCall=opcode_main==8'd182 && (instr[15:13]==3'd1 || instr[15:13]==3'd2);
   assign isRet=opcode_main==8'd182 && instr[15:13]==3'd3;
-  assign isMovOrExtB=opcode_main==8'd183 || opcode_main[7:2]==6'b101110 || opcode_main[7:0]==8'd189;
+  assign isMovOrExtB=opcode_main==8'd183 || opcode_main[7:2]==6'b101110 || opcode_main[7:0]==8'd189 || opcode_main[7:0]==8'd210;
   assign isMovOrExtA=opcode_main==8'd188 || opcode_main[7:1]==7'd95 || opcode_main[7:1]==7'd96;
   assign isMovOrExtExcept=magic[1:0]==2'b11 && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
   assign isCSet=opcode_main==8'd194; 
@@ -418,8 +418,8 @@ module smallInstr_decoder(
   assign isBaseIndexSpecStore=opcode_main=8'd206 || opcode_main==8'd207;
   assign isImmSpecStore=opcode_main=8'd208 || opcode_main==8'd209;
 
-  assign isShlAddMulLike=opcode_main==8'd210 || opcode_main==8'd211 || 
-    opcode_main==8'd231 || opcode_main==8'd232;
+  assign isShlAddMulLike=1'b0;// opcode_main==8'd211 || 
+//    opcode_main==8'd231 || opcode_main==8'd232;
   assign isPtrSec=opcode_main==8'd212 || opcode_main=233;
   assign isJalR=opcode_main==8'd213 || opcode_main==8'd214 || opcode_main==8'd215 || opcode_main==8'd220 || opcode_main==8'd221;
   //216-219=cmp16,cmp8
@@ -1579,17 +1579,18 @@ module smallInstr_decoder(
       end
 
       trien[26]=magic[0] && isMovOrExtB && ~isMovOrExtExcept;
-      puseBConst[26]=(magic[1:0]==2'b11 || (magic[1:0]==2'b01 && instr[31]));
+      puseBConst[26]=(magic[1:0]==2'b11 || (magic[1:0]==2'b01 && opcode_main[7:0]==8'd210));
       pport[26]=PORT_ALU;
-      prA_use[26]=opcode_main==8'd186||opcode_main==8'd185;
+      prA_use[26]=opcode_main==8'd185||opcode_main==8'd184;
       prB_use[26]=1'b1;
       prT_use[26]=1'b1;
       puseRs[26]=1'b1;
       prAlloc[26]=1'b1;
-      if (magic[3:0]==4'hf && opcode_main==8'd183) perror[26]=0;
+      if (magic[3:0]==4'hf && opcode_main==8'd210) perror[26]=0;
       poperation[26][12]=1'b1;
       //verilator lint_off CASEINCOMPLETE
       case(opcode_main)
+      8'd210: poperation[26][7:0]=`op_mov64;
       8'd183: poperation[26][7:0]=`op_mov64;
       8'd184: poperation[26][7:0]=`op_mov8;
       8'd185: poperation[26][7:0]=`op_mov16;
@@ -1606,12 +1607,12 @@ module smallInstr_decoder(
           prA[26]={instr[17],instr[11:8]};
           prT[26]={instr[17],instr[11:8]};
           prB[26]=instr[16:12];
-          pconstant[26]={{51{instr[30]}},instr[30:18]};
-	  if (!instr[31]) begin
+          if (opcode_main!=210) pcalu[26]=instr[23:20];
+	  if (opcode_main!=210) begin
 	      prTE[26]=instr[18];
 	      prBE[26]=instr[19];
 	  end
-          if (opcode_main[7:0]==8'd186) begin
+          if (opcode_main[7:0]==8'd184) begin
               poperation[26][8]=instr[30];//rT
               poperation[26][9]=instr[28]^instr[30];
               poperation[26][10]=instr[29];//rB
@@ -1645,6 +1646,7 @@ module smallInstr_decoder(
           prA[27]={instr[17],instr[11:8]};
           prT[27]={instr[17],instr[11:8]};
           prB[27]=instr[16:12];
+          pcalu[27]=instr[23:20];
           if (opcode_main[7:1]==7'd93 || opcode_main==8'd191) begin
               poperation[27][8]=instr[30];
               poperation[27][9]=instr[30];
