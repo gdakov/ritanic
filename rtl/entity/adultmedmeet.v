@@ -351,7 +351,7 @@ module smallInstr_decoder(
   assign constantDef=(magic==4'b1111) ? instr[79:16] : 64'bz;
   assign constantDef=(magic[1:0]==2'b11) ? {{32{instr[47]}},instr[47:16]} : 64'bz;
   assign constantDef=(magic[1:0]==2'b01) ? {{32{instr[31]}},{17{instr[31]}},instr[31],instr[31:18]} : 64'bz;
-  assign constantDef=(~magic[0]) ? {32'b0,26'b0,instr[7:6],instr[11:8]} : 64'bz;
+  assign constantDef=(~magic[0]) ? {{32{instr[7]}},{26{instr[7}},instr[7:6],instr[11:8]} : 64'bz;
 
   assign constantN=~constant;
  
@@ -772,13 +772,21 @@ module smallInstr_decoder(
       
       trien[0]=~magic[0] && subIsBasicALU|subIsBasicShift;
       poperation[0]={8'b0,opcode_sub[4:2],1'b0,opcode_sub[1]};
+      if (opcode_sub[4:2]==3'b1) begin
+          poperation[0]={8'b0,3'b0,opcode_sub[1],1'b0};
+          if (!opcode_sub[1]) poperation[0][8]=1'b1;
+      end
       puseBConst[0]=opcode_sub[0]|subIsBasicShift;
       prA_use[0]=1'b1;
       prB_use[0]=1'b1;
       prT_use[0]=1'b1;
       puseRs[0]=1'b1;
       prAlloc[0]=1'b1;
+      `ifndef dynamic_logic
       pport[0]=subIsBasicShift|subIsBasicXOR ? PORT_SHIFT : PORT_ALU;
+      `else
+      pport[0]=PORT_ALU;
+      `endif
       pflags_write[0]=1'b0;
       poperation[0][12]=1'b1;
       if (~prevSpecLoad && opcode_sub[0]|subIsBasicShift) begin
