@@ -348,10 +348,10 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   except_jump_cmp jcmp2_mod (valS,{1'b0,cond[3:0]},doJmp2);
   
  
-  assign flag64_ZF=(valRes[63:0]==64'b0);
-  assign flag32_ZF=(valRes[31:0]==32'b0);
-  assign flag16_ZF=(valRes[15:0]==16'b0);
-  assign flag8_ZF=(valRes[7:0]==8'b0);
+  assign flag64_ZF=(valRes[63:1]==64'b0);
+  assign flag32_ZF=(valRes[31:1]==32'b0);
+  assign flag16_ZF=(valRes[15:1]==16'b0);
+  assign flag8_ZF=(valRes[7:1]==8'b0);
 
   
   assign flag8_PF=~^(valRes[7:0]);
@@ -370,7 +370,8 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign flags_COASZP=((retOp[7:0]==`op_add64) && ~(retOp[2]&operation_reg[8]) && isFlags_reg) ? 
       {carryAdd64_reg&~is_ptr_reg,flagAdd64_OF_reg&~is_ptr_reg,carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
   assign flags_COASZP=((retOp[7:0]==`op_add32 || retOp[7:0]==`op_sub32) && isFlags_reg) ? {carryAdd32_reg,flagAdd32_OF_reg,carryAdd4LL_reg,valRes_reg[31],flag32_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((retOp[7:1]==7'd23) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:47]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],valRes_reg[63:47]==17'b0,valRes_reg[0]} : 6'bz;
+  assign flags_COASZP=((retOp[7:1]==7'd23) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:47]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],valRes_reg[63:47]==17'b0,
+     valRes_reg[0]} : 6'bz;
   
   assign flags_COASZP=((retOp[7:0]==`op_sub64) && isFlags_reg && is_ptr_sub) ? {carryAdd44_reg,flagSub44_OF_reg,~carryAdd4LL_reg,valRes_reg[43],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
   assign flags_COASZP=((retOp[7:0]==`op_sub64) && isFlags_reg && ~is_ptr_sub) ? {carryAdd64_reg & ~is_ptr_reg,flagSub64_OF_reg&~is_ptr_reg,~carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
@@ -588,21 +589,21 @@ module except_jump_cmp(
   always @(*)
     begin
       case(jumpType)
-        `jump_Z:	doJump=Z;
-        `jump_nZ:	doJump=~Z;
+        `jump_Z:	doJump=Z&~P;
+        `jump_nZ:	doJump=~(Z&~P);
         `jump_S:	doJump=S;
         `jump_nS:	doJump=~S;
-        `jump_uGT:	doJump=~(~C | Z);
-        `jump_uLE:	doJump=~C | Z;
+        `jump_uGT:	doJump=~(~C | (Z&~P));
+        `jump_uLE:	doJump=~C | (Z&~P);
         `jump_uGE:	doJump=C;
         `jump_uLT:	doJump=~C;
-        `jump_sGT:	doJump=~((S^O)|Z);
-        `jump_sLE:	doJump=(S^O)|Z;
+        `jump_sGT:	doJump=~((S^O)|(Z&~P));
+        `jump_sLE:	doJump=(S^O)|(Z&~P);
         `jump_sGE:	doJump=~S^O;
         `jump_sLT:	doJump=S^O;
         `jump_O:	doJump=O;
         `jump_nO:	doJump=~O;
-        `jump_P:	doJump=P;
+        `jump_P:	doJump=P|(~Z&~S);
         `jump_nP:	doJump=1'b1;
         5'b11001:	doJump=0;//wr msrss
         default:	doJump=1;
