@@ -369,7 +369,7 @@ module smallInstr_decoder(
   assign subIsSIMD=opcode_sub[5:3]==3'b011 && opcode_sub[2:1]!=2'b0 && ~opcode_sub[0];
   assign subIsMovOrExt=opcode_sub[5:3]==3'b100 || opcode_sub[5:1]==5'b10100;
   assign subIsCmpTest=opcode_sub[5:1]==5'b10101 || opcode_sub[5:2]==4'b1011;
-  assign subIsCJ=opcode_sub[5:2]==4'b1100 && opcode_main[7:0]!=8'b11110010;
+  assign subIsCJ=opcode_sub[5:2]==4'b1100;
   assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100);
   assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100);
 
@@ -842,10 +842,23 @@ module smallInstr_decoder(
        //verilator lint_on CASEINCOMPLETE
       
        trien[3]=~magic[0] & subIsCJ;
-       pconstant[3]={{55{instr[15]}},instr[15:8],1'b0};
-       pport[3]=0;
-       pjumpType[3]=({instr[7:6],instr[1:0]}==4'hf) ? 5'h10 : 
-         {1'b0,instr[7:6],instr[1:0]};
+       prA[3]={2'b0,instr[7],1'b1,instr[6]};
+       puseBConst[3]=1'b1;
+       if (!vecmode) boggie_baboogie=H*3+enc02;
+       case(instr[1:0])
+          //verilator lint_off WIDTH
+	     0:pconstant[3]={-boogie_baboogie*4<~vecmode,boogie_baboogie*4};
+	     1:pconstant[3]={-boogie_baboogie*8<<~vecmode,boogie_baboogie*8};
+	     2:pconstant[3]={-boogie_baboogie*24<<~vecmode,boogie_baboogie*24};
+	     4:pconstant[3]={-boogie_baboogie*32<<~vecmode,boogie_baboogie*32};
+         //verilator lint_on WIDTH
+          endcase
+	prT[3]=prA[3];
+	perror[3]=2'b0;
+        poperation[3][7:0]=`op_cloop_odd;
+        poperation[3][10:8]=3'h7;
+        jumptype[3]={1'b0,3'h3,~vecmode};
+    
        
        trien[4]=~magic[0] & subIsFPUD;
        puseRs[4]=1'b1;

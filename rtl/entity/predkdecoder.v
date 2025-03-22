@@ -128,7 +128,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign subIsSIMD=(opcode_sub[5:3]==3'b011 && |opcode_sub[2:1] && ~opcode_sub[0]) & ~magic[0];
   assign subIsMovOrExt=(opcode_sub[5:3]==3'b100 || opcode_sub[5:1]==5'b10100) & ~magic[0];
   assign subIsCmpTest=(opcode_sub[5:1]==5'b10101 || opcode_sub[5:2]==4'b1011) & ~magic[0];
-  assign subIsCJ=opcode_sub[5:2]==4'b1100 && opcode_main[7:0]!=8'b11110010 && |instr[15:8] && ~magic[0]; //zero offset jumps are hint instructions! 
+  assign subIsCJ=opcode_sub[5:2]==4'b1100  && |instr[15:8] && ~magic[0]; //zero offset jumps are hint instructions! 
   assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100) & ~magic[0];
   assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100) & ~magic[0];
   assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
