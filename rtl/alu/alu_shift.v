@@ -106,7 +106,7 @@ module alu_shift(
   assign valRes[64]=is_shift ? 1'b0 : 1'bz;
   assign valRes[65]=is_shift ? ^valRes[64:0] : 1'bz;
 
-  assign en[63:32]={arith,{31{sz[3]}};
+  assign en[63:32]={sz[3],{31{sz[3]}|{31{val2[5]&& &val2[8:6]}}};
   assign en[31:24]=(val2[31:24]&{8{rmode==3'b100}})|{8{rmode==3'b0}};
   assign en[23:16]=(val2[23:16]&{8{rmode==3'b100 || rmode==3'b010}})|{8{rmode==3'b0}};
   assign en[15:8]=(val2[31:24]&{8{rmode==3'b10 || rmode==3'b1}})|{8{rmode==3'b0}};
