@@ -847,17 +847,17 @@ module smallInstr_decoder(
        if (!vecmode) boggie_baboogie=H*3+enc02;
        case(instr[1:0])
           //verilator lint_off WIDTH
-	     0:pconstant[3]={-boogie_baboogie*4<~vecmode,boogie_baboogie*4};
-	     1:pconstant[3]={-boogie_baboogie*8<<~vecmode,boogie_baboogie*8};
-	     2:pconstant[3]={-boogie_baboogie*24<<~vecmode,boogie_baboogie*24};
-	     4:pconstant[3]={-boogie_baboogie*32<<~vecmode,boogie_baboogie*32};
+	     0:pconstant[3]={-boogie_baboogie*1<~vecmode,boogie_baboogie*1};
+	     1:pconstant[3]={-boogie_baboogie*2<<~vecmode,boogie_baboogie*2};
+	     2:pconstant[3]={-boogie_baboogie*3<<~vecmode,boogie_baboogie*3};
+	     4:pconstant[3]={-boogie_baboogie*4<<~vecmode,boogie_baboogie*4};
          //verilator lint_on WIDTH
           endcase
 	prT[3]=prA[3];
 	perror[3]=2'b0;
         poperation[3][7:0]=`op_cloop_odd;
         poperation[3][10:8]=3'h7;
-        jumptype[3]={1'b0,3'h3,~vecmode};
+        jumptype[3]={1'b0,3'h3,~instr[15]};
     
        
        trien[4]=~magic[0] & subIsFPUD;

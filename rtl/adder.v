@@ -1473,14 +1473,14 @@ endmodule
 
   genvar k;
   
-  assign xorab=a[43:0]^b[43:0];
-  assign nxorab=a[43:0]~^b[43:0];
-  assign andab=a[43:0]&b[43:0];
-  assign orab=a[43:0]|b[43:0];
-  assign c1={c[43:0]} & {44{shift[0]}};
-  assign c2={c[42:0],1'b0} & {44{shift[1]}};
-  assign c3={c[41:0],2'b0} & {44{shift[2]}};
-  assign c4={c[40:0],3'b0} & {44{shift[3]}};
+  assign xorab=a[55:0]^b[55:0];
+  assign nxorab=a[55:0]~^b[55:0];
+  assign andab=a[55:0]&b[55:0];
+  assign orab=a[55:0]|b[55:0];
+  assign c1={c[54:0],2'b0} & {56{shift[0]}};
+  assign c2={c[53:0],3'b0} & {56{shift[1]}};
+  assign c3={c[52:0],4'b0} & {56{shift[2]}};
+  assign c4={c[51:0],5'b0} & {56{shift[3]}};
   
   assign tmp2[0]=1'b0;
 
