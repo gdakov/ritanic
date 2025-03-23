@@ -1273,36 +1273,40 @@ module smallInstr_decoder(
       poperation[14][10:8]=instr[25:23];
       
       trien[15]=magic[0] & isBasicCmpTest; 
-      puseBConst[15]=instr[0] || magic[1:0]!=2'b01;
+      puseBConst[15]=1'b1;
       pport[15]=PORT_ALU;
-      pflags_write[15]=1'b1;
+      pflags_write[15]=1'b0;
       case(opcode_main)
-      46,47: poperation[15]=`op_sub64;
-      48,49: poperation[15]=`op_sub32;
-      216,217: poperation[15]=`op_cmp16;
-      218,219: poperation[15]=`op_cmp8;
-      50,51,224,225: poperation[15]=`op_and64|(opcode_main[7]<<1);
-      52,53,226,227: poperation[15]=`op_and32|(opcode_main[7]<<1);
+      46,47: begin poperation[15]=`op_sub64; poperation[15][8]=instr[0]; end
+      48,49: begin poperation[15]=`op_add64; poperation[15][8]=instr[0]; end
+      216: poperation[15]=`op_and64;
+      217: poperation[15]=`op_or64;
+      218: poperation[15]=`op_xor64;
+      219: poperation[15]=`op_add32;
+      226:  poperation[15]=`op_xor32;
+      227:  poperation[15]=`op_or32;
+      224: poperation[15]=`op_and32
+      225: poperation[15]=`op_sub32;
       default: perror[15]=1;
       endcase
       prA_use[15]=1'b1;
       prB_use[15]=1'b1;
-      prT_use[15]=1'b0;
+      prT_use[15]=1'b1;
       puseRs[15]=1'b1;
       prAlloc[15]=1'b1;
       prT[15]=5'd31;
+      poperation[15][12]=1'b1;
 	 
-      if (magic[1:0]==2'b01) begin
-          prA[15]={instr[16],instr[15:12]};
-          prB[15]={instr[17],instr[11:8]};
-          if (!puseBConst[15]) begin
-              pcalu[15]=instr[22:18];
-              poperation[15][9]=instr[23];
-              poperation[15][10]=instr[24];
-          end
-      end else if (magic[2:0]==3'b011) begin
-          prA[15]=instr[12:8];
-          if (instr[15:13]!=0) perror[15]=1;
+      prA[15]={instr[16],instr[15:12]};
+      prT[15]={instr[17],instr[11:8]};
+      pcalu[15]={1'b1,instr[21:18]};
+      poperation[15][9]=instr[22];
+      poperation[15][10]=instr[23];
+      pconstant[15]=pconstant[15]>>6;
+      if (prT[15]==31) begin
+           prT_use[15]=1'b0;
+           poperation[15][12]=1'b0;
+           pflags_write[15]=1'b1;
       end
     
       trien[16]=magic[0] && isShlAddMulLike|isPtrSec; 

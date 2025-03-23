@@ -601,8 +601,8 @@ module except_jump_cmp(
         `jump_sLE:	doJump=(S^O)|(Z&~P);
         `jump_sGE:	doJump=~S^O;
         `jump_sLT:	doJump=S^O;
-        `jump_O:	doJump=O;
-        `jump_nO:	doJump=~O;
+        `jump_O:	doJump=~((S)|(Z&~P));
+        `jump_nO:	doJump=(S)|(Z&~P);
         `jump_P:	doJump=P|(~Z&~S);
         `jump_nP:	doJump=1'b1;
         5'b11001:	doJump=0;//wr msrss
