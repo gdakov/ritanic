@@ -445,7 +445,7 @@ module smallInstr_decoder(
   //when only bit 3 is set then the condition is overflow
   assign isBasicSysInstr=opcode_main==8'hef;
  //8'hfe==new insn; starting with 48 bit size (no 32 bit)
- 
+ //WARINNG: qcontant/qtrien out of date
   assign qconstant[1]={1'b0,pconstant[3]};//??
   assign qtrien   [1]=trien    [3];//??
   assign qconstant[2]={1'b0,pconstant[8]};
@@ -1195,11 +1195,11 @@ module smallInstr_decoder(
       if (opcode_main[0]) begin //store
               prC[13]={instr[16],instr[11:8]};
               prB[13]={instr[17],instr[15:12]};
-              prA[13]={2'b0,instr[19],1'b0,instr[18]};
+              prA[13]={2'b0,instr[19],instr[19],instr[18]};
       end else begin
               prT[13]={instr[16],instr[11:8]};
               prB[13]={instr[27]instr[15:12]};
-              prA[13]={2'b0,instr[19],1'b0,instr[18]};
+              prA[13]={2'b0,instr[19],instr[19],instr[18]};
       end
       prB_use[13]=1'b1;
       prA_use[13]=1'b1;
