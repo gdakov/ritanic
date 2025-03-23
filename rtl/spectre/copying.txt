@@ -1,7 +1,7 @@
 
 Heptane Central Processor unit
 Copyright (C) Goran Dakov, D.O.B. 11 January 1983, lives in Bristol UK in 2024
-
+You can distribute and modify this code under the GPL v3 license
 
 
 GNU GENERAL PUBLIC LICENSE
