@@ -423,7 +423,8 @@ module smallInstr_decoder(
   assign isShlAddMulLike=1'b0;// opcode_main==8'd211 || 
 //    opcode_main==8'd231 || opcode_main==8'd232;
   assign isPtrSec=opcode_main==8'd212 || opcode_main=233;
-  assign isJalR=opcode_main==8'd213 || opcode_main==8'd214 || opcode_main==8'd215 || opcode_main==8'd220 || opcode_main==8'd221;
+  assign isJalR=opcode_main==8'd213 || opcode_main==8'd214 || opcode_main==8'd215 || opcode_main==8'd220 || opcode_main==8'd221 || opcode_main==8'd211 ||
+    opcode_main==8'd231 || opcode_main==8'd232;
   //216-219=cmp16,cmp8
   //224-230=and16,and8,or16,or8
   assign isCexALU=opcode_main==8'd222;
@@ -1270,7 +1271,7 @@ module smallInstr_decoder(
       pcalu[15]={1'b1,instr[21:18]};
       poperation[15][9]=instr[22];
       poperation[15][10]=instr[23];
-      pconstant[15]=pconstant[15]>>6;
+      pconstant[15]=pconstant[15]>>>6;
       if (prT[15]==31) begin
            prT_use[15]=1'b0;
            poperation[15][12]=1'b0;
@@ -1377,7 +1378,7 @@ module smallInstr_decoder(
           puseRs[18]=1'b1;
           prAlloc[18]=1'b0;
           puseBConst[18]=1'b1;
-          pconstant[18]=constantDef>>6;
+          pconstant[18]=constantDef>>>6;
           perror[18]=2'b0;
           prT[18]=5'd16;
           pthisSpecLoad[18]=1'b1;
@@ -1741,48 +1742,29 @@ opcode_main[0] ? `op_add64 : `op_add32;
       end
 	  
       trien[31]=magic[0] & (isJalR|isCexALU|isGA);
-      if (isJalR && opcode_main!=221) begin
+      if (isJalR) begin
           pport[31]=PORT_ALU;
-	  if (instr[10]) pport[31]=PORT_SHIFT;
-	  prA_use[31]=1'b1;
-	  prB_use[31]=1'b1;
-	  prT_use[31]=1'b1;
-	  puseBConst[31]=magic[1:0]==2'b11 || instr[23];
-	  pconstant[31]=magic[2:0]==3'b111 ? {{32{instr[47]}},instr[47:16]} : {{44{instr[43]}},instr[43:23]};
-	  puseRs[31]=1'b1;
-	  prAlloc[31]=1'b1;
-	  pflags_write[31]=instr[13];
-	  poperation[31][12]=1'b1;
-	  poperation[31][7:0]={3'b0,instr[10:8],1'b0,instr[11]};
-          poperation[31][9]=instr[12];
-	  if (magic[1:0]==2'b01) begin
-	      prA[31]={1'b0,instr[21] & ~instr[23],instr[20:18]};
-	      prB[31]=instr[28:24];
-	      prT[31]=~instr[23] ? {1'b0,instr[22],instr[31:29]} : {2'b0,instr[21],instr[1:0]};
-              if (~instr[23) begin
-                 poperation[31][1]=instr[1];
-                 poperation[31][5]=instr[0];
-              end
-	      palucond[31]={1'b1,instr[17:14]};
-	      if (~instr[12]) begin poperation[31][12]=~instr[13]; pflags_write[31]=instr[13]; end
-              else begin poperation[31][10]=instr[13]; pflags_write[31]=1'b0; end
-	      pconstant[31]={{56{instr[31]}},instr[31:24]};
-	  end else if (magic[3:0]==4'b0111) begin
-	      prA[31]=instr[52:48];
-	      prT[31]=instr[52:48];
-	      palucond[31]={1'b1,instr[56:53]};
-	      if (~instr[12]) begin poperation[31][12]=~instr[13]; pflags_write[31]=instr[13]; end
-              else begin poperation[31][10]=instr[13]; pflags_write[31]=1'b0; end
-              perror[31]=0;
-              prndmode[31]=3'b1<<instr[1:0];
-	  end else begin
-	      palucond[31]={1'b1,instr[17:14]};
-	      if (~instr[12]) begin poperation[31][12]=~instr[13]; pflags_write[31]=instr[13]; end
-              else begin poperation[31][10]=instr[13]; pflags_write[31]=1'b0; end
-              prA[31]=instr[22:18];
-	      prT[31]=instr[47:43];
-               prndmode[31]=3'b1<<instr[1:0];
-	  end
+	      prA_use[31]=1'b1;
+	      prB_use[31]=1'b1;
+	      prT_use[31]=1'b1;
+          puseBConst[31]=1'b1;
+	      pconstant[31]=constantDef<<12;
+	      puseRs[31]=1'b1;
+	      prAlloc[31]=1'b1;
+	      pflags_write[31]=1'b0;
+	      poperation[31][12]=1'b1;
+          case(opcode_main)
+           8'd213 : poperation[31][7:0]=op_add64;
+           8'd214 : poperation[31][7:0]=op_and64;
+           8'd215 : poperation[31][7:0]=op_or64;
+           8'd220 : poperation[31][7:0]=op_xor64;
+           8'd221 : poperation[31][7:0]=op_add32;
+           8'd211 : poperation[31][7:0]=op_and32;
+           8'd231 : poperation[31][7:0]=op_or32;
+           9'd232 : poperation[31][7:0]=op_xor32;
+          endcase
+	      prA[31]={instr[16],instr[15:12]};
+	      prT[31]={instr[17],instr[11:8]};
       end else if (isGA) begin
           pport[31]=instr[29] ? PORT_MUL : PORT_ALU;
           prA_use[31]=1'b1;
