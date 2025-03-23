@@ -1766,7 +1766,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
 	      prA[31]={instr[16],instr[15:12]};
 	      prT[31]={instr[17],instr[11:8]};
       end else if (isGA) begin
-          pport[31]=instr[29] ? PORT_MUL : PORT_ALU;
+          pport[31]=PORT_MUL;
           prA_use[31]=1'b1;
           prB_use[31]=1'b1;
           prT_use[31]=1'b1;
@@ -1788,7 +1788,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
           prT[31]={instr[16],instr[15:12]};
           prB[31]=instr[22:18];
           pflags_write[31]=1'b0;
-          poperation[31][7:0]=instr[29] ? `op_gather_hi : `op_gather_low;
+          poperation[31][7:0]=`op_gather;
           poperation[31][12]=1'b1;
           poperation[31][11]=instr[29];
           prmode[31]=0;
