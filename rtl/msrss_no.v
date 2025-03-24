@@ -20,7 +20,8 @@ limitations under the License.
 `define csr_excStack 6
 `define csr_PCR 7
 `define csr_excIP 8
-//`define csr_PCR_reg_save 9
+// to save register during context switch:
+`define csr_PCR_reg_save 9
 `define csr_mflags 10
 `define csr_FPU 11
 `define csr_syscall 12
@@ -33,7 +34,7 @@ limitations under the License.
 `define csr_last_jmp2 20
 `define csr_subsyscall 21
 `define csr_pinvoke 22
-`define csr_embedded_mode 23
+`define csr_pkill 23
 
 `define csr_GORQ_send 36
 `define csr_GORQ_recv_vector 37

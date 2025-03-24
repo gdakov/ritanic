@@ -24,9 +24,9 @@ module BOBind_ram(
   write_wen
   );
 
-  parameter ADDR_WIDTH=`iob_addr_width;
+  parameter ADDR_WIDTH=`bob_addr_width;
   parameter DATA_WIDTH=65;
-  parameter ADDR_COUNT=`iob_count;
+  parameter ADDR_COUNT=`bob_count;
 
   input clk;
   input rst;
@@ -66,9 +66,9 @@ module BOBind_ready_ram(
   write1_wen
   );
 
-  parameter ADDR_WIDTH=`iob_addr_width;
+  parameter ADDR_WIDTH=`bob_addr_width;
   parameter DATA_WIDTH=1;
-  parameter ADDR_COUNT=`iob_count;
+  parameter ADDR_COUNT=`bob_count;
 
   input clk;
   input rst;
@@ -112,9 +112,9 @@ module BOBind(
   writeI_wen
   );
 
-  parameter ADDR_WIDTH=`iob_addr_width;
+  parameter ADDR_WIDTH=`bob_addr_width;
   parameter DATA_WIDTH=65;
-  parameter ADDR_COUNT=`iob_count;
+  parameter ADDR_COUNT=`bob_count;
 
   input clk;
   input rst;

@@ -105,13 +105,13 @@ module decoder_permitted_i(
           popcnt10_or_more mulx_more_mod(mul&shift & ((10'd2<<k)-10'd1),mulx_more_cnt[k]);
           popcnt10_or_less lsas_mod((load|shift|alu|store) & ((10'd2<<k)-10'd1),lsas_cnt[k]);
 
-          assign has_vec=|(vec & ((10'd2<<k)-10'd1))) || vec_mode;
+          assign has_vec=|(vec & ((10'd2<<k)-10'd1)) || vec_mode;
           
           assign storeL_has[k]=(storeL & ((10'd2<<k)-10'd1))!=0;
           
           
           assign permA[k]=(~storeL_has[k] & mul_cnt[k][0]) ? load_cnt[k][6] & alu_cnt[k][6] & shift_cnt[k][3] & 
-            store_cnt[k][{has_vec,~has_vec}}] & ldst_cnt[k][5] & alu_shift_cnt[k][6] & lsas_cnt[k][9] : 1'bz; 
+            store_cnt[k][{has_vec,~has_vec}] & ldst_cnt[k][5] & alu_shift_cnt[k][6] & lsas_cnt[k][9] : 1'bz; 
           assign permA[k]=(storeL_has[k] & mul_cnt[k][0]) ? load_cnt[k][5] & alu_cnt[k][6] & shift_cnt[k][3] & 
             store_cnt[k][{has_vec,~has_vec}] & ldst_cnt[k][1] & alu_shift_cnt[k][6] & lsas_cnt[k][8] : 1'bz; 
           assign permA[k]=(~storeL_has[k] & mul_cnt[k][1]) ? load_cnt[k][3] & alu_cnt[k][4] && shift_cnt[k][3] & 
@@ -251,7 +251,7 @@ module decoder_aux_const(
           aux_can_read=~csr_mflags[thread][`mflags_vm] && 0==csr_mflags[thread][`mflags_priv]; aux_can_write=aux_can_read; end
       `csr_PCR: begin	aux_const=csr_PCR[thread];
           aux_can_read=~csr_mflags[thread][`mflags_vm] && 0==csr_mflags[thread][`mflags_priv]; aux_can_write=aux_can_read; end
-      `csr_PCR_reg_save:begin aux_const= csr_PCR_reg_save[thread];
+      `csr_PCR_reg_save: begin aux_const= csr_PCR_reg_save[thread];
           aux_can_read=~csr_mflags[thread][`mflags_vm] && 0==csr_mflags[thread][`mflags_priv]; aux_can_write=aux_can_read; end
       `csr_mflags: begin	aux_const={1'b0,csr_mflags[thread]}; aux_can_read=~csr_mflags[thread][`mflags_vm] && 0==csr_mflags[thread][`mflags_priv]; aux_can_write=aux_can_read; end
       `csr_FPU:			aux_const={1'b0,csr_fpu[thread]};
@@ -284,7 +284,7 @@ module decoder_aux_const(
   assign riscmode=csr_mflags[thread][21];
   assign disstruss=csr_mflags[thread][22];
 
-  assign doStall=msrss_en && msrss_addr=`csr_pinvoke && ~thread && fat_stall_en;
+  assign doStall=msrss_en && msrss_addr==`csr_pinvoke && ~thread && fat_stall_en;
 
   always @(posedge clk) begin
       if (rst) begin
@@ -363,8 +363,8 @@ module decoder_aux_const(
       `csr_vmcall:		csr_vmcall[msrss_no[15]]<=msrss_data[63:0];
       `csr_USER3:		csr_USER3[msrss_no[15]]<=msrss_data[63:0];
       `csr_last_jmp: begin csr_last_jmp[msrss_no[15]]<=msrss_data[63:0]; csr_last_jmp2[msrss_no[15]]<=csr_last_jmp[msrss_no[15]]; end
-      `csr_pinvoke:		if (!thread) thrmode0[0]<=thrmode0[0]+2'b1;
-      `csr_pkill:		if (thread) thrmode0[1]<=thrmode0[1]+2'b1;
+      `csr_pinvoke:		if (!thread) thrmode0[0]<=thrmode0[0]+3'b1;
+      `csr_pkill:		if (thread) thrmode0[1]<=thrmode0[1]+3'b1;
       `csr_cl_lock:             csr_mflags[msrss_no[15]][18]<=1'b1;
      	      endcase
               aux0_reg<=aux0;
@@ -1601,7 +1601,7 @@ module decoder(
     input wr_gen_purp;
     input [5:0] reeg;
     begin
-        ffx=&reeg[4:3] ? {thrmode+2,reg[2:0]} : reeg;
+        ffx=&reeg[4:3] ? {thrmode,reeg[2:0]} : reeg;
     end
   endfunction
   wire [9:0] msrss_retIP_en;
@@ -1909,8 +1909,8 @@ module decoder(
           .distrust(lizztruss),
           .instrQ(instQ[k]),
           .instr(inst[k]),
-          .instr_prev(k=0 ? instr_save[15:0] : instr[k-1][15:0]),
-          .prevClsFMA(k=0 ? was_FMA_last : instrQ[k-1][`instrQ_class+`iclass_FMA]),
+          .instr_prev(k==0 ? instr_save[15:0] : instr[k-1][15:0]),
+          .prevClsFMA(k==0 ? was_FMA_last : instrQ[k-1][`instrQ_class+`iclass_store2]),
           .operation(dec_operation[k]),
 	  .can_jump_csr(aux_can_jump),
 	  .can_read_csr(aux_can_read),
@@ -2374,11 +2374,11 @@ module decoder(
           if (k<9) begin
               assign dec_lspecR_d=(iUsed[k+:2]==2'b01) ? dec_lspec[k] : 1'bz;
               assign instr_save_d=(iUsed[k+:2]==2'b01) ? instr[k] : 15'bz;
-              assign was_FMA_last_d=(iUsed[k+:2]==2'b01) ? instrQ[`instrQ_class+`iclass_FMA] : 1'bz;
+              assign was_FMA_last_d=(iUsed[k+:2]==2'b01) ? instrQ[`instrQ_class+`iclass_store2] : 1'bz;
           end else begin
               assign dec_lspecR_d=iUsed[k] ? dec_lspec[k] : 1'bz;
               assign instr_save_d=iUsed[k] ? instr[k] : 15'bz;
-              assign was_FMA_last_d=iUsed[k] ? instrQ[`instrQ_class+`iclass_FMA] : 1'bz;
+              assign was_FMA_last_d=iUsed[k] ? instrQ[`instrQ_class+`iclass_store2] : 1'bz;
           end
       end
   endgenerate

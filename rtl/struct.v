@@ -301,7 +301,8 @@ limitations under the License.
 `define instrQ_ght2_addr 58:43
 `define instrQ_jval 59
 `define instrQ_nop 60
-`define instrQ_width 61
+`define instrQ_attr 64:61
+`define instrQ_width 65
 
 
 `define instrQ_addr_count 36
