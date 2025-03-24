@@ -1,0 +1,12 @@
+
+Contribution may be welcome. Preferably finding bugs, or implementing missing
+stuff.
+New features not already present are unlikely to be accepted in the basic core.
+Code can be rejected on the basis of too much delay of the circuit or too large size of the circuit.
+I don't guarantee to share the income from the commercial licensing with external
+contributors but if someone contributes, they should accept that i can offer the core
+with their code under the commercial license as well as the gpl v3.
+
+In general, assume MUX circuits are with enable signals and not with an index.
+
+
