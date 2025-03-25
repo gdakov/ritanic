@@ -593,7 +593,7 @@ module decoder_reorder_mux(
 
   input [9:0] dec0_useRs;
   
-  signed input [9:0][43:0] dec0_srcIPOff;
+  input signed [9:0][43:0] dec0_srcIPOff;
   
   input [9:0][3:0] dec0_flDep;
   

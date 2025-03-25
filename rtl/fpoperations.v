@@ -36,12 +36,12 @@ limitations under the License.
 //`define fop_subES 23
 //`define fop_addS 32
 `define fop_addSP 33
-//`define fop_subS 34
+`define fop_cmpSH 34
 `define fop_subSP 35
 `define fop_cmpDH 32
 `define fop_cmpDL 33
-//`define fop_cmpE 34
-`define fop_cmpS 35
+`define fop_cmpSL 34
+//`define fop_cmpS 35
 `define fop_pcmplt 36
 `define fop_pcmpge 37
 `define fop_pcmpeq 38

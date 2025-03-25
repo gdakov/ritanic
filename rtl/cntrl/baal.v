@@ -1033,7 +1033,7 @@ module cntrl_find_outcome(
     {indir_IP[59:50],2'b0,indir_IP[49:45],2'b0,indir_IP[44],indir_IP[43:5],indir_IP[4:1]^{3'b0,&indir_IP[4:1]}} : 63'bz;
   assign exceptIP_d=(break_exceptn) ? {excpt_handlerIP[62:43],excpt_handlerIP[42:11],excpt_code[5:0],5'b0} : 63'bz;
   assign exceptIP_d=(break_replay|break_replayS) ? {bbaseIP[62:43],breakIP} : 63'bz;
-  assign exceptIP_d=(break_pending | ~has_break) ? tire_thread_reg : oldbrk : {bbaseIP[62:43],breakIP} : 63'bz;
+  assign exceptIP_d=(break_pending | ~has_break) ? 63'b0 : 63'bz;
 
   assign except_attr_d=((break_jump0&~break_exceptn) & jump0_taken) ? jump0Attr : 4'bz;
   assign except_attr_d=((break_jump1&~break_exceptn) & jump1_taken) ? jump1Attr : 4'bz;
@@ -1052,7 +1052,7 @@ module cntrl_find_outcome(
   assign msrss_no_d=((break_jump0&~break_exceptn) && jump0Type!=5'b11001 && jump0_taken) ||
     ((break_jump1&~break_exceptn) && jump1Type!=5'b11001 && jump1_taken) ? {tire_thread_reg,15'd`csr_last_jmp} : 16'bz;
   assign msrss_no_d=(break_exceptn) ? {tire_thread_reg,15'd`csr_retIP} : 16'bz;
-  assign msrss_no_d=(~(break_jump0&~break_exceptn) & ~(break_jump1&~break_exceptn) & ~break_exceptn) ? {tire_thread_reg,GORQ_en_reg? 15'd`csr_GORQ_data : 15'd`csr_excpt_fpu} : 16'bz;
+  assign msrss_no_d=(~(break_jump0&~break_exceptn) & ~(break_jump1&~break_exceptn) & ~break_exceptn) ? {tire_thread_reg,GORQ_en_reg? 15'd`csr_GORQ_send : 15'd`csr_excpt_fpu} : 16'bz;
 
   assign msrss_xdata_d=((break_jump0&~break_exceptn) && jump0Type==5'b11001) ? {jump0IP[63:40]} : 24'bz;
   assign msrss_xdata_d=((break_jump1&~break_exceptn) && jump1Type==5'b11001) ? {jump1IP[63:40]} : 24'bz;
@@ -1156,10 +1156,10 @@ module cntrl_find_outcome(
   assign bob_wdata[`bob_attrJ1]=iJump1Attr;
   assign jump1Attr=bob_rdata[`bob_attrJ1];
 
-  assign bob_wdata[`bob_CLPJ0]=iJump0CLP;
-  assign jump0CLP=bob_rdata[`bob_CLPJ0];
-  assign bob_wdata[`bob_CLPJ1]=iJump1CLP;
-  assign jump1CLP=bob_rdata[`bob_CLPJ1];
+  assign bob_wdata[`bob_j0cloop]=iJump0CLP;
+  assign jump0CLP=bob_rdata[`bob_j0cloop];
+  assign bob_wdata[`bob_j1cloop]=iJump1CLP;
+  assign jump1CLP=bob_rdata[`bob_j1cloop];
   
   assign bob_wdata[`bob_magicO]={instr9_magic,instr8_magic,instr7_magic,instr6_magic,instr5_magic,
 	  instr4_magic,instr3_magic,instr2_magic,instr1_magic,instr0_magic};

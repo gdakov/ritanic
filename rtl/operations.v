@@ -129,3 +129,4 @@ limitations under the License.
 `define op_cvtS 14
 
 `define op_dec (15|`op_multiclk)
+`define op_gather (16|`op_multiclk)
