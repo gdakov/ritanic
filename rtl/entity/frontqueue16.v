@@ -1332,7 +1332,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
     .rst(rst),
     .thread(thread),
     .bundle(splice256(read_data)),
-    .bnext(splice256({128'b0,cc_read_data[383:256]}),
+    .bnext(splice256({128'b0,cc_read_data[383:256]})),
     .bnext_tail({2'b0,cc_read_data[389:384]}),
     .btail(read_data_reg[239:176]),
     .bstop(read_data_reg[254:251]),
@@ -1644,7 +1644,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
     pred_sc0B[0]^pred_sh0B^kkk},
     takenB,);
 
-  assign taken=btb_way ? takenB&{btb_has7,btb_has6,btb_has5,btb_has4,,btb_has3,btb_has2,btb_has1,btb_has0} :
+  assign taken=btb_way ? takenB&{btb_has7,btb_has6,btb_has5,btb_has4,btb_has3,btb_has2,btb_has1,btb_has0} :
     takenA&{btb_has7,btb_has6,btb_has5,btb_has4,btb_has3,btb_has2,btb_has1,btb_has0};
 
   always @* begin

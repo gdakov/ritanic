@@ -222,7 +222,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   isRet,
   subIsCJ,
   opcode_main==8'hff && ~instr[15] && ~instr[13] && magic[0] && 
-    instr[30:16]!=15'd22;
+    instr[30:16]!=15'd22
   };
 
   assign clsIndir=|{
@@ -232,7 +232,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   opcode_main==8'hff && ~instr[15] && ~instr[13] && magic[0]
   };
 
-  assign clsFMA=|{,
+  assign clsFMA=|{
   FMA_mul,
   subIsFPUD && instr[7],
   subIsFPUPD && instr[7],
@@ -483,7 +483,7 @@ module predecoder_get(
         begin
             if (cond && bstop[3:2]==2'b01) boogy_baboogy=index0;
             if (cond && bstop[3:1]==3'b001) boogy_baboogy=index1;
-            if (cond && bstop[3:0]==4'b0001) boogy_baboogy==index2;
+            if (cond && bstop[3:0]==4'b0001) boogy_baboogy=index2;
             if (cond &&  bstop[3:0]==4'b0) boogy_baboogy=index3;
             if (!cond || bstop[3]) boogy_baboogy=index_else;
         end
@@ -493,9 +493,9 @@ module predecoder_get(
         for(k=0;k<20;k=k+1) begin : popcnt_gen
             popcnt20 cnt_mod(instrEnd[19:0] & ((20'b10<<k)-20'b1) & mask[19:0],cntEnd[k]);
             get_carry #(5) carry_mod(k[4:0],~{1'b0,startOff},1'b1,mask0[k]);
-            mask[k]=mask0[k] || ((k+1)==startOff && !instrEnd[k]) ||
+            assign mask[k]=mask0[k] || ((k+1)==startOff && !instrEnd[k]) ||
                ((k+2)==startOff && instrEnd[k+:2]==2'b00) ||
-               ((k+3)==startOff && instrEnd[k+:3]==3'b000)
+               ((k+3)==startOff && instrEnd[k+:3]==3'b000) ||
                ((k+4)==startOff && instrEnd[k+:4]==4'b0000);
             assign brk=cntEnd[k][12] ? k[3:0] && k[4] : 4'bz;
             wire [4:0] kk;
@@ -545,7 +545,7 @@ module predecoder_get(
     assign cntJEnd[-1]=16'd1;
     assign lcnt[-1]=16'd1;
     
-    assign last_is_FMAmul=|(FMAmulI[11:0] & (instrEn[11:0]&~(instrEn[11:0]>>1));
+    assign last_is_FMAmul=|(FMAmulI[11:0] & (instrEn[11:0]&~(instrEn[11:0]>>1)));
     //verilator lint_off WIDTH
     assign bundleF=boogy_baboogy(bstop[3:0],bundle[255] && startOff==0,{bundle0[255+48:0],btail[63:48]},{bundle0[255+32:0],btail[63:32]}, {bundle0[255+16:0],btail[63:16]},{bundle0[255:0],btail[63:0]},bundle0);
 
