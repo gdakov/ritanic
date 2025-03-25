@@ -107,7 +107,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   parameter [5:0] BUS_ID=0;
   parameter [6:0] BUS_ID2=0;
   parameter LARGE_CORE=0;
-  paremeter H=0;
+  parameter H=0;
 
 /*verilator public_module*/ 
   input clk;

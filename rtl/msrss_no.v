@@ -49,7 +49,7 @@ limitations under the License.
 //define mflags_helper 6
 `define mflags_dbl_fault 7
 `define mflags_excpt_extra 15:8
-`define mflags_transl_en 16
+`define mflags_indir_magic 16
 `define mflags_locked 18
 `define mflags_set_ptr_can 19
 `define mflags_sec 19
