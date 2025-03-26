@@ -16,28 +16,28 @@ module addrcalcsec_check_upper3(
   input [64:0] ptr,
   input [32:0] A,
   input [32:0] B,
-  output [3:0] pos_ack,
-  output [3:0] neg_ack,
-  output [2:0] pos_nack,
-  output [2:0] neg_nack,
-  output nhi_less
+  output pwire [3:0] pos_ack,
+  output pwire [3:0] neg_ack,
+  output pwire [2:0] pos_nack,
+  output pwire [2:0] neg_nack,
+  output pwire nhi_less
   );
   parameter [0:0] AGU=0;
-  wire [4:0] exp=ptr[`ptr_exp];
+  pwire [4:0] exp=ptr[`ptr_exp];
 
-  wire [3:0] posx;
-  wire do_pos,do_pos2,do_neg,do_neg2,do_neg1;
-  wire do_pos3,do_neg3;
-  wire do_pos1,do_negP;
-  wire [7:0] msk;
-  wire [7:0] msk0;
-  wire [40:0] O={1'b0,A|B};
-  wire [40:0] X={1'b1,A^B};
-  wire [40:0] And={1'b1,A&B};
-  wire diff=~nhi_less;
-  wire on_hi=ptr[`ptr_on_low]!=ptr[12+exp];
-  wire hiff=~AGU && ptr[`ptr_hi]==7'h7f;
-  wire max=exp==5'h1f;
+  pwire [3:0] posx;
+  pwire do_pos,do_pos2,do_neg,do_neg2,do_neg1;
+  pwire do_pos3,do_neg3;
+  pwire do_pos1,do_negP;
+  pwire [7:0] msk;
+  pwire [7:0] msk0;
+  pwire [40:0] O={1'b0,A|B};
+  pwire [40:0] X={1'b1,A^B};
+  pwire [40:0] And={1'b1,A&B};
+  pwire diff=~nhi_less;
+  pwire on_hi=ptr[`ptr_on_low]!=ptr[12+exp];
+  pwire hiff=~AGU && ptr[`ptr_hi]==7'h7f;
+  pwire max=exp==5'h1f;
 
   function [0:0] redand8;
       input [7:0] din;
@@ -81,24 +81,24 @@ module addrcalcsec_check_upper3(
   get_carry #(7) cmp_mod(ptr[`ptr_hi],~ptr[`ptr_low],1'b1,nhi_less);
   generate
     genvar p;
-    wire [3:0] pos0;
-    wire [3:0] pos1;
-    wire [3:0] pos2;
-    wire [3:0] pos3;
-    wire [3:0] posP;
-    wire [3:0] neg2;
-    wire [3:0] neg1;
-    wire [3:0] neg0;
-    wire [3:0] neg3;
-    wire [3:0] xpos0;
-    wire [3:0] xpos1;
-    wire [3:0] xpos2;
-    wire [3:0] xpos3;
-    wire [3:0] xposP;
-    wire [3:0] xneg2;
-    wire [3:0] xneg1;
-    wire [3:0] xneg0;
-    wire [3:0] xneg3;
+    pwire [3:0] pos0;
+    pwire [3:0] pos1;
+    pwire [3:0] pos2;
+    pwire [3:0] pos3;
+    pwire [3:0] posP;
+    pwire [3:0] neg2;
+    pwire [3:0] neg1;
+    pwire [3:0] neg0;
+    pwire [3:0] neg3;
+    pwire [3:0] xpos0;
+    pwire [3:0] xpos1;
+    pwire [3:0] xpos2;
+    pwire [3:0] xpos3;
+    pwire [3:0] xposP;
+    pwire [3:0] xneg2;
+    pwire [3:0] xneg1;
+    pwire [3:0] xneg0;
+    pwire [3:0] xneg3;
     for(p=0;p<4;p=p+1) begin : offs
        
         assign pos0[p]= ~posx[p] ||  ~redor8(O[p*8+:8+&p[1:0]);
@@ -130,15 +130,15 @@ module addrcalcsec_range(
   input [64:0] ptr,
   input cin_secq,
   input diff,
-  output cout_secq);
+  output pwire cout_secq);
 
-  wire [7:0] low={ptr[`ptr_low],1'b0};
-  wire [7:0] high={ptr[`ptr_hi],1'b1};
+  pwire [7:0] low={ptr[`ptr_low],1'b0};
+  pwire [7:0] high={ptr[`ptr_hi],1'b1};
   //wire diff=ptr[`ptr_hi_less];
-  wire hi_pass=diff && ptr[`ptr_on_low]==ptr[12+ptr[`ptr_exp]];
-  wire lo_lass=diff && ptr[`ptr_on_low]!=ptr[12+ptr[`ptr_exp]];
-  wire [7:0] bits;
-  wire cout_low,cout_hio;
+  pwire hi_pass=diff && ptr[`ptr_on_low]==ptr[12+ptr[`ptr_exp]];
+  pwire lo_lass=diff && ptr[`ptr_on_low]!=ptr[12+ptr[`ptr_exp]];
+  pwire [7:0] bits;
+  pwire cout_low,cout_hio;
 
   get_carry #(8) cmpLow_mod(~low,bits,1'b1,cout_low);
   get_carry #(8) cmpHio_mod(high,~bits,1'b1,cout_hio);

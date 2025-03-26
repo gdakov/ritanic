@@ -48,10 +48,10 @@ module cntrl_jump_upto(
   input jumpPredTk;
   input jumpTbufMiss;
   input indirMismatch;
-  output jumpMisPred;
-  output jumpTaken;
-  output [WIDTH-1:0] flagOut;
-  output [WIDTH-1:0] flagOutN;
+  output pwire jumpMisPred;
+  output pwire jumpTaken;
+  output pwire [WIDTH-1:0] flagOut;
+  output pwire [WIDTH-1:0] flagOutN;
   input [WIDTH-1:0] flags0;
   input [WIDTH-1:0] flags1;
   input [WIDTH-1:0] flags2;
@@ -63,15 +63,15 @@ module cntrl_jump_upto(
   input [WIDTH-1:0] flags8;
   input [WIDTH-1:0] flags9;
   
-  wire [WIDTH-1:0] flags[9:0];
-  wire [9:0] jumpTaken_x;
-  wire [9:0] mispred_x;
+  pwire [WIDTH-1:0] flags[9:0];
+  pwire [9:0] jumpTaken_x;
+  pwire [9:0] mispred_x;
 
-  wire [9:0] flagLast;
-  wire nFlagIsPrev;
+  pwire [9:0] flagLast;
+  pwire nFlagIsPrev;
   
-  wire jumpTaken_0;
-  wire mispred_0;
+  pwire jumpTaken_0;
+  pwire mispred_0;
 
   assign flags[0]=flags0;
   assign flags[1]=flags1;
@@ -120,15 +120,15 @@ module cntrl_get_IP(
   input [2:0] magicO;
   input last;
   input excpt;
-  output [62:0] nextIP;
+  output pwire [62:0] nextIP;
   
-  wire [62:0] nextIP0;
-  wire [4:0] par0;
-  wire [4:0] par1;
-  wire [64:0] val2;
-  wire cout_sec;
-  wire ndiff;
-  wire mgt;
+  pwire [62:0] nextIP0;
+  pwire [4:0] par0;
+  pwire [4:0] par1;
+  pwire [64:0] val2;
+  pwire cout_sec;
+  pwire ndiff;
+  pwire mgt;
 	get_carry #(4) cmp(magicO,~srcIPOff[3:0],1'b0,mgt);
   adder_CSA #(4) csa_mod(baseIP[3:0],srcIPOff[3:0],~{1'b0,magicO},par0,par1);
 	adder #(4) nlast_add_small(par0[3:0],par1[3:0],nextIP0[3:0],~mgt,excpt,,,,);
@@ -158,9 +158,9 @@ module cntrl_get_shortIP(
   );
   input [19:0] baseIP;
   input [8:0] srcIPOff;
-  output [19:0] jupd0_IP;
+  output pwire [19:0] jupd0_IP;
   input jupd0_en;
-  output [19:0] jupd1_IP;
+  output pwire [19:0] jupd1_IP;
   input jupd1_en;
 
   adder2o #(20-4) last_add(baseIP[19:4],{11'b0,srcIPOff[8:4]},jupd0_IP[19:4],jupd1_IP[19:4],1'b0,jupd0_en,jupd1_en,,,,);
@@ -174,11 +174,11 @@ module cntrl_get_retcnt(
   reten,
   retcnt);
   input [8:0] reten;
-  output [3:0] retcnt;
+  output pwire [3:0] retcnt;
   
-  wire [3:0] cpop0;
-  wire [3:0] cpop1;
-  wire [3:0] cpop2;
+  pwire [3:0] cpop0;
+  pwire [3:0] cpop1;
+  pwire [3:0] cpop2;
   
   popcnt3 cpop0_mod({reten[6],reten[3],reten[0]},cpop0);
   popcnt3 cpop1_mod({reten[7],reten[4],reten[1]},cpop1);
@@ -296,29 +296,29 @@ module cntrl_find_outcome(
   input clk;
   input rst;
   input stall;
-  output doStall;
+  output pwire doStall;
 
-  output reg do_sched_reset;
+  output pwire reg do_sched_reset;
   
-  output reg except;
-  output reg [62:0] exceptIP;
-  output reg [3:0] except_attr;
-  output reg except_thread;
-  output reg except_both;
-  output reg except_due_jump;
-  output reg [7:0] except_jump_ght;
-  output reg [15:0] except_jump_ght2;
-  output reg except_set_instr_flag;
-  output reg except_jmp_mask_en;
-  output reg [3:0] except_jmp_mask;
-  output reg [15:0] msrss_no;
-  output reg msrss_thread;
-  output reg msrss_en;
-  output reg [6_4:0] msrss_data;
-  output reg [23:0] msrss_xdata;
+  output pwire reg except;
+  output pwire reg [62:0] exceptIP;
+  output pwire reg [3:0] except_attr;
+  output pwire reg except_thread;
+  output pwire reg except_both;
+  output pwire reg except_due_jump;
+  output pwire reg [7:0] except_jump_ght;
+  output pwire reg [15:0] except_jump_ght2;
+  output pwire reg except_set_instr_flag;
+  output pwire reg except_jmp_mask_en;
+  output pwire reg [3:0] except_jmp_mask;
+  output pwire reg [15:0] msrss_no;
+  output pwire reg msrss_thread;
+  output pwire reg msrss_en;
+  output pwire reg [6_4:0] msrss_data;
+  output pwire reg [23:0] msrss_xdata;
   input new_en;
   input new_thread;
-  output wire [5:0] new_addr;
+  output pwire [5:0] new_addr;
   input GORQ;
   input [15:0] GORQ_data;
   input [1:0] instr0_err;
@@ -488,74 +488,74 @@ module cntrl_find_outcome(
   input iJump1Taken;
   input [3:0] iJump0Attr;
   input [3:0] iJump1Attr;
-  output [8:0] flTE;
-  output reg tire_enFl;
-  output reg [5:0] tire0_rT;
-  output [8:0] tire0_rF;
-  output reg tire0_enG;
-  output reg tire0_enV;
-  output reg tire0_enF;
-  output reg [5:0] tire1_rT;
-  output [8:0] tire1_rF;
-  output reg tire1_enG;
-  output reg tire1_enV;
-  output reg tire1_enF;
-  output reg [5:0] tire2_rT;
-  output [8:0] tire2_rF;
-  output reg tire2_enG;
-  output reg tire2_enV;
-  output reg tire2_enF;
-  output reg [5:0] tire3_rT;
-  output [8:0] tire3_rF;
-  output reg tire3_enG;
-  output reg tire3_enV;
-  output reg tire3_enF;
-  output reg [5:0] tire4_rT;
-  output [8:0] tire4_rF;
-  output reg tire4_enG;
-  output reg tire4_enV;
-  output reg tire4_enF;
-  output reg [5:0] tire5_rT;
-  output [8:0] tire5_rF;
-  output reg tire5_enG;
-  output reg tire5_enV;
-  output reg tire5_enF;
-  output reg [5:0] tire6_rT;
-  output [8:0] tire6_rF;
-  output reg tire6_enG;
-  output reg tire6_enV;
-  output reg tire6_enF;
-  output reg [5:0] tire7_rT;
-  output [8:0] tire7_rF;
-  output reg tire7_enG;
-  output reg tire7_enV;
-  output reg tire7_enF;
-  output reg [5:0] tire8_rT;
-  output [8:0] tire8_rF;
-  output reg tire8_enG;
-  output reg tire8_enV;
-  output reg tire8_enF;
+  output pwire [8:0] flTE;
+  output pwire reg tire_enFl;
+  output pwire reg [5:0] tire0_rT;
+  output pwire [8:0] tire0_rF;
+  output pwire reg tire0_enG;
+  output pwire reg tire0_enV;
+  output pwire reg tire0_enF;
+  output pwire reg [5:0] tire1_rT;
+  output pwire [8:0] tire1_rF;
+  output pwire reg tire1_enG;
+  output pwire reg tire1_enV;
+  output pwire reg tire1_enF;
+  output pwire reg [5:0] tire2_rT;
+  output pwire [8:0] tire2_rF;
+  output pwire reg tire2_enG;
+  output pwire reg tire2_enV;
+  output pwire reg tire2_enF;
+  output pwire reg [5:0] tire3_rT;
+  output pwire [8:0] tire3_rF;
+  output pwire reg tire3_enG;
+  output pwire reg tire3_enV;
+  output pwire reg tire3_enF;
+  output pwire reg [5:0] tire4_rT;
+  output pwire [8:0] tire4_rF;
+  output pwire reg tire4_enG;
+  output pwire reg tire4_enV;
+  output pwire reg tire4_enF;
+  output pwire reg [5:0] tire5_rT;
+  output pwire [8:0] tire5_rF;
+  output pwire reg tire5_enG;
+  output pwire reg tire5_enV;
+  output pwire reg tire5_enF;
+  output pwire reg [5:0] tire6_rT;
+  output pwire [8:0] tire6_rF;
+  output pwire reg tire6_enG;
+  output pwire reg tire6_enV;
+  output pwire reg tire6_enF;
+  output pwire reg [5:0] tire7_rT;
+  output pwire [8:0] tire7_rF;
+  output pwire reg tire7_enG;
+  output pwire reg tire7_enV;
+  output pwire reg tire7_enF;
+  output pwire reg [5:0] tire8_rT;
+  output pwire [8:0] tire8_rF;
+  output pwire reg tire8_enG;
+  output pwire reg tire8_enV;
+  output pwire reg tire8_enF;
 
-  output reg dotire;
-  output reg [3:0] retcnt;
-  output reg [8:0] retclr;
+  output pwire reg dotire;
+  output pwire reg [3:0] retcnt;
+  output pwire reg [8:0] retclr;
 
-  output reg jupd0_en;
-  output reg jupdt0_en;
-  output reg jupd0_ght_en;
-  output reg jupd0_ght2_en;
-  output reg [15:0] jupd0_addr;
-  output reg [12:0] jupd0_baddr;
-  output reg [1:0] jupd0_sc;
-  output reg jupd0_tk;
-  output reg jupd1_en;
-  output reg jupdt1_en;
-  output reg jupd1_ght_en;
-  output reg jupd1_ght2_en;
-  output reg [15:0] jupd1_addr;
-  output reg [12:0] jupd1_baddr;
-  output reg [1:0] jupd1_sc;
-  output reg jupd1_tk;
+  output pwire reg jupd0_en;
+  output pwire reg jupdt0_en;
+  output pwire reg jupd0_ght_en;
+  output pwire reg jupd0_ght2_en;
+  output pwire reg [15:0] jupd0_addr;
+  output pwire reg [12:0] jupd0_baddr;
+  output pwire reg [1:0] jupd0_sc;
+  output pwire reg jupd0_tk;
+  output pwire reg jupd1_en;
+  output pwire reg jupdt1_en;
+  output pwire reg jupd1_ght_en;
+  output pwire reg jupd1_ght2_en;
+  output pwire reg [15:0] jupd1_addr;
+  output pwire reg [12:0] jupd1_baddr;
+  output pwire reg [1:0] jupd1_sc;
+  output pwire reg jupd1_tk;
   
   
   input [9:0] 			ret0_addr;
@@ -591,7 +591,7 @@ module cntrl_find_outcome(
   input [5:0] mem_II_upper;
   input [5:0] mem_II_upper2;
   input has_stores;
-  output [5:0] mem_II_upper_out;
+  output pwire [5:0] mem_II_upper_out;
   input [9:0] mem_II_bits_fine;
   input [9:0] mem_II_bits_ldconfl;
   input [9:0] mem_II_bits_waitconfl;
@@ -599,192 +599,192 @@ module cntrl_find_outcome(
   input [9:0] mem_II_bits_ret;
   input mem_II_stall;
 
-  output dotire_d;
-  output [9:0] xbreak;
-  output has_xbreak;
+  output pwire dotire_d;
+  output pwire [9:0] xbreak;
+  output pwire has_xbreak;
 
-  wire mem_match;
-  wire [9:0][RET_WIDTH-1:0] ret_data; 
-  wire [3:0] ret[9:0];
-  wire [9:0] flagSet;
-  wire [9:0] pending;
-  wire [9:0] exceptn;
-  wire [9:0] replay;
-  wire [9:0] replay_safe;
-  wire [9:0] done;
-  wire [9:0] fpudone;
-  wire [9:0] btb_miss;
-  wire break_pending,break_prejmp_tick,break_prejmp_ntick;
-  wire break_exceptn;
-  wire break_replay,break_replayS;
-  wire break_jump0;
-  wire break_jump1;
-  wire [9:0][9:0] ret_prev;
-  wire [9:0][9:0] ret_prevG;
-  wire [9:0][9:0] ret_prevV;
-  wire [9:0][9:0] ret_prevF;
-  wire [9:0] xbreak0;
-  wire [9:0] break_;
-  wire [9:0][5:0] rT;
-  wire [8:0][5:0] rTe;
-  wire [9:0] jump0_misPred;
-  wire [9:0] jump1_misPred;
-  wire indirMismatch;
-  wire indir_error;
-  wire has_break;
-  wire has_xbreak0;
+  pwire mem_match;
+  pwire [9:0][RET_WIDTH-1:0] ret_data; 
+  pwire [3:0] ret[9:0];
+  pwire [9:0] flagSet;
+  pwire [9:0] pending;
+  pwire [9:0] exceptn;
+  pwire [9:0] replay;
+  pwire [9:0] replay_safe;
+  pwire [9:0] done;
+  pwire [9:0] fpudone;
+  pwire [9:0] btb_miss;
+  pwire break_pending,break_prejmp_tick,break_prejmp_ntick;
+  pwire break_exceptn;
+  pwire break_replay,break_replayS;
+  pwire break_jump0;
+  pwire break_jump1;
+  pwire [9:0][9:0] ret_prev;
+  pwire [9:0][9:0] ret_prevG;
+  pwire [9:0][9:0] ret_prevV;
+  pwire [9:0][9:0] ret_prevF;
+  pwire [9:0] xbreak0;
+  pwire [9:0] break_;
+  pwire [9:0][5:0] rT;
+  pwire [8:0][5:0] rTe;
+  pwire [9:0] jump0_misPred;
+  pwire [9:0] jump1_misPred;
+  pwire indirMismatch;
+  pwire indir_error;
+  pwire has_break;
+  pwire has_xbreak0;
 
-  wire [3:0] retcnt_d;
+  pwire [3:0] retcnt_d;
   
-  wire [BOB_WIDTH-1:0] bob_wdata;
-  wire [BOB_WIDTH-1:0] bob_rdata;
+  pwire [BOB_WIDTH-1:0] bob_wdata;
+  pwire [BOB_WIDTH-1:0] bob_rdata;
 
   reg [27:0] sched_rst_cnt;
-  wire [27:0] sched_rst_cnt_d;
+  pwire [27:0] sched_rst_cnt_d;
   
-  wire [9:0][8:0] IPOff;
-  wire [9:0][2:0] magicO;
-  wire [8:0] tireG;
-  wire [8:0] tireV;
-  wire [8:0] tireF;
-  wire [8:0] no_tire;
+  pwire [9:0][8:0] IPOff;
+  pwire [9:0][2:0] magicO;
+  pwire [8:0] tireG;
+  pwire [8:0] tireV;
+  pwire [8:0] tireF;
+  pwire [8:0] no_tire;
 
-  wire [8:0][8:0] tire_rF;
-  wire [8:0][8:0] tire_rFl;
+  pwire [8:0][8:0] tire_rF;
+  pwire [8:0][8:0] tire_rFl;
 
-  wire [4:0] jump0Type;
-  wire [3:0] jump0Pos;
-  wire [42:0] jump0IP;
-  wire [4:0] jump1Type;
-  wire [3:0] jump1Pos;
-  wire [42:0] jump1IP;
+  pwire [4:0] jump0Type;
+  pwire [3:0] jump0Pos;
+  pwire [42:0] jump0IP;
+  pwire [4:0] jump1Type;
+  pwire [3:0] jump1Pos;
+  pwire [42:0] jump1IP;
   
-  wire       jump0BtbWay;
-  wire [1:0] jump0JmpInd;
-  wire [7:0] jump0GHT;
-  wire [15:0] jump0GHT2;
-  wire        jump0Val;
-  wire       jump1BtbWay;
-  wire [1:0] jump1JmpInd;
-  wire [7:0] jump1GHT;
-  wire [15:0] jump1GHT2;
-  wire        jump1Val;
-  wire [1:0] jump0SC;
-  wire jump0Miss;
-  wire jump0BtbOnly;
-  wire [1:0] jump1SC;
-  wire jump1Miss;
-  wire jump1BtbOnly;
+  pwire       jump0BtbWay;
+  pwire [1:0] jump0JmpInd;
+  pwire [7:0] jump0GHT;
+  pwire [15:0] jump0GHT2;
+  pwire        jump0Val;
+  pwire       jump1BtbWay;
+  pwire [1:0] jump1JmpInd;
+  pwire [7:0] jump1GHT;
+  pwire [15:0] jump1GHT2;
+  pwire        jump1Val;
+  pwire [1:0] jump0SC;
+  pwire jump0Miss;
+  pwire jump0BtbOnly;
+  pwire [1:0] jump1SC;
+  pwire jump1Miss;
+  pwire jump1BtbOnly;
 
-  wire jump0_taken;
-  wire [5:0] jump0_flags;
-  wire jump1_taken;
-  wire [5:0] jump1_flags;
+  pwire jump0_taken;
+  pwire [5:0] jump0_flags;
+  pwire jump1_taken;
+  pwire [5:0] jump1_flags;
 
-  wire [9:0][5:0] nextFlags;
+  pwire [9:0][5:0] nextFlags;
   
-  wire [42:0] breakIP;
-  wire [62:43] bbaseIP;
-  wire [9:0][62:0] nextIP;
-  wire [19:0] jupd0_IP;
-  wire [19:0] jupd1_IP;
-  wire lastIP;
+  pwire [42:0] breakIP;
+  pwire [62:43] bbaseIP;
+  pwire [9:0][62:0] nextIP;
+  pwire [19:0] jupd0_IP;
+  pwire [19:0] jupd1_IP;
+  pwire lastIP;
 
-  wire both_threads;
-  wire thread0,thread1;
+  pwire both_threads;
+  pwire thread0,thread1;
 
   reg [10:0] excpt_fpu;
 
-  wire tire_thread;
+  pwire tire_thread;
   reg tire_thread_reg;
 
-  wire [62:0] exceptIP_d;
-  wire except_thread_d=tire_thread_reg;
-  wire except_both_d=both_threads;
-  wire except_d;
-  wire [15:0] proc_d;
-  wire [3:0] except_attr_d;
+  pwire [62:0] exceptIP_d;
+  pwire except_thread_d=tire_thread_reg;
+  pwire except_both_d=both_threads;
+  pwire except_d;
+  pwire [15:0] proc_d;
+  pwire [3:0] except_attr_d;
 
-  wire [5:0] flags_d;
+  pwire [5:0] flags_d;
   reg  [5:0] flags[1:0];
 
- // wire dotire_d;
-  wire has_some,has_some2;
+ // pwire dotire_d;
+  pwire has_some,has_some2;
 
-  wire [5:0] tire_addr;
+  pwire [5:0] tire_addr;
   reg  [5:0] tire_addr_reg;
 
-  wire [64:0] indir_IP;
-  wire indir_ready;
-  wire has_indir;
-  wire i_has_indir;
-  wire [42:0] takenIP;
+  pwire [64:0] indir_IP;
+  pwire indir_ready;
+  pwire has_indir;
+  pwire i_has_indir;
+  pwire [42:0] takenIP;
 
-  wire [3:0] attr;
-  wire [3:0] jump0Attr;
-  wire [3:0] jump1Attr;
-  wire jump0CLP;
-  wire jump1CLP;
+  pwire [3:0] attr;
+  pwire [3:0] jump0Attr;
+  pwire [3:0] jump1Attr;
+  pwire jump0CLP;
+  pwire jump1CLP;
 
   reg [5:0] initcount;
-  wire [5:0] initcount_d;
+  pwire [5:0] initcount_d;
   reg init;
 
-  wire [62:0] excpt_handlerIP;
-  wire [7:0] excpt_code;
-  wire jump0Pred;
-  wire jump1Pred;
+  pwire [62:0] excpt_handlerIP;
+  pwire [7:0] excpt_code;
+  pwire jump0Pred;
+  pwire jump1Pred;
 
-  wire [15:0] update_ght_addr_j0;
-  wire [15:0] update_ght_addr_j1;
-  wire [15:0] update_ght2_addr_j0;
-  wire [15:0] update_ght2_addr_j1;
-  wire [12:0] update_btb_addr_j0;
-  wire [12:0] update_btb_addr_j1;
-  wire [1:0]  update_sc_j0;
-  wire [1:0]  update_sc_j1;
+  pwire [15:0] update_ght_addr_j0;
+  pwire [15:0] update_ght_addr_j1;
+  pwire [15:0] update_ght2_addr_j0;
+  pwire [15:0] update_ght2_addr_j1;
+  pwire [12:0] update_btb_addr_j0;
+  pwire [12:0] update_btb_addr_j1;
+  pwire [1:0]  update_sc_j0;
+  pwire [1:0]  update_sc_j1;
 
-  wire [9:0] jump0_here;
-  wire [9:0] jump1_here;
-  wire jump0_in,jump1_in;
+  pwire [9:0] jump0_here;
+  pwire [9:0] jump1_here;
+  pwire jump0_in,jump1_in;
 
-  wire [9:0] tk_after;
-  wire [9:0] afterTick;
+  pwire [9:0] tk_after;
+  pwire [9:0] afterTick;
 
-  wire [9:0] isGen;
-  wire [9:0] isVec;
-  wire [9:0] isFPU;
+  pwire [9:0] isGen;
+  pwire [9:0] isVec;
+  pwire [9:0] isFPU;
   
-  wire [9:0] rgen;
-  wire [9:0] rvec;
-  wire [9:0] last_instr;
+  pwire [9:0] rgen;
+  pwire [9:0] rvec;
+  pwire [9:0] last_instr;
 
-  wire [64:0] base_add;
-  wire is_after_spec;
-  wire [9:0] rd_after_spec;
+  pwire [64:0] base_add;
+  pwire is_after_spec;
+  pwire [9:0] rd_after_spec;
   reg [62:0] baseIP;
-  wire [62:0] baseIP_d;
+  pwire [62:0] baseIP_d;
   
-  wire [8:0] retclrP;
+  pwire [8:0] retclrP;
 
-  wire [3:0] jump0JMask;
-  wire [3:0] jump1JMask;
-  wire [3:0] jump0Mask;
-  wire [3:0] jump1Mask;
+  pwire [3:0] jump0JMask;
+  pwire [3:0] jump1JMask;
+  pwire [3:0] jump0Mask;
+  pwire [3:0] jump1Mask;
       
-  wire [9:0] flag_last;
-  wire flag_has;
-  wire [9:0] lfl;
-  wire lfl_has;
-  wire has_someX;
+  pwire [9:0] flag_last;
+  pwire flag_has;
+  pwire [9:0] lfl;
+  pwire lfl_has;
+  pwire has_someX;
 
-  wire [19:0] jump0BND=20'hf80ff;
-  wire [19:0] jump1BND=20'hf80ff;
+  pwire [19:0] jump0BND=20'hf80ff;
+  pwire [19:0] jump1BND=20'hf80ff;
 
-  wire [15:0] msrss_no_d;
-  wire msrss_thread_d;
-  wire msrss_en_d;
-  wire [64:0] msrss_data_d;
+  pwire [15:0] msrss_no_d;
+  pwire msrss_thread_d;
+  pwire msrss_en_d;
+  pwire [64:0] msrss_data_d;
 
   reg [42:0] archReg_xcpt_retIP		[1:0];
   reg [62:0] archReg_xcpt_handlerIP;
@@ -807,8 +807,8 @@ module cntrl_find_outcome(
       assign btb_miss[k]=(jump0Pos==k && jump0Miss) || (jump1Pos==k && jump1Miss);
       assign jump0_here[k]=jump0Pos==k;
       assign jump1_here[k]=jump1Pos==k;
-      wire [9:0] flag_last;
-      wire flag_has;
+      pwire [9:0] flag_last;
+      pwire flag_has;
       /* verilator lint_off WIDTH */
       if (k>0) bit_find_last_bit #(10) lastfl_mod({10'b0,flagSet[k-1:0]},flag_last,flag_has);
       /* verilator lint_on WIDTH */
@@ -835,9 +835,9 @@ module cntrl_find_outcome(
 
       assign afterTick[k]=IPOff[k][8];
      
-      wire [8:0] flE; 
+      pwire [8:0] flE; 
       for(j=0;j<9;j=j+1) begin : ret_gen
-	  wire reteq=ret[j]==k;
+	  pwire reteq=ret[j]==k;
           assign ret_prev[j][k]=rT[j]==rT[k] && ~xbreak[k] && k>j;
           assign ret_prevG[j][k]=ret_prev[j][k] && isGen[j] && isGen[k];
           assign ret_prevV[j][k]=ret_prev[j][k] && isVec[j] && isVec[k];
@@ -915,7 +915,7 @@ module cntrl_find_outcome(
       .flags9(ret_data[9][`except_flags])
       );
 
-      wire [62:0] from_IP;
+      pwire [62:0] from_IP;
       assign from_IP=(~tk_after[k]) ? baseIP[62:0] : 63'bz;
       assign from_IP=(tk_after[k] & jump0Pred) ? {jump0BND,jump0IP[42:0]} : 63'bz;
       assign from_IP=(tk_after[k] & jump1Pred) ? {jump1BND,jump1IP[42:0]} : 63'bz;

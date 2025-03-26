@@ -101,7 +101,7 @@ module addrcalc(
   input [3:0] attr;
   input rsStall;
   input read_clkEn;
-  output doStall;
+  output pwire doStall;
   input bus_hold;
   input [OPERATION_WIDTH-1:0] op;
   input [3:0] shiftSize;
@@ -119,50 +119,50 @@ module addrcalc(
   input [BANK_COUNT-1:0] other1_banks;
   input [BANK_COUNT-1:0] otherR_banks;
   input other_flip;
-  output conflict;
-  output mlbMiss;
+  output pwire conflict;
+  output pwire mlbMiss;
   output pageFault;
-  output [7:0] faultCode;
-  output [8:0] faultNo;
-  output [REG_WIDTH-1:0] mOp_register;
-  output [2:0] mOp_type;
-  output mOp_skip_LDQ;
-  output [8:0] mOp_LSQ;
-  output [9:0] mOp_II;
-  output [5:0] mOp_WQ;
-  output [3:0] mOp_attr;
-  output [PADDR_WIDTH-1:8] mOp_addrEven;
-  output [PADDR_WIDTH-1:8] mOp_addrOdd;
-  output [43:0] mOp_addrMain;
-  output [4:0] mOp_sz;
-  output mOp_st;
-  output mOp_en;
-  output mOp_secq;
-  output mOp_invmlb;
-  output mOp_rsEn;
-  output mOp_thread;
-  output mOp_lsflag;
-  output [BANK_COUNT-1:0] mOp_banks;
-  output [BANK_COUNT-1:0] mOp_rsBanks;
-  output [4:0] mOp_bank0;
-  output mOp_odd;
-  output [1:0] mOp_addr_low;
-  output mOp_split;
-  output [BANK_COUNT-1:0] mOp_noBanks;
+  output pwire [7:0] faultCode;
+  output pwire [8:0] faultNo;
+  output pwire [REG_WIDTH-1:0] mOp_register;
+  output pwire [2:0] mOp_type;
+  output pwire mOp_skip_LDQ;
+  output pwire [8:0] mOp_LSQ;
+  output pwire [9:0] mOp_II;
+  output pwire [5:0] mOp_WQ;
+  output pwire [3:0] mOp_attr;
+  output pwire [PADDR_WIDTH-1:8] mOp_addrEven;
+  output pwire [PADDR_WIDTH-1:8] mOp_addrOdd;
+  output pwire [43:0] mOp_addrMain;
+  output pwire [4:0] mOp_sz;
+  output pwire mOp_st;
+  output pwire mOp_en;
+  output pwire mOp_secq;
+  output pwire mOp_invmlb;
+  output pwire mOp_rsEn;
+  output pwire mOp_thread;
+  output pwire mOp_lsflag;
+  output pwire [BANK_COUNT-1:0] mOp_banks;
+  output pwire [BANK_COUNT-1:0] mOp_rsBanks;
+  output pwire [4:0] mOp_bank0;
+  output pwire mOp_odd;
+  output pwire [1:0] mOp_addr_low;
+  output pwire mOp_split;
+  output pwire [BANK_COUNT-1:0] mOp_noBanks;
   input [15:0] msrss_no;
   input msrss_en;
   input msrss_thr;
   input [64:0] msrss_data;
-  output mlb_clkEn;
-  output cout_secq;
-  output  [TLB_IP_WIDTH-1:0] addrTlb;
-  output [23:0] sproc;
+  output pwire mlb_clkEn;
+  output pwire cout_secq;
+  output pwire  [TLB_IP_WIDTH-1:0] addrTlb;
+  output pwire [23:0] sproc;
   input [TLB_DATA_WIDTH-1:0] mlb_data0;
   input [TLB_DATA_WIDTH-1:0] mlb_data1;
   input mlb_hit;
 
   reg [2:0] opsize;
-  wire hasIndex;
+  pwire hasIndex;
   reg aligned;//aligned for int subsys purpose not arch
   reg aligned2;//same for complex addressing
   reg tiny; //1 or 2 byte
@@ -173,43 +173,43 @@ module addrcalc(
   reg modeCmplx;
   reg modeCmplx_reg;
   
-  wire isLongOffset;
+  pwire isLongOffset;
   reg stepOver;//step over to next bank because of offset
   reg stepOver2;
   reg addrCarry;//offset by one bank
-  wire stepOverCmplx;
-  wire stepOverCmplx2;
+  pwire stepOverCmplx;
+  pwire stepOverCmplx2;
 
-  wire modeCmplx_d;
+  pwire modeCmplx_d;
   //complex mode when index register used, or offset not fit in unsigned 12-bit range
 
   reg [31:0] banks0;
   
-  wire [4:0] bank0;
-  wire [4:0] bankL1;
+  pwire [4:0] bank0;
+  pwire [4:0] bankL1;
   reg  [2:0] mOp_type_reg;
-  wire split;
-  wire [13:0] addrMain;
-  wire [14:0] addrNext;
-  wire [13:0] dummy0;
-//  wire [13:0] CSAarg1;
-//  wire [13:0] CSAarg2;
-//  wire pageCarry;
-//  wire pageCarry1;
+  pwire split;
+  pwire [13:0] addrMain;
+  pwire [14:0] addrNext;
+  pwire [13:0] dummy0;
+//  pwire [13:0] CSAarg1;
+//  pwire [13:0] CSAarg2;
+//  pwire pageCarry;
+//  pwire pageCarry1;
   
-//  wire [5:0] CSAbn0;
-//  wire [5:0] CSAbn1;
+//  pwire [5:0] CSAbn0;
+//  pwire [5:0] CSAbn1;
   
-  wire [TLB_IP_WIDTH-1:0] addrTlb;
-  wire [TLB_DATA_WIDTH-1:0] mlb_data0;
-  wire [TLB_DATA_WIDTH-1:0] mlb_data1;
-  wire [TLB_DATA_WIDTH-1:0] mlb_data;
-  wire [TLB_DATA_WIDTH-1:0] mlb_data_next;
+  pwire [TLB_IP_WIDTH-1:0] addrTlb;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data0;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data1;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data_next;
   reg [TLB_DATA_WIDTH-1:0] mlb_data_reg;
   
-  wire mlb_clkEn;
-  wire mlb_hit;
-  wire cout_secq;
+  pwire mlb_clkEn;
+  pwire mlb_hit;
+  pwire cout_secq;
   
 
   reg read_clkEn_reg;
@@ -217,16 +217,16 @@ module addrcalc(
   reg [OPERATION_WIDTH-1:0] op_reg;
 
 
-  wire [BANK_COUNT-1:0] all_banks;
-  wire otherness;
+  pwire [BANK_COUNT-1:0] all_banks;
+  pwire otherness;
 
-  wire [BANK_COUNT-1:0] bit_confl;
+  pwire [BANK_COUNT-1:0] bit_confl;
   reg  [BANK_COUNT-1:0] bit_confl_reg;
   
   reg cin_secq_reg;
   
-  wire carryNext;
- // wire non_overlap;
+  pwire carryNext;
+ // pwire non_overlap;
 
   reg [23:0] proc;
   reg [1:0][23:0] pproc;
@@ -235,13 +235,13 @@ module addrcalc(
   //reg [23:0] proc_reg;
   //reg [23:0] proc_reg2;
   reg [1:0][63:0] mflags;
-  wire [64:0] mflags0; 
+  pwire [64:0] mflags0; 
   integer i;
   
 //  reg [ADDR_WIDTH-1:48] cmplxAddr_reg;
   
-//  wire [4:0] bankNextOff;
-//  wire hasBankNext;
+//  pwire [4:0] bankNextOff;
+//  pwire hasBankNext;
   
   reg bus_hold_reg;
   reg bus_hold_reg2;
@@ -254,19 +254,19 @@ module addrcalc(
   reg lsflag_reg;
   reg thread_reg2;
 
-  wire [1:0] rcn_mask;
+  pwire [1:0] rcn_mask;
 
   reg except_reg;
   reg except_reg2;
   reg except_thread_reg;
   reg except_thread_reg2;
   
-  wire [1:0] fault_mlb;
-  wire [1:0] fault_mlb_next;
-  wire [4:0] lastSz;
-  wire [1:0] pageFault_t;
+  pwire [1:0] fault_mlb;
+  pwire [1:0] fault_mlb_next;
+  pwire [4:0] lastSz;
+  pwire [1:0] pageFault_t;
   reg [1:0] pageFault_t_reg; 
-  wire fault_cann;
+  pwire fault_cann;
   reg fault_cann_reg;
   reg error_reg;
 
@@ -275,7 +275,7 @@ module addrcalc(
   generate
       genvar p,q;
       for(p=0;p<32;p=p+1) begin
-          wire otherness;
+          pwire otherness;
           assign otherness=~(otherR_banks[p] & all_banks[p]);
         
           if (INDEX==0) begin
@@ -425,7 +425,7 @@ module addrcalc(
   assign fault_mlb={mflags0[`mflags_priv+1] & mlb_data[`dmlbData_user] , ~na}; 
   assign fault_mlb_next={mflags0[`mflags_priv+1] & mlb_data_next[`dmlbData_user],  ~na_next}; 
 
-  wire coov,cout_secq1,cout_secq2;
+  pwire coov,cout_secq1,cout_secq2;
 
   adder_15_11 #(15) nextCAddr_mod({1'b0,cmplxAddr[13:0]},15'b10000000,addrNext,1'b0,1'b1,,coov,,);
   
@@ -610,8 +610,8 @@ endmodule
 module addrcalc_get_shiftSize(op,shiftSize,sh2);
   localparam OPERATION_WIDTH=`operation_width;
   input [OPERATION_WIDTH-1:0] op;
-  output reg [3:0] shiftSize;
-  output reg [1:0] sh2;
+  output pwire reg [3:0] shiftSize;
+  output pwire reg [1:0] sh2;
   always @* begin
       if (op[7:6]==2'b01) begin
           case(op[9:8])

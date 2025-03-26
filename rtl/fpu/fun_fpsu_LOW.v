@@ -50,45 +50,45 @@ module fun_fpuSL(
   input [67:0] u1_A;
   input [67:0] u1_B;
   input [67:0] u1_Bx;
-  output [67:0] u1_Bxo;
+  output pwire [67:0] u1_Bxo;
   input [3:0] u1_en;
   input [20:0] u1_op;
   input [3:0] u1_fufwd_A;
   input [3:0] u1_fuufwd_A;
   input [3:0] u1_fufwd_B;
   input [3:0] u1_fuufwd_B;
-  output [13:0] u1_ret;
-  output u1_ret_en;
+  output pwire [13:0] u1_ret;
+  output pwire u1_ret_en;
   input u1_XSUB;
   input u1_FX;
 
   input [67:0] u3_A;
   input [67:0] u3_B;
   input [67:0] u3_Bx;
-  output [67:0] u3_Bxo;
+  output pwire [67:0] u3_Bxo;
   input [3:0] u3_en;
   input [20:0] u3_op;
   input [3:0] u3_fufwd_A;
   input [3:0] u3_fuufwd_A;
   input [3:0] u3_fufwd_B;
   input [3:0] u3_fuufwd_B;
-  output [13:0] u3_ret;
-  output u3_ret_en;
+  output pwire [13:0] u3_ret;
+  output pwire u3_ret_en;
   input u3_XSUB;
   input u3_FX;
   
   input [67:0] u5_A;
   input [67:0] u5_B;
   input [67:0] u5_Bx;
-  output [67:0] u5_Bxo;
+  output pwire [67:0] u5_Bxo;
   input [3:0] u5_en;
   input [20:0] u5_op;
   input [3:0] u5_fufwd_A;
   input [3:0] u5_fuufwd_A;
   input [3:0] u5_fufwd_B;
   input [3:0] u5_fuufwd_B;
-  output [13:0] u5_ret;
-  output u5_ret_en;
+  output pwire [13:0] u5_ret;
+  output pwire u5_ret_en;
   input u5_XSUB;
   input u5_FX;
   
@@ -97,38 +97,38 @@ module fun_fpuSL(
   (* register equiload *) input [67:0] FUF1;
   (* register equiload *) input [67:0] FUF2;
   (* register equiload *) input [67:0] FUF3;
-  (* register equiload *) output [67:0] FUF4;
-  (* register equiload *) output [67:0] FUF5;
-  (* register equiload *) output [67:0] FUF6;
-  (* register equiload *) output [67:0] FUF7;
-  (* register equiload *) output [67:0] FUF8;
-  (* register equiload *) output [67:0] FUF9;
-  (* register equiload *) output [67:0] FUF4X;
-  (* register equiload *) output [67:0] FUF5X;
-  (* register equiload *) output [67:0] FUF6X;
+  (* register equiload *) output pwire [67:0] FUF4;
+  (* register equiload *) output pwire [67:0] FUF5;
+  (* register equiload *) output pwire [67:0] FUF6;
+  (* register equiload *) output pwire [67:0] FUF7;
+  (* register equiload *) output pwire [67:0] FUF8;
+  (* register equiload *) output pwire [67:0] FUF9;
+  (* register equiload *) output pwire [67:0] FUF4X;
+  (* register equiload *) output pwire [67:0] FUF5X;
+  (* register equiload *) output pwire [67:0] FUF6X;
   input [67:0] xdataD;
-  output [67:0] xdata2D;
+  output pwire [67:0] xdata2D;
   input [67:0] xdataB;
-  output [67:0] xdata2B;
+  output pwire [67:0] xdata2B;
   input [67:0] xdataC;
-  output [67:0] xdata2C;
+  output pwire [67:0] xdata2C;
 
   input [1:0] ALT_INP;
   input [67:0] ALTDATA0;
   
  
-  (* register equiload *) output [5:0] FOOSL0_out;
-  (* register equiload *) output [5:0] FOOSL1_out;
-  (* register equiload *) output [5:0] FOOSL2_out;
+  (* register equiload *) output pwire [5:0] FOOSL0_out;
+  (* register equiload *) output pwire [5:0] FOOSL1_out;
+  (* register equiload *) output pwire [5:0] FOOSL2_out;
 
   input [67:0] XI_dataS;
-  output [67:0] XI_dataT;
+  output pwire [67:0] XI_dataT;
 
-  wire [67:0] ALTDATA1;
+  pwire [67:0] ALTDATA1;
   reg [67:0] ALTDATA1_reg;
   reg [67:0] ALTDATA1_reg2;
-  wire daltXA;
-  wire daltXB;
+  pwire daltXA;
+  pwire daltXB;
   reg daltXA_reg;
   reg daltXB_reg;
   reg daltXA_reg2;
@@ -194,8 +194,8 @@ module fun_fpuSL(
   XI_dataS,XI_dataT
   );
 
-  wire [69:0] FUCVT1A;
-  wire [69:0] FUCVT1B;
+  pwire [69:0] FUCVT1A;
+  pwire [69:0] FUCVT1B;
 
   cvt_FP_I_mod fp2i_mod(
   .clk(clk),

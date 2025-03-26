@@ -60,8 +60,8 @@ module fun_fpsu_BOTH(
   input [3:0] u1_fuufwd_A;
   input [3:0] u1_fufwd_B;
   input [3:0] u1_fuufwd_B;
-  output [13:0] u1_ret;
-  output u1_ret_en;
+  output pwire [13:0] u1_ret;
+  output pwire u1_ret_en;
   input u1_XSUB;
 
   (* bus=SIMDL bus_spacing=10 bus_off=1 *) input [67:0] u3_A0;
@@ -74,8 +74,8 @@ module fun_fpsu_BOTH(
   input [3:0] u3_fuufwd_A;
   input [3:0] u3_fufwd_B;
   input [3:0] u3_fuufwd_B;
-  output [13:0] u3_ret;
-  output u3_ret_en;
+  output pwire [13:0] u3_ret;
+  output pwire u3_ret_en;
   input u3_XSUB;
 
   (* bus=SIMDL bus_spacing=10 bus_off=2 *) input [67:0] u5_A0;
@@ -88,8 +88,8 @@ module fun_fpsu_BOTH(
   input [3:0] u5_fuufwd_A;
   input [3:0] u5_fufwd_B;
   input [3:0] u5_fuufwd_B;
-  output [13:0] u5_ret;
-  output u5_ret_en;
+  output pwire [13:0] u5_ret;
+  output pwire u5_ret_en;
   input u5_XSUB;
 
 
@@ -97,29 +97,29 @@ module fun_fpsu_BOTH(
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH1;
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH2;
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH3;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFH4;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFH5;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFH6;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFH7;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFH8;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFH9;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFXH4;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFXH5;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output [67:0] FUFXH6;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH4;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH5;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH6;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH7;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH8;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH9;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXH4;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXH5;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXH6;
   
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL0;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL1;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL2;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL3;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFL4;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFL5;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFL6;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFL7;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFL8;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFL9;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFXL4;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFXL5;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output [67:0] FUFXL6;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL4;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL5;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL6;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL7;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL8;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL9;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXL4;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXL5;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXL6;
 
   input [1:0] ALT_INP;
   (* bus=SIMDL bus_spacing=10 *) input [67:0] ALTDATAL0;
@@ -127,40 +127,40 @@ module fun_fpsu_BOTH(
   (* bus=SIMDH bus_spacing=10 *) input [67:0] ALTDATAH0;
   (* bus=SIMDH bus_spacing=10 *) input [67:0] ALTDATAH1;
 
-  (* register equiload *) output [5:0] FOOFL0;
-  (* register equiload *) output [5:0] FOOFL1;
-  (* register equiload *) output [5:0] FOOFL2;
+  (* register equiload *) output pwire [5:0] FOOFL0;
+  (* register equiload *) output pwire [5:0] FOOFL1;
+  (* register equiload *) output pwire [5:0] FOOFL2;
   
 
   input [135:0] fork_in;
-  output [135:0] fork_out;
+  output pwire [135:0] fork_out;
 
-  wire [67:0] xtra0;
-  wire [67:0] x2tra0;  
-  wire [67:0] xtra1;
-  wire [67:0] x2tra1;  
-  wire [67:0] xtra2;
-  wire [67:0] x2tra2;  
+  pwire [67:0] xtra0;
+  pwire [67:0] x2tra0;  
+  pwire [67:0] xtra1;
+  pwire [67:0] x2tra1;  
+  pwire [67:0] xtra2;
+  pwire [67:0] x2tra2;  
 
-  wire [67:0] u1_Ax;
-  wire [67:0] u1_Bx;
-  wire [67:0] u2_Ax;
-  wire [67:0] u2_Bx;
-  wire [67:0] u3_Ax;
-  wire [67:0] u3_Bx;
-  wire [67:0] u4_Ax;
-  wire [67:0] u4_Bx;
-  wire [67:0] u5_Ax;
-  wire [67:0] u5_Bx;
-  wire [67:0] u6_Ax;
-  wire [67:0] u6_Bx;
+  pwire [67:0] u1_Ax;
+  pwire [67:0] u1_Bx;
+  pwire [67:0] u2_Ax;
+  pwire [67:0] u2_Bx;
+  pwire [67:0] u3_Ax;
+  pwire [67:0] u3_Bx;
+  pwire [67:0] u4_Ax;
+  pwire [67:0] u4_Bx;
+  pwire [67:0] u5_Ax;
+  pwire [67:0] u5_Bx;
+  pwire [67:0] u6_Ax;
+  pwire [67:0] u6_Bx;
   
   /*wire  [67:0] FUFH4X;
-  wire  [67:0] FUFH5X;
-  wire  [67:0] FUFH6X;
-  wire  [67:0] FUFH7X;
-  wire  [67:0] FUFH8X;
-  wire  [67:0] FUFH9X;
+  pwire  [67:0] FUFH5X;
+  pwire  [67:0] FUFH6X;
+  pwire  [67:0] FUFH7X;
+  pwire  [67:0] FUFH8X;
+  pwire  [67:0] FUFH9X;
 
   assign FUFH4=FUFH4X;
   assign FUFH5=FUFH5X;
@@ -169,12 +169,12 @@ module fun_fpsu_BOTH(
   assign FUFH8=FUFH8X;
   assign FUFH9=FUFH9X;
 
-  wire  [67:0] FUFL4X;
-  wire  [67:0] FUFL5X;
-  wire  [67:0] FUFL6X;
-  wire  [67:0] FUFL7X;
-  wire  [67:0] FUFL8X;
-  wire  [67:0] FUFL9X;
+  pwire  [67:0] FUFL4X;
+  pwire  [67:0] FUFL5X;
+  pwire  [67:0] FUFL6X;
+  pwire  [67:0] FUFL7X;
+  pwire  [67:0] FUFL8X;
+  pwire  [67:0] FUFL9X;
 
   assign FUFL4=FUFL4X;
   assign FUFL5=FUFL5X;
@@ -183,30 +183,30 @@ module fun_fpsu_BOTH(
   assign FUFL8=FUFL8X;
   assign FUFL9=FUFL9X;
 */
-  wire [13:0] u1_retH;
-  wire u1_ret_enH;
-  wire [13:0] u2_retH;
-  wire u2_ret_enH;
-  wire [13:0] u3_retH;
-  wire u3_ret_enH;
-  wire [13:0] u4_retH;
-  wire u4_ret_enH;
-  wire [13:0] u5_retH;
-  wire u5_ret_enH;
-  wire [13:0] u6_retH;
-  wire u6_ret_enH;
-  wire [13:0] u1_retL;
-  wire u1_ret_enL;
-  wire [13:0] u2_retL;
-  wire u2_ret_enL;
-  wire [13:0] u3_retL;
-  wire u3_ret_enL;
-  wire [13:0] u4_retL;
-  wire u4_ret_enL;
-  wire [13:0] u5_retL;
-  wire u5_ret_enL;
-  wire [13:0] u6_retL;
-  wire u6_ret_enL;
+  pwire [13:0] u1_retH;
+  pwire u1_ret_enH;
+  pwire [13:0] u2_retH;
+  pwire u2_ret_enH;
+  pwire [13:0] u3_retH;
+  pwire u3_ret_enH;
+  pwire [13:0] u4_retH;
+  pwire u4_ret_enH;
+  pwire [13:0] u5_retH;
+  pwire u5_ret_enH;
+  pwire [13:0] u6_retH;
+  pwire u6_ret_enH;
+  pwire [13:0] u1_retL;
+  pwire u1_ret_enL;
+  pwire [13:0] u2_retL;
+  pwire u2_ret_enL;
+  pwire [13:0] u3_retL;
+  pwire u3_ret_enL;
+  pwire [13:0] u4_retL;
+  pwire u4_ret_enL;
+  pwire [13:0] u5_retL;
+  pwire u5_ret_enL;
+  pwire [13:0] u6_retL;
+  pwire u6_ret_enL;
 
   reg [20:0] u1_op_reg;
   reg [20:0] u3_op_reg;

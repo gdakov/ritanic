@@ -26,8 +26,8 @@ module accum_int64_one(
     input [63:0] A;
     input [107:0][63:0] B;
     input din_en;
-    output [64:0] res;
-    output res_en; //one clock before res
+    output pwire [64:0] res;
+    output pwire res_en; //one clock before res
 
     integer kl;
     //reg [108:0][11:0] exp;
@@ -47,7 +47,7 @@ module accum_int64_one(
 
 
 
-    assign res_en=din_en_reg; //but output on clock 9
+    assign res_en=din_en_reg; //but output pwire on clock 9
 
     assign res=din_en_reg2 ? Bss_reg : 'z;
 endmodule

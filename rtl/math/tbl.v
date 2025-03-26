@@ -17,7 +17,7 @@ module tblD(
   input [2:0] xtra;
   input is_read;
   input is_write;
-  output [67:0] res;
+  output pwire [67:0] res;
 
   reg [255+64:0][67:0] ram;
 

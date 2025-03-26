@@ -34,13 +34,13 @@ module ght_buf(
   input rst;
   input read_clkEn;
   input [12:0] read_addr0;
-  output read_hit0;
+  output pwire read_hit0;
   input [12:0] read_addr1;
-  output read_hit1;
+  output pwire read_hit1;
   input [12:0] read_addr2;
-  output read_hit2;
+  output pwire read_hit2;
   input [12:0] read_addr3;
-  output read_hit3;
+  output pwire read_hit3;
   input [12:0] write_addr;
   input write_wen;
   input write_thread;
@@ -91,13 +91,13 @@ module ght_cam(
   input rst;
   input read_clkEn;
   input [12:0] read_addr0;
-  output read_hit0;
+  output pwire read_hit0;
   input [12:0] read_addr1;
-  output read_hit1;
+  output pwire read_hit1;
   input [12:0] read_addr2;
-  output read_hit2;
+  output pwire read_hit2;
   input [12:0] read_addr3;
-  output read_hit3;
+  output pwire read_hit3;
   input [12:0] write_addr;
   input write_wen;
   input write_thread;
@@ -105,10 +105,10 @@ module ght_cam(
   input except_thread;
 
   reg [31:0] wrtpos;
-  wire [31:0] read_hit0_way;
-  wire [31:0] read_hit1_way;
-  wire [31:0] read_hit2_way;
-  wire [31:0] read_hit3_way;
+  pwire [31:0] read_hit0_way;
+  pwire [31:0] read_hit1_way;
+  pwire [31:0] read_hit2_way;
+  pwire [31:0] read_hit3_way;
 
   assign read_hit0=|read_hit0_way;
   assign read_hit1=|read_hit1_way;

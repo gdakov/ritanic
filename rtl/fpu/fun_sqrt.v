@@ -48,34 +48,34 @@ module fun_fpusqr0(
   input [S+67:0] ul_B;
   input [3:0] u1_en;
   input [12:0] u1_op;
-  output [13:0] u1_ret;
-  output u1_ret_en;
+  output pwire [13:0] u1_ret;
+  output pwire u1_ret_en;
   input [REG_WIDTH-1:0] u1_regNo;
   input [9:0] u1_II;
   input [3:0] en_early;
   input [12:0] op_early;
   
-  output [3:0] outEn;
-  output [9:0] outII;
-  output [12:0] outOp;
-  output [8:0] FUreg;
-  output [8:0] FUSreg;
-  output FUwen;
-  output [S+SIMD_WIDTH-1:0] outAltData;
+  output pwire [3:0] outEn;
+  output pwire [9:0] outII;
+  output pwire [12:0] outOp;
+  output pwire [8:0] FUreg;
+  output pwire [8:0] FUSreg;
+  output pwire FUwen;
+  output pwire [S+SIMD_WIDTH-1:0] outAltData;
 
-  output [2:0] fxFRT_alten;//very fat wire
+  output pwire [2:0] fxFRT_alten;//very fat wire
 	output [2:0]      fxFRT_pause;//same here
 
-  wire [1:0][10:0] fxFCADD_raise;
+  pwire [1:0][10:0] fxFCADD_raise;
   reg [10:0] fxFCADD_raise_reg[1:0];
   reg [10:0] fxFCADD_raise_s_reg[1:0];
-  wire [1:0][10:0] fxFADD_raise;
+  pwire [1:0][10:0] fxFADD_raise;
   reg [10:0] fxFADD_raise_reg[1:0];
   reg [10:0] fxFADD_raise_s_reg[1:0];
-  wire [10:0] fraise2;
-  wire [10:0] fraise3;
-  wire [10:0] fmask2;
-  wire [10:0] fmask3;
+  pwire [10:0] fraise2;
+  pwire [10:0] fraise3;
+  pwire [10:0] fmask2;
+  pwire [10:0] fmask3;
   //wire [15:0] u1_Bx=u1_BH[15:0];
   //wire [15:0] u2_Bx=u2_BH[15:0];
   integer k;
@@ -91,7 +91,7 @@ module fun_fpusqr0(
 	reg [2:0] fxFRT_alten_reg6;
 	wire [2:0] fxFRT_pause;
 	wire [2:0] fxFRT_can;
-    wire [2:0] fxFRT_don;
+    pwire [2:0] fxFRT_don;
     reg [2:0] fxFRT_can_reg;
     reg [2:0] fxFRT_don_reg;
     reg [2:0] fxFRT_don_reg2;
@@ -116,36 +116,36 @@ module fun_fpusqr0(
   reg fxFRT_dbl_ns;
   reg fxFRT_ext_ns;
   reg fxFRT_sngl_ns;
-  wire [63:-1] fxFRT_normA0;
-  wire [15:0] fxFRT_expA;
-  wire [63:-1] fxFRT_normB0;
-  wire [15:0] fxFRT_expB;
-  wire fxFRT_sgnA;
-  wire fxFRT_sgnB;
-    wire [2:0][8:0] rtReg;
-    wire [2:0][9:0] rtII;
-  wire [8:0] frtReg;
-  wire [9:0] frtII;
-  wire [12:0] frtOp;
+  pwire [63:-1] fxFRT_normA0;
+  pwire [15:0] fxFRT_expA;
+  pwire [63:-1] fxFRT_normB0;
+  pwire [15:0] fxFRT_expB;
+  pwire fxFRT_sgnA;
+  pwire fxFRT_sgnB;
+    pwire [2:0][8:0] rtReg;
+    pwire [2:0][9:0] rtII;
+  pwire [8:0] frtReg;
+  pwire [9:0] frtII;
+  pwire [12:0] frtOp;
   reg [8:0] frtReg_reg;
   reg [9:0] frtII_reg;
   reg [12:0] frtOp_reg;
-    wire [2:0][12:0] rtOp;
-    wire [2:0][135:0] rtRes;
+    pwire [2:0][12:0] rtOp;
+    pwire [2:0][135:0] rtRes;
   reg fxFRT_do,fxFRT_en;
   reg [12:0] u1_op_reg;
   reg [9:0]  u1_II_reg;
     reg [3:0]  u1_en_reg;
 
-  wire [S+67:0] rtDataA;
-  wire [S+67:0] rtDataB;
+  pwire [S+67:0] rtDataA;
+  pwire [S+67:0] rtDataB;
   reg  [S+67:0] rtDataA_reg;
   reg  [S+67:0] rtDataB_reg;
 
-  wire [S+67:0] uu_Bv1;
-  wire [S+67:0] uu_Av1;
-  wire [S+67:0] uu_B1;
-  wire [S+67:0] uu_A1;
+  pwire [S+67:0] uu_Bv1;
+  pwire [S+67:0] uu_Av1;
+  pwire [S+67:0] uu_B1;
+  pwire [S+67:0] uu_A1;
   reg [S+67:0] uu_Bv_reg;
   reg [S+67:0] uu_Av_reg;
 

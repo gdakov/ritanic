@@ -42,7 +42,7 @@ module iob_except_ram(
   
   input read_burst;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   
   input [ADDR_WIDTH-1:0] write0_addr;
   input [DATA_WIDTH-1:0] write0_data;
@@ -156,16 +156,16 @@ module iob_except(
   
   input read_step;
   input [5:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data0;
-  output [DATA_WIDTH-1:0] read_data1;
-  output [DATA_WIDTH-1:0] read_data2;
-  output [DATA_WIDTH-1:0] read_data3;
-  output [DATA_WIDTH-1:0] read_data4;
-  output [DATA_WIDTH-1:0] read_data5;
-  output [DATA_WIDTH-1:0] read_data6;
-  output [DATA_WIDTH-1:0] read_data7;
-  output [DATA_WIDTH-1:0] read_data8;
-  output [DATA_WIDTH-1:0] read_data9;
+  output pwire [DATA_WIDTH-1:0] read_data0;
+  output pwire [DATA_WIDTH-1:0] read_data1;
+  output pwire [DATA_WIDTH-1:0] read_data2;
+  output pwire [DATA_WIDTH-1:0] read_data3;
+  output pwire [DATA_WIDTH-1:0] read_data4;
+  output pwire [DATA_WIDTH-1:0] read_data5;
+  output pwire [DATA_WIDTH-1:0] read_data6;
+  output pwire [DATA_WIDTH-1:0] read_data7;
+  output pwire [DATA_WIDTH-1:0] read_data8;
+  output pwire [DATA_WIDTH-1:0] read_data9;
   
   input [ADDR_WIDTH-1:0] write0_addr;
   input [DATA_WIDTH-1:0] write0_data;
@@ -218,8 +218,8 @@ module iob_except(
   input [DATA_WIDTH-1:0] writeInit_data8;
   input [DATA_WIDTH-1:0] writeInit_data9;
  
-  wire [DATA_WIDTH-1:0] writeInit_data[9:0];
-  wire [DATA_WIDTH-1:0] read_data[9:0];
+  pwire [DATA_WIDTH-1:0] writeInit_data[9:0];
+  pwire [DATA_WIDTH-1:0] read_data[9:0];
 
   generate
     genvar k;

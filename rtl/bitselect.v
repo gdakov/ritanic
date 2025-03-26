@@ -21,12 +21,12 @@ module bit_find_last_bit(
   parameter WIDTH=128;
 
   input [WIDTH-1:0] bits;
-  output [WIDTH-1:0] bitsOutIndex;
-  output found;
+  output pwire [WIDTH-1:0] bitsOutIndex;
+  output pwire found;
 
-  wire [WIDTH:0] bits1={bits,1'b1};
-  wire [WIDTH:0] match;
-  wire notFound;  
+  pwire [WIDTH:0] bits1={bits,1'b1};
+  pwire [WIDTH:0] match;
+  pwire notFound;  
   assign {bitsOutIndex,notFound}=match;
   assign found=~notFound;
   
@@ -50,12 +50,12 @@ module bit_find_first_bit(
   parameter WIDTH=128;
   
   input [WIDTH-1:0] bits;
-  output [WIDTH-1:0] bitsOutIndex;
-  output found;
+  output pwire [WIDTH-1:0] bitsOutIndex;
+  output pwire found;
   
-  wire [WIDTH:0] match;
-  wire [WIDTH:0] bits1={1'b1,bits};
-  wire notFound;
+  pwire [WIDTH:0] match;
+  pwire [WIDTH:0] bits1={1'b1,bits};
+  pwire notFound;
     
   assign {notFound,bitsOutIndex}=match;
   assign found=~notFound;
@@ -80,8 +80,8 @@ module bit_find_first_bit_tail(
   parameter WIDTH=128;
   
   input [WIDTH-1:0] bits;
-  output [WIDTH-1:0] bitsOutIndex;
-  output found;
+  output pwire [WIDTH-1:0] bitsOutIndex;
+  output pwire found;
   
     
   genvar i;
@@ -120,20 +120,20 @@ input needed0;
 input needed1;
 input needed2;
 input needed3;
-output [WIDTH-1:0] bitsOut0;
-output [WIDTH-1:0] bitsOut1;
-output [WIDTH-1:0] bitsOut2;
-output [WIDTH-1:0] bitsOut3;
-output doStall;
+output pwire [WIDTH-1:0] bitsOut0;
+output pwire [WIDTH-1:0] bitsOut1;
+output pwire [WIDTH-1:0] bitsOut2;
+output pwire [WIDTH-1:0] bitsOut3;
+output pwire doStall;
 
-wire found0;
-wire found1;
-wire found2;
-wire found3;
-wire [WIDTH-1:0] bitsOutIndex0;
-wire [WIDTH-1:0] bitsOutIndex1;
-wire [WIDTH-1:0] bitsOutIndex2;
-wire [WIDTH-1:0] bitsOutIndex3;
+pwire found0;
+pwire found1;
+pwire found2;
+pwire found3;
+pwire [WIDTH-1:0] bitsOutIndex0;
+pwire [WIDTH-1:0] bitsOutIndex1;
+pwire [WIDTH-1:0] bitsOutIndex2;
+pwire [WIDTH-1:0] bitsOutIndex3;
 
   bit_find_first_bit first0_mod(
     bits,
@@ -175,9 +175,9 @@ endmodule
 module bit_is_single_bit(bits,isSingle);
   parameter WIDTH=32;
   input [WIDTH-1:0] bits;
-  output isSingle;
+  output pwire isSingle;
   
-  wire [WIDTH-1:0] singleBits;
+  pwire [WIDTH-1:0] singleBits;
   
   genvar i;
   generate

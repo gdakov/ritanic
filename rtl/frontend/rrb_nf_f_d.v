@@ -36,10 +36,10 @@ module rrf(
   input read_clkEn;
   
   input [9:0][ADDR_WIDTH-1:0] read0_addr;
-  output [9:0][DATA_WIDTH-1:0] read0_data;
+  output pwire [9:0][DATA_WIDTH-1:0] read0_data;
   input [9:0] read0_oe;
   input [10:0][ADDR_WIDTH-1:0] read1_addr;
-  output [10:0][DATA_WIDTH-1:0] read1_data;
+  output pwire [10:0][DATA_WIDTH-1:0] read1_data;
   input [10:0]read1_oe;
 
   

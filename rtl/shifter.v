@@ -32,23 +32,23 @@ limitations under the License.
   input arith;
   input [WIDTH-1:0] val0;
   input [5:0] val1;
-  output [WIDTH-1:0] valres;
-  output coutR;
-  output [3:0] coutL;
+  output pwire [WIDTH-1:0] valres;
+  output pwire coutR;
+  output pwire [3:0] coutL;
 
-  wire [WIDTH+7:-8] val_int;
-  wire fill_bit;
-  (* align_width *) wire [WIDTH-1:0] valP0;
+  pwire [WIDTH+7:-8] val_int;
+  pwire fill_bit;
+  (* align_width *) pwire [WIDTH-1:0] valP0;
 
-  wire [7:-7] eq;
-  wire [7:0] eq2;
+  pwire [7:-7] eq;
+  pwire [7:0] eq2;
   
-  wire coutR0,coutL0_8,coutL0_4,coutL0_2;
+  pwire coutR0,coutL0_8,coutL0_4,coutL0_2;
 
   generate
     genvar a,b;
     for(a=0;a<WIDTH/8;a=a+1) begin : upper_gen
-        wire ben;
+        pwire ben;
         if (a>=4) assign ben=bit_en[2];
         else assign ben=bit_en[1];
 	if (a!=0) begin
@@ -128,14 +128,14 @@ module shlr8(
   input arith;
   input [WIDTH-1:0] val0;
   input [5:0] val1;
-  output [WIDTH-1:0] valres;
-  output coutR;
-  output coutL;
+  output pwire [WIDTH-1:0] valres;
+  output pwire coutR;
+  output pwire coutL;
 
-  wire fill_bit;
-  wire [WIDTH-7:-8] valP0;
+  pwire fill_bit;
+  pwire [WIDTH-7:-8] valP0;
 
-  wire [7:0] eq;
+  pwire [7:0] eq;
 
   generate
     genvar a,b;
@@ -172,12 +172,12 @@ module rotate8x4(
   dout);
   input [31:0] din;
   input [4:0] shf;
-  output [4:0] dout;
- // output [3:0] dout1;
+  output pwire [4:0] dout;
+ // output pwire [3:0] dout1;
 
-  wire [2:0] shf4=shf[4:2];
-  wire [3:0] data0;
-  wire [3:0] data1;
+  pwire [2:0] shf4=shf[4:2];
+  pwire [3:0] data0;
+  pwire [3:0] data1;
   generate
       genvar l;
       for(l=0;l<8;l=l+1) begin
@@ -200,9 +200,9 @@ module addrcalcsec_shift(
   shift);
   input [4:0] ptr_ext;
   input [31:0] cary;
-  output shift;
+  output pwire shift;
 
-  wire [31:0] mask;
+  pwire [31:0] mask;
 
   generate
     genvar p;
@@ -220,9 +220,9 @@ module addrcalcsec_shift8(
   bits_out);
   input [4:0] ptr_ext;
   input [39:0] bits;
-  output [7:0] bits_out;
+  output pwire [7:0] bits_out;
 
-  wire [15:0] bits_med;
+  pwire [15:0] bits_med;
 
   generate
     genvar p;

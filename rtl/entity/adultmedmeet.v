@@ -108,64 +108,64 @@ module smallInstr_decoder(
 
   input [INSTR_WIDTH-1:0] instr;
   
-  output [OPERATION_WIDTH-1:0] operation;
+  output pwire [OPERATION_WIDTH-1:0] operation;
   input can_jump_csr;
   input can_read_csr;
   input can_write_csr;
-  output [REG_WIDTH-1:0] rA;
-  output rA_use;
-  output [REG_WIDTH-1:0] rB;
-  output rB_use;
-  output [REG_WIDTH-1:0] rC;
-  output rC_use;
-  output useCRet;
-  output reg rstindex;
-  output [4:0] alucond;
-  output [2:0] rndmode;
-  output useBConst;
-  output [64:0] constant;
+  output pwire [REG_WIDTH-1:0] rA;
+  output pwire rA_use;
+  output pwire [REG_WIDTH-1:0] rB;
+  output pwire rB_use;
+  output pwire [REG_WIDTH-1:0] rC;
+  output pwire rC_use;
+  output pwire useCRet;
+  output pwire reg rstindex;
+  output pwire [4:0] alucond;
+  output pwire [2:0] rndmode;
+  output pwire useBConst;
+  output pwire [64:0] constant;
   input prevClsFma;
   input [15:0] instr_prev;
-  output [REG_WIDTH-1:0] rT;
-  output rT_use;
-  output [3:0] port;
-  output useRs;
-  output rA_useF,rB_useF,rT_useF,rC_useF,maskOp;
-  output rA_isV,rB_isV,rT_isV,rBT_copyV;
-  output [15:0] js_atom;
-  output clr64,clr128,chain;
-  output flags_use;
-  output flags_write;
-  output instr_fsimd;
-  output halt;
+  output pwire [REG_WIDTH-1:0] rT;
+  output pwire rT_use;
+  output pwire [3:0] port;
+  output pwire useRs;
+  output pwire rA_useF,rB_useF,rT_useF,rC_useF,maskOp;
+  output pwire rA_isV,rB_isV,rT_isV,rBT_copyV;
+  output pwire [15:0] js_atom;
+  output pwire clr64,clr128,chain;
+  output pwire flags_use;
+  output pwire flags_write;
+  output pwire instr_fsimd;
+  output pwire halt;
   
   output pushCallStack;
   output popCallStack;
-  output isJump;
-  output jumpTaken;
-  output [4:0] jumpType;
-  output jumpBtbHit;
-  output jumpIndir;
+  output pwire isJump;
+  output pwire jumpTaken;
+  output pwire [4:0] jumpType;
+  output pwire jumpBtbHit;
+  output pwire jumpIndir;
   
   input prevSpecLoad;
-  output thisSpecLoad;
-  output isIPRel;
-  output rAlloc;
-  output reg msrss_retIP_en;
-  output error;
-  output reor_en_out;
-  output [23:0] reor_val_out;
+  output pwire thisSpecLoad;
+  output pwire isIPRel;
+  output pwire rAlloc;
+  output pwire reg msrss_retIP_en;
+  output pwire error;
+  output pwire reor_en_out;
+  output pwire [23:0] reor_val_out;
   input reor_en;
   input [23:0] reor_val;
   input [4:0] stsz_in;
-  output reg [4:0] stsz_out;
+  output pwire reg [4:0] stsz_out;
   //7:0 free 15:8 unfree 39:16 fxch/pop/push 
-  wire [3:0] magic;
-  wire [7:0] srcIPOff;
-//  wire _splitinsn;
-  wire [7:0] opcode_main;
+  pwire [3:0] magic;
+  pwire [7:0] srcIPOff;
+//  pwire _splitinsn;
+  pwire [7:0] opcode_main;
   
-  wire isGA;
+  pwire isGA;
 
   reg [31:0] fpu_reor;
 
@@ -176,89 +176,89 @@ module smallInstr_decoder(
   reg [4:0] rT_reor32;
   reg reor_error;
 
-  wire isBasicALU;
-  wire isBasicALUExcept;
-  wire isBasicShift;
-  wire isBasicShiftExcept;
-  wire isBasicCmpTest;
-  wire isCmpTestExtra;   
+  pwire isBasicALU;
+  pwire isBasicALUExcept;
+  pwire isBasicShift;
+  pwire isBasicShiftExcept;
+  pwire isBasicCmpTest;
+  pwire isCmpTestExtra;   
   
-  wire isBaseLoadStore;
-  wire isBaseIndexLoadStore;
-  wire isBaseSpecLoad;
-  wire isBaseIndexSpecLoad;
-  wire isBaseSpecStore;
-  wire isBaseIndexSpecStore;
-  wire isImmLoadStore;
-  wire isImmSpecStore;
+  pwire isBaseLoadStore;
+  pwire isBaseIndexLoadStore;
+  pwire isBaseSpecLoad;
+  pwire isBaseIndexSpecLoad;
+  pwire isBaseSpecStore;
+  pwire isBaseIndexSpecStore;
+  pwire isImmLoadStore;
+  pwire isImmSpecStore;
 
 
-  wire isBasicCJump;
- // wire isInvCJumpLong;
-  wire isSelfTestCJump;
-  wire isLongCondJump;
-  wire isUncondJump;
+  pwire isBasicCJump;
+ // pwire isInvCJumpLong;
+  pwire isSelfTestCJump;
+  pwire isLongCondJump;
+  pwire isUncondJump;
   
-  wire isIndirJump;
-  wire isCall;
-  wire isCallPrep;
-  wire isRet;
+  pwire isIndirJump;
+  pwire isCall;
+  pwire isCallPrep;
+  pwire isRet;
  
-  wire subIsBasicXOR;
-  wire isBasicXOR;
+  pwire subIsBasicXOR;
+  pwire isBasicXOR;
 
-  wire isMovOrExtA,isMovOrExtB;
-  wire isMovOrExtExcept;
-  wire isLeaIPRel;
-  wire isCmov;
-  wire isCSet;
-  wire isBasicAddNoFl;
-  wire isAddNoFlExtra;
-  wire isShiftNoFl;
-  wire isCexALU;
+  pwire isMovOrExtA,isMovOrExtB;
+  pwire isMovOrExtExcept;
+  pwire isLeaIPRel;
+  pwire isCmov;
+  pwire isCSet;
+  pwire isBasicAddNoFl;
+  pwire isAddNoFlExtra;
+  pwire isShiftNoFl;
+  pwire isCexALU;
 
-  wire isBasicMUL;
-  wire isSimdInt;
-  wire isFPUreor;
-  wire isShlAddMulLike;
-  wire isPtrSec;
-  wire isJalR;
-  wire isBasicFPUScalarA;
-  wire isBasicFPUScalarB;
-  wire isBasicFPUScalarC;
-  wire isBasicFPUScalarCmp;
-  wire isBasicFPUScalarCmp2;
-  wire isBasicFPUScalarCmp3;
+  pwire isBasicMUL;
+  pwire isSimdInt;
+  pwire isFPUreor;
+  pwire isShlAddMulLike;
+  pwire isPtrSec;
+  pwire isJalR;
+  pwire isBasicFPUScalarA;
+  pwire isBasicFPUScalarB;
+  pwire isBasicFPUScalarC;
+  pwire isBasicFPUScalarCmp;
+  pwire isBasicFPUScalarCmp2;
+  pwire isBasicFPUScalarCmp3;
   
-  wire isBasicSysInstr;
+  pwire isBasicSysInstr;
 
-  wire subIsBasicALU;
-  wire subIsMovOrExt;
-  wire subIsBasicShift;
-  wire subIsCmpTest;
-  wire subIsCJ;
-  wire subIsFPUD;
-  wire subIsFPUPD;
-  wire subIsFPUE;
-  wire subIsFPUSngl;
-  wire subIsSIMD;
-  wire subIsLinkRet;
+  pwire subIsBasicALU;
+  pwire subIsMovOrExt;
+  pwire subIsBasicShift;
+  pwire subIsCmpTest;
+  pwire subIsCJ;
+  pwire subIsFPUD;
+  pwire subIsFPUPD;
+  pwire subIsFPUE;
+  pwire subIsFPUSngl;
+  pwire subIsSIMD;
+  pwire subIsLinkRet;
   
-  wire isPtrBump_other_domain;//reverse of horizontal accumulate or productize
+  pwire isPtrBump_other_domain;//reverse of horizontal accumulate or productize
   
   reg keep2instr;
   
-  wire [64:0] constantDef;
+  pwire [64:0] constantDef;
 
-  wire [12:0] class_;
+  pwire [12:0] class_;
 
-  wire [5:0] opcode_sub;
+  pwire [5:0] opcode_sub;
 
   reg isBigConst;
   
-  wire flags_wrFPU;
+  pwire flags_wrFPU;
 
-  wire [3:0] oddmode=instrQ[`instrQ_attr];
+  pwire [3:0] oddmode=instrQ[`instrQ_attr];
 
   reg signed [46:0] boogie_baboogie;
 
@@ -277,9 +277,9 @@ module smallInstr_decoder(
   reg [4:0] palucond[TRICNT_TOP-1:0];
   reg [2:0] rndmode[TRICNT_TOP-1:0];
   reg puseBConst[TRICNT_TOP-1:0];
-//  output reg useBSmall;//small constant use; used for call/pop/push
+//  output pwire reg useBSmall;//small constant use; used for call/pop/push
   reg [64:0] pconstant[TRICNT_TOP-1:0];
-//  output reg [3:0] smallConst; //signed
+//  output pwire reg [3:0] smallConst; //signed
   reg [REG_WIDTH-2:0] prT[TRICNT_TOP-1:0];
   reg prT_use[TRICNT_TOP-1:0];
   reg [3:0] pport[TRICNT_TOP-1:0];
@@ -303,8 +303,8 @@ module smallInstr_decoder(
   reg phalt[TRICNT_TOP-1:0];
   reg [2:0] prndmode[TRICNT_TOP-1:0];
   
-  wire [64:0] qconstant[17:0];
-  wire [17:0] qtrien;
+  pwire [64:0] qconstant[17:0];
+  pwire [17:0] qtrien;
   
   reg [4:0] pjumpType[TRICNT_TOP-1:0];
   
@@ -314,7 +314,7 @@ module smallInstr_decoder(
   reg [TRICNT_TOP-1:0] trien;
   reg [1:0] perror[TRICNT_TOP-1:0];
 
-  wire [5:0] dat;
+  pwire [5:0] dat;
 
   LFSR16_6 lfsr1(clk,rst,dat);
 
@@ -492,46 +492,46 @@ module smallInstr_decoder(
 	  assign constant=qtrien[m] ? qconstant[m] : 65'bz;
       end
       for(p=0;p<5;p=p+1) begin
-          wire [OPERATION_WIDTH-1:0] koperation;
-          wire [REG_WIDTH-1:0] krA;
-          wire krA_use;
-          wire [REG_WIDTH-1:0] krB;
-          wire krB_use;
-          wire [REG_WIDTH-1:0] krC;
-          wire krC_use;
-          wire kuseCRet;
-	  wire [4:0] kalucond;
-          wire kuseBConst;
-          wire [2:0] krndmode;
-    //  output reg useBSmall;//small constant use; used for call/pop/push
-          wire [64:0] kconstant;
-    //  output reg [3:0] smallConst; //signed
-          wire [REG_WIDTH-1:0] krT;
-          wire krT_use;
-          wire [3:0] kport;
-          wire kuseRs;
-          wire krA_useF;
-          wire krB_useF;
-          wire krT_useF;
-          wire krC_useF;
-          wire kmaskOp;
-          wire krA_isV;
-          wire krB_isV;
-          wire krT_isV;
-          wire krBT_copyV;
-          wire kclr64;
-          wire kclr128;
-          wire kchain;
-          wire kflags_use;
-          wire kflags_write;
-          wire kinstr_fsimd;
-          wire khalt;
-          wire krAlloc;
-          wire kthisSpecLoad;
-          wire kisIPRel;
-          wire kflags_wrFPU;
-          wire [1:0] kerror;
-          wire [4:0] kjumpType;
+          pwire [OPERATION_WIDTH-1:0] koperation;
+          pwire [REG_WIDTH-1:0] krA;
+          pwire krA_use;
+          pwire [REG_WIDTH-1:0] krB;
+          pwire krB_use;
+          pwire [REG_WIDTH-1:0] krC;
+          pwire krC_use;
+          pwire kuseCRet;
+	  pwire [4:0] kalucond;
+          pwire kuseBConst;
+          pwire [2:0] krndmode;
+    //  output pwire reg useBSmall;//small constant use; used for call/pop/push
+          pwire [64:0] kconstant;
+    //  output pwire reg [3:0] smallConst; //signed
+          pwire [REG_WIDTH-1:0] krT;
+          pwire krT_use;
+          pwire [3:0] kport;
+          pwire kuseRs;
+          pwire krA_useF;
+          pwire krB_useF;
+          pwire krT_useF;
+          pwire krC_useF;
+          pwire kmaskOp;
+          pwire krA_isV;
+          pwire krB_isV;
+          pwire krT_isV;
+          pwire krBT_copyV;
+          pwire kclr64;
+          pwire kclr128;
+          pwire kchain;
+          pwire kflags_use;
+          pwire kflags_write;
+          pwire kinstr_fsimd;
+          pwire khalt;
+          pwire krAlloc;
+          pwire kthisSpecLoad;
+          pwire kisIPRel;
+          pwire kflags_wrFPU;
+          pwire [1:0] kerror;
+          pwire [4:0] kjumpType;
 	  for(q=0;q<8;q=q+1) begin : tri_gen
 	      assign krA=trien[p*8+q] ? {prAX[p*8+q],prA[p*8+q]} : 6'bz;
 	      assign krB=trien[p*8+q] ? {prBE[p*8+q],prB[p*8+q]} : 6'bz;

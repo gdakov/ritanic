@@ -12,7 +12,7 @@ module pdc_ram(
   input rst;
   input [2:0][10:0] read_addr;
   input [2:0] read_clkEn;
-  output reg [2:0][`pdc_width-1:0] read_data;
+  output pwire reg [2:0][`pdc_width-1:0] read_data;
   input [10:0] write_addr;
   input write_wen;
   input [`pdc_width-1:0] write_data;

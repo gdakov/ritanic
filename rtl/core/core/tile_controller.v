@@ -28,7 +28,7 @@ module rbus(
   parameter [4:0] IDB=IDA;
   input clk;
   input rst;
-  output rbus_rdyIn;
+  output pwire rbus_rdyIn;
   input rbus_rdyOutA;
   input rbus_rdyOutB;
   input [`rbus_width-1:0] rbusIn0_signals;
@@ -43,10 +43,10 @@ module rbus(
   input [9:0] rbusPrev_src_req;
   input [9:0] rbusPrev_dst_req;
   input [36:0] rbusPrev_address;
-  output [`rbus_width-1:0] rbusOut_signals;
-  output [9:0] rbusOut_src_req;
-  output [9:0] rbusOut_dst_req;
-  output [36:0] rbusOut_address;
+  output pwire [`rbus_width-1:0] rbusOut_signals;
+  output pwire [9:0] rbusOut_src_req;
+  output pwire [9:0] rbusOut_dst_req;
+  output pwire [36:0] rbusOut_address;
   output prev_out_can;
   input next_in_can;
   
@@ -131,7 +131,7 @@ module rbusD_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -165,7 +165,7 @@ module rbusD(
   localparam [4:0] STALL_CNT=19;
   input clk;
   input rst;
-  output rbus_rdyIn;
+  output pwire rbus_rdyIn;
   input rbus_rdyOutA;
   input rbus_rdyOutB;
   input [`rbus_width-1:0] rbusIn0_signals;
@@ -173,23 +173,23 @@ module rbusD(
   input [9:0] rbusIn0_dst_req;
   input [511:0] rbusIn0_data;
   input [36:0] rbusIn0_addr;
-  output rbusIn0_doStall;
+  output pwire rbusIn0_doStall;
   input [`rbus_width-1:0] rbusIn1_signals;
   input [9:0] rbusIn1_src_req;
   input [9:0] rbusIn1_dst_req;
   input [511:0] rbusIn1_data;
   input [36:0] rbusIn1_addr;
-  output rbusIn1_doStall;
+  output pwire rbusIn1_doStall;
   input [`rbus_width-1:0] rbusPrev_signals;
   input [9:0] rbusPrev_src_req;
   input [9:0] rbusPrev_dst_req;
   input [511:0] rbusPrev_data;
   input [36:0] rbusPrev_addr;
-  output [`rbus_width-1:0] rbusOut_signals;
-  output [9:0] rbusOut_src_req;
-  output [9:0] rbusOut_dst_req;
-  output [511:0] rbusOut_data;
-  output [36:0] rbusOut_addr;
+  output pwire [`rbus_width-1:0] rbusOut_signals;
+  output pwire [9:0] rbusOut_src_req;
+  output pwire [9:0] rbusOut_dst_req;
+  output pwire [511:0] rbusOut_data;
+  output pwire [36:0] rbusOut_addr;
   output prev_out_can;
   input next_in_can;
   
@@ -207,23 +207,23 @@ module rbusD(
   reg [511:0] rbusIn1_data_reg;
   reg [1:0] busy;
   
-  wire read_clkEnA;
+  pwire read_clkEnA;
   reg [4:0] cntA;
   reg [4:0] read_addrA;
   reg [4:0] write_addrA;
-  wire [4:0] cntA_plus;
-  wire [4:0] cntA_minus;
-  wire [4:0] read_addrA_d;
-  wire [4:0] write_addrA_d;
+  pwire [4:0] cntA_plus;
+  pwire [4:0] cntA_minus;
+  pwire [4:0] read_addrA_d;
+  pwire [4:0] write_addrA_d;
 
-  wire read_clkEnB;
+  pwire read_clkEnB;
   reg [4:0] cntB;
   reg [4:0] read_addrB;
   reg [4:0] write_addrB;
-  wire [4:0] cntB_plus;
-  wire [4:0] cntB_minus;
-  wire [4:0] read_addrB_d;
-  wire [4:0] write_addrB_d;
+  pwire [4:0] cntB_plus;
+  pwire [4:0] cntB_minus;
+  pwire [4:0] read_addrB_d;
+  pwire [4:0] write_addrB_d;
   
   assign rbus_rdyIn=~rbusPrev_signals[`rbus_second] && next_in_can && !(&busy);
   assign prev_out_can=(~rbus_rdyOutA&&~rbus_rdyOutB&&!(&busy))||

@@ -80,21 +80,21 @@ module regfilef(
 
   input [ADDR_WIDTH-1:0] read0_addr;
   input [5:0] read0_addr_rrf;
-  (* register equiload *) output [DATA_WIDTH-1:0] read0_data;
+  (* register equiload *) output pwire [DATA_WIDTH-1:0] read0_data;
   input read0_oe;
-  output [10:0] read0_match;
+  output pwire [10:0] read0_match;
 
   input [ADDR_WIDTH-1:0] read1_addr;
   input [5:0] read1_addr_rrf;
-  (* register equiload *) output [DATA_WIDTH-1:0] read1_data;
+  (* register equiload *) output pwire [DATA_WIDTH-1:0] read1_data;
   input read1_oe;
-  output [10:0] read1_match;
+  output pwire [10:0] read1_match;
 
   input [ADDR_WIDTH-1:0] read2_addr;
   input [5:0] read2_addr_rrf;
-  (* register equiload *) output [DATA_WIDTH-1:0] read2_data;
+  (* register equiload *) output pwire [DATA_WIDTH-1:0] read2_data;
   input read2_oe;
-  output [10:0] read2_match;
+  output pwire [10:0] read2_match;
 
   input read0_constEn;
   input read1_constEn;
@@ -174,17 +174,17 @@ module regfilef(
   input [DATA_WIDTH-1:0] write9_data;
   input write9_wen;
 
-  wire [2:0][DATA_WIDTH-1:0] ram_read_data;
-  wire [2:0][DATA_WIDTH-1:0] read_data;
-  wire [2:0][ADDR_WIDTH-1:0] read_addr;
-  wire [8:0][DATA_WIDTH-1:0] ram_retireRead_data;
-  wire [8:0][DATA_WIDTH-1:0] retireRead_data;
-  wire [8:0][DATA_WIDTH-1:0] retireRead_datax;
-  wire [8:0][ADDR_WIDTH-1:0] retireRead_addr;
+  pwire [2:0][DATA_WIDTH-1:0] ram_read_data;
+  pwire [2:0][DATA_WIDTH-1:0] read_data;
+  pwire [2:0][ADDR_WIDTH-1:0] read_addr;
+  pwire [8:0][DATA_WIDTH-1:0] ram_retireRead_data;
+  pwire [8:0][DATA_WIDTH-1:0] retireRead_data;
+  pwire [8:0][DATA_WIDTH-1:0] retireRead_datax;
+  pwire [8:0][ADDR_WIDTH-1:0] retireRead_addr;
 
 
-  wire read_constEn[2:0];
-  wire read_oe[2:0];
+  pwire read_constEn[2:0];
+  pwire read_oe[2:0];
 
   reg [ADDR_WIDTH-1:0] write0_addr_reg2;
   reg write0_wen_reg2;
@@ -256,12 +256,12 @@ module regfilef(
   reg [DATA_WIDTH-1:0] write7_data_reg;
   reg [DATA_WIDTH-1:0] write8_data_reg;
   reg [DATA_WIDTH-1:0] write9_data_reg;
-  wire [8:0][5:0] write_addr_rrf;
-  wire [8:0]      write_wen_rrf;  
-  wire [8:0][5:0] write_addr_rrfx;
-  wire [8:0]      write_wen_rrfx;  
+  pwire [8:0][5:0] write_addr_rrf;
+  pwire [8:0]      write_wen_rrf;  
+  pwire [8:0][5:0] write_addr_rrfx;
+  pwire [8:0]      write_wen_rrfx;  
   
-  wire [10:0] read_match[2:0];
+  pwire [10:0] read_match[2:0];
   
   genvar b;
 

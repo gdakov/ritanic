@@ -31,8 +31,8 @@ module rsSelect_helper(
   input clk;
   input rst;
   input except;
-  output reg hasData;
-  output reg [DATA_WIDTH-1:0] read_data;
+  output pwire reg hasData;
+  output pwire reg [DATA_WIDTH-1:0] read_data;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
   input [DATA_WIDTH-1:0] rsSelect_data;
@@ -133,40 +133,40 @@ module rsSelectFifo(
   input except;
   input [BUF_WIDTH-1:0] portReady;  
   input portEn;
-  output found;
-  output found_no_z;
-  output [BUF_WIDTH-1:0] rsSelect;  
-  output [3:0] rsSel8;
+  output pwire found;
+  output pwire found_no_z;
+  output pwire [BUF_WIDTH-1:0] rsSelect;  
+  output pwire [3:0] rsSel8;
 
-  wire firstFound;
-  wire [BUF_WIDTH-1:0] first;  
+  pwire firstFound;
+  pwire [BUF_WIDTH-1:0] first;  
 
-  wire firstFoundH;
-  wire [BUF_WIDTH-1:0] firstH;  
+  pwire firstFoundH;
+  pwire [BUF_WIDTH-1:0] firstH;  
 
-  wire firstFoundH1;
-  wire [BUF_WIDTH-1:0] firstH1;  
+  pwire firstFoundH1;
+  pwire [BUF_WIDTH-1:0] firstH1;  
 
-  wire [BUF_WIDTH-1:0] rsShelect;  
+  pwire [BUF_WIDTH-1:0] rsShelect;  
   
-  wire [BUF_WIDTH-1:0] portReadyH;  
-  wire [BUF_WIDTH-1:0] portReadyX;  
-  wire hasDataH;
+  pwire [BUF_WIDTH-1:0] portReadyH;  
+  pwire [BUF_WIDTH-1:0] portReadyX;  
+  pwire hasDataH;
 
-  wire hasMultipleH;  
-  wire hasMultiple;
+  pwire hasMultipleH;  
+  pwire hasMultiple;
   
-  wire [3:0] first8;
-  wire [3:0] first8H;
-  wire [3:0] first8H1;
-  wire found8;
-  wire found8H;
-  wire found8H1;
+  pwire [3:0] first8;
+  pwire [3:0] first8H;
+  pwire [3:0] first8H1;
+  pwire found8;
+  pwire found8H;
+  pwire found8H1;
   
   
-  wire [BUF_COUNT-1:0] portReadyH1;
- // wire [3:0] msk8;
-  wire [BUF_COUNT-1:0] portReadyM;
+  pwire [BUF_COUNT-1:0] portReadyH1;
+ // pwire [3:0] msk8;
+  pwire [BUF_COUNT-1:0] portReadyM;
   reg [BUF_COUNT-1:0] mask;
 
   
@@ -254,39 +254,39 @@ module rsSelectFifo48(
   input except;
   input [BUF_WIDTH-1:0] portReady;  
   input portEn;
-  output found;
-  output [BUF_WIDTH-1:0] rsSelect;  
-  output [5:0] rsSel8;
+  output pwire found;
+  output pwire [BUF_WIDTH-1:0] rsSelect;  
+  output pwire [5:0] rsSel8;
 
-  wire firstFound;
-  wire [BUF_WIDTH-1:0] first;  
+  pwire firstFound;
+  pwire [BUF_WIDTH-1:0] first;  
 
-  wire firstFoundH;
-  wire [BUF_WIDTH-1:0] firstH;  
+  pwire firstFoundH;
+  pwire [BUF_WIDTH-1:0] firstH;  
 
-  wire firstFoundH1;
-  wire [BUF_WIDTH-1:0] firstH1;  
+  pwire firstFoundH1;
+  pwire [BUF_WIDTH-1:0] firstH1;  
 
-  wire [BUF_WIDTH-1:0] rsShelect;  
+  pwire [BUF_WIDTH-1:0] rsShelect;  
   
-  wire [BUF_WIDTH-1:0] portReadyH;  
-  wire [BUF_WIDTH-1:0] portReadyX;  
-  wire hasDataH;
+  pwire [BUF_WIDTH-1:0] portReadyH;  
+  pwire [BUF_WIDTH-1:0] portReadyX;  
+  pwire hasDataH;
 
-  wire hasMultipleH;  
-  wire hasMultiple;
+  pwire hasMultipleH;  
+  pwire hasMultiple;
   
-  wire [5:0] first8;
-  wire [5:0] first8H;
-  wire [5:0] first8H1;
-  wire found8;
-  wire found8H;
-  wire found8H1;
+  pwire [5:0] first8;
+  pwire [5:0] first8H;
+  pwire [5:0] first8H1;
+  pwire found8;
+  pwire found8H;
+  pwire found8H1;
   
   
-  wire [BUF_COUNT-1:0] portReadyH1;
- // wire [3:0] msk8;
-  wire [BUF_COUNT-1:0] portReadyM;
+  pwire [BUF_COUNT-1:0] portReadyH1;
+ // pwire [3:0] msk8;
+  pwire [BUF_COUNT-1:0] portReadyM;
   reg [BUF_COUNT-1:0] mask;
 
   

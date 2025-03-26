@@ -43,32 +43,32 @@ module stq_buf_A(
   input [WIDTH-1:0] wrt1_addrO;
 
   input chk0_en;
-  output [1:0] chk0_addrEO;
+  output pwire [1:0] chk0_addrEO;
   input [WIDTH-1:0] chk0_addrE;
   input [WIDTH-1:0] chk0_addrO;
 
   input chk1_en;
-  output [1:0] chk1_addrEO;
+  output pwire [1:0] chk1_addrEO;
   input [WIDTH-1:0] chk1_addrE;
   input [WIDTH-1:0] chk1_addrO;
   
   input chk2_en;
-  output [1:0] chk2_addrEO;
+  output pwire [1:0] chk2_addrEO;
   input [WIDTH-1:0] chk2_addrE;
   input [WIDTH-1:0] chk2_addrO;
   
   input chk3_en;
-  output [1:0] chk3_addrEO;
+  output pwire [1:0] chk3_addrEO;
   input [WIDTH-1:0] chk3_addrE;
   input [WIDTH-1:0] chk3_addrO;
   
   input chk4_en;
-  output [1:0] chk4_addrEO;
+  output pwire [1:0] chk4_addrEO;
   input [WIDTH-1:0] chk4_addrE;
   input [WIDTH-1:0] chk4_addrO;
   
   input chk5_en;
-  output [1:0] chk5_addrEO;
+  output pwire [1:0] chk5_addrEO;
   input [WIDTH-1:0] chk5_addrE;
   input [WIDTH-1:0] chk5_addrO;
 
@@ -77,9 +77,9 @@ module stq_buf_A(
   input upd1_en;
 
   input free_en;
-  output reg free;
-  output reg upd;
-  output reg passe;
+  output pwire reg free;
+  output pwire reg upd;
+  output pwire reg passe;
   input passe_en;
   
   reg [WIDTH-1:0] addrE;
@@ -173,32 +173,32 @@ module stq_buf_A_array(
   input [WIDTH-1:0] wrt1_addrO;
 
   input chk0_en;
-  output [BUF_COUNT-1:0] [1:0] chk0_addrEO;
+  output pwire [BUF_COUNT-1:0] [1:0] chk0_addrEO;
   input [WIDTH-1:0] chk0_addrE;
   input [WIDTH-1:0] chk0_addrO;
 
   input chk1_en;
-  output [BUF_COUNT-1:0] [1:0] chk1_addrEO;
+  output pwire [BUF_COUNT-1:0] [1:0] chk1_addrEO;
   input [WIDTH-1:0] chk1_addrE;
   input [WIDTH-1:0] chk1_addrO;
   
   input chk2_en;
-  output [BUF_COUNT-1:0] [1:0] chk2_addrEO;
+  output pwire [BUF_COUNT-1:0] [1:0] chk2_addrEO;
   input [WIDTH-1:0] chk2_addrE;
   input [WIDTH-1:0] chk2_addrO;
   
   input chk3_en;
-  output [BUF_COUNT-1:0] [1:0] chk3_addrEO;
+  output pwire [BUF_COUNT-1:0] [1:0] chk3_addrEO;
   input [WIDTH-1:0] chk3_addrE;
   input [WIDTH-1:0] chk3_addrO;
   
   input chk4_en;
-  output [BUF_COUNT-1:0] [1:0] chk4_addrEO;
+  output pwire [BUF_COUNT-1:0] [1:0] chk4_addrEO;
   input [WIDTH-1:0] chk4_addrE;
   input [WIDTH-1:0] chk4_addrO;
   
   input chk5_en;
-  output [BUF_COUNT-1:0] [1:0] chk5_addrEO;
+  output pwire [BUF_COUNT-1:0] [1:0] chk5_addrEO;
   input [WIDTH-1:0] chk5_addrE;
   input [WIDTH-1:0] chk5_addrO;
 
@@ -207,9 +207,9 @@ module stq_buf_A_array(
   input [BUF_COUNT-1:0] upd1_en;
 
   input [BUF_COUNT-1:0] free_en;
-  output [BUF_COUNT-1:0]  free;
-  output [BUF_COUNT-1:0]  upd;
-  output [BUF_COUNT-1:0]  passe;
+  output pwire [BUF_COUNT-1:0]  free;
+  output pwire [BUF_COUNT-1:0]  upd;
+  output pwire [BUF_COUNT-1:0]  passe;
   input [BUF_COUNT-1:0]  passe_en;
   
   generate

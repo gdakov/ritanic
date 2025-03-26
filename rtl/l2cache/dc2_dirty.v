@@ -29,7 +29,7 @@ module dcache2_dirty_ram(
   input rst;
   input [ADDR_WIDTH-1:0] read_addr0;
   input read_clkEn0;
-  output [DATA_WIDTH-1:0] read_data0;
+  output pwire [DATA_WIDTH-1:0] read_data0;
 
   input [ADDR_WIDTH-1:0] write_addr0;
   input write_wen0;
@@ -78,7 +78,7 @@ module dcache2_dirty(
   input rst;
   input [ADDR_WIDTH-1:0] read_addr0;
   input read_clkEn0;
-  output read_dirty0;
+  output pwire read_dirty0;
   input [ADDR_WIDTH-1:0] write_addr0;
   input write_wen0;
   input [ADDR_WIDTH-1:0] write_addr1;
@@ -87,9 +87,9 @@ module dcache2_dirty(
   input insert_dirty;
   input init;
 
-  wire [DATA_WIDTH-1:0] read_data0;
-  wire [DATA_WIDTH-1:0] write_data0;
-  wire [DATA_WIDTH-1:0] write_data1;
+  pwire [DATA_WIDTH-1:0] read_data0;
+  pwire [DATA_WIDTH-1:0] write_data0;
+  pwire [DATA_WIDTH-1:0] write_data1;
   
   reg [7:5] read_addr0_reg;
   

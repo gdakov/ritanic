@@ -58,15 +58,15 @@ module fun_fpu(
   input [S+69:0] u1_A;
   input [S+69:0] u1_B;
   input [69:0] u1_Bx;
-  output [69:0] u1_Ax;
+  output pwire [69:0] u1_Ax;
   input [3:0] u1_en;
   input [20:0] u1_op;
   input [3:0] u1_fufwd_A;
   input [3:0] u1_fuufwd_A;
   input [3:0] u1_fufwd_B;
   input [3:0] u1_fuufwd_B;
-  output [13:0] u1_ret;
-  output u1_ret_en;
+  output pwire [13:0] u1_ret;
+  output pwire u1_ret_en;
   input u1_XADD;
   input [2:0] u1_FK;
   input [5:0] u1_flag;
@@ -96,14 +96,14 @@ module fun_fpu(
   input [10:0] fxFADD_raise_s;
   input [10:0] fxFCADD_raise_s;
   (* register equiload *) input [5:0] FOOSH_in;
-  (* register equiload *) output [5:0] FOOSH_out;
-  output [69:0] HH_data;
+  (* register equiload *) output pwire [5:0] FOOSH_out;
+  output pwire [69:0] HH_data;
   input  [69:0] XX_data;
 
 
-  wire [1:0][16+67:0] FOOF;
+  pwire [1:0][16+67:0] FOOF;
   reg [1:0][S+67:0] FOOF_reg;
-  wire [5:0] FOOSH;
+  pwire [5:0] FOOSH;
   reg [5:0] FOOSH_reg;
   reg [5:0] FOOSH_reg2;
   reg  gfFADD_hi;
@@ -118,8 +118,8 @@ module fun_fpu(
   reg  gfFADD_pkdS;
   reg  gfFADD_pkdD;
   reg  gfFADD_pkdD_reg;
-/*  wire fxAlt1;
-  wire fxAlt2;
+/*  pwire fxAlt1;
+  pwire fxAlt2;
   reg [2:0] u1_FK_reg;
   reg fxAlt1_reg;
   reg fxAlt1_reg2;
@@ -179,16 +179,16 @@ module fun_fpu(
   reg [1:0] fxFCADD_copyA_reg;
   reg [1:0] fxFCADD_com_reg;
   reg  fxFCADD_pswp_reg;
-  wire [10:0] fxFCADD_raise;
+  pwire [10:0] fxFCADD_raise;
   reg [10:0] fxFCADD_raise_reg;
   reg [10:0] fxFCADD_raise_s_reg;
-  wire [10:0] fxFADD_raise;
+  pwire [10:0] fxFADD_raise;
   reg [10:0] fxFADD_raise_reg;
   reg [10:0] fxFADD_raise_s_reg;
-  wire [10:0] fraise2;
-  wire [10:0] fraise3;
-  wire [10:0] fmask2;
-  wire [10:0] fmask3;
+  pwire [10:0] fraise2;
+  pwire [10:0] fraise3;
+  pwire [10:0] fmask2;
+  pwire [10:0] fmask3;
   reg [10:0] fraise2_reg;
   reg [10:0] fraise3_reg;
   reg [10:0] fmask2_reg;
@@ -200,10 +200,10 @@ module fun_fpu(
   //wire [15:0] u1_Bx=u1_BH[15:0];
   //wire [15:0] u1_Bx=u1_BH[15:0];
   integer k;
-  wire [13:0] u1_retX;
-  wire u1_retX_en;
-  wire [13:0] u1_retY;
-  wire u1_retY_en;
+  pwire [13:0] u1_retX;
+  pwire u1_retX_en;
+  pwire [13:0] u1_retY;
+  pwire u1_retY_en;
   reg  [13:0] u1_retX_reg;
   reg  u1_retX_en_reg;
   reg  [13:0] u1_retX_reg2;
@@ -213,10 +213,10 @@ module fun_fpu(
 
   reg [1:0] ALT_INP_reg;
 
-  wire do_jmp0;
-  wire do_jmp;
+  pwire do_jmp0;
+  pwire do_jmp;
 
-  wire [1:0][S+69:0] gfDataBFL;
+  pwire [1:0][S+69:0] gfDataBFL;
   reg [1:0][16+69:0] gfDataBFL_reg;
   reg [1:0][16+69:0] fxDataAFL_reg;
   reg [1:0][S+69:0] gfDataBFL_REG;
@@ -226,10 +226,10 @@ module fun_fpu(
   reg [1:0][S+69:0] gfDataBXL_reg2;
   reg [1:0][S+69:0] fxDataAXL_reg2;
 
-  wire [S+69:0] uu_A1;
-  wire [S+69:0] uu_A2;
-  wire [S+69:0] uu_B1;
-  wire [S+69:0] uu_B2;
+  pwire [S+69:0] uu_A1;
+  pwire [S+69:0] uu_A2;
+  pwire [S+69:0] uu_B1;
+  pwire [S+69:0] uu_B2;
 
   reg error,error_reg,error_reg2,error_reg3;
 

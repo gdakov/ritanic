@@ -76,180 +76,180 @@ module distrib(
   input [WIDTH-1:0] load_fpu;
   input [WIDTH-1:0] mul;
   
-  output [POS_WIDTH-1:0] pos0;
-  output [POS_WIDTH-1:0] pos1;
-  output [POS_WIDTH-1:0] pos2;
-  output [POS_WIDTH-1:0] pos3;
-  output [POS_WIDTH-1:0] pos4;
-  output [POS_WIDTH-1:0] pos5;
-  output [POS_WIDTH-1:0] pos6;
-  output [POS_WIDTH-1:0] pos7;
-  output [POS_WIDTH-1:0] pos8;
+  output pwire [POS_WIDTH-1:0] pos0;
+  output pwire [POS_WIDTH-1:0] pos1;
+  output pwire [POS_WIDTH-1:0] pos2;
+  output pwire [POS_WIDTH-1:0] pos3;
+  output pwire [POS_WIDTH-1:0] pos4;
+  output pwire [POS_WIDTH-1:0] pos5;
+  output pwire [POS_WIDTH-1:0] pos6;
+  output pwire [POS_WIDTH-1:0] pos7;
+  output pwire [POS_WIDTH-1:0] pos8;
 
-  output sto0,sto1,sto2;
-  output stol0,stol1,stol2;
-  output [9:0] stoA;
-  output [9:0] stoB;
+  output pwire sto0,sto1,sto2;
+  output pwire stol0,stol1,stol2;
+  output pwire [9:0] stoA;
+  output pwire [9:0] stoB;
   
-  output [2:0] altRs;
+  output pwire [2:0] altRs;
 
-  output [5:0] lsi0;
-  output [5:0] lsi1;
-  output [5:0] lsi2;
-  output [5:0] lsi3;
-  output [5:0] lsi4;
-  output [5:0] lsi5;
+  output pwire [5:0] lsi0;
+  output pwire [5:0] lsi1;
+  output pwire [5:0] lsi2;
+  output pwire [5:0] lsi3;
+  output pwire [5:0] lsi4;
+  output pwire [5:0] lsi5;
 
-  output [5:0] wrt0;
-  output [5:0] wrt1;
-  output [5:0] wrt2;
+  output pwire [5:0] wrt0;
+  output pwire [5:0] wrt1;
+  output pwire [5:0] wrt2;
   
-  wire nmul;
+  pwire nmul;
   
-  wire [10:0] load_cnt;
-  wire [10:0] alu_cnt;
-  wire [10:0] shift_cnt;
-  wire [10:0] lsa_cnt;
-  wire [10:0] store_cnt;
-  wire [10:1] store_cnt_or_more;
-  wire [10:1] load_cnt_or_more;
-  wire [9:0] ldst_cnt_or_less;
-  wire [10:1] alu_cnt_or_more;
-  wire [10:0] ldst_cnt;
-  wire [10:1] shift_cnt_or_more;
-  wire [9:0] lsa_cnt_or_less;
-  wire [9:0] alu_cnt_or_less;
-  wire [10:1] ldst_cnt_or_more;
-  wire [9:0] load_cnt_or_less;
-  wire [9:0] store_cnt_or_less;
-  wire [9:0] shift_cnt_or_less;
+  pwire [10:0] load_cnt;
+  pwire [10:0] alu_cnt;
+  pwire [10:0] shift_cnt;
+  pwire [10:0] lsa_cnt;
+  pwire [10:0] store_cnt;
+  pwire [10:1] store_cnt_or_more;
+  pwire [10:1] load_cnt_or_more;
+  pwire [9:0] ldst_cnt_or_less;
+  pwire [10:1] alu_cnt_or_more;
+  pwire [10:0] ldst_cnt;
+  pwire [10:1] shift_cnt_or_more;
+  pwire [9:0] lsa_cnt_or_less;
+  pwire [9:0] alu_cnt_or_less;
+  pwire [10:1] ldst_cnt_or_more;
+  pwire [9:0] load_cnt_or_less;
+  pwire [9:0] store_cnt_or_less;
+  pwire [9:0] shift_cnt_or_less;
 
 
-  wire [9:-1][10:0] load_cntA;
-  wire [9:-1][10:0] alu_cntA;
-  wire [9:-1][10:0] shift_cntA;
-  wire [9:-1][10:0] store_cntA;
-  wire [9:-1][10:0] ldst_cntA;
+  pwire [9:-1][10:0] load_cntA;
+  pwire [9:-1][10:0] alu_cntA;
+  pwire [9:-1][10:0] shift_cntA;
+  pwire [9:-1][10:0] store_cntA;
+  pwire [9:-1][10:0] ldst_cntA;
   
 
-  wire [9:0][POS_WIDTH-1:0] load_index;
-  wire [9:0][POS_WIDTH-1:0] alu_index;
-  wire [9:0][POS_WIDTH-1:0] shift_index;
-  wire [9:0][POS_WIDTH-1:0] store_index;
+  pwire [9:0][POS_WIDTH-1:0] load_index;
+  pwire [9:0][POS_WIDTH-1:0] alu_index;
+  pwire [9:0][POS_WIDTH-1:0] shift_index;
+  pwire [9:0][POS_WIDTH-1:0] store_index;
   
-  wire [POS_WIDTH-1:0] mul_index;
+  pwire [POS_WIDTH-1:0] mul_index;
  
-  wire stol;
-  wire fmem;
+  pwire stol;
+  pwire fmem;
   
-  wire sto0H,sto1H,sto2H;
+  pwire sto0H,sto1H,sto2H;
   
-  wire [2:0] ldpos;
+  pwire [2:0] ldpos;
   reg [2:0] lpos;
-  wire [2:0] lpos_d;
+  pwire [2:0] lpos_d;
   reg [2:0] shpos;
-  wire [2:0] shpos_d;
-  wire [3:0] shpos_cnt;
+  pwire [2:0] shpos_d;
+  pwire [3:0] shpos_cnt;
 
   reg [WIDTH-1:0] storeI_reg;
 
-  wire [2:0] altRs0;
+  pwire [2:0] altRs0;
   
-  wire [POS_WIDTH-1:0] posA0;
-  wire [POS_WIDTH-1:0] posA1;
-  wire [POS_WIDTH-1:0] posA2;
-  wire [POS_WIDTH-1:0] posA3;
-  wire [POS_WIDTH-1:0] posA4;
-  wire [POS_WIDTH-1:0] posA5;
-  wire [POS_WIDTH-1:0] posA6;
-  wire [POS_WIDTH-1:0] posA7;
-  wire [POS_WIDTH-1:0] posA8;
+  pwire [POS_WIDTH-1:0] posA0;
+  pwire [POS_WIDTH-1:0] posA1;
+  pwire [POS_WIDTH-1:0] posA2;
+  pwire [POS_WIDTH-1:0] posA3;
+  pwire [POS_WIDTH-1:0] posA4;
+  pwire [POS_WIDTH-1:0] posA5;
+  pwire [POS_WIDTH-1:0] posA6;
+  pwire [POS_WIDTH-1:0] posA7;
+  pwire [POS_WIDTH-1:0] posA8;
 
-  wire [POS_WIDTH-1:0] posB0;
-  wire [POS_WIDTH-1:0] posB1;
-  wire [POS_WIDTH-1:0] posB2;
-  wire [POS_WIDTH-1:0] posB3;
-  wire [POS_WIDTH-1:0] posB4;
-  wire [POS_WIDTH-1:0] posB5;
-  wire [POS_WIDTH-1:0] posB6;
-  wire [POS_WIDTH-1:0] posB7;
-  wire [POS_WIDTH-1:0] posB8;
+  pwire [POS_WIDTH-1:0] posB0;
+  pwire [POS_WIDTH-1:0] posB1;
+  pwire [POS_WIDTH-1:0] posB2;
+  pwire [POS_WIDTH-1:0] posB3;
+  pwire [POS_WIDTH-1:0] posB4;
+  pwire [POS_WIDTH-1:0] posB5;
+  pwire [POS_WIDTH-1:0] posB6;
+  pwire [POS_WIDTH-1:0] posB7;
+  pwire [POS_WIDTH-1:0] posB8;
   
   
-  wire [POS_WIDTH-1:0] posC0;
-  wire [POS_WIDTH-1:0] posC1;
-  wire [POS_WIDTH-1:0] posC2;
-  wire [POS_WIDTH-1:0] posC3;
-  wire [POS_WIDTH-1:0] posC4;
-  wire [POS_WIDTH-1:0] posC5;
-  wire [POS_WIDTH-1:0] posC6;
-  wire [POS_WIDTH-1:0] posC7;
-  wire [POS_WIDTH-1:0] posC8;
+  pwire [POS_WIDTH-1:0] posC0;
+  pwire [POS_WIDTH-1:0] posC1;
+  pwire [POS_WIDTH-1:0] posC2;
+  pwire [POS_WIDTH-1:0] posC3;
+  pwire [POS_WIDTH-1:0] posC4;
+  pwire [POS_WIDTH-1:0] posC5;
+  pwire [POS_WIDTH-1:0] posC6;
+  pwire [POS_WIDTH-1:0] posC7;
+  pwire [POS_WIDTH-1:0] posC8;
 
-  wire [POS_WIDTH-1:0] posD0;
-  wire [POS_WIDTH-1:0] posD1;
-  wire [POS_WIDTH-1:0] posD2;
-  wire [POS_WIDTH-1:0] posD3;
-  wire [POS_WIDTH-1:0] posD4;
-  wire [POS_WIDTH-1:0] posD5;
-  wire [POS_WIDTH-1:0] posD6;
-  wire [POS_WIDTH-1:0] posD7;
-  wire [POS_WIDTH-1:0] posD8;
+  pwire [POS_WIDTH-1:0] posD0;
+  pwire [POS_WIDTH-1:0] posD1;
+  pwire [POS_WIDTH-1:0] posD2;
+  pwire [POS_WIDTH-1:0] posD3;
+  pwire [POS_WIDTH-1:0] posD4;
+  pwire [POS_WIDTH-1:0] posD5;
+  pwire [POS_WIDTH-1:0] posD6;
+  pwire [POS_WIDTH-1:0] posD7;
+  pwire [POS_WIDTH-1:0] posD8;
 
-  wire [POS_WIDTH-1:0] posH0;
-  wire [POS_WIDTH-1:0] posH1;
-  wire [POS_WIDTH-1:0] posH2;
-  wire [POS_WIDTH-1:0] posH3;
-  wire [POS_WIDTH-1:0] posH4;
-  wire [POS_WIDTH-1:0] posH5;
-  wire [POS_WIDTH-1:0] posH6;
-  wire [POS_WIDTH-1:0] posH7;
-  wire [POS_WIDTH-1:0] posH8;
+  pwire [POS_WIDTH-1:0] posH0;
+  pwire [POS_WIDTH-1:0] posH1;
+  pwire [POS_WIDTH-1:0] posH2;
+  pwire [POS_WIDTH-1:0] posH3;
+  pwire [POS_WIDTH-1:0] posH4;
+  pwire [POS_WIDTH-1:0] posH5;
+  pwire [POS_WIDTH-1:0] posH6;
+  pwire [POS_WIDTH-1:0] posH7;
+  pwire [POS_WIDTH-1:0] posH8;
 
-  wire [5:0] lsiH0;
-  wire [5:0] lsiH1;
-  wire [5:0] lsiH2;
-  wire [5:0] lsiH3;
-  wire [5:0] lsiH4;
-  wire [5:0] lsiH5;
+  pwire [5:0] lsiH0;
+  pwire [5:0] lsiH1;
+  pwire [5:0] lsiH2;
+  pwire [5:0] lsiH3;
+  pwire [5:0] lsiH4;
+  pwire [5:0] lsiH5;
 
-  wire [5:0] lsiA0;
-  wire [5:0] lsiA1;
-  wire [5:0] lsiA2;
-  wire [5:0] lsiA3;
-  wire [5:0] lsiA4;
-  wire [5:0] lsiA5;
+  pwire [5:0] lsiA0;
+  pwire [5:0] lsiA1;
+  pwire [5:0] lsiA2;
+  pwire [5:0] lsiA3;
+  pwire [5:0] lsiA4;
+  pwire [5:0] lsiA5;
 
-  wire [5:0] lsiB0;
-  wire [5:0] lsiB1;
-  wire [5:0] lsiB2;
-  wire [5:0] lsiB3;
-  wire [5:0] lsiB4;
-  wire [5:0] lsiB5;
+  pwire [5:0] lsiB0;
+  pwire [5:0] lsiB1;
+  pwire [5:0] lsiB2;
+  pwire [5:0] lsiB3;
+  pwire [5:0] lsiB4;
+  pwire [5:0] lsiB5;
 
-  wire [5:0] lsiC0;
-  wire [5:0] lsiC1;
-  wire [5:0] lsiC2;
-  wire [5:0] lsiC3;
-  wire [5:0] lsiC4;
-  wire [5:0] lsiC5;
+  pwire [5:0] lsiC0;
+  pwire [5:0] lsiC1;
+  pwire [5:0] lsiC2;
+  pwire [5:0] lsiC3;
+  pwire [5:0] lsiC4;
+  pwire [5:0] lsiC5;
 
-  wire [5:0] lsiD0;
-  wire [5:0] lsiD1;
-  wire [5:0] lsiD2;
-  wire [5:0] lsiD3;
-  wire [5:0] lsiD4;
-  wire [5:0] lsiD5;
+  pwire [5:0] lsiD0;
+  pwire [5:0] lsiD1;
+  pwire [5:0] lsiD2;
+  pwire [5:0] lsiD3;
+  pwire [5:0] lsiD4;
+  pwire [5:0] lsiD5;
 
-  wire [5:0] lsi_P0;
-  wire [5:0] lsi_P1;
-  wire [5:0] lsi_P2;
-  wire [5:0] lsi_Q0;
-  wire [5:0] lsi_Q1;
-  wire [5:0] lsi_Q2;
-  wire [5:0] lsi_Q3;
-  wire [5:0] lsi_Q4;
-  wire [5:0] lsi_Q5;
+  pwire [5:0] lsi_P0;
+  pwire [5:0] lsi_P1;
+  pwire [5:0] lsi_P2;
+  pwire [5:0] lsi_Q0;
+  pwire [5:0] lsi_Q1;
+  pwire [5:0] lsi_Q2;
+  pwire [5:0] lsi_Q3;
+  pwire [5:0] lsi_Q4;
+  pwire [5:0] lsi_Q5;
  
   integer n;
   

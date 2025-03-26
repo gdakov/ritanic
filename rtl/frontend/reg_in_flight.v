@@ -18,7 +18,7 @@ limitations under the License.
 
 
 //regfile_ram read during write behaviour: write first; untiled memory
-//WARNING: data output needs to be updated even if no clkEn; clkEn is only for the addresses.
+//WARNING: data output pwire needs to be updated even if no clkEn; clkEn is only for the addresses.
 module reginfl_ram(
   clk,
   rst,
@@ -51,39 +51,39 @@ module reginfl_ram(
 
 
   input [ADDR_WIDTH-1:0] read0_addr;
-  output read0_data;
+  output pwire read0_data;
   input read0_clkEn;
   
   input [ADDR_WIDTH-1:0] read1_addr;
-  output read1_data;
+  output pwire read1_data;
   input read1_clkEn;
 
   input [ADDR_WIDTH-1:0] read2_addr;
-  output read2_data;
+  output pwire read2_data;
   input read2_clkEn;
 
   input [ADDR_WIDTH-1:0] read3_addr;
-  output read3_data;
+  output pwire read3_data;
   input read3_clkEn;
 
   input [ADDR_WIDTH-1:0] read4_addr;
-  output read4_data;
+  output pwire read4_data;
   input read4_clkEn;
 
   input [ADDR_WIDTH-1:0] read5_addr;
-  output read5_data;
+  output pwire read5_data;
   input read5_clkEn;
 
   input [ADDR_WIDTH-1:0] read6_addr;
-  output read6_data;
+  output pwire read6_data;
   input read6_clkEn;
 
   input [ADDR_WIDTH-1:0] read7_addr;
-  output read7_data;
+  output pwire read7_data;
   input read7_clkEn;
 
   input [ADDR_WIDTH-1:0] read8_addr;
-  output read8_data;
+  output pwire read8_data;
   input read8_clkEn;
 
 
@@ -222,31 +222,31 @@ module reginfl_ram_placeholder(
 
 
   input [ADDR_WIDTH-1:0] read0_addr;
-  output [DATA_WIDTH-1:0] read0_data;
+  output pwire [DATA_WIDTH-1:0] read0_data;
   
   input [ADDR_WIDTH-1:0] read1_addr;
-  output [DATA_WIDTH-1:0] read1_data;
+  output pwire [DATA_WIDTH-1:0] read1_data;
 
   input [ADDR_WIDTH-1:0] read2_addr;
-  output [DATA_WIDTH-1:0] read2_data;
+  output pwire [DATA_WIDTH-1:0] read2_data;
 
   input [ADDR_WIDTH-1:0] read3_addr;
-  output [DATA_WIDTH-1:0] read3_data;
+  output pwire [DATA_WIDTH-1:0] read3_data;
 
   input [ADDR_WIDTH-1:0] read4_addr;
-  output [DATA_WIDTH-1:0] read4_data;
+  output pwire [DATA_WIDTH-1:0] read4_data;
 
   input [ADDR_WIDTH-1:0] read5_addr;
-  output [DATA_WIDTH-1:0] read5_data;
+  output pwire [DATA_WIDTH-1:0] read5_data;
 
   input [ADDR_WIDTH-1:0] read6_addr;
-  output [DATA_WIDTH-1:0] read6_data;
+  output pwire [DATA_WIDTH-1:0] read6_data;
 
   input [ADDR_WIDTH-1:0] read7_addr;
-  output [DATA_WIDTH-1:0] read7_data;
+  output pwire [DATA_WIDTH-1:0] read7_data;
 
   input [ADDR_WIDTH-1:0] read8_addr;
-  output [DATA_WIDTH-1:0] read8_data;
+  output pwire [DATA_WIDTH-1:0] read8_data;
 
   input read0_constEn;
   input read1_constEn;
@@ -286,33 +286,33 @@ module reginfl_ram_placeholder(
 
 
 
-  wire [DATA_WIDTH-1:0] ram_read0_data;
-  wire [DATA_WIDTH-1:0] ram_read1_data;
-  wire [DATA_WIDTH-1:0] ram_read2_data;
-  wire [DATA_WIDTH-1:0] ram_read3_data;
-  wire [DATA_WIDTH-1:0] ram_read4_data;
-  wire [DATA_WIDTH-1:0] ram_read5_data;
-  wire [DATA_WIDTH-1:0] ram_read6_data;
-  wire [DATA_WIDTH-1:0] ram_read7_data;
-  wire [DATA_WIDTH-1:0] ram_read8_data;
+  pwire [DATA_WIDTH-1:0] ram_read0_data;
+  pwire [DATA_WIDTH-1:0] ram_read1_data;
+  pwire [DATA_WIDTH-1:0] ram_read2_data;
+  pwire [DATA_WIDTH-1:0] ram_read3_data;
+  pwire [DATA_WIDTH-1:0] ram_read4_data;
+  pwire [DATA_WIDTH-1:0] ram_read5_data;
+  pwire [DATA_WIDTH-1:0] ram_read6_data;
+  pwire [DATA_WIDTH-1:0] ram_read7_data;
+  pwire [DATA_WIDTH-1:0] ram_read8_data;
 
 
-  wire ram_write0_wen;
-  wire ram_write1_wen;
-  wire ram_write2_wen;
-  wire ram_write3_wen;
-  wire ram_write4_wen;
+  pwire ram_write0_wen;
+  pwire ram_write1_wen;
+  pwire ram_write2_wen;
+  pwire ram_write3_wen;
+  pwire ram_write4_wen;
 
 
-  wire read0_clkEn;
-  wire read1_clkEn;
-  wire read2_clkEn;
-  wire read3_clkEn;
-  wire read4_clkEn;
-  wire read5_clkEn;
-  wire read6_clkEn;
-  wire read7_clkEn;
-  wire read8_clkEn;
+  pwire read0_clkEn;
+  pwire read1_clkEn;
+  pwire read2_clkEn;
+  pwire read3_clkEn;
+  pwire read4_clkEn;
+  pwire read5_clkEn;
+  pwire read6_clkEn;
+  pwire read7_clkEn;
+  pwire read8_clkEn;
 
 
   reg read0_en;
@@ -469,31 +469,31 @@ module reginfl_ram_block(
 
 
   input [ADDR_WIDTH-1:0] read0_addr;
-  output [DATA_WIDTH-1:0] read0_data;
+  output pwire [DATA_WIDTH-1:0] read0_data;
   
   input [ADDR_WIDTH-1:0] read1_addr;
-  output [DATA_WIDTH-1:0] read1_data;
+  output pwire [DATA_WIDTH-1:0] read1_data;
 
   input [ADDR_WIDTH-1:0] read2_addr;
-  output [DATA_WIDTH-1:0] read2_data;
+  output pwire [DATA_WIDTH-1:0] read2_data;
 
   input [ADDR_WIDTH-1:0] read3_addr;
-  output [DATA_WIDTH-1:0] read3_data;
+  output pwire [DATA_WIDTH-1:0] read3_data;
 
   input [ADDR_WIDTH-1:0] read4_addr;
-  output [DATA_WIDTH-1:0] read4_data;
+  output pwire [DATA_WIDTH-1:0] read4_data;
 
   input [ADDR_WIDTH-1:0] read5_addr;
-  output [DATA_WIDTH-1:0] read5_data;
+  output pwire [DATA_WIDTH-1:0] read5_data;
 
   input [ADDR_WIDTH-1:0] read6_addr;
-  output [DATA_WIDTH-1:0] read6_data;
+  output pwire [DATA_WIDTH-1:0] read6_data;
 
   input [ADDR_WIDTH-1:0] read7_addr;
-  output [DATA_WIDTH-1:0] read7_data;
+  output pwire [DATA_WIDTH-1:0] read7_data;
 
   input [ADDR_WIDTH-1:0] read8_addr;
-  output [DATA_WIDTH-1:0] read8_data;
+  output pwire [DATA_WIDTH-1:0] read8_data;
 
 
   input read0_constEn;
@@ -556,27 +556,27 @@ module reginfl_ram_block(
   input [4:0] newAddr8;
   input newEn8;
    
-  output doInit;
+  output pwire doInit;
  
 
-  wire [ADDR_WIDTH-1:0] write0_addr_ram[2:0];
-  wire write0_wen_ram[2:0];
+  pwire [ADDR_WIDTH-1:0] write0_addr_ram[2:0];
+  pwire write0_wen_ram[2:0];
   
-  wire [ADDR_WIDTH-1:0] write1_addr_ram[2:0];
-  wire write1_wen_ram[2:0];
+  pwire [ADDR_WIDTH-1:0] write1_addr_ram[2:0];
+  pwire write1_wen_ram[2:0];
   
-  wire [ADDR_WIDTH-1:0] write2_addr_ram[2:0];
-  wire write2_wen_ram[2:0];
+  pwire [ADDR_WIDTH-1:0] write2_addr_ram[2:0];
+  pwire write2_wen_ram[2:0];
 
 
 
-  wire [ADDR_WIDTH-5:0] initRegCount_next;
+  pwire [ADDR_WIDTH-5:0] initRegCount_next;
   
   reg [ADDR_WIDTH-1:0] initRegCount;
   reg doInit;
 
-  wire [4:0] newAddr [8:0];
-  wire [8:0] newEn;
+  pwire [4:0] newAddr [8:0];
+  pwire [8:0] newEn;
 
 
   reg read0_constEn_reg;
@@ -787,7 +787,7 @@ module reginfl_zero_cycle_write(
   input read_clkEn;
   
   input [DATA_WIDTH-1:0] read_data_ram;
-  output [DATA_WIDTH-1:0] read_data_new;
+  output pwire [DATA_WIDTH-1:0] read_data_new;
   input [ADDR_WIDTH-1:0] read_addr;
 
   input read_constEn;
@@ -858,25 +858,25 @@ module reginfl_zero_cycle_write(
 
   
   
-  wire match_r0;
-  wire match_r1;
-  wire match_r2;
-  wire match_r3;
-  wire match_r4;
-  wire match_r5;
-  wire match_r6;
-  wire match_r7;
-  wire match_r8;
-  wire match_r9;
+  pwire match_r0;
+  pwire match_r1;
+  pwire match_r2;
+  pwire match_r3;
+  pwire match_r4;
+  pwire match_r5;
+  pwire match_r6;
+  pwire match_r7;
+  pwire match_r8;
+  pwire match_r9;
 
-  wire match;
+  pwire match;
 
   reg read_constEn_reg;
 
   reg read_oe_reg;
   reg [ADDR_WIDTH-1:0] read_addr_reg;
 
-  wire [10:0] match_w;
+  pwire [10:0] match_w;
 
   assign read_data_new=(init & OE_IN) ? 1'b0 : 1'bz;
   
@@ -1012,39 +1012,39 @@ module reginfl(
 
 
   input [ADDR_WIDTH-1:0] read0_addr;
-  output [DATA_WIDTH-1:0] read0_data;
+  output pwire [DATA_WIDTH-1:0] read0_data;
   input read0_oe;
 
   input [ADDR_WIDTH-1:0] read1_addr;
-  output [DATA_WIDTH-1:0] read1_data;
+  output pwire [DATA_WIDTH-1:0] read1_data;
   input read1_oe;
 
   input [ADDR_WIDTH-1:0] read2_addr;
-  output [DATA_WIDTH-1:0] read2_data;
+  output pwire [DATA_WIDTH-1:0] read2_data;
   input read2_oe;
 
   input [ADDR_WIDTH-1:0] read3_addr;
-  output [DATA_WIDTH-1:0] read3_data;
+  output pwire [DATA_WIDTH-1:0] read3_data;
   input read3_oe;
 
   input [ADDR_WIDTH-1:0] read4_addr;
-  output [DATA_WIDTH-1:0] read4_data;
+  output pwire [DATA_WIDTH-1:0] read4_data;
   input read4_oe;
 
   input [ADDR_WIDTH-1:0] read5_addr;
-  output [DATA_WIDTH-1:0] read5_data;
+  output pwire [DATA_WIDTH-1:0] read5_data;
   input read5_oe;
 
   input [ADDR_WIDTH-1:0] read6_addr;
-  output [DATA_WIDTH-1:0] read6_data;
+  output pwire [DATA_WIDTH-1:0] read6_data;
   input read6_oe;
 
   input [ADDR_WIDTH-1:0] read7_addr;
-  output [DATA_WIDTH-1:0] read7_data;
+  output pwire [DATA_WIDTH-1:0] read7_data;
   input read7_oe;
 
   input [ADDR_WIDTH-1:0] read8_addr;
-  output [DATA_WIDTH-1:0] read8_data;
+  output pwire [DATA_WIDTH-1:0] read8_data;
   input read8_oe;
 
   input read0_constEn;
@@ -1107,13 +1107,13 @@ module reginfl(
   input [4:0] newAddr8;
   input newEn8;
 
-  wire [8:0][DATA_WIDTH-1:0] ram_read_data;
-  wire [8:0][DATA_WIDTH-1:0] read_data;
-  wire [8:0][ADDR_WIDTH-1:0] read_addr;
+  pwire [8:0][DATA_WIDTH-1:0] ram_read_data;
+  pwire [8:0][DATA_WIDTH-1:0] read_data;
+  pwire [8:0][ADDR_WIDTH-1:0] read_addr;
 
 
-  wire read_constEn[8:0];
-  wire read_oe[8:0];
+  pwire read_constEn[8:0];
+  pwire read_oe[8:0];
 
   reg [ADDR_WIDTH-1:0] write0_addr_reg2;
   reg write0_wen_reg2;
@@ -1145,9 +1145,9 @@ module reginfl(
   reg [ADDR_WIDTH-1:0] write9_addr_reg2;
   reg write9_wen_reg2;
   
-  wire init;
+  pwire init;
   
-  wire [10:0] read_match[8:0];
+  pwire [10:0] read_match[8:0];
   
   genvar b;
 

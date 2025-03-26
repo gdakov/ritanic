@@ -44,7 +44,7 @@ module regfile_get_gazump0(
   input read_constEn;
   input read_oe;
   
-  output [10:0] match_w;
+  output pwire [10:0] match_w;
   
   input [ADDR_WIDTH-1:0] write0_addr_reg;
   input write0_wen_reg;
@@ -79,18 +79,18 @@ module regfile_get_gazump0(
 
 
   
-  wire match_r0;
-  wire match_r1;
-  wire match_r2;
-  wire match_r3;
-  wire match_r4;
-  wire match_r5;
-  wire match_r6;
-  wire match_r7;
-  wire match_r8;
-  wire match_r9;
+  pwire match_r0;
+  pwire match_r1;
+  pwire match_r2;
+  pwire match_r3;
+  pwire match_r4;
+  pwire match_r5;
+  pwire match_r6;
+  pwire match_r7;
+  pwire match_r8;
+  pwire match_r9;
 
-  wire match;
+  pwire match;
 
   reg read_constEn_reg;
 
@@ -177,39 +177,39 @@ module regfile_get_gazump(
   input [ADDR_WIDTH-1:0] read0_addr;
   input read0_constEn;
   input read0_oe;
-  output [10:0] read0_match;
+  output pwire [10:0] read0_match;
   input [ADDR_WIDTH-1:0] read1_addr;
   input read1_constEn;
   input read1_oe;
-  output [10:0] read1_match;
+  output pwire [10:0] read1_match;
   input [ADDR_WIDTH-1:0] read2_addr;
   input read2_constEn;
   input read2_oe;
-  output [10:0] read2_match;
+  output pwire [10:0] read2_match;
   input [ADDR_WIDTH-1:0] read3_addr;
   input read3_constEn;
   input read3_oe;
-  output [10:0] read3_match;
+  output pwire [10:0] read3_match;
   input [ADDR_WIDTH-1:0] read4_addr;
   input read4_constEn;
   input read4_oe;
-  output [10:0] read4_match;
+  output pwire [10:0] read4_match;
   input [ADDR_WIDTH-1:0] read5_addr;
   input read5_constEn;
   input read5_oe;
-  output [10:0] read5_match;
+  output pwire [10:0] read5_match;
   input [ADDR_WIDTH-1:0] read6_addr;
   input read6_constEn;
   input read6_oe;
-  output [10:0] read6_match;
+  output pwire [10:0] read6_match;
   input [ADDR_WIDTH-1:0] read7_addr;
   input read7_constEn;
   input read7_oe;
-  output [10:0] read7_match;
+  output pwire [10:0] read7_match;
   input [ADDR_WIDTH-1:0] read8_addr;
   input read8_constEn;
   input read8_oe;
-  output [10:0] read8_match;
+  output pwire [10:0] read8_match;
 
   input [ADDR_WIDTH-1:0] write0_addr_reg;
   input write0_wen_reg;
@@ -232,10 +232,10 @@ module regfile_get_gazump(
   input [ADDR_WIDTH-1:0] write9_addr_reg;
   input write9_wen_reg;
 
-  wire [ADDR_WIDTH-1:0] read_addr[8:0];
-  wire [8:0] read_constEn;
-  wire [10:0] read_match[8:0];
-  wire [8:0] read_oe;
+  pwire [ADDR_WIDTH-1:0] read_addr[8:0];
+  pwire [8:0] read_constEn;
+  pwire [10:0] read_match[8:0];
+  pwire [8:0] read_oe;
 
   assign read_addr[0]=read0_addr;
   assign read_addr[1]=read1_addr;

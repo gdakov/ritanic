@@ -31,7 +31,7 @@ module ret_stack_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -75,7 +75,7 @@ module ret_stack(
   input except_thread;
   input read_clkEn;
   input thread;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [DATA_WIDTH-1:0] write_data;
   input [4:0] write_lnk;
   input write_trace;
@@ -84,12 +84,12 @@ module ret_stack(
   reg [ADDR_WIDTH-1:0] read_addr[1:0];
   reg [ADDR_WIDTH-1:0] write_addr[1:0];
   reg [ADDR_WIDTH-1:0] write_addr_reg;
-  wire [1:0][ADDR_WIDTH-1:0] read_addr_inc;
-  wire [1:0][ADDR_WIDTH-1:0] write_addr_inc;
-  wire [1:0][ADDR_WIDTH-1:0] read_addr_dec;
-  wire [1:0][ADDR_WIDTH-1:0] write_addr_dec;
-  wire [DATA_WIDTH-1:0] write_data_new;
-  wire [DATA_WIDTH-1:0] read_data_ram;
+  pwire [1:0][ADDR_WIDTH-1:0] read_addr_inc;
+  pwire [1:0][ADDR_WIDTH-1:0] write_addr_inc;
+  pwire [1:0][ADDR_WIDTH-1:0] read_addr_dec;
+  pwire [1:0][ADDR_WIDTH-1:0] write_addr_dec;
+  pwire [DATA_WIDTH-1:0] write_data_new;
+  pwire [DATA_WIDTH-1:0] read_data_ram;
 
   reg write_wen_reg;
   reg thread_reg;

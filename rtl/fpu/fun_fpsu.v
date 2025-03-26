@@ -44,15 +44,15 @@ module fun_fpsu(
   input [S+69:0] u1_A;
   input [S+69:0] u1_B;
   input [69:0] u1_Bx;
-  output [69:0] u1_Ax;
+  output pwire [69:0] u1_Ax;
   input [3:0] u1_en;
   input [20:0] u1_op;
   input [3:0] u1_fufwd_A;
   input [3:0] u1_fuufwd_A;
   input [3:0] u1_fufwd_B;
   input [3:0] u1_fuufwd_B;
-  output [13:0] u1_ret;
-  output u1_ret_en;
+  output pwire [13:0] u1_ret;
+  output pwire u1_ret_en;
   input u1_XSUB;
   input [2:0] u1_FK;
 
@@ -72,8 +72,8 @@ module fun_fpsu(
   input [1:0] ALT_INP;
   input [S+69:0] ALTDATA0;
   input [S+69:0] ALTDATA1;
-  output [5:0] FOOSL_out;
-  output [69:0] HH_data;
+  output pwire [5:0] FOOSL_out;
+  output pwire [69:0] HH_data;
   input [69:0] XY_data;
   inout  [S+67:0] xdata;
   inout  [S+67:0] xdata2;
@@ -82,9 +82,9 @@ module fun_fpsu(
   reg  [S+67:0] xdata_reg;
   reg  [S+67:0] xdata2_reg;
 
-  wire [1:0][S+67:0] FOOF;
+  pwire [1:0][S+67:0] FOOF;
   reg [1:0][S+67:0] FOOF_reg;
-  wire [5:0] FOOSL;
+  pwire [5:0] FOOSL;
   reg [5:0] FOOSL_reg;
 
   reg [2:0] u1_FK_reg;
@@ -102,8 +102,8 @@ module fun_fpsu(
   reg  gxFADD_ord;
   reg  gxFADD_pkdS;
   reg  gxFADD_pkdD;
-/*  wire fxAlt1;
-  wire fxAlt2;
+/*  pwire fxAlt1;
+  pwire fxAlt2;
   reg fxAlt1_reg;
   reg fxAlt1_reg2;
   reg [2:0] fxAlt1_reg3;
@@ -158,16 +158,16 @@ module fun_fpsu(
   reg [1:0] fxFCADD_copyA_reg;
   reg [1:0] fxFCADD_com_reg;
   reg  fxFCADD_pswp_reg;
-  wire [1:0][10:0] fxFCADD_raise;
+  pwire [1:0][10:0] fxFCADD_raise;
   reg [10:0] fxFCADD_raise_reg[1:0];
   reg [10:0] fxFCADD_raise_s_reg[1:0];
-  wire [1:0][10:0] fxFADD_raise;
+  pwire [1:0][10:0] fxFADD_raise;
   reg [10:0] fxFADD_raise_reg[1:0];
   reg [10:0] fxFADD_raise_s_reg[1:0];
-  wire [10:0] fraise2;
-  wire [10:0] fraise3;
-  wire [10:0] fmask2;
-  wire [10:0] fmask3;
+  pwire [10:0] fraise2;
+  pwire [10:0] fraise3;
+  pwire [10:0] fmask2;
+  pwire [10:0] fmask3;
   reg [10:0] fraise2_reg;
   reg [10:0] fraise3_reg;
   reg [10:0] fmask2_reg;
@@ -175,10 +175,10 @@ module fun_fpsu(
   //wire [15:0] u1_Bx=u1_BH[15:0];
   //wire [15:0] u1_Bx=u1_BH[15:0];
   integer k;
-  wire [13:0] u1_retX;
-  wire u1_retX_en;
-  wire [13:0] u1_retY;
-  wire u1_retY_en;
+  pwire [13:0] u1_retX;
+  pwire u1_retX_en;
+  pwire [13:0] u1_retY;
+  pwire u1_retY_en;
   reg  [13:0] u1_retX_reg;
   reg  u1_retX_en_reg;
   reg  [13:0] u1_retX_reg2;
@@ -192,7 +192,7 @@ module fun_fpsu(
   reg [1:0] gxFADD_sz;
   reg gxFADD_srch;
 
-  wire [1:0][69:0] gxDataBFL;
+  pwire [1:0][69:0] gxDataBFL;
   reg [1:0][69:0] gxDataBFL_reg;
   reg [1:0][69:0] fxDataAFL_reg;
   reg [1:0][69:0] fxDataAFL_REG;
@@ -202,10 +202,10 @@ module fun_fpsu(
   reg [1:0][69:0] fxDataAXL_reg2;
   reg [3:0] u1_en_reg;
   reg [3:0] u2_en_reg;
-  wire [S+69:0] uu_A1;
-  wire [S+69:0] uu_A2;
-  wire [S+69:0] uu_B1;
-  wire [S+69:0] uu_B2;
+  pwire [S+69:0] uu_A1;
+  pwire [S+69:0] uu_A2;
+  pwire [S+69:0] uu_B1;
+  pwire [S+69:0] uu_B2;
 
   reg [S+69:0] FUF0_reg;
   reg [S+69:0] FUF1_reg;
@@ -230,7 +230,7 @@ module fun_fpsu(
   reg [3:0] u1_en_reg6;
   reg [3:0] u1_en_reg7;
   
-  wire pookH,pookL;
+  pwire pookH,pookL;
 
   rs_write_forward #(S+70) u1_A_fwd(
   clk,rst,

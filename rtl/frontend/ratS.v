@@ -51,9 +51,9 @@ module rat_flags_buf(
 
   input read_clkEn;
 
-  output [ROB_ADDR_WIDTH-1:0] read0_data;
-  output [FN_WIDTH-1:0] read0_funit;
-  output read0_retired;
+  output pwire [ROB_ADDR_WIDTH-1:0] read0_data;
+  output pwire [FN_WIDTH-1:0] read0_funit;
+  output pwire read0_retired;
 
   input [ROB_ADDR_WIDTH-1:0] writeNew1_data;
   input [FN_WIDTH-1:0] writeNew1_funit;
@@ -103,35 +103,35 @@ module rat_flags_buf(
   reg retired[1:0];
   reg [FN_WIDTH-1:0] funit[1:0];
   
-  wire match_new;
+  pwire match_new;
 
-  wire match_ret0[1:0];  
-  wire match_ret1[1:0];  
-  wire match_ret2[1:0];  
-  wire match_ret3[1:0];  
-  wire match_ret4[1:0];  
-  wire match_ret5[1:0];
-  wire match_ret6[1:0];
-  wire match_ret7[1:0];
-  wire match_ret8[1:0];
+  pwire match_ret0[1:0];  
+  pwire match_ret1[1:0];  
+  pwire match_ret2[1:0];  
+  pwire match_ret3[1:0];  
+  pwire match_ret4[1:0];  
+  pwire match_ret5[1:0];
+  pwire match_ret6[1:0];
+  pwire match_ret7[1:0];
+  pwire match_ret8[1:0];
 
-  wire match_ret[1:0];
+  pwire match_ret[1:0];
 
-  wire [ROB_ADDR_WIDTH-1:0] robAddr_d;
+  pwire [ROB_ADDR_WIDTH-1:0] robAddr_d;
   
-  wire retired_d[1:0];
+  pwire retired_d[1:0];
 
-  wire [FN_WIDTH-1:0] funit_d;
+  pwire [FN_WIDTH-1:0] funit_d;
 
-  wire match_rd0;
-  wire match_rd1;
-  wire match_rd2;
-  wire match_rd3;
-  wire match_rd4;
-  wire match_rd5;
-  wire match_rd6;
-  wire match_rd7;
-  wire match_rd8;
+  pwire match_rd0;
+  pwire match_rd1;
+  pwire match_rd2;
+  pwire match_rd3;
+  pwire match_rd4;
+  pwire match_rd5;
+  pwire match_rd6;
+  pwire match_rd7;
+  pwire match_rd8;
   
 
   assign match_new=|{writeNew1_wen,writeNew2_wen,writeNew4_wen,writeNew5_wen
@@ -225,9 +225,9 @@ module rat_flags_dep(
   localparam FN_WIDTH=10;
 
   input [RAT_ADDR_WIDTH-1:0] addr;
-  output [ROB_ADDR_WIDTH-1:0] data;
-  output retired;
-  output [FN_WIDTH-1:0] funit;
+  output pwire [ROB_ADDR_WIDTH-1:0] data;
+  output pwire retired;
+  output pwire [FN_WIDTH-1:0] funit;
   
   input [3:0] rs0i0_index;
   input [3:0] rs0i1_index;
@@ -356,33 +356,33 @@ module rat_flags(
   input [FN_WIDTH-1:0] newU8;
 
   input [RAT_ADDR_WIDTH-1:0] read1_addr;
-  output [ROB_ADDR_WIDTH-1:0] read1_data;
-  output read1_retired;
-  output [FN_WIDTH-1:0] read1_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] read1_data;
+  output pwire read1_retired;
+  output pwire [FN_WIDTH-1:0] read1_fun;
   input [RAT_ADDR_WIDTH-1:0] read2_addr;
-  output [ROB_ADDR_WIDTH-1:0] read2_data;
-  output read2_retired;
-  output [FN_WIDTH-1:0] read2_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] read2_data;
+  output pwire read2_retired;
+  output pwire [FN_WIDTH-1:0] read2_fun;
   input [RAT_ADDR_WIDTH-1:0] read4_addr;
-  output [ROB_ADDR_WIDTH-1:0] read4_data;
-  output read4_retired;
-  output [FN_WIDTH-1:0] read4_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] read4_data;
+  output pwire read4_retired;
+  output pwire [FN_WIDTH-1:0] read4_fun;
   input [RAT_ADDR_WIDTH-1:0] read5_addr;
-  output [ROB_ADDR_WIDTH-1:0] read5_data;
-  output read5_retired;
-  output [FN_WIDTH-1:0] read5_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] read5_data;
+  output pwire read5_retired;
+  output pwire [FN_WIDTH-1:0] read5_fun;
   input [RAT_ADDR_WIDTH-1:0] read7_addr;
-  output [ROB_ADDR_WIDTH-1:0] read7_data;
-  output read7_retired;
-  output [FN_WIDTH-1:0] read7_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] read7_data;
+  output pwire read7_retired;
+  output pwire [FN_WIDTH-1:0] read7_fun;
   input [RAT_ADDR_WIDTH-1:0] read8_addr;
-  output [ROB_ADDR_WIDTH-1:0] read8_data;
-  output read8_retired;
-  output [FN_WIDTH-1:0] read8_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] read8_data;
+  output pwire read8_retired;
+  output pwire [FN_WIDTH-1:0] read8_fun;
 
-  output [ROB_ADDR_WIDTH-1:0] r_data;
-  output r_retired;
-  output [FN_WIDTH-1:0] r_fun;
+  output pwire [ROB_ADDR_WIDTH-1:0] r_data;
+  output pwire r_retired;
+  output pwire [FN_WIDTH-1:0] r_fun;
 
 
   input writeNew0_wen;
@@ -428,13 +428,13 @@ module rat_flags(
   input read_thread;
   input ret_thread;
 
-  wire [ROB_ADDR_WIDTH-1:0] read_data_buf;
-  wire read_retired_buf;
-  wire [FN_WIDTH-1:0] read_fun_buf;
+  pwire [ROB_ADDR_WIDTH-1:0] read_data_buf;
+  pwire read_retired_buf;
+  pwire [FN_WIDTH-1:0] read_fun_buf;
 
-  wire [8:0][ROB_ADDR_WIDTH-1:0] read_data;
-  wire [8:0]read_retired;
-  wire [8:0][FN_WIDTH-1:0] read_fun;
+  pwire [8:0][ROB_ADDR_WIDTH-1:0] read_data;
+  pwire [8:0]read_retired;
+  pwire [8:0][FN_WIDTH-1:0] read_fun;
   
   reg [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
   reg read_thread_reg;

@@ -29,7 +29,7 @@ module cc_fstalle(
   input fstall;
   input en;
   input [WIDTH-1:0] write_data;  
-  output [WIDTH-1:0] read_data;  
+  output pwire [WIDTH-1:0] read_data;  
 
   reg [2:0] where1;
   reg [2:0] where2;

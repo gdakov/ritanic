@@ -16,14 +16,14 @@ module addrcalcsec_mul(
   input [64:0] A;
   input [11:0] B;
   input [3:0] attr;
-  output [64:0] res;
+  output pwire [64:0] res;
 
-  wire [7:0] low;
-  wire C;
-  wire [6:0] hi;
-  wire [7:0] oldhi;
-  wire [43:0] BB;
-  wire [31:0] dummy;
+  pwire [7:0] low;
+  pwire C;
+  pwire [6:0] hi;
+  pwire [7:0] oldhi;
+  pwire [43:0] BB;
+  pwire [31:0] dummy;
 
   assign {BB,dummy}<={31'b0,A[`ptr_hi],5'h1f,32'hffff_ffff}<<A[`ptr_exp];
 

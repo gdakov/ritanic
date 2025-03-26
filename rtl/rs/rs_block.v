@@ -43,7 +43,7 @@ module rs_write_forward_ALU(
   input sxtEn;
   
   input [DATA_WIDTH-1:0] oldData;
-  output reg [2:0][DATA_WIDTH-1:0] newData;
+  output pwire reg [2:0][DATA_WIDTH-1:0] newData;
   input [3:0] fuFwd;
   input [3:0] fuuFwd;
   
@@ -68,9 +68,9 @@ module rs_write_forward_ALU(
   (* register equiload *) input  [DATA_WIDTH-1:0] FU9;
   input [DATA_WIDTH-1:0] FU9_reg;
   
-  wire [DATA_WIDTH-1:0] newData_d;
-  wire [DATA_WIDTH-1:0] newDataFu_d;
-  wire [DATA_WIDTH-1:0] newDataFuu_d;
+  pwire [DATA_WIDTH-1:0] newData_d;
+  pwire [DATA_WIDTH-1:0] newDataFu_d;
+  pwire [DATA_WIDTH-1:0] newDataFuu_d;
   
   assign newDataFu_d=(fuFwd==4'd0) ? FU0 : 'z;  
   assign newDataFuu_d=(fuuFwd==4'd0) ? FU0_reg : 'z;  
@@ -141,7 +141,7 @@ module rs_write_forward(
   input stall;
   
   input [DATA_WIDTH-1:0] oldData;
-  output reg [DATA_WIDTH-1:0] newData;
+  output pwire reg [DATA_WIDTH-1:0] newData;
   input [3:0] fuFwd;
   input [3:0] fuuFwd;
   
@@ -166,9 +166,9 @@ module rs_write_forward(
   (* register equiload *) input  [DATA_WIDTH-1:0] FU9;
   input [DATA_WIDTH-1:0] FU9_reg;
   
-  wire [DATA_WIDTH-1:0] newData_d;
-  wire [DATA_WIDTH-1:0] newDataFu_d;
-  wire [DATA_WIDTH-1:0] newDataFuu_d;
+  pwire [DATA_WIDTH-1:0] newData_d;
+  pwire [DATA_WIDTH-1:0] newDataFu_d;
+  pwire [DATA_WIDTH-1:0] newDataFuu_d;
   
   assign newDataFu_d=(fuFwd==4'd0) ? FU0 : 'z;  
   assign newDataFuu_d=(fuuFwd==4'd0) ? FU0_reg : 'z;  
@@ -226,7 +226,7 @@ module rs_write_forwardF(
   input stall;
   
   input [DATA_WIDTH-1:0] oldData;
-  output reg [DATA_WIDTH-1:0] newData;
+  output pwire reg [DATA_WIDTH-1:0] newData;
   input [3:0] fuFwd;
   input [3:0] fuuFwd;
   
@@ -251,9 +251,9 @@ module rs_write_forwardF(
   (* register equiload *) input  [DATA_WIDTH-1:0] FU9;
   input [DATA_WIDTH-1:0] FU9_reg;
   
-  wire [DATA_WIDTH-1:0] newData_d;
-  wire [DATA_WIDTH-1:0] newDataFu_d;
-  wire [DATA_WIDTH-1:0] newDataFuu_d;
+  pwire [DATA_WIDTH-1:0] newData_d;
+  pwire [DATA_WIDTH-1:0] newDataFu_d;
+  pwire [DATA_WIDTH-1:0] newDataFuu_d;
   
   assign newDataFu_d=(fuFwd==4'd0) ? FU0 : 'z;  
   assign newDataFuu_d=(fuuFwd==4'd0) ? FU0_reg : 'z;  
@@ -312,7 +312,7 @@ module rs_write_forward_JALR(
   input stall;
   
   input [DATA_WIDTH-1:0] oldData;
-  output reg [DATA_WIDTH-1:0] newData;
+  output pwire reg [DATA_WIDTH-1:0] newData;
   input [DATA_WIDTH-1:0] auxData;
   input auxEn;
   input [3:0] fuFwd;
@@ -339,9 +339,9 @@ module rs_write_forward_JALR(
   (* register equiload *) input  [DATA_WIDTH-1:0] FU9;
   input [DATA_WIDTH-1:0] FU9_reg;
 
-  wire [DATA_WIDTH-1:0] newData_d;
-  wire [DATA_WIDTH-1:0] newDataFu_d;
-  wire [DATA_WIDTH-1:0] newDataFuu_d;
+  pwire [DATA_WIDTH-1:0] newData_d;
+  pwire [DATA_WIDTH-1:0] newDataFu_d;
+  pwire [DATA_WIDTH-1:0] newDataFuu_d;
   
   assign newDataFu_d=(fuFwd==4'd0) ? FU0 : 'z;  
   assign newDataFuu_d=(fuuFwd==4'd0 && ~auxEn) ? FU0_reg : 'z;  
@@ -401,7 +401,7 @@ module rs_writeiS_forward(
   input stall;
   
   input [DATA_WIDTH-1:0] oldData;
-  output [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input [3:0] fuFwd;
   input [3:0] fuuFwd;
   
@@ -426,9 +426,9 @@ module rs_writeiS_forward(
   (* register equiload *) input  [DATA_WIDTH-1:0] FU9;
   input [DATA_WIDTH-1:0] FU9_reg;
 
-  wire [DATA_WIDTH-1:0] newData_d;
-  wire [DATA_WIDTH-1:0] newDataFu_d;
-  wire [DATA_WIDTH-1:0] newDataFuu_d;
+  pwire [DATA_WIDTH-1:0] newData_d;
+  pwire [DATA_WIDTH-1:0] newDataFu_d;
+  pwire [DATA_WIDTH-1:0] newDataFuu_d;
   reg [DATA_WIDTH-1:0] oldData_reg;
   
   assign newDataFu_d=(fuFwd==4'd0) ? FU0 : 'z;  
@@ -487,7 +487,7 @@ module rs_write_forward_save(
   input rst;
   
   input [DATA_WIDTH-1:0] oldData;
-  output [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input [3:0] fuFwd;
   input [3:0] fuuFwd;
   input save;
@@ -514,9 +514,9 @@ module rs_write_forward_save(
   input [DATA_WIDTH-1:0] FU9;
   input [DATA_WIDTH-1:0] FU9_reg;
 
-  wire [DATA_WIDTH-1:0] oldDataX;
-  wire [3:0] fuFwdX;
-  wire [3:0] fuuFwdX;
+  pwire [DATA_WIDTH-1:0] oldDataX;
+  pwire [3:0] fuFwdX;
+  pwire [3:0] fuuFwdX;
 
   reg saved;
 
@@ -567,12 +567,12 @@ module rs_save(
   input rst;
   
   input [DATA_WIDTH-1:0] oldData;
-  output reg [DATA_WIDTH-1:0] newData;
+  output pwire reg [DATA_WIDTH-1:0] newData;
   input save;
   input en;
   
 
-  wire [DATA_WIDTH-1:0] oldDataX;
+  pwire [DATA_WIDTH-1:0] oldDataX;
 
   reg saved;
 
@@ -615,7 +615,7 @@ module rs_write_forward_nxt(
   input stall;
   
   input [DATA_WIDTH-1:0] oldData;
-  output [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input [3:0] fuFwd;
   input [3:0] fuuFwd;
   
@@ -641,8 +641,8 @@ module rs_write_forward_nxt(
   input [DATA_WIDTH-1:0] FU9_reg;
 
   reg  [DATA_WIDTH-1:0] oldData_reg;
-  wire [DATA_WIDTH-1:0] newDataFu_d;
-  wire [DATA_WIDTH-1:0] newDataFuu_d;
+  pwire [DATA_WIDTH-1:0] newDataFu_d;
+  pwire [DATA_WIDTH-1:0] newDataFuu_d;
   reg [3:0] fuFwd_reg;
   reg [3:0] fuuFwd_reg;
   

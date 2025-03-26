@@ -44,19 +44,19 @@ module suggstQ_buf(
   input read_clkEn;
   
   input [10:0][ADDR_WIDTH-1:0] read_addr0;
-  output [10:0][WIDTH-1:0] read_instr0;
-  output [10:0][OTHER-1:0] read_other0;
+  output pwire [10:0][WIDTH-1:0] read_instr0;
+  output pwire [10:0][OTHER-1:0] read_other0;
   
   reg [WIDTH-1:0] instr[1:0];
   reg [OTHER-1:0] other[1:0];
   reg read_en[9:0];
   integer k;
-  wire [WIDTH-1:0] instr_rd;
-  wire [OTHER-1:0] other_rd;
-  wire [WIDTH-1:0] instr_wr;
-  wire [OTHER-1:0] other_wr;
-  wire [15:0] instr_wren;
-  wire instr_wrAny;
+  pwire [WIDTH-1:0] instr_rd;
+  pwire [OTHER-1:0] other_rd;
+  pwire [WIDTH-1:0] instr_wr;
+  pwire [OTHER-1:0] other_wr;
+  pwire [15:0] instr_wren;
+  pwire instr_wrAny;
   integer x;
 
   assign instr_rd=instr[read_thread];
@@ -125,8 +125,8 @@ module suggstQ_box(
   input read_thread;
   input read_clkEn;
   input [10:0][ADDR_WIDTH-1:0] read_addr0;
-  output [10:0][WIDTH-1:0] read_instr0;
-  output [10:0][OTHER-1:0] read_other0;
+  output pwire [10:0][WIDTH-1:0] read_instr0;
+  output pwire [10:0][OTHER-1:0] read_other0;
   
 
   reg [10:0][5:0] read_en0;
@@ -136,8 +136,8 @@ module suggstQ_box(
       genvar l,m,x;
       
       for (m=0;m<6;m=m+1) begin : tile_gen
-          wire [10:0][WIDTH-1:0] read_instrm;
-          wire [10:0][OTHER-1:0] read_otherm;
+          pwire [10:0][WIDTH-1:0] read_instrm;
+          pwire [10:0][OTHER-1:0] read_otherm;
           
           for (l=0;l<8;l=l+1) begin : buf_gen
               suggstQ_buf #(l+m*8,l==0) buf_mod(
@@ -203,7 +203,7 @@ module suggestions(
   input [15:0] write_instrEn;
   input write_thread;
   input write_wen;
-  output doFStall;
+  output pwire doFStall;
   input except;
   input except_thread;
   input [15:0][WIDTH-1:0] write_instr0;
@@ -212,34 +212,34 @@ module suggestions(
   input read_thread;
   input read_clkEn;
   input [10:0] read_instrEn;
-  output [10:0] read_avail;
-  output [10:0][WIDTH-1:0] read_instr0;
-  output [10:0][OTHER-1:0] read_other0;
+  output pwire [10:0] read_avail;
+  output pwire [10:0][WIDTH-1:0] read_instr0;
+  output pwire [10:0][OTHER-1:0] read_other0;
 
   
   reg [ADDR_WIDTH-1:0] write_addrA[15:0];
-  wire [15:0][ADDR_WIDTH-1:0] write_addrA_d;
+  pwire [15:0][ADDR_WIDTH-1:0] write_addrA_d;
   reg [ADDR_WIDTH-1:0] write_addrB[15:0];
-  wire [15:0][ADDR_WIDTH-1:0] write_addrB_d;
-  wire [ADDR_WIDTH-1:0] write_addr[15:0];
+  pwire [15:0][ADDR_WIDTH-1:0] write_addrB_d;
+  pwire [ADDR_WIDTH-1:0] write_addr[15:0];
 
   reg [ADDR_WIDTH-1:0] read_addrA[10:0];
-  wire [10:0][ADDR_WIDTH-1:0] read_addrA_d;
+  pwire [10:0][ADDR_WIDTH-1:0] read_addrA_d;
   reg [ADDR_WIDTH-1:0] read_addrB[10:0];
-  wire [10:0][ADDR_WIDTH-1:0] read_addrB_d;
-  wire [ADDR_WIDTH-1:0] read_addr_d[10:0];
+  pwire [10:0][ADDR_WIDTH-1:0] read_addrB_d;
+  pwire [ADDR_WIDTH-1:0] read_addr_d[10:0];
 
   integer k;
   
   reg [5:0] busy[1:0];
-  wire [1:0][5:0] busy_d;
-  wire doFStall0,doFStall1;
+  pwire [1:0][5:0] busy_d;
+  pwire doFStall0,doFStall1;
   
   reg read_thread_reg;
 
   reg [6:0] initCount;
   reg init;
-  wire [6:0] initCount_d;
+  pwire [6:0] initCount_d;
   
   generate
   
@@ -341,14 +341,14 @@ module instrQ_bndAdd(addr,addr_new,cnt);
   parameter CNT_COUNT=16;
   
   input [5:0] addr;
-  output [5:0] addr_new;
+  output pwire [5:0] addr_new;
   input [CNT_COUNT:0] cnt;
   
   
   generate
     genvar n;
     for (n=0;n<=CNT_COUNT;n=n+1) begin : add_gen
-         wire [5:0] addr1;
+         pwire [5:0] addr1;
          adder #(6) add_mod(addr,n[5:0],addr1,1'b0,1'b1,,,,);
         assign addr_new=cnt[n] ? addr1 &{~{2{&addr1[5:4]}},4'b1111} : 6'bz;
     end
@@ -360,19 +360,19 @@ module instrQ_upDown(addr,addr_new,fstall,inEn,stall,outEn,doFStall);
 
   
   input [5:0] addr;
-  output [5:0] addr_new;
+  output pwire [5:0] addr_new;
   input fstall;
   input [15:0] inEn;
   input stall;
   input [9:0] outEn;
-  output doFStall;
+  output pwire doFStall;
   
  
 
-  wire [16:0] cntIn;
-  wire [11:0] cntOut;
+  pwire [16:0] cntIn;
+  pwire [11:0] cntOut;
   
-  wire [16:-11] cnt;
+  pwire [16:-11] cnt;
   
   assign cntIn[16:1]=~{1'b0,inEn[16:1]}&inEn[16:0]&{17{~(fstall|doFStall)}};
   assign cntIn[0]=~inEn[0] || fstall|doFStall;

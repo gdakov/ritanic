@@ -32,7 +32,7 @@ module ccTag_ram(
   input rst;
   input [`wport-1:0]read_clkEn;
   input [`wport-1:0][ADDR_WIDTH-1:0] read_addr;
-  output [`wport-1:0][DATA_WIDTH-1:0] read_data;
+  output pwire [`wport-1:0][DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -74,7 +74,7 @@ module ccTag_lram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -126,33 +126,33 @@ module ccTag(
   input rst;
   input [`wport-1:0] read_clkEn;
   input [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr;
-  output [`wport-1:0] read_hit;
-  output [`wport-1:0] read_err;
+  output pwire [`wport-1:0] read_hit;
+  output pwire [`wport-1:0] read_err;
   
   input [PHYS_BITS-8:0] write_phys_addr;
   input write_wen;
   input invalidate;
   
   
-  output [2:0] hitNRU;
+  output pwire [2:0] hitNRU;
   input [2:0] hitNRU_in;
   input [2:0] hitNRU_reg;
-  output write_hit;
-  output [36:0] write_expun_addr;
-  output write_exp_en;
+  output pwire write_hit;
+  output pwire [36:0] write_expun_addr;
+  output pwire write_exp_en;
   inout [7:0] EI;
   input init;
 
-  wire [`wport-1:0][PHYS_BITS-8:0] tag_paddr;
-  wire [`wport-1:0]tag_valid;
+  pwire [`wport-1:0][PHYS_BITS-8:0] tag_paddr;
+  pwire [`wport-1:0]tag_valid;
 
 
-  wire [`wport-1:0][DATA_WIDTH-1:0] read_data;
-  wire [`wport-1:0][DATA_WIDTH-1:0] readW_data;
-  wire [`wport-1:0][DATA_WIDTH-1:0] read_dataW;
+  pwire [`wport-1:0][DATA_WIDTH-1:0] read_data;
+  pwire [`wport-1:0][DATA_WIDTH-1:0] readW_data;
+  pwire [`wport-1:0][DATA_WIDTH-1:0] read_dataW;
 
-  wire [DATA_WIDTH-1:0] write_data_way;
-  wire [DATA_WIDTH-1:0] write_data_new;
+  pwire [DATA_WIDTH-1:0] write_data_way;
+  pwire [DATA_WIDTH-1:0] write_data_new;
   
   reg [`wport-1:0] read_clkEn_reg;
   reg [`wport-1:0] read_clkEn_reg2;
@@ -164,11 +164,11 @@ module ccTag(
   reg [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg2;
  
 
-  wire [2:0] read_NRUr;
-  wire [2:0] read_NRUw;
-  wire [2:0] write_NRU;
+  pwire [2:0] read_NRUr;
+  pwire [2:0] read_NRUw;
+  pwire [2:0] write_NRU;
 
-  wire [5:0] POOG;
+  pwire [5:0] POOG;
 
   
   reg write_wen_reg;

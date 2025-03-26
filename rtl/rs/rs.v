@@ -58,8 +58,8 @@ module rs_wakeUp_logic(
   input clk;
   input rst;
   input stall;
-  output wire isData;
-  (* horizontal *) output [5:0] outEq;
+  output pwire isData;
+  (* horizontal *) output pwire [5:0] outEq;
   input buffree;
   input FU0Hit;
   input FU1Hit;
@@ -153,26 +153,26 @@ module rs_wakeUp_logic(
   input newIsFP2,newIsV2;
   input [1:0] newEQ2;
   
-  output reg [3:0] fuFwd;
+  output pwire reg [3:0] fuFwd;
   
   input outRsSelect0;
   input outDataEn0;
-  output [3:0] outFuFwd0;
-  output [3:0] outFuuFwd0;
+  output pwire [3:0] outFuFwd0;
+  output pwire [3:0] outFuuFwd0;
   input outRsSelect1;
   input outDataEn1;
-  output [3:0] outFuFwd1;
-  output [3:0] outFuuFwd1;
+  output pwire [3:0] outFuFwd1;
+  output pwire [3:0] outFuuFwd1;
   input outRsSelect2;
   input outDataEn2;
-  output [3:0] outFuFwd2;
-  output [3:0] outFuuFwd2;
+  output pwire [3:0] outFuFwd2;
+  output pwire [3:0] outFuuFwd2;
   
-  wire [3:0] fuFwd_d;
+  pwire [3:0] fuFwd_d;
 // equals wires
-  wire [1:0] eq;
+  pwire [1:0] eq;
 
-  wire [1:0] eq_new;
+  pwire [1:0] eq_new;
 
   reg [1:0] eq_reg;
 //  reg [1:0] eq_reg2;
@@ -184,33 +184,33 @@ module rs_wakeUp_logic(
 
   reg [9:0] outEq0;
 
-  wire [REG_WIDTH-1:0] register_d;
+  pwire [REG_WIDTH-1:0] register_d;
   reg [REG_WIDTH-1:0] register;
 
-  wire [FN_WIDTH-1:0] funit_d;
+  pwire [FN_WIDTH-1:0] funit_d;
   reg [FN_WIDTH-1:0] funit;
-  wire [18:0] funit0;
+  pwire [18:0] funit0;
 
   reg [3:0] fuuFwd;
   
-  wire [10:0] gazump;
-  wire [3:0] gzFwd;
+  pwire [10:0] gazump;
+  pwire [3:0] gzFwd;
 
-  wire [8:0] Treg0;
-  wire Twen0;
-  wire [8:0] Treg1;
-  wire Twen1;
+  pwire [8:0] Treg0;
+  pwire Twen0;
+  pwire [8:0] Treg1;
+  pwire Twen1;
 
-  wire [8:0] FUreg[21:0];
-  wire [21:0] FUwen;
+  pwire [8:0] FUreg[21:0];
+  pwire [21:0] FUwen;
 
   reg isFP;
-  wire isFP_d;
+  pwire isFP_d;
   reg isV;
-  wire isV_d;
+  pwire isV_d;
   
-//  wire isDataF,isDataI,isDataV;
-  wire sel;
+//  pwire isDataF,isDataI,isDataV;
+  pwire sel;
 
   assign sel=outRsSelect0&outDataEn0||outRsSelect1&outDataEn1||outRsSelect2&outDataEn2||buffree&~newRsSelect0&~newRsSelect1&~newRsSelect2;
 
@@ -426,8 +426,8 @@ module rs_wakeUp_logic_array(
   input clk;
   input rst;
   input stall;
-  output [BUF_COUNT-1:0] isData;
-  (* horizontal *) output [BUF_COUNT*6-1:0] outEq;
+  output pwire [BUF_COUNT-1:0] isData;
+  (* horizontal *) output pwire [BUF_COUNT*6-1:0] outEq;
   input [BUF_COUNT-1:0] buffree;
   
 //functional units inputs/outputs
@@ -485,38 +485,38 @@ module rs_wakeUp_logic_array(
   input [10:0] newGazump2;
   input newIsFP2,newIsV2;
   
-  output [BUF_COUNT*4-1:0] fuFwd;
+  output pwire [BUF_COUNT*4-1:0] fuFwd;
   
   input [BUF_COUNT-1:0] outRsSelect0;
   input outDataEn0;
   input [3:0] outBank0;
   input outFound0;
-  output [3:0] outFuFwd0;
-  output [3:0] outFuuFwd0;
+  output pwire [3:0] outFuFwd0;
+  output pwire [3:0] outFuuFwd0;
   input [BUF_COUNT-1:0] outRsSelect1;
   input outDataEn1;
   input [3:0] outBank1;
   input outFound1;
-  output [3:0] outFuFwd1;
-  output [3:0] outFuuFwd1;
+  output pwire [3:0] outFuFwd1;
+  output pwire [3:0] outFuuFwd1;
   input [BUF_COUNT-1:0] outRsSelect2;
   input outDataEn2;
   input [3:0] outBank2;
   input outFound2;
-  output [3:0] outFuFwd2;
-  output [3:0] outFuuFwd2;
+  output pwire [3:0] outFuFwd2;
+  output pwire [3:0] outFuuFwd2;
 
-  wire [1:0] newEQ[2:0];
-  wire [8:0] register[2:0];
-  wire [9:0] funit[2:0];
+  pwire [1:0] newEQ[2:0];
+  pwire [8:0] register[2:0];
+  pwire [9:0] funit[2:0];
   
-  wire [2:0][8:0] Treg0;
-  wire [2:0] Twen0;
-  wire [2:0][8:0] Treg1;
-  wire [2:0] Twen1;
+  pwire [2:0][8:0] Treg0;
+  pwire [2:0] Twen0;
+  pwire [2:0][8:0] Treg1;
+  pwire [2:0] Twen1;
 
-  wire [8:0] FUreg[21:0];
-  wire [21:0] FUwen;
+  pwire [8:0] FUreg[21:0];
+  pwire [21:0] FUwen;
   
   reg [REG_WIDTH-1:0] FUreg4_reg;
   reg FU4wen_reg;
@@ -554,9 +554,9 @@ module rs_wakeUp_logic_array(
   reg [REG_WIDTH-1:0] FUreg9_reg2;
   reg FU9wen_reg2;
 
-  wire [21:0] funit0[2:0];
-  wire [2:0] isFP;
-  wire [2:0] isV;
+  pwire [21:0] funit0[2:0];
+  pwire [2:0] isFP;
+  pwire [2:0] isV;
 
   assign register[0]=newReg0;
   assign register[1]=newReg1;
@@ -623,15 +623,15 @@ module rs_wakeUp_logic_array(
   generate
       genvar j,k,p,q;
       for (j=0;j<4;j=j+1) begin : banks_gen
-          wire [3:0] fuFwdk;
-          wire [3:0] fuuFwdk;
+          pwire [3:0] fuFwdk;
+          pwire [3:0] fuuFwdk;
           
-          wire [3:0] outFuFwd0k;
-          wire [3:0] outFuuFwd0k;
-          wire [3:0] outFuFwd1k;
-          wire [3:0] outFuuFwd1k;
-          wire [3:0] outFuFwd2k;
-          wire [3:0] outFuuFwd2k;
+          pwire [3:0] outFuFwd0k;
+          pwire [3:0] outFuuFwd0k;
+          pwire [3:0] outFuFwd1k;
+          pwire [3:0] outFuuFwd1k;
+          pwire [3:0] outFuFwd2k;
+          pwire [3:0] outFuuFwd2k;
           for (k=0;k<8;k=k+1) begin : bufs_gen
               rs_wakeUp_logic #(DATA_WIDTH) buf_mod(
               clk,rst,stall,
@@ -823,16 +823,16 @@ module rs_wakeUp_data(
   input [WIDTH-1:0] FU8;
   input [WIDTH-1:0] FU9;
   
-  output [WIDTH-1:0] outData0;
+  output pwire [WIDTH-1:0] outData0;
   (* horizontal *) input outRsSelect1;
-  output [WIDTH-1:0] outData1;
+  output pwire [WIDTH-1:0] outData1;
   (* horizontal *) input outRsSelect2;
-  output [WIDTH-1:0] outData2;
+  output pwire [WIDTH-1:0] outData2;
   
-  wire data_en;
-  wire [WIDTH-1:0] data_d;
-  wire [WIDTH-1:0] data_d0;
-  wire [WIDTH-1:0] data_d1;
+  pwire data_en;
+  pwire [WIDTH-1:0] data_d;
+  pwire [WIDTH-1:0] data_d0;
+  pwire [WIDTH-1:0] data_d1;
   reg [WIDTH-1:0] data_q;
 
 
@@ -872,7 +872,7 @@ endmodule
 
 //insturct compiler not to delete the redundant outputs of
 //rs_wakeUp_data_array
-//route outputs with x1 wire layers
+//route outputs with x1 pwire layers
 module rs_wakeUp_data_array(
   clk,rst,stall,
   newRsSelect0,newData0,
@@ -915,22 +915,22 @@ module rs_wakeUp_data_array(
   input [BUF_COUNT-1:0] outRsSelect0;
   input [3:0] outBank0;
   input outFound0;
-  output [WIDTH-1:0] outData0;
+  output pwire [WIDTH-1:0] outData0;
   input [BUF_COUNT-1:0] outRsSelect1;
   input [3:0] outBank1;
   input outFound1;
-  output [WIDTH-1:0] outData1;
+  output pwire [WIDTH-1:0] outData1;
   input [BUF_COUNT-1:0] outRsSelect2;
   input [3:0] outBank2;
   input outFound2;
-  output [WIDTH-1:0] outData2;
+  output pwire [WIDTH-1:0] outData2;
 
   generate
       genvar j,k;
       for (j=0;j<4;j=j+1) begin : tile_gen
-          wire [WIDTH-1:0] outData0k;
-          wire [WIDTH-1:0] outData1k;
-          wire [WIDTH-1:0] outData2k;
+          pwire [WIDTH-1:0] outData0k;
+          pwire [WIDTH-1:0] outData1k;
+          pwire [WIDTH-1:0] outData2k;
           
           for (k=0;k<8;k=k+1) begin : buf_gen
               rs_wakeUp_data #(WIDTH) buf_mod(
@@ -997,14 +997,14 @@ module rs_wakeUp_data3(
   input [WIDTH-1:0] FU5;
   input [WIDTH-1:0] FU6;
   
-  output [WIDTH-1:0] outDataA0;
-  output [WIDTH-1:0] outDataB0;
+  output pwire [WIDTH-1:0] outDataA0;
+  output pwire [WIDTH-1:0] outDataB0;
   input outRsSelect0;
 
-  wire [1:0] data_en;
-  wire [1:0] [WIDTH-1:0] data_d;
-  wire [1:0] [WIDTH-1:0] data_d0;
-  wire [1:0] [WIDTH-1:0] data_d1;
+  pwire [1:0] data_en;
+  pwire [1:0] [WIDTH-1:0] data_d;
+  pwire [1:0] [WIDTH-1:0] data_d0;
+  pwire [1:0] [WIDTH-1:0] data_d1;
   reg [1:0] [WIDTH-1:0] data_q;
 
 
@@ -1062,7 +1062,7 @@ endmodule
 
 //insturct compiler not to delete the redundant outputs of
 //rs_wakeUp_data_array
-//route outputs with x1 wire layers
+//route outputs with x1 pwire layers
 module rs_wakeUp_data4_array(
   clk,rst,stall,
   newRsSelect0,newData0,newDataA0,
@@ -1100,14 +1100,14 @@ module rs_wakeUp_data4_array(
   input [BUF_COUNT-1:0] outRsSelect0;
   input [3:0] outBank0;
   input outFound0;
-  output [WIDTH-1:0] outDataA0;
-  output [WIDTH-1:0] outDataB0;
+  output pwire [WIDTH-1:0] outDataA0;
+  output pwire [WIDTH-1:0] outDataB0;
 
   generate
       genvar j,k;
       for (j=0;j<4;j=j+1) begin : tile_gen
-          wire [WIDTH-1:0] outData0k;
-          wire [WIDTH-1:0] outData1k;
+          pwire [WIDTH-1:0] outData0k;
+          pwire [WIDTH-1:0] outData1k;
           
           for (k=0;k<8;k=k+1) begin : buf_gen
               rs_wakeUp_data3 #(WIDTH) buf_mod(
@@ -1163,8 +1163,8 @@ module rs_wakeUpS_logic(
   input clk;
   input rst;
   input stall;
-  output wire isData;
-  output [5:0] outEq;
+  output pwire isData;
+  output pwire [5:0] outEq;
 
   input buffree;
 
@@ -1211,54 +1211,54 @@ module rs_wakeUpS_logic(
   input newIsFP2;
   input [1:0] newEQ2;
   
-  output reg [3:0] fuFwd;
+  output pwire reg [3:0] fuFwd;
   
   input outRsSelect1;
   input outDataEn1;
-  output [3:0] outFuFwd1;
-  output [3:0] outFuuFwd1;
+  output pwire [3:0] outFuFwd1;
+  output pwire [3:0] outFuuFwd1;
   input outRsSelect2;
   input outDataEn2;
-  output [3:0] outFuFwd2;
-  output [3:0] outFuuFwd2;
+  output pwire [3:0] outFuFwd2;
+  output pwire [3:0] outFuuFwd2;
   
-  wire [3:0] fuFwd_d;
+  pwire [3:0] fuFwd_d;
 // equals wires
-  wire [1:0] eq;
-  wire [1:0] eq_new;
+  pwire [1:0] eq;
+  pwire [1:0] eq_new;
 
 
   reg [1:0] eq_reg;
 
   reg [1:0] eq_mask;
    
-  wire [REG_WIDTH-1:0] register_d;
+  pwire [REG_WIDTH-1:0] register_d;
   reg [REG_WIDTH-1:0] register;
 
-  wire [FN_WIDTH-1:0] funit_d;
+  pwire [FN_WIDTH-1:0] funit_d;
   reg [FN_WIDTH-1:0] funit;
 
   reg [3:0] fuuFwd;
   
-  wire [10:0] gazump;
-  wire [3:0] gzFwd;
+  pwire [10:0] gazump;
+  pwire [3:0] gzFwd;
   
-  wire [8:0] Treg0;
-  wire Twen0;
-  wire [8:0] Treg1;
-  wire Twen1;
+  pwire [8:0] Treg0;
+  pwire Twen0;
+  pwire [8:0] Treg1;
+  pwire Twen1;
 
-  wire [8:0] FUreg[9:0];
-  wire [9:0] FUwen;
+  pwire [8:0] FUreg[9:0];
+  pwire [9:0] FUwen;
 
   reg isFP;
-  wire isFP_d;
+  pwire isFP_d;
   
-  wire isDataF,isDataI;
+  pwire isDataF,isDataI;
 
-  wire sel;
+  pwire sel;
 
-  wire funM,funAdd,funMul;
+  pwire funM,funAdd,funMul;
   
   reg [9:1] outEq0;
   
@@ -1422,8 +1422,8 @@ module rs_wakeUpS_logic_array(
   input clk;
   input rst;
   input stall;
-  output [BUF_COUNT-1:0] isData;
-  output [BUF_COUNT*6-1:0] outEq;
+  output pwire [BUF_COUNT-1:0] isData;
+  output pwire [BUF_COUNT*6-1:0] outEq;
   
   input [BUF_COUNT-1:0] buffree;
   
@@ -1465,32 +1465,32 @@ module rs_wakeUpS_logic_array(
   input [10:0] newGazump2;
   input newIsFP2;
   
-  output [BUF_COUNT*4-1:0] fuFwd;
+  output pwire [BUF_COUNT*4-1:0] fuFwd;
   
   input [BUF_COUNT-1:0] outRsSelect1;
   input outDataEn1;
   input [3:0] outBank1;
   input outFound1;
-  output [3:0] outFuFwd1;
-  output [3:0] outFuuFwd1;
+  output pwire [3:0] outFuFwd1;
+  output pwire [3:0] outFuuFwd1;
   input [BUF_COUNT-1:0] outRsSelect2;
   input outDataEn2;
   input [3:0] outBank2;
   input outFound2;
-  output [3:0] outFuFwd2;
-  output [3:0] outFuuFwd2;
+  output pwire [3:0] outFuFwd2;
+  output pwire [3:0] outFuuFwd2;
 
-  wire [1:0] newEQ[2:1];
-  wire [8:0] register[2:1];
-  wire [9:0] funit[2:1];
+  pwire [1:0] newEQ[2:1];
+  pwire [8:0] register[2:1];
+  pwire [9:0] funit[2:1];
 
-  wire [2:1][8:0] Treg0;
-  wire [2:1] Twen0;
-  wire [2:1][8:0] Treg1;
-  wire [2:1] Twen1;
+  pwire [2:1][8:0] Treg0;
+  pwire [2:1] Twen0;
+  pwire [2:1][8:0] Treg1;
+  pwire [2:1] Twen1;
 
-  wire [8:0] FUreg[9:0];
-  wire [9:0] FUwen;
+  pwire [8:0] FUreg[9:0];
+  pwire [9:0] FUwen;
   
   
   reg [REG_WIDTH-1:0] FUreg0_reg;
@@ -1562,15 +1562,15 @@ module rs_wakeUpS_logic_array(
   generate
       genvar j,k,p,q;
       for (j=0;j<4;j=j+1) begin : banks_gen
-          wire [3:0] fuFwdk;
-          wire [3:0] fuuFwdk;
+          pwire [3:0] fuFwdk;
+          pwire [3:0] fuuFwdk;
           
-          wire [3:0] outFuFwd0k;
-          wire [3:0] outFuuFwd0k;
-          wire [3:0] outFuFwd1k;
-          wire [3:0] outFuuFwd1k;
-          wire [3:0] outFuFwd2k;
-          wire [3:0] outFuuFwd2k;
+          pwire [3:0] outFuFwd0k;
+          pwire [3:0] outFuuFwd0k;
+          pwire [3:0] outFuFwd1k;
+          pwire [3:0] outFuuFwd1k;
+          pwire [3:0] outFuFwd2k;
+          pwire [3:0] outFuuFwd2k;
           
           for (k=0;k<8;k=k+1) begin : bufs_gen
               rs_wakeUpS_logic #(DATA_WIDTH) buf_mod(
@@ -1688,15 +1688,15 @@ module rs_nonWakeUp_DFF(
   (* horizontal *) input newRsSelect2;
   input [WIDTH-1:0] newData2;
   (* horizontal *) input outRsSelect0;
-  output [WIDTH-1:0] outData0;
+  output pwire [WIDTH-1:0] outData0;
   (* horizontal *) input outRsSelect1;
-  output [WIDTH-1:0] outData1;
+  output pwire [WIDTH-1:0] outData1;
   (* horizontal *) input outRsSelect2;
-  output [WIDTH-1:0] outData2;
+  output pwire [WIDTH-1:0] outData2;
   
 
-  wire data_en;
-  wire [WIDTH-1:0] data_d;
+  pwire data_en;
+  pwire [WIDTH-1:0] data_d;
   reg [WIDTH-1:0] data_q;
 
 
@@ -1748,22 +1748,22 @@ module rs_nonWakeUp_array(
   input [BUF_COUNT-1:0] outRsSelect0;
   input [3:0] outBank0;
   input outFound0;
-  output [WIDTH-1:0] outData0;
+  output pwire [WIDTH-1:0] outData0;
   input [BUF_COUNT-1:0] outRsSelect1;
   input [3:0] outBank1;
   input outFound1;
-  output [WIDTH-1:0] outData1;
+  output pwire [WIDTH-1:0] outData1;
   input [BUF_COUNT-1:0] outRsSelect2;
   input [3:0] outBank2;
   input outFound2;
-  output [WIDTH-1:0] outData2;
+  output pwire [WIDTH-1:0] outData2;
   
   generate
       genvar j,k;
       for (j=0;j<4;j=j+1) begin : tile_gen
-          wire [WIDTH-1:0] outData0k;
-          wire [WIDTH-1:0] outData1k;
-          wire [WIDTH-1:0] outData2k;
+          pwire [WIDTH-1:0] outData0k;
+          pwire [WIDTH-1:0] outData1k;
+          pwire [WIDTH-1:0] outData2k;
           
           for (k=0;k<8;k=k+1) begin : buf_gen
               rs_nonWakeUp_DFF #(WIDTH) buf_mod(
@@ -1807,8 +1807,8 @@ module rs_nonWakeUp_datad_DFF(
   input clk;
   input rst;
   input stall;
-  output reg [WIDTH-1:0] data_q;
-  output [WIDTH-1:0] data_d;
+  output pwire reg [WIDTH-1:0] data_q;
+  output pwire [WIDTH-1:0] data_d;
   (* horizontal *) input newRsSelect0;
   input [WIDTH-1:0] newData0;
   (* horizontal *) input newRsSelect1;
@@ -1816,7 +1816,7 @@ module rs_nonWakeUp_datad_DFF(
   (* horizontal *) input newRsSelect2;
   input [WIDTH-1:0] newData2;
 
-  wire data_en;
+  pwire data_en;
 
 
   assign data_en=|{newRsSelect0,newRsSelect1,newRsSelect2,rst};
@@ -1877,12 +1877,12 @@ module rs_buf(
   input [2:0] newRsSelect0;
   input [2:0] [3:0] newPort0;
 
-// output data to functional units
+// output pwire data to functional units
 
   input [2:0]outRsSelect0;
-  output wire [2:0] portReady0;
-  output [2:0] [3:0] outDataEn0;
-  output [2:0] outThread0;
+  output pwire [2:0] portReady0;
+  output pwire [2:0] [3:0] outDataEn0;
+  output pwire [2:0] outThread0;
     
   input [3:0] fuFwdA;
   input [3:0] fuFwdB;
@@ -1890,57 +1890,57 @@ module rs_buf(
   input [2:0] isDataABS;
 
 // free output
-  output wire bufFree;
+  output pwire bufFree;
 // wires
 // wires - new data
   
 
-  wire [2:0] portReady0_d;
-  wire [2:0] portReady0_q;
+  pwire [2:0] portReady0_d;
+  pwire [2:0] portReady0_q;
 
 
-  wire [3:0] portNo_new;
+  pwire [3:0] portNo_new;
 
-  wire [2:0] port0_d;
-  wire [2:0] port0_en;
-  wire [2:0] port0_q;
+  pwire [2:0] port0_d;
+  pwire [2:0] port0_en;
+  pwire [2:0] port0_q;
 
 
-  wire [2:0] [REG_WIDTH-1:0] regA_q;
-  wire [2:0] [REG_WIDTH-1:0] regA_d;
+  pwire [2:0] [REG_WIDTH-1:0] regA_q;
+  pwire [2:0] [REG_WIDTH-1:0] regA_d;
 
-  wire newRsSelectAny=|newRsSelect0;
+  pwire newRsSelectAny=|newRsSelect0;
 
-  wire [2:0] dataAPending_en;
-  wire [2:0] dataAPending_d;
-  wire [2:0] dataAPending_q;
-  wire [2:0] dataAPending_gather;
-  wire [2:0] dataAPending_new;
+  pwire [2:0] dataAPending_en;
+  pwire [2:0] dataAPending_d;
+  pwire [2:0] dataAPending_q;
+  pwire [2:0] dataAPending_gather;
+  pwire [2:0] dataAPending_new;
  
 // wires - gather data
-  wire isReady;
+  pwire isReady;
 // wires - free bit
-  wire bufFree_d;
-  wire bufFree_en;
+  pwire bufFree_d;
+  pwire bufFree_en;
   
-  wire stall_n;
+  pwire stall_n;
   
   
-  wire unFwdCheck;
-  wire [3:0] fwdCheck0;
+  pwire unFwdCheck;
+  pwire [3:0] fwdCheck0;
 
-  wire unCheckA;
-  wire unCheckB;
+  pwire unCheckA;
+  pwire unCheckB;
 
-  wire forgetUpdate;
+  pwire forgetUpdate;
   
-  wire thread_q;
-  wire FP_q;
-  wire Vec_q;
+  pwire thread_q;
+  pwire FP_q;
+  pwire Vec_q;
   
-  wire nonDataRst0;
+  pwire nonDataRst0;
   
-  wire new_stall_n;
+  pwire new_stall_n;
     
   assign stall_n=~stall;  
   assign nonDataRst0=(rst_thread) ? nonDataRst & thread_q || dataRst : nonDataRst &~thread_q || dataRst;
@@ -1987,7 +1987,7 @@ module rs_buf(
 
 // end new data input into buffer
 
-// output from buffer
+// output pwire from buffer
 
 // issue port 0 -addrcalc
   
@@ -2060,14 +2060,14 @@ module rs_array(
   input [2:0][BUF_COUNT-1:0] newRsSelect0;
   input [2:0][3:0] newPort0;
 
-// output data to functional units
+// output pwire data to functional units
 
   input [2:0][BUF_COUNT-1:0] outRsSelect0;
   input [2:0][3:0] outRsBank0;
   input [2:0]outFound0;
-  output [2:0][BUF_COUNT-1:0] portReady0;
-  output [2:0][3:0] outDataEn0;
-  output [2:0]outThread0;
+  output pwire [2:0][BUF_COUNT-1:0] portReady0;
+  output pwire [2:0][3:0] outDataEn0;
+  output pwire [2:0]outThread0;
     
   input [BUF_COUNT*4-1:0] fuFwdA;
   input [BUF_COUNT*4-1:0] fuFwdB;
@@ -2075,15 +2075,15 @@ module rs_array(
   input [2:0][BUF_COUNT-1:0] isDataA;
 
 // free output
-  output [BUF_COUNT-1:0]  bufFree;
+  output pwire [BUF_COUNT-1:0]  bufFree;
 // wires
 // wires - new data
 
   generate
       genvar k,j;
       for (j=0;j<4;j=j+1) begin : banks_gen
-          wire [2:0][3:0] outDataEn0a;
-          wire [2:0] outThread0a;
+          pwire [2:0][3:0] outDataEn0a;
+          pwire [2:0] outThread0a;
       for(k=0;k<8;k=k+1) begin : buffers_gen
           rs_buf buf_mod(
           clk,
@@ -2243,7 +2243,7 @@ module rs(
   input nonDataRst;
   input rst_thread;
   input stall;
-  output doStall;
+  output pwire doStall;
   input FU0Hit;
   input FU1Hit;
   input FU2Hit;
@@ -2323,61 +2323,61 @@ module rs(
   input [ATTR_WIDTH-1:0] newAttr2;
   input newXPort2;
   
-// output data to functional units
+// output pwire data to functional units
 
-  output wire [DATA_WIDTH-1:0]       outDataA0;
-  output wire [DATA_WIDTH-1:0]       outDataB0;//b USED AS BASE REG
-  output wire [CONST_WIDTH-1:0]       outDataC0;
-  output wire [REG_WIDTH-1:0] outReg0;
-  output wire [OPERATION_WIDTH-1:0]   outOp0;
-  output wire [II_WIDTH-1:0] outInstrIndex0;
-  output wire [WQ_WIDTH-1:0] outWQ0;
-  output outLSFlag0;
-  output [3:0] outFuFwdA0;
-  output [3:0] outFuFwdB0;
-  output [3:0] outFuuFwdA0;
-  output [3:0] outFuuFwdB0;
-  output [LSQ_WIDTH-1:0] outLSQ0;
-  output [3:0] outDataEn0;
-  output outThread0;
-  output [ATTR_WIDTH-1:0] outAttr0;
+  output pwire [DATA_WIDTH-1:0]       outDataA0;
+  output pwire [DATA_WIDTH-1:0]       outDataB0;//b USED AS BASE REG
+  output pwire [CONST_WIDTH-1:0]       outDataC0;
+  output pwire [REG_WIDTH-1:0] outReg0;
+  output pwire [OPERATION_WIDTH-1:0]   outOp0;
+  output pwire [II_WIDTH-1:0] outInstrIndex0;
+  output pwire [WQ_WIDTH-1:0] outWQ0;
+  output pwire outLSFlag0;
+  output pwire [3:0] outFuFwdA0;
+  output pwire [3:0] outFuFwdB0;
+  output pwire [3:0] outFuuFwdA0;
+  output pwire [3:0] outFuuFwdB0;
+  output pwire [LSQ_WIDTH-1:0] outLSQ0;
+  output pwire [3:0] outDataEn0;
+  output pwire outThread0;
+  output pwire [ATTR_WIDTH-1:0] outAttr0;
     
-  output wire [DATA_WIDTH-1:0]       outDataA1;
-  output wire [DATA_WIDTH-1:0]       outDataB1;
-  output wire [CONST_WIDTH-1:0]       outDataC1;
-  output wire [FLAGS_WIDTH-1:0]       outDataS1;
-  output wire [REG_WIDTH-1:0] outReg1;
-  output wire [REG_WIDTH-1:0] outRegSimd1;
-  output wire [OPERATION_WIDTH-1:0]   outOp1;
-  output wire [II_WIDTH-1:0] outInstrIndex1;
-  output [3:0] outFuFwdA1;
-  output [3:0] outFuFwdB1;
-  output [3:0] outFuFwdS1;
-  output [3:0] outFuuFwdA1;
-  output [3:0] outFuuFwdB1;
-  output [3:0] outFuuFwdS1;
-  output [3:0] outDataEn1;
-  output outThread1;
-  output [ATTR_WIDTH-1:0] outAttr1;
-  output outXPort1;
+  output pwire [DATA_WIDTH-1:0]       outDataA1;
+  output pwire [DATA_WIDTH-1:0]       outDataB1;
+  output pwire [CONST_WIDTH-1:0]       outDataC1;
+  output pwire [FLAGS_WIDTH-1:0]       outDataS1;
+  output pwire [REG_WIDTH-1:0] outReg1;
+  output pwire [REG_WIDTH-1:0] outRegSimd1;
+  output pwire [OPERATION_WIDTH-1:0]   outOp1;
+  output pwire [II_WIDTH-1:0] outInstrIndex1;
+  output pwire [3:0] outFuFwdA1;
+  output pwire [3:0] outFuFwdB1;
+  output pwire [3:0] outFuFwdS1;
+  output pwire [3:0] outFuuFwdA1;
+  output pwire [3:0] outFuuFwdB1;
+  output pwire [3:0] outFuuFwdS1;
+  output pwire [3:0] outDataEn1;
+  output pwire outThread1;
+  output pwire [ATTR_WIDTH-1:0] outAttr1;
+  output pwire outXPort1;
 
-  output wire [DATA_WIDTH-1:0]       outDataA2;
-  output wire [DATA_WIDTH-1:0]       outDataB2;
-  output wire [FLAGS_WIDTH-1:0]       outDataS2;
-  output wire [REG_WIDTH-1:0] outReg2;
-  output wire [REG_WIDTH-1:0] outRegSimd2;
-  output wire [OPERATION_WIDTH-1:0]   outOp2;
-  output wire [II_WIDTH-1:0] outInstrIndex2;
-  output [3:0] outFuFwdA2;
-  output [3:0] outFuFwdB2;
-  output [3:0] outFuFwdS2;
-  output [3:0] outFuuFwdA2;
-  output [3:0] outFuuFwdB2;
-  output [3:0] outFuuFwdS2;
-  output [3:0] outDataEn2;
-  output outThread2;
-  output [ATTR_WIDTH-1:0] outAttr2;
-  output outXPort2;
+  output pwire [DATA_WIDTH-1:0]       outDataA2;
+  output pwire [DATA_WIDTH-1:0]       outDataB2;
+  output pwire [FLAGS_WIDTH-1:0]       outDataS2;
+  output pwire [REG_WIDTH-1:0] outReg2;
+  output pwire [REG_WIDTH-1:0] outRegSimd2;
+  output pwire [OPERATION_WIDTH-1:0]   outOp2;
+  output pwire [II_WIDTH-1:0] outInstrIndex2;
+  output pwire [3:0] outFuFwdA2;
+  output pwire [3:0] outFuFwdB2;
+  output pwire [3:0] outFuFwdS2;
+  output pwire [3:0] outFuuFwdA2;
+  output pwire [3:0] outFuuFwdB2;
+  output pwire [3:0] outFuuFwdS2;
+  output pwire [3:0] outDataEn2;
+  output pwire outThread2;
+  output pwire [ATTR_WIDTH-1:0] outAttr2;
+  output pwire outXPort2;
 
   
 
@@ -2443,25 +2443,25 @@ module rs(
   input [16+SIMD_WIDTH-1:0] newDataFA2L;
   input [16+SIMD_WIDTH-1:0] newDataFB2L;
   
-  output [SIMD_WIDTH-1:0] outDataVA1H;
-  output [SIMD_WIDTH-1:0] outDataVB1H;
-  output [SIMD_WIDTH-1:0] outDataVA1L;
-  output [SIMD_WIDTH-1:0] outDataVB1L;
+  output pwire [SIMD_WIDTH-1:0] outDataVA1H;
+  output pwire [SIMD_WIDTH-1:0] outDataVB1H;
+  output pwire [SIMD_WIDTH-1:0] outDataVA1L;
+  output pwire [SIMD_WIDTH-1:0] outDataVB1L;
   
-  output [SIMD_WIDTH-1:0] outDataVA2H;
-  output [SIMD_WIDTH-1:0] outDataVB2H;
-  output [SIMD_WIDTH-1:0] outDataVA2L;
-  output [SIMD_WIDTH-1:0] outDataVB2L;
+  output pwire [SIMD_WIDTH-1:0] outDataVA2H;
+  output pwire [SIMD_WIDTH-1:0] outDataVB2H;
+  output pwire [SIMD_WIDTH-1:0] outDataVA2L;
+  output pwire [SIMD_WIDTH-1:0] outDataVB2L;
   
-  output [SIMD_WIDTH-1:0] outDataFA1H;
-  output [SIMD_WIDTH-1:0] outDataFB1H;
-  output [16+SIMD_WIDTH-1:0] outDataFA1L;
-  output [16+SIMD_WIDTH-1:0] outDataFB1L;
+  output pwire [SIMD_WIDTH-1:0] outDataFA1H;
+  output pwire [SIMD_WIDTH-1:0] outDataFB1H;
+  output pwire [16+SIMD_WIDTH-1:0] outDataFA1L;
+  output pwire [16+SIMD_WIDTH-1:0] outDataFB1L;
   
-  output [SIMD_WIDTH-1:0] outDataFA2H;
-  output [SIMD_WIDTH-1:0] outDataFB2H;
-  output [16+SIMD_WIDTH-1:0] outDataFA2L;
-  output [16+SIMD_WIDTH-1:0] outDataFB2L;
+  output pwire [SIMD_WIDTH-1:0] outDataFA2H;
+  output pwire [SIMD_WIDTH-1:0] outDataFB2H;
+  output pwire [16+SIMD_WIDTH-1:0] outDataFA2L;
+  output pwire [16+SIMD_WIDTH-1:0] outDataFB2L;
   
   input [SIMD_WIDTH-1:0] FUV0H;
   input [SIMD_WIDTH-1:0] FUV0L;
@@ -2577,67 +2577,67 @@ module rs(
   input foundAlt1;
   input foundAlt2;
 
-  wire [BUF_COUNT-1:0] bufFree;
+  pwire [BUF_COUNT-1:0] bufFree;
   
-  wire [BUF_COUNT-1:0] newRsSelect0;
-  wire [BUF_COUNT-1:0] newRsSelect1;
-  wire [BUF_COUNT-1:0] newRsSelect2;
+  pwire [BUF_COUNT-1:0] newRsSelect0;
+  pwire [BUF_COUNT-1:0] newRsSelect1;
+  pwire [BUF_COUNT-1:0] newRsSelect2;
   
-  wire [2:0][BUF_COUNT-1:0] outRsSelect;
-  wire [BUF_COUNT-1:0] portReady[2:0];
-  wire [2:0][3:0] outBank;
-  wire [2:0] portEn;
-  wire [2:0] rsFound;
-  wire [2:0] rsFoundNZ;
+  pwire [2:0][BUF_COUNT-1:0] outRsSelect;
+  pwire [BUF_COUNT-1:0] portReady[2:0];
+  pwire [2:0][3:0] outBank;
+  pwire [2:0] portEn;
+  pwire [2:0] rsFound;
+  pwire [2:0] rsFoundNZ;
   
-  wire [127:0] fuFwdA;
-  wire [127:0] fuFwdB;
-  wire [BUF_COUNT-1:0] isDataA;
-  wire [BUF_COUNT-1:0] isDataB;
-  wire [BUF_COUNT-1:0] isDataS;
+  pwire [127:0] fuFwdA;
+  pwire [127:0] fuFwdB;
+  pwire [BUF_COUNT-1:0] isDataA;
+  pwire [BUF_COUNT-1:0] isDataB;
+  pwire [BUF_COUNT-1:0] isDataS;
 
-  wire [FLAGS_WIDTH-1:0] outDataS0;
-  wire [3:0] outFuFwdS0;
-  wire [3:0] outFuuFwdS0;
-  wire [127:0] fuFwdS;
+  pwire [FLAGS_WIDTH-1:0] outDataS0;
+  pwire [3:0] outFuFwdS0;
+  pwire [3:0] outFuuFwdS0;
+  pwire [127:0] fuFwdS;
 
-  wire [SIMD_WIDTH-1:0] outDataFA1HP;
-  wire [SIMD_WIDTH-1:0] outDataFB1HP;
-//  wire [SIMD_WIDTH-1:0] outDataFA1UHP;
-//  wire [SIMD_WIDTH-1:0] outDataFB1UHP;
+  pwire [SIMD_WIDTH-1:0] outDataFA1HP;
+  pwire [SIMD_WIDTH-1:0] outDataFB1HP;
+//  pwire [SIMD_WIDTH-1:0] outDataFA1UHP;
+//  pwire [SIMD_WIDTH-1:0] outDataFB1UHP;
   
-  wire [6*BUF_COUNT-1:0] outEqA;
-  wire [6*BUF_COUNT-1:0] outEqB;
-  wire [6*BUF_COUNT-1:0]  outEqS;
-  wire [6*BUF_COUNT-1:0]  outEqS_reg;
-  wire [6*BUF_COUNT-1:0] outEqA_reg;
-  wire [6*BUF_COUNT-1:0] outEqB_reg;
-  wire [6*BUF_COUNT-1:0] outEqA_reg2;
-  wire [6*BUF_COUNT-1:0] outEqB_reg2;
-  wire [6*BUF_COUNT-1:0] outEqA_reg3;
-  wire [6*BUF_COUNT-1:0] outEqB_reg3;
-  wire [BUF_COUNT-1:0] newRsSelect0_reg;
-  wire [BUF_COUNT-1:0] newRsSelect1_reg;
-  wire [BUF_COUNT-1:0] newRsSelect2_reg;
-  wire [BUF_COUNT-1:0] outRsSelect_reg[2:1];
-  wire [3:0] outBank_reg[2:1];
-  wire [2:1] rsFound_reg;
-  wire [2:1] rsFoundNZ_reg;
-  wire [BUF_COUNT-1:0] newRsSelect0_reg2;
-  wire [BUF_COUNT-1:0] newRsSelect1_reg2;
-  wire [BUF_COUNT-1:0] newRsSelect2_reg2;
-  wire [BUF_COUNT-1:0] outRsSelect_reg2[2:1];
-  wire [3:0] outBank_reg2[2:1];
-  wire [2:1] rsFound_reg2;
-  wire [2:1] rsFoundNZ_reg2;
+  pwire [6*BUF_COUNT-1:0] outEqA;
+  pwire [6*BUF_COUNT-1:0] outEqB;
+  pwire [6*BUF_COUNT-1:0]  outEqS;
+  pwire [6*BUF_COUNT-1:0]  outEqS_reg;
+  pwire [6*BUF_COUNT-1:0] outEqA_reg;
+  pwire [6*BUF_COUNT-1:0] outEqB_reg;
+  pwire [6*BUF_COUNT-1:0] outEqA_reg2;
+  pwire [6*BUF_COUNT-1:0] outEqB_reg2;
+  pwire [6*BUF_COUNT-1:0] outEqA_reg3;
+  pwire [6*BUF_COUNT-1:0] outEqB_reg3;
+  pwire [BUF_COUNT-1:0] newRsSelect0_reg;
+  pwire [BUF_COUNT-1:0] newRsSelect1_reg;
+  pwire [BUF_COUNT-1:0] newRsSelect2_reg;
+  pwire [BUF_COUNT-1:0] outRsSelect_reg[2:1];
+  pwire [3:0] outBank_reg[2:1];
+  pwire [2:1] rsFound_reg;
+  pwire [2:1] rsFoundNZ_reg;
+  pwire [BUF_COUNT-1:0] newRsSelect0_reg2;
+  pwire [BUF_COUNT-1:0] newRsSelect1_reg2;
+  pwire [BUF_COUNT-1:0] newRsSelect2_reg2;
+  pwire [BUF_COUNT-1:0] outRsSelect_reg2[2:1];
+  pwire [3:0] outBank_reg2[2:1];
+  pwire [2:1] rsFound_reg2;
+  pwire [2:1] rsFoundNZ_reg2;
 
   
-  wire [3:0] outFuFwdA1_reg;
-  wire [3:0] outFuFwdB1_reg;
-  wire [3:0] outFuuFwdA1_reg;
-  wire [3:0] outFuuFwdB1_reg;
+  pwire [3:0] outFuFwdA1_reg;
+  pwire [3:0] outFuFwdB1_reg;
+  pwire [3:0] outFuuFwdA1_reg;
+  pwire [3:0] outFuuFwdB1_reg;
 
-  wire op_swp,op_swp_reg,op_swp_reg2,op_swp_reg3;
+  pwire op_swp,op_swp_reg,op_swp_reg2,op_swp_reg3;
  
   function op_fpswap;
       input [OPERATION_WIDTH-1:0] op;

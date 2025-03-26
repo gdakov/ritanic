@@ -20,7 +20,7 @@ module LDE2NativeE(
   input [79:0] A;
   input [79:0] An;
   input en;
-  output [80:0] res;
+  output pwire [80:0] res;
   //assign except=A[78:64]==0 && A[63:0];//denormal
   assign res=(A[78:64]!=0 && A[78:64]!=15'hefff && en) ? {~A[78],A[79],A[78:64],1'b1,A[62:0]} : 81'bz;
   assign res=(A[78:64]==15'hefff && en) ? {A[78],A[79],A[78],A[77:65],A[62:0]!=63'b0,A[78],1'b1,A[62:0]} : 81'bz;
@@ -37,13 +37,13 @@ module stNativeE2E(
   localparam [15:0] OVFL=16'hbfff;
   input [80:0] A;
   input en;
-  output [127:0] res;
+  output pwire [127:0] res;
  
-  wire is_den;
-  wire is_overflow;
-  wire [15:0] expA={A[79],A[64],A[77:64]};
-  wire is_unord=&expA;
-  wire [15:0] expOff;
+  pwire is_den;
+  pwire is_overflow;
+  pwire [15:0] expA={A[79],A[64],A[77:64]};
+  pwire is_unord=&expA;
+  pwire [15:0] expOff;
   adder #(16) expAddD_mod(DEN,~expA,expOff,1'b1,1'b1,is_den,,,);
   adder #(16) expAddO_mod(expA,~OVFL,,1'b1,1'b1,is_overflow,,,);
 

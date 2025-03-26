@@ -33,11 +33,11 @@ module fprnd(
   input isEXT;
   input toDBL;
   input toSNG;
-  output [79:0] B;
+  output pwire [79:0] B;
 
-  wire [64:0] Ax;
-  wire do_rnd;
-  wire cout;
+  pwire [64:0] Ax;
+  pwire do_rnd;
+  pwire cout;
 
   assign Ax={A[63:53]&{11{isEXT}},A[52]|isDBL,A[51:0]};
 

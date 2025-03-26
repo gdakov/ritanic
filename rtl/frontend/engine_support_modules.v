@@ -36,7 +36,7 @@ module reg_alloc(
   input clk;
   input rst;
   input stall;
-  output doStall;
+  output pwire doStall;
   input except;
   input ethread;
   input eboth;
@@ -53,15 +53,15 @@ module reg_alloc(
   input [4:0] ret_rno7;
   input [4:0] ret_rno8;
   
-  output [8:0] newR0;
-  output [8:0] newR1;
-  output [8:0] newR2;
-  output [8:0] newR3;
-  output [8:0] newR4;
-  output [8:0] newR5;
-  output [8:0] newR6;
-  output [8:0] newR7;
-  output [8:0] newR8;
+  output pwire [8:0] newR0;
+  output pwire [8:0] newR1;
+  output pwire [8:0] newR2;
+  output pwire [8:0] newR3;
+  output pwire [8:0] newR4;
+  output pwire [8:0] newR5;
+  output pwire [8:0] newR6;
+  output pwire [8:0] newR7;
+  output pwire [8:0] newR8;
   
   input rs0i0_en,rs1i0_en,rs2i0_en;
   input rs0i1_en,rs1i1_en,rs2i1_en;
@@ -75,23 +75,23 @@ module reg_alloc(
   reg [8:0] new_en;
   reg [8:0] new_enn;
 
-  wire [3:0] pop3[2:0];
-  wire [3:1] pop3_or_more[2:0];
-  wire [3:0] pop_max;
-  wire [4:0] hhpos;
-  wire step;
-  wire [1:0] pos_d;
+  pwire [3:0] pop3[2:0];
+  pwire [3:1] pop3_or_more[2:0];
+  pwire [3:0] pop_max;
+  pwire [4:0] hhpos;
+  pwire step;
+  pwire [1:0] pos_d;
   reg [1:0] pos_1;
   reg [1:0] pos_2;
-  wire [4:0] ret_rno[8:0];
+  pwire [4:0] ret_rno[8:0];
 
 
   reg [31:0] rAllOc[8:0];
-  wire [8:0][31:0] rAllOc_first;
-  wire [8:0][31:0] rAllOc_free;
-  wire [8:0] rAllOc_has;
-  wire [8:0][3:0] rAllOc_first_b;
-  wire [8:0][4:0] rAllOc_first_r;
+  pwire [8:0][31:0] rAllOc_first;
+  pwire [8:0][31:0] rAllOc_free;
+  pwire [8:0] rAllOc_has;
+  pwire [8:0][3:0] rAllOc_first_b;
+  pwire [8:0][4:0] rAllOc_first_r;
   reg [31:0] rThread[8:0];
 
   integer k;
@@ -123,7 +123,7 @@ module reg_alloc(
 	    assign rAllOc_free[l][q]=ret_rno[l]==q && ret_en[l];
 	end
         for(a=0;a<4;a=a+1) begin
-            wire [4:0] rAllOc_first_rk;
+            pwire [4:0] rAllOc_first_rk;
             for(b=0;b<8;b=b+1) begin
                 assign rAllOc_first_rk=rAllOc_first[l][a*8+b] ? a*8+b : 5'bz;
             end
@@ -268,9 +268,9 @@ module busy_updown_alloc(
   input [6:0] busy;
   input [3:0] regCnt;
   input [3:0] retCnt;
-  output [6:0] busy_new;
+  output pwire [6:0] busy_new;
   
-  wire [3:-3] en;
+  pwire [3:-3] en;
   
   assign en[3]=regCnt[3] && retCnt[0];
   assign en[2]=(regCnt[3] && retCnt[1]) || (regCnt[2] && retCnt[0]);
@@ -325,30 +325,30 @@ module get_clear_reg(
   input [REG_WIDTH-1:0] newRF8;
 
   input [8:0] alloc;
-  output [8:0] clr;
+  output pwire [8:0] clr;
 
   input [8:0] allocS;
-  output [8:0] clrS;
+  output pwire [8:0] clrS;
 
-  output [REG_WIDTH-1:0] clrR0;
-  output [REG_WIDTH-1:0] clrR1;
-  output [REG_WIDTH-1:0] clrR2;
-  output [REG_WIDTH-1:0] clrR3;
-  output [REG_WIDTH-1:0] clrR4;
-  output [REG_WIDTH-1:0] clrR5;
-  output [REG_WIDTH-1:0] clrR6;
-  output [REG_WIDTH-1:0] clrR7;
-  output [REG_WIDTH-1:0] clrR8;
+  output pwire [REG_WIDTH-1:0] clrR0;
+  output pwire [REG_WIDTH-1:0] clrR1;
+  output pwire [REG_WIDTH-1:0] clrR2;
+  output pwire [REG_WIDTH-1:0] clrR3;
+  output pwire [REG_WIDTH-1:0] clrR4;
+  output pwire [REG_WIDTH-1:0] clrR5;
+  output pwire [REG_WIDTH-1:0] clrR6;
+  output pwire [REG_WIDTH-1:0] clrR7;
+  output pwire [REG_WIDTH-1:0] clrR8;
   
-  output [REG_WIDTH-1:0] clrRS0;
-  output [REG_WIDTH-1:0] clrRS1;
-  output [REG_WIDTH-1:0] clrRS2;
-  output [REG_WIDTH-1:0] clrRS3;
-  output [REG_WIDTH-1:0] clrRS4;
-  output [REG_WIDTH-1:0] clrRS5;
-  output [REG_WIDTH-1:0] clrRS6;
-  output [REG_WIDTH-1:0] clrRS7;
-  output [REG_WIDTH-1:0] clrRS8;
+  output pwire [REG_WIDTH-1:0] clrRS0;
+  output pwire [REG_WIDTH-1:0] clrRS1;
+  output pwire [REG_WIDTH-1:0] clrRS2;
+  output pwire [REG_WIDTH-1:0] clrRS3;
+  output pwire [REG_WIDTH-1:0] clrRS4;
+  output pwire [REG_WIDTH-1:0] clrRS5;
+  output pwire [REG_WIDTH-1:0] clrRS6;
+  output pwire [REG_WIDTH-1:0] clrRS7;
+  output pwire [REG_WIDTH-1:0] clrRS8;
   
   reg [REG_WIDTH-1:0] rs0_newR[2:0];
   reg [REG_WIDTH-1:0] rs1_newR[2:0];
@@ -467,7 +467,7 @@ module get_flag_infl(
   input [3:0] rs2i1_flagDep;
   input [3:0] rs2i2_flagDep;
   input srcFlight;
-  output [8:0] infl;
+  output pwire [8:0] infl;
   
   assign infl[1]=rs0i1_flagDep==4'he && srcFlight || ~rs0i1_flagDep[3] || rs0i1_flagDep==4'h8;
   assign infl[2]=rs0i2_flagDep==4'he && srcFlight || ~rs0i2_flagDep[3] || rs0i2_flagDep==4'h8;
@@ -548,18 +548,18 @@ module get_funit(
   input [PORT_WIDTH-1:0] rs2i2_port;
   input rs2i2_en;
   
-  output [9:0] funit0;
-  output [9:0] funit1;
-  output [9:0] funit2;
-  output [9:0] funit3;
-  output [9:0] funit4;
-  output [9:0] funit5;
-  output [9:0] funit6;
-  output [9:0] funit7;
-  output [9:0] funit8;
-  output [9:0] funit9;
+  output pwire [9:0] funit0;
+  output pwire [9:0] funit1;
+  output pwire [9:0] funit2;
+  output pwire [9:0] funit3;
+  output pwire [9:0] funit4;
+  output pwire [9:0] funit5;
+  output pwire [9:0] funit6;
+  output pwire [9:0] funit7;
+  output pwire [9:0] funit8;
+  output pwire [9:0] funit9;
 
-  wire [9:0] funt[9:0];
+  pwire [9:0] funt[9:0];
 
   assign funit0=funt[0];  
   assign funit1=funt[1];  
@@ -574,7 +574,7 @@ module get_funit(
   generate
       genvar k;
       for(k=0;k<10;k=k+1) begin
-          wire [8:0] rs_eq;
+          pwire [8:0] rs_eq;
           assign rs_eq[0]= k==rs0i0_index;
           assign rs_eq[1]= k==rs1i0_index;
           assign rs_eq[2]= k==rs2i0_index;
@@ -672,15 +672,15 @@ module get_funit(
   input [PORT_WIDTH-1:0] rs2i2_port;
   input mul;
 
-  output [9:0] funit0;
-  output [9:0] funit1;
-  output [9:0] funit2;
-  output [9:0] funit3;
-  output [9:0] funit4;
-  output [9:0] funit5;
-  output [9:0] funit6;
-  output [9:0] funit7;
-  output [9:0] funit8;
+  output pwire [9:0] funit0;
+  output pwire [9:0] funit1;
+  output pwire [9:0] funit2;
+  output pwire [9:0] funit3;
+  output pwire [9:0] funit4;
+  output pwire [9:0] funit5;
+  output pwire [9:0] funit6;
+  output pwire [9:0] funit7;
+  output pwire [9:0] funit8;
 
   reg [9:0] funit[9:0];
   integer k;
@@ -780,12 +780,12 @@ module get_wSwp(
   input st1;
   input [2:0] lsi2;
   input st2;
-  output reg [2:0] Wswp;
-  output [2:0] lsiA;
-  output [2:0] lsiB;
-  output [6:0] port0;
-  output [6:0] port1;
-  output [6:0] port2;
+  output pwire reg [2:0] Wswp;
+  output pwire [2:0] lsiA;
+  output pwire [2:0] lsiB;
+  output pwire [6:0] port0;
+  output pwire [6:0] port1;
+  output pwire [6:0] port2;
   input  [0:0] domA0;
   input  [0:0] domB0;
   input  [0:0] domA1;
@@ -798,41 +798,41 @@ module get_wSwp(
   input  [OP_WIDTH-1:0] op0;
   input  [OP_WIDTH-1:0] op1;
   input  [OP_WIDTH-1:0] op2;
-  output [OP_WIDTH-1:0] opA;
-  output [OP_WIDTH-1:0] opB;
+  output pwire [OP_WIDTH-1:0] opA;
+  output pwire [OP_WIDTH-1:0] opB;
   input [3:0] ind0;
   input [3:0] ind1;
   input [3:0] ind2;
-  output [3:0] indA;
-  output [3:0] indB;
+  output pwire [3:0] indA;
+  output pwire [3:0] indB;
   input [5:0] wq0;
   input [5:0] wq1;
   input [5:0] wq2;
-  output [5:0] wqA;
-  output [5:0] wqB;
+  output pwire [5:0] wqA;
+  output pwire [5:0] wqB;
   
   
-  wire [2:0] lsiA_;
-  wire [2:0] lsiB_;
-  wire [2:0] stol;
+  pwire [2:0] lsiA_;
+  pwire [2:0] lsiB_;
+  pwire [2:0] stol;
 
-  wire [7:0] wqA_;
-  wire [7:0] wqB_;
+  pwire [7:0] wqA_;
+  pwire [7:0] wqB_;
   
-  wire [OP_WIDTH-1:0] opA_;
-  wire [OP_WIDTH-1:0] opB_;
+  pwire [OP_WIDTH-1:0] opA_;
+  pwire [OP_WIDTH-1:0] opB_;
 
-  wire [3:0] indA_;
-  wire [3:0] indB_;
+  pwire [3:0] indA_;
+  pwire [3:0] indB_;
 
-  wire [3:0] stCnt;
-  wire [2:0] first;
-  wire [2:0] second;
-  wire [2:0] third;  
+  pwire [3:0] stCnt;
+  pwire [2:0] first;
+  pwire [2:0] second;
+  pwire [2:0] third;  
   reg isOdd;
  
   reg [2:0] Wswp0;
-  wire stol_swp;
+  pwire stol_swp;
 
   assign stol[0]=lsi0==3'd7;
   assign stol[1]=lsi1==3'd7;
@@ -955,15 +955,15 @@ module backend_get_ret(
   input [3:0] rs_index7;
   input [3:0] rs_index8;
 
-  output reg [3:0] ret0;
-  output reg [3:0] ret1;
-  output reg [3:0] ret2;
-  output reg [3:0] ret3;
-  output reg [3:0] ret4;
-  output reg [3:0] ret5;
-  output reg [3:0] ret6;
-  output reg [3:0] ret7;
-  output reg [3:0] ret8;
+  output pwire reg [3:0] ret0;
+  output pwire reg [3:0] ret1;
+  output pwire reg [3:0] ret2;
+  output pwire reg [3:0] ret3;
+  output pwire reg [3:0] ret4;
+  output pwire reg [3:0] ret5;
+  output pwire reg [3:0] ret6;
+  output pwire reg [3:0] ret7;
+  output pwire reg [3:0] ret8;
 
   reg [3:0] ret[8:0];
   reg [3:0] rs_newR[8:0];
@@ -1059,20 +1059,20 @@ module backend_reorder_free_regs(
   input [3:0] rs_index7;
   input [3:0] rs_index8;
 
-  output [8:0] instr_reg0;
-  output [8:0] instr_reg1;
-  output [8:0] instr_reg2;
-  output [8:0] instr_reg3;
-  output [8:0] instr_reg4;
-  output [8:0] instr_reg5;
-  output [8:0] instr_reg6;
-  output [8:0] instr_reg7;
-  output [8:0] instr_reg8;
-  output [8:0] instr_reg9;
+  output pwire [8:0] instr_reg0;
+  output pwire [8:0] instr_reg1;
+  output pwire [8:0] instr_reg2;
+  output pwire [8:0] instr_reg3;
+  output pwire [8:0] instr_reg4;
+  output pwire [8:0] instr_reg5;
+  output pwire [8:0] instr_reg6;
+  output pwire [8:0] instr_reg7;
+  output pwire [8:0] instr_reg8;
+  output pwire [8:0] instr_reg9;
 
-  wire [8:0] rs_reg[8:0];
-  wire [3:0] rs_index[8:0];
-  wire [8:0] instr_reg[9:0];
+  pwire [8:0] rs_reg[8:0];
+  pwire [3:0] rs_index[8:0];
+  pwire [8:0] instr_reg[9:0];
 
   assign rs_reg[0]=rs_reg0;
   assign rs_reg[1]=rs_reg1;
@@ -1108,7 +1108,7 @@ module backend_reorder_free_regs(
   generate
       genvar k,j;
       for(j=0;j<10;j=j+1) begin
-	  wire [8:0] instr_eq;
+	  pwire [8:0] instr_eq;
 	  for(k=0;k<8;k=k+1) begin
 	      assign instr_eq[k]=rs_index[k]==j;
 	      assign instr_reg[j]=instr_eq[k] ? rs_reg[k] : 9'bz;
@@ -1144,9 +1144,9 @@ module get_LDQ_new_en(
   input [PORT_WIDTH-1:0] rs2i1_port;
   input rs2i1_ldst_flg;
 
-  output [5:0] new_mask;
+  output pwire [5:0] new_mask;
 
-  wire [5:0] in_inc;
+  pwire [5:0] in_inc;
 
   assign in_inc[0]=rs0i0_port==PORT_LOAD && ~rs0i0_ldst_flg;
   assign in_inc[1]=rs1i0_port==PORT_LOAD && ~rs1i0_ldst_flg;
@@ -1176,15 +1176,15 @@ module get_wrtII(
   input [3:0] II0;
   input [3:0] II1;
   input [3:0] II2;
-  output [3:0] wrtII0;
-  output [3:0] wrtII1;
-  output [3:0] wrtII2;
-  output [2:0] wrtO0; 
-  output [2:0] wrtO1; 
-  output [2:0] wrtO2; 
+  output pwire [3:0] wrtII0;
+  output pwire [3:0] wrtII1;
+  output pwire [3:0] wrtII2;
+  output pwire [2:0] wrtO0; 
+  output pwire [2:0] wrtO1; 
+  output pwire [2:0] wrtO2; 
 
-  wire [5:0] lsi[3:0];
-  wire [3:0] II[3:0];
+  pwire [5:0] lsi[3:0];
+  pwire [3:0] II[3:0];
   
   generate
     genvar p,q;
@@ -1238,7 +1238,7 @@ module alloc_WQ(
   input clk;
   input rst;
   input stall;
-  output doStall;
+  output pwire doStall;
   input except;
   input except_thread;
   input except_both;
@@ -1250,36 +1250,36 @@ module alloc_WQ(
   input [5:0] lsi0;
   input [5:0] lsi1;
   input [5:0] lsi2;
-  output [5:0] WQr0;
-  output [5:0] WQr1;
-  output [5:0] WQr2;
-  output [5:0] WQs0;
-  output [5:0] WQs1;
-  output [5:0] WQs2;
+  output pwire [5:0] WQr0;
+  output pwire [5:0] WQr1;
+  output pwire [5:0] WQr2;
+  output pwire [5:0] WQs0;
+  output pwire [5:0] WQs1;
+  output pwire [5:0] WQs2;
   input free0;
   input [5:0] freeWQ0;
   input free1;
   input [5:0] freeWQ1;
 
-  wire [5:0] wrt[2:0];
-  wire [5:0] WQ[2:0];
+  pwire [5:0] wrt[2:0];
+  pwire [5:0] WQ[2:0];
   reg [6:0] addr_low;
   reg [6:0] addr_hi;
-  wire [6:0] addr_low1;
-  wire [6:0] addr_hi1;
-  wire [6:0] addr_low2;
-  wire [6:0] addr_hi2;
+  pwire [6:0] addr_low1;
+  pwire [6:0] addr_hi1;
+  pwire [6:0] addr_low2;
+  pwire [6:0] addr_hi2;
   reg [6:0] xaddr_low;
   reg [6:0] xaddr_hi;
-  wire [6:0] xaddr_low1;
-  wire [6:0] xaddr_hi1;
-  wire [6:0] xaddr_low2;
-  wire [6:0] xaddr_hi2;
+  pwire [6:0] xaddr_low1;
+  pwire [6:0] xaddr_hi1;
+  pwire [6:0] xaddr_low2;
+  pwire [6:0] xaddr_hi2;
 //  reg  [6:0] cnt;
-//  wire [6:0] cnt_d;
+//  pwire [6:0] cnt_d;
   reg pos;
-  wire [3:0] wrcnt;
-//  wire [3:-2] cncnt;
+  pwire [3:0] wrcnt;
+//  pwire [3:-2] cncnt;
 
 
   integer k;
@@ -1377,14 +1377,14 @@ module wrtdata_combine(data,dataN,pdata,en,odata,odataN,opdata,low,sz,etype);
   input [135:0] dataN;
   input [1:0] pdata;
   input en;
-  output [127:0] odata;
-  output [127:0] odataN;
-  output [1:0] opdata;
+  output pwire [127:0] odata;
+  output pwire [127:0] odataN;
+  output pwire [1:0] opdata;
   input [1:0] low;
   input [4:0] sz;
   input [3:0] etype;
 
-  wire is_stack;
+  pwire is_stack;
 
   assign is_stack=pdata[0] && &data[42:41];
 
@@ -1416,14 +1416,14 @@ module get_ben_een(
   input [1:0] low;
   input [4:0] sz;
   input [4:0] bgn0;
-  output reg [4:0] end0;
-  output reg [3:0] bgnBen;
-  output reg [3:0] endBen;
+  output pwire reg [4:0] end0;
+  output pwire reg [3:0] bgnBen;
+  output pwire reg [3:0] endBen;
 
-  wire [4:0] bgn1;
-  wire [4:0] bgn2;
-  wire [4:0] bgn3;
-  wire [4:0] bgn4;
+  pwire [4:0] bgn1;
+  pwire [4:0] bgn2;
+  pwire [4:0] bgn3;
+  pwire [4:0] bgn4;
   reg [1:0] low2;
   reg stepOver;
   reg stepOver2;
@@ -1517,7 +1517,7 @@ module get_lsi_en(
   input flag4;
   input [2:0] lsi5;
   input flag5;
-  output [5:0] lsi_en;
+  output pwire [5:0] lsi_en;
 
   generate
       genvar k;
@@ -1547,7 +1547,7 @@ module msrss_watch(
   input [15:0] msrss_addr;
   input [64:0] msrss_data;
   input msrss_en;
-  output reg [1:0][63:0] data_out;
+  output pwire reg [1:0][63:0] data_out;
 
   always @(posedge clk) begin
     if (rst) begin
@@ -1572,14 +1572,14 @@ module fexcpt(
   input [8:0] in;
   input [10:0] in_mask;
   input in_en;
-  output [13:0] no;
-  output en;
+  output pwire [13:0] no;
+  output pwire en;
 
-  wire [13:0] msk1;
-  wire [10:0] first;
-  wire en0;
-  wire [13:0] no0;
-  wire [13:0] no_X;
+  pwire [13:0] msk1;
+  pwire [10:0] first;
+  pwire en0;
+  pwire [13:0] no0;
+  pwire [13:0] no_X;
 
   assign no=no_X;
   

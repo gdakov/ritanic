@@ -18,7 +18,7 @@ limitations under the License.
 
 
 //regfile_ram read during write behaviour: write first; untiled memory
-//WARNING: data output needs to be updated even if no clkEn; clkEn is only for the addresses.
+//WARNING: data output pwire needs to be updated even if no clkEn; clkEn is only for the addresses.
 module regfile_ram(
   clk,
   rst,
@@ -48,16 +48,16 @@ module regfile_ram(
   input read_non_stall;
 
   input [9:0][ADDR_WIDTH-1:0] read0_addr;
-  (* read_port *) output [9:0][DATA_WIDTH-1:0] read0_data;
+  (* read_port *) output pwire [9:0][DATA_WIDTH-1:0] read0_data;
   input [9:0] read0_clkEn;
   
   input [10:0] [ADDR_WIDTH-1:0] read1_addr;
-  (* read_port *) output [10:0] [DATA_WIDTH-1:0] read1_data;
+  (* read_port *) output pwire [10:0] [DATA_WIDTH-1:0] read1_data;
   input [10:0]read1_clkEn;
 
 
   input [ADDR_WIDTH-1:0] retireRead_addr;
-  (* read_port *) output [DATA_WIDTH-1:0] retireRead_data;
+  (* read_port *) output pwire [DATA_WIDTH-1:0] retireRead_data;
 
 
   input [ADDR_WIDTH-1:0] write0_addr;
@@ -159,17 +159,17 @@ module regfile_ram_placeholder(
 
 
   input [9:0][ADDR_WIDTH-1:0] read0_addr;
-  (* register equiload *) output [9:0] [DATA_WIDTH-1:0] read0_data;
+  (* register equiload *) output pwire [9:0] [DATA_WIDTH-1:0] read0_data;
   
   input [10:0] [ADDR_WIDTH-1:0] read1_addr;
-  (* register equiload *) output [10:0] [DATA_WIDTH-1:0] read1_data;
+  (* register equiload *) output pwire [10:0] [DATA_WIDTH-1:0] read1_data;
 
 
   input [9:0] read0_constEn;
   input [10:0] read1_constEn;
   
   input [ADDR_WIDTH-1:0] retireRead_addr;
-  output [DATA_WIDTH-1:0] retireRead_data;
+  output pwire [DATA_WIDTH-1:0] retireRead_data;
 
   input [ADDR_WIDTH-1:0] write0_addr;
   input [DATA_WIDTH-1:0] write0_data;
@@ -193,24 +193,24 @@ module regfile_ram_placeholder(
   reg [ADDR_WIDTH-1:0] retireRead_addr_reg;
 
 
-  wire [9:0][DATA_WIDTH-1:0] ram_read0A_data;
-  wire [10:0][DATA_WIDTH-1:0] ram_read1A_data;
+  pwire [9:0][DATA_WIDTH-1:0] ram_read0A_data;
+  pwire [10:0][DATA_WIDTH-1:0] ram_read1A_data;
 
-  wire [9:0][DATA_WIDTH-1:0] ram_read0B_data;
-  wire [10:0][DATA_WIDTH-1:0] ram_read1B_data;
+  pwire [9:0][DATA_WIDTH-1:0] ram_read0B_data;
+  pwire [10:0][DATA_WIDTH-1:0] ram_read1B_data;
 
-  wire ram_write0A_wen;
-  wire ram_write1A_wen;
-  wire ram_write2A_wen;
-  wire ram_write3A_wen;
+  pwire ram_write0A_wen;
+  pwire ram_write1A_wen;
+  pwire ram_write2A_wen;
+  pwire ram_write3A_wen;
 
-  wire ram_write0B_wen;
-  wire ram_write1B_wen;
-  wire ram_write2B_wen;
-  wire ram_write3B_wen;
+  pwire ram_write0B_wen;
+  pwire ram_write1B_wen;
+  pwire ram_write2B_wen;
+  pwire ram_write3B_wen;
 
-  wire [9:0] read0_clkEn;
-  wire [10:0] read1_clkEn;
+  pwire [9:0] read0_clkEn;
+  pwire [10:0] read1_clkEn;
 
 
   reg [9:0] read0A_en;
@@ -220,8 +220,8 @@ module regfile_ram_placeholder(
   reg [10:0] read1B_en;
 
   reg retA_en;
-  wire [DATA_WIDTH-1:0] retireReadA_data;
-  wire [DATA_WIDTH-1:0] retireReadB_data;
+  pwire [DATA_WIDTH-1:0] retireReadA_data;
+  pwire [DATA_WIDTH-1:0] retireReadB_data;
 
   always @* begin
     for(p=0;p <11;p=p+1) begin
@@ -316,7 +316,7 @@ module regfile_ram_placeholder(
 endmodule
 
 //compile regfile_ram_block to hard macro without deleting
-//the redundant inputs including 2 horizontal x2 wire layers
+//the redundant inputs including 2 horizontal x2 pwire layers
 //fore read{0-9}_data and read{0-9}_dataN.
 module regfile_ram_block(
   clk,
@@ -348,10 +348,10 @@ module regfile_ram_block(
 
 
   input [9:0][ADDR_WIDTH-1:0] read0_addr;
-  (* register equiload *) output [9:0][DATA_WIDTH-1:0] read0_data;
+  (* register equiload *) output pwire [9:0][DATA_WIDTH-1:0] read0_data;
   
   input [9:0][ADDR_WIDTH-1:0] read1_addr;
-  (* register equiload *) output [9:0][DATA_WIDTH-1:0] read1_data;
+  (* register equiload *) output pwire [9:0][DATA_WIDTH-1:0] read1_data;
 
 
 
@@ -362,7 +362,7 @@ module regfile_ram_block(
   input [10:0] [DATA_WIDTH-1:0] read1_const;
 
   input [9:0] [ADDR_WIDTH-1:0] retireRead0_addr;
-  output [9:0] [DATA_WIDTH-1:0] retireRead0_data;
+  output pwire [9:0] [DATA_WIDTH-1:0] retireRead0_data;
 
 
   input [9:0][ADDR_WIDTH-1:0] write0_addr;
@@ -371,29 +371,29 @@ module regfile_ram_block(
 
  
 
-  wire [ADDR_WIDTH-1:0] write0_addr_ram[2:0];
-  wire [DATA_WIDTH-1:0] write0_data_ram[2:0];
-  wire write0_wen_ram[2:0];
+  pwire [ADDR_WIDTH-1:0] write0_addr_ram[2:0];
+  pwire [DATA_WIDTH-1:0] write0_data_ram[2:0];
+  pwire write0_wen_ram[2:0];
   
-  wire [ADDR_WIDTH-1:0] write1_addr_ram[2:0];
-  wire [DATA_WIDTH-1:0] write1_data_ram[2:0];
-  wire write1_wen_ram[2:0];
+  pwire [ADDR_WIDTH-1:0] write1_addr_ram[2:0];
+  pwire [DATA_WIDTH-1:0] write1_data_ram[2:0];
+  pwire write1_wen_ram[2:0];
   
-  wire [ADDR_WIDTH-1:0] write2_addr_ram[2:0];
-  wire [DATA_WIDTH-1:0] write2_data_ram[2:0];
-  wire write2_wen_ram[2:0];
+  pwire [ADDR_WIDTH-1:0] write2_addr_ram[2:0];
+  pwire [DATA_WIDTH-1:0] write2_data_ram[2:0];
+  pwire write2_wen_ram[2:0];
 
-  wire [ADDR_WIDTH-1:0] retireRead_addr[8:0];
-  wire [DATA_WIDTH-1:0] retireRead_data[8:0];
+  pwire [ADDR_WIDTH-1:0] retireRead_addr[8:0];
+  pwire [DATA_WIDTH-1:0] retireRead_data[8:0];
 
 
-  wire [ADDR_WIDTH-5:0] initRegCount_next;
+  pwire [ADDR_WIDTH-5:0] initRegCount_next;
   
   reg [ADDR_WIDTH-1:0] initRegCount;
   reg doInit;
 
-  wire [4:0] newAddr [8:0];
-  wire [8:0] newEn;
+  pwire [4:0] newAddr [8:0];
+  pwire [8:0] newEn;
 
   reg [9:0][DATA_WIDTH-1:0] read0_const_reg;
   reg [10:0][DATA_WIDTH-1:0] read1_const_reg;
@@ -549,13 +549,13 @@ module regfile_zero_cycle_write(
   input read_clkEn;
   
   input [DATA_WIDTH-1:0] read_data_ram;
-  output [DATA_WIDTH-1:0] read_data_new;
+  output pwire [DATA_WIDTH-1:0] read_data_new;
   input [ADDR_WIDTH-1:0] read_addr;
 
   input read_constEn;
   input read_oe;
   
-  output [10:0] match_w;
+  output pwire [10:0] match_w;
   
   input [9:0][ADDR_WIDTH-1:0] write0_addr_reg;
   input [9:0]write0_wen_reg;
@@ -567,9 +567,9 @@ module regfile_zero_cycle_write(
 
   input [9:0][DATA_WIDTH-1:0] write0_data_reg;
   
-  wire [9:0]match_r0;
+  pwire [9:0]match_r0;
 
-  wire match;
+  pwire match;
 
   reg read_constEn_reg;
 
@@ -648,15 +648,15 @@ module regfile(
 
   input [9:0][ADDR_WIDTH-1:0] read0_addr;
   input [9:0][5:0] read0_addr_rrf;
-  (* register equiload *) output [9:0][DATA_WIDTH-1:0] read0_data;
+  (* register equiload *) output pwire [9:0][DATA_WIDTH-1:0] read0_data;
   input [9:0]read0_oe;
-  output [9:0][10:0] read0_match;
+  output pwire [9:0][10:0] read0_match;
 
   input [10:0][ADDR_WIDTH-1:0] read1_addr;
   input [10:0][5:0] read1_addr_rrf;
-  (* register equiload *) output [10:0][DATA_WIDTH-1:0] read1_data;
+  (* register equiload *) output pwire [10:0][DATA_WIDTH-1:0] read1_data;
   input [10:0] read1_oe;
-  output [10:0] [10:0] read1_match;
+  output pwire [10:0] [10:0] read1_match;
 
 
   input [9:0] read0_constEn;
@@ -678,13 +678,13 @@ module regfile(
   input [9:0]write0_wen_reg;
 
 
-  wire [9:0][DATA_WIDTH-1:0] ram_read_data0;
-  wire [10:0][DATA_WIDTH-1:0] ram_read_data1;
-  wire [9:0][DATA_WIDTH-1:0] retireRead_datax;
+  pwire [9:0][DATA_WIDTH-1:0] ram_read_data0;
+  pwire [10:0][DATA_WIDTH-1:0] ram_read_data1;
+  pwire [9:0][DATA_WIDTH-1:0] retireRead_datax;
 
 
-  wire read_constEn[9:0];
-  wire read_oe[9:0];
+  pwire read_constEn[9:0];
+  pwire read_oe[9:0];
 
   reg [9:0][ADDR_WIDTH-1:0] write0_addr_reg2;
   reg [9:0]write0_wen_reg2;

@@ -27,19 +27,19 @@ module msiq_buf(
   input all_clear;
   input [`lsaddr_width-1:0] chk0_data;
   input chk0_en;
-  output chk0_smpc;
+  output pwire chk0_smpc;
   input [`lsaddr_width-1:0] chk1_data;
   input chk1_en;
-  output chk1_smpc;
+  output pwire chk1_smpc;
   input [`lsaddr_width-1:0] chk2_data;
   input chk2_en;
-  output chk2_smpc;
+  output pwire chk2_smpc;
   input [`lsaddr_width-1:0] chk3_data;
   input chk3_en;
-  output chk3_smpc;
+  output pwire chk3_smpc;
   input [36:0] wrt_addr;
   input wrt_en;
-  output reg wrt_can;
+  output pwire reg wrt_can;
 
   reg [36:0] addr;
 
@@ -85,28 +85,28 @@ module msiq(
   input all_clear;
   input [`lsaddr_width-1:0] chk0_data;
   input chk0_en;
-  output chk0_smpc;
+  output pwire chk0_smpc;
   input [`lsaddr_width-1:0] chk1_data;
   input chk1_en;
-  output chk1_smpc;
+  output pwire chk1_smpc;
   input [`lsaddr_width-1:0] chk2_data;
   input chk2_en;
-  output chk2_smpc;
+  output pwire chk2_smpc;
   input [`lsaddr_width-1:0] chk3_data;
   input chk3_en;
-  output chk3_smpc;
+  output pwire chk3_smpc;
   input [36:0] wrt_addr;
   input wrt_en;
-  output wrt_can;
+  output pwire wrt_can;
  
-  wire [7:0] chk0_smpc_way;
-  wire [7:0] chk1_smpc_way;
-  wire [7:0] chk2_smpc_way;
-  wire [7:0] chk3_smpc_way;
-  wire [7:0] wrt_en_way;
-  wire [7:0] wrt_can_way;
-  wire [7:0] wrt_first;
-  wire wrt_has;
+  pwire [7:0] chk0_smpc_way;
+  pwire [7:0] chk1_smpc_way;
+  pwire [7:0] chk2_smpc_way;
+  pwire [7:0] chk3_smpc_way;
+  pwire [7:0] wrt_en_way;
+  pwire [7:0] wrt_can_way;
+  pwire [7:0] wrt_first;
+  pwire wrt_has;
   generate
     genvar t;
     for(t=0;t<8;t=t+1) begin : buffers

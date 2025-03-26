@@ -27,9 +27,9 @@ module stq_adata(
   input [5:0] wrt1_WQ;
   input [4:0] wrt1_adata;
   input [5:0] upd0_WQ;
-  output [4:0] upd0_adata;
+  output pwire [4:0] upd0_adata;
   input [5:0] upd1_WQ;
-  output [4:0] upd1_adata;
+  output pwire [4:0] upd1_adata;
   
   reg [4:0] BGN[63:0];
   

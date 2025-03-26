@@ -65,54 +65,54 @@ module jump_decoder(
   input [11:0] class_;
   input _splitinsn;
   
-  output reg [64:0] constant;
+  output pwire reg [64:0] constant;
 
-  output reg [1:0] cleave;
-  output reg [2:0] cleaveoff; 
-  output reg [2:0] cloopntk;
-  output reg cloop_is;
+  output pwire reg [1:0] cleave;
+  output pwire reg [2:0] cleaveoff; 
+  output pwire reg [2:0] cloopntk;
+  output pwire reg cloop_is;
   
-  output reg pushCallStack;
-  output reg popCallStack;
-  output isJump;
-  output reg [4:0] jumpType;
-  output jumpIndir;
+  output pwire reg pushCallStack;
+  output pwire reg popCallStack;
+  output pwire isJump;
+  output pwire reg [4:0] jumpType;
+  output pwire jumpIndir;
   
-  output reg isIPRel;
-  output reg halt;
+  output pwire reg isIPRel;
+  output pwire reg halt;
   
-  wire [7:0] opcode_main;
+  pwire [7:0] opcode_main;
 
-  wire isBasicCmpTest;
-  wire isCmpTestExtra;   
+  pwire isBasicCmpTest;
+  pwire isCmpTestExtra;   
   
 
-  wire isBasicCJump;
-  wire isInvCJumpLong;
-  wire isSelfTestCJump;
-  wire isLongCondJump;
-  wire isCLeave;
-  wire isUncondJump;
+  pwire isBasicCJump;
+  pwire isInvCJumpLong;
+  pwire isSelfTestCJump;
+  pwire isLongCondJump;
+  pwire isCLeave;
+  pwire isUncondJump;
   
-  wire isIndirJump;
-  wire isCall;
-  wire isRet;
+  pwire isIndirJump;
+  pwire isCall;
+  pwire isRet;
   
-  wire isJalR;
+  pwire isJalR;
  
-  wire isShlAddMulLike; 
-  wire isBasicSysInstr;
+  pwire isShlAddMulLike; 
+  pwire isBasicSysInstr;
   
   reg error;
   
   reg keep2instr;
   
-  wire [31:0] constantDef;
+  pwire [31:0] constantDef;
 
 
   reg isBigConst;
 
-  wire subIsCJ;
+  pwire subIsCJ;
   
   
   assign jumpIndir=class_[`iclass_indir];

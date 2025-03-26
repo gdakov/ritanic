@@ -30,7 +30,7 @@ module rrf_flag_buf(
   input clk;
   input rst;
   
-  output [DATA_WIDTH-1:0] read0_data;
+  output pwire [DATA_WIDTH-1:0] read0_data;
 
   
   input [DATA_WIDTH-1:0] write0_data;
@@ -40,8 +40,8 @@ module rrf_flag_buf(
   input write_thread;
 
   reg [DATA_WIDTH-1:0] data0;
-  wire [DATA_WIDTH-1:0] data;
-  wire [DATA_WIDTH-1:0] wData;
+  pwire [DATA_WIDTH-1:0] data;
+  pwire [DATA_WIDTH-1:0] wData;
 
   
   assign data=data0;
@@ -79,7 +79,7 @@ module rrf_flag(
   input rst;
   input read_clkEn;
   
-  output [DATA_WIDTH:0] read0_data;
+  output pwire [DATA_WIDTH:0] read0_data;
   input read0_oe;
 
   
@@ -91,7 +91,7 @@ module rrf_flag(
 
   reg read_thread_reg;
 
-  wire [DATA_WIDTH-1:0] read_data_ram;
+  pwire [DATA_WIDTH-1:0] read_data_ram;
 
 
   reg read0_oe_reg;

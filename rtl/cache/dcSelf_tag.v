@@ -33,7 +33,7 @@ module dcache1_tag_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -75,7 +75,7 @@ module dcache1_tagV_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write0_addr;
   input [DATA_WIDTH-1:0] write0_data;
   input                  write0_wen;
@@ -153,35 +153,35 @@ module dcache1_tag(
   input read_odd;
   input read_split;
   input read_invl;
-  output read_exclOut0;
-  output read_exclOut1;
-  output reg read_hitL_odd,read_hitL_even,read_hitH_odd,read_hitH_even;
-  output read_hit_odd,read_hit_even;
- // output [1:0] read_excl;  
-  output errH,errL;
+  output pwire read_exclOut0;
+  output pwire read_exclOut1;
+  output pwire reg read_hitL_odd,read_hitL_even,read_hitH_odd,read_hitH_even;
+  output pwire read_hit_odd,read_hit_even;
+ // output pwire [1:0] read_excl;  
+  output pwire errH,errL;
   input write_exclusive;
   input [5:0] write_rand;
-  output write_recent_out;
+  output pwire write_recent_out;
   input write_recent_in;
   input write_wen;
-  output write_hit;
-  output [PADDR_WIDTH-8:0] wb_addr;
-  output wb_valid;
+  output pwire write_hit;
+  output pwire [PADDR_WIDTH-8:0] wb_addr;
+  output pwire wb_valid;
   input [5:0] puke_en;
   input [6:0] puke_addr;
 
-  wire [PADDR_WIDTH-9:0] tagR0_IP;
-  wire [PADDR_WIDTH-9:0] tagR1_IP;
+  pwire [PADDR_WIDTH-9:0] tagR0_IP;
+  pwire [PADDR_WIDTH-9:0] tagR1_IP;
 
-  wire tagR0_valid,tagR1_valid;
-  wire tagR0_exclusive,tagR1_exclusive;
-  wire hit_odd;
-  wire hit_even;
+  pwire tagR0_valid,tagR1_valid;
+  pwire tagR0_exclusive,tagR1_exclusive;
+  pwire hit_odd;
+  pwire hit_even;
   
-  wire [`dc1Tag_width-1:0] tagR0_data;
-  wire [`dc1Tag_width-1:0] tagR1_data;
-  wire [`dc1Tag_width-1:0] tag_write_data;
-  wire [`dc1Tag_width-1:0] tag_same_data;
+  pwire [`dc1Tag_width-1:0] tagR0_data;
+  pwire [`dc1Tag_width-1:0] tagR1_data;
+  pwire [`dc1Tag_width-1:0] tag_write_data;
+  pwire [`dc1Tag_width-1:0] tag_same_data;
   
   reg [PADDR_WIDTH-9:0] read_addrOdd_reg;
   reg [PADDR_WIDTH-9:0] read_addrEven_reg;
@@ -191,14 +191,14 @@ module dcache1_tag(
   
   reg init;
   reg [5:0] initCount;
-  wire [5:0] initCount_d;
-  wire recent;
+  pwire [5:0] initCount_d;
+  pwire recent;
   
   reg read_invl_reg;
   reg read_en_reg;
   
-  wire write_hit1;
-  wire write_hit2;
+  pwire write_hit1;
+  pwire write_hit2;
 /* verilator lint_off WIDTH */  
   dcache1_tag_ram tagR0_mod(
   .clk(clk),

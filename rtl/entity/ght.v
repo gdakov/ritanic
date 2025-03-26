@@ -29,7 +29,7 @@ module ght_ram(
 
     input clk;
     input [ADDR_WIDTH-1:0] read_addr;
-    output [DATA_WIDTH-1:0] read_data;
+    output pwire [DATA_WIDTH-1:0] read_data;
     input [ADDR_WIDTH-1:0] write_addr;
     input [DATA_WIDTH-1:0] write_data;
     input [DATA_WIDTH-1:0] write_bitEn;
@@ -106,20 +106,20 @@ module ght_bank(
     input [1:0] Abtb_sc2;
     input [1:0] Abtb_sc3;
     
-    output [1:0] AotherPred0;
-    output [1:0] AotherPred1;
-    output [1:0] AotherPred2;
-    output [1:0] AotherPred3;
+    output pwire [1:0] AotherPred0;
+    output pwire [1:0] AotherPred1;
+    output pwire [1:0] AotherPred2;
+    output pwire [1:0] AotherPred3;
     
     input [1:0] Bbtb_sc0;
     input [1:0] Bbtb_sc1;
     input [1:0] Bbtb_sc2;
     input [1:0] Bbtb_sc3;
     
-    output [1:0] BotherPred0;
-    output [1:0] BotherPred1;
-    output [1:0] BotherPred2;
-    output [1:0] BotherPred3;
+    output pwire [1:0] BotherPred0;
+    output pwire [1:0] BotherPred1;
+    output pwire [1:0] BotherPred2;
+    output pwire [1:0] BotherPred3;
 //    inout [7:0] otherIndex0;
 //    inout [7:0] otherIndex1;
 //    inout [7:0] otherIndex2;
@@ -137,51 +137,51 @@ module ght_bank(
     reg [15:0] IP_BITS_reg;
     reg [7:0] GHT_reg;
     
-    wire [15:0] read_addr;
-    wire [7:0] read1_addr[1:0];
-    wire [7:0] read2_addr[3:0];
-    wire [7:0] read3_addr[3:0];
+    pwire [15:0] read_addr;
+    pwire [7:0] read1_addr[1:0];
+    pwire [7:0] read2_addr[3:0];
+    pwire [7:0] read3_addr[3:0];
 
-    wire [1:0] otherPred0X;
-    wire [1:0] otherPred1X;
-    wire [1:0] otherPred2X;
-    wire [1:0] otherPred3X;
+    pwire [1:0] otherPred0X;
+    pwire [1:0] otherPred1X;
+    pwire [1:0] otherPred2X;
+    pwire [1:0] otherPred3X;
 
-    wire [1:0] otherPred0W;
-    wire [1:0] otherPred1W;
-    wire [1:0] otherPred2W;
-    wire [1:0] otherPred3W;
+    pwire [1:0] otherPred0W;
+    pwire [1:0] otherPred1W;
+    pwire [1:0] otherPred2W;
+    pwire [1:0] otherPred3W;
     
-    wire [3:0] curJump;
-    wire [3:0] curJumpSh; //shifted by first jump
+    pwire [3:0] curJump;
+    pwire [3:0] curJumpSh; //shifted by first jump
     
-    wire [1:0] GHT0_sc;
-    wire [1:0] GHT1_sc[1:0];
-    wire [1:0] GHT2_sc[3:0];
-    wire [1:0] GHT3_sc[3:0];
+    pwire [1:0] GHT0_sc;
+    pwire [1:0] GHT1_sc[1:0];
+    pwire [1:0] GHT2_sc[3:0];
+    pwire [1:0] GHT3_sc[3:0];
    
-    wire [1:0] GHTx_sc0; 
-    wire [1:0] GHTx_sc1; 
-    wire [1:0] GHTx_sc2; 
-    wire [1:0] GHTx_sc3; 
-    wire [1:0] GHTx_sc;
+    pwire [1:0] GHTx_sc0; 
+    pwire [1:0] GHTx_sc1; 
+    pwire [1:0] GHTx_sc2; 
+    pwire [1:0] GHTx_sc3; 
+    pwire [1:0] GHTx_sc;
 
-    wire GHTx_en;
+    pwire GHTx_en;
 
-    wire upper0,upper1,upper2,upper3;
+    pwire upper0,upper1,upper2,upper3;
 
-    wire [7:0] GHTx_addr0;
-    wire [7:0] GHTx_addr1;
-    wire [7:0] GHTx_addr2;
-    wire [7:0] GHTx_addr3;
-    wire [7:0] GHTx_addr;
-    wire GHTx_upper0,GHTx_upper1,GHTx_upper2,GHTx_upper3;
+    pwire [7:0] GHTx_addr0;
+    pwire [7:0] GHTx_addr1;
+    pwire [7:0] GHTx_addr2;
+    pwire [7:0] GHTx_addr3;
+    pwire [7:0] GHTx_addr;
+    pwire GHTx_upper0,GHTx_upper1,GHTx_upper2,GHTx_upper3;
  
-    wire [511:0] read_data;
+    pwire [511:0] read_data;
     
-    wire [511:0] write_data;
-//   wire [511:0] write_dataW;
-    wire [511:0] write_bitEn;
+    pwire [511:0] write_data;
+//   pwire [511:0] write_dataW;
+    pwire [511:0] write_bitEn;
     
     //wire [1:0] start;
     
@@ -350,7 +350,7 @@ module ght_bank(
         genvar k;
         genvar j;
         for(j=0;j<256;j=j+1) begin : bitEn_gen
-            wire ae0;
+            pwire ae0;
             assign ae0=j==write_addr[15:8];
             
             assign write_bitEn[j*2]= ae0 || init;
@@ -379,15 +379,15 @@ module sel_ght_entry(entry,addr,update,sc);
     input [511:0] entry;
     input [7:0] addr;
     input update;
-    output [1:0] sc;
+    output pwire [1:0] sc;
     
-    wire [1:0] sc1;
+    pwire [1:0] sc1;
 
     assign sc=sc1|{update,1'b0};
     generate
         genvar k,p;
         for (k=0;k<16;k=k+1) begin
-            wire [1:0] sc0;
+            pwire [1:0] sc0;
             for(p=0;p<16;p=p+1) begin
                 assign sc0=( p[3:0]==addr[3:0]) ? entry[2*(k*16+p)+:2] : 2'bz;
             end
@@ -460,19 +460,19 @@ module ght(
     input [1:0] Bbtb_sc2;
     input [1:0] Bbtb_sc3;
 
-    output [1:0] AotherPred0;
-    output [1:0] AotherPred1;
-    output [1:0] AotherPred2;
-    output [1:0] AotherPred3;
-    output [1:0] BotherPred0;
-    output [1:0] BotherPred1;
-    output [1:0] BotherPred2;
-    output [1:0] BotherPred3;
+    output pwire [1:0] AotherPred0;
+    output pwire [1:0] AotherPred1;
+    output pwire [1:0] AotherPred2;
+    output pwire [1:0] AotherPred3;
+    output pwire [1:0] BotherPred0;
+    output pwire [1:0] BotherPred1;
+    output pwire [1:0] BotherPred2;
+    output pwire [1:0] BotherPred3;
     
-//    output [7:0] otherIndex0;
-//    output [7:0] otherIndex1;
-//    output [7:0] otherIndex2;
-//    output [7:0] otherIndex3;
+//    output pwire [7:0] otherIndex0;
+//    output pwire [7:0] otherIndex1;
+//    output pwire [7:0] otherIndex2;
+//    output pwire [7:0] otherIndex3;
 
     input [1:0] write0_sc;
     input [15:0] write0_addr;
@@ -482,28 +482,28 @@ module ght(
     input [15:0] write1_addr;
     input write1_wen;
 
-    wire [2:0] write0_way;
-    wire [2:0] write1_way;
-    wire [2:0] writeS_way;
+    pwire [2:0] write0_way;
+    pwire [2:0] write1_way;
+    pwire [2:0] writeS_way;
     
     reg [1:0] writeS_sc;
     reg [15:0] writeS_addr;
     reg has_saved;
-    wire save0;
-    wire save1;
+    pwire save0;
+    pwire save1;
     
-    wire [7:0][1:0] write_sc;
-    wire [7:0][15:0] write_addr;
-    wire [7:0]write_wen;
+    pwire [7:0][1:0] write_sc;
+    pwire [7:0][15:0] write_addr;
+    pwire [7:0]write_wen;
 
-    wire [1:0] otherPred0a;
-    wire [1:0] otherPred1a;
-    wire [1:0] otherPred2a;
-    wire [1:0] otherPred3a;
+    pwire [1:0] otherPred0a;
+    pwire [1:0] otherPred1a;
+    pwire [1:0] otherPred2a;
+    pwire [1:0] otherPred3a;
     
     reg init;
     reg [4:0] initCount;
-    wire [4:0] initCount_d;
+    pwire [4:0] initCount_d;
 
     generate
         genvar k;

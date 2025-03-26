@@ -60,19 +60,19 @@ module cc_comb (
   input fstallA;
   input exceptA;
   input [IP_WIDTH-1:0] cc_readA_IP;
-  output cc_readA_hit;
-  output [DATA_WIDTH/4-1:0] readA_data;
-  output [14:0] readA_dataX;
-  output errA;
+  output pwire cc_readA_hit;
+  output pwire [DATA_WIDTH/4-1:0] readA_data;
+  output pwire [14:0] readA_dataX;
+  output pwire errA;
   input readB_clkEn;
   input readB_set_flag;
   input fstallB;
   input exceptB;
   input [IP_WIDTH-1:0] cc_readB_IP;
-  output cc_readB_hit;
-  output [DATA_WIDTH/4-1:0] readB_data;
-  output [14:0] readB_dataX;
-  output errB;
+  output pwire cc_readB_hit;
+  output pwire [DATA_WIDTH/4-1:0] readB_data;
+  output pwire [14:0] readB_dataX;
+  output pwire errB;
   input [IP_WIDTH-1:0] write_IP;
   input cc_write_wen;
   input cc_invalidate;
@@ -80,22 +80,22 @@ module cc_comb (
   input [DATA_WIDTH/2-1:0] write_data;
   input [IP_WIDTH-1:0] chkCL_IP;
   input chkCL_clkEn;
-  output chkCL_hit;
-  output [36:0] expun_addr;
-  output expun_wen;
+  output pwire chkCL_hit;
+  output pwire [36:0] expun_addr;
+  output pwire expun_wen;
   
-  wire [DATA_WIDTH-1:0] readA_data0;
-  wire [DATA_WIDTH-1:0] cc_readA_data0;
-  wire [DATA_WIDTH-1:0] readB_data0;
-  wire [DATA_WIDTH-1:0] cc_readB_data0;
+  pwire [DATA_WIDTH-1:0] readA_data0;
+  pwire [DATA_WIDTH-1:0] cc_readA_data0;
+  pwire [DATA_WIDTH-1:0] readB_data0;
+  pwire [DATA_WIDTH-1:0] cc_readB_data0;
   
   reg [IP_WIDTH-1:0] write_IP_reg;
   reg [DATA_WIDTH-1:0] write_data_reg;
 
-  wire [7:0] cc_readA_tagErr;
-  wire [7:0] cc_readA_hit_way;
-  wire [7:0] cc_readB_tagErr;
-  wire [7:0] cc_readB_hit_way;
+  pwire [7:0] cc_readA_tagErr;
+  pwire [7:0] cc_readA_hit_way;
+  pwire [7:0] cc_readB_tagErr;
+  pwire [7:0] cc_readB_hit_way;
 
 
   reg cc_write_wen_reg;
@@ -116,27 +116,27 @@ module cc_comb (
   reg [IP_WIDTH-6:0] cc_readB_IP_reg;
   
   
-  wire [`wport-1:0] readA_dataX0;
-  wire [`wport-1:0] cc_readA_dataX0;
-  wire [14:0] readA_dataXP[3:0];
+  pwire [`wport-1:0] readA_dataX0;
+  pwire [`wport-1:0] cc_readA_dataX0;
+  pwire [14:0] readA_dataXP[3:0];
   reg [`wport-1:0] readA_dataX0_reg;
-  wire [`wport-1:0] readB_dataX0;
-  wire [`wport-1:0] cc_readB_dataX0;
-  wire [14:0] readB_dataXP[3:0];
+  pwire [`wport-1:0] readB_dataX0;
+  pwire [`wport-1:0] cc_readB_dataX0;
+  pwire [14:0] readB_dataXP[3:0];
   reg [`wport-1:0] readB_dataX0_reg;
-  wire [36:0] cc_exp_addr0;  
+  pwire [36:0] cc_exp_addr0;  
   reg [36:0] cc_exp_addr0_reg;  
-//  wire [71:0] read_dataY0;
-//  wire [17:0] read_dataYP;
+//  pwire [71:0] read_dataY0;
+//  pwire [17:0] read_dataYP;
 //  reg [71:0] read_dataY0_reg;
 
-  wire [7:0] writeIP_next;
+  pwire [7:0] writeIP_next;
   
-  wire cc_readA_hit0;
-  wire cc_readB_hit0;
-  wire [7:0] cc_tagErrA;
-  wire [7:0] cc_tagErrB;
-  wire cc_expun_hit0;
+  pwire cc_readA_hit0;
+  pwire cc_readB_hit0;
+  pwire [7:0] cc_tagErrA;
+  pwire [7:0] cc_tagErrB;
+  pwire cc_expun_hit0;
   reg cc_expun_hitP; 
 
   reg readA_hit0A;
@@ -150,10 +150,10 @@ module cc_comb (
   reg readB_hit1B;
   reg readB_hitP;
 
-  wire [DATA_WIDTH/4-1:0] readA_dataP[3:0];
+  pwire [DATA_WIDTH/4-1:0] readA_dataP[3:0];
   
   reg [7:0] cc_readA_tagErrP;
-  wire [DATA_WIDTH/4-1:0] readB_dataP[3:0];
+  pwire [DATA_WIDTH/4-1:0] readB_dataP[3:0];
   
   reg [7:0] cc_readB_tagErrP;
   

@@ -44,17 +44,17 @@ module dmlb_ram(
   input clk;
   input rst;
   input [ADDR_WIDTH-1:0] read0_addr;
-  output [DATA_WIDTH-1:0] read0_data;
+  output pwire [DATA_WIDTH-1:0] read0_data;
   input [ADDR_WIDTH-1:0] read1_addr;
-  output [DATA_WIDTH-1:0] read1_data;
+  output pwire [DATA_WIDTH-1:0] read1_data;
   input [ADDR_WIDTH-1:0] read2_addr;
-  output [DATA_WIDTH-1:0] read2_data;
+  output pwire [DATA_WIDTH-1:0] read2_data;
   input [ADDR_WIDTH-1:0] read3_addr;
-  output [DATA_WIDTH-1:0] read3_data;
+  output pwire [DATA_WIDTH-1:0] read3_data;
   input [ADDR_WIDTH-1:0] read4_addr;
-  output [DATA_WIDTH-1:0] read4_data;
+  output pwire [DATA_WIDTH-1:0] read4_data;
   input [ADDR_WIDTH-1:0] read5_addr;
-  output [DATA_WIDTH-1:0] read5_data;
+  output pwire [DATA_WIDTH-1:0] read5_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -94,7 +94,7 @@ module dmlb_lru_ram(
   input clk;
   input rst;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -157,14 +157,14 @@ module dmlb_way(
   input R0_sec_wren;
   input [5:0][VADDR_WIDTH-18:0]   addr;
   input [5:0][3:0] attr;
-  output [5:0][OUTDATA_WIDTH-1:0] read_data0;
-  output [5:0][OUTDATA_WIDTH-1:0] read_data1;
-  output [5:0][OUTDATA_WIDTH-1:0] read_data2;
-  output [5:0][2:0]               read_way;
-  output [2:0] read_lru;
-  output [2:0] read_lruW;
-  output [5:0] read_hit;
-  output [5:0] read_hitL;
+  output pwire [5:0][OUTDATA_WIDTH-1:0] read_data0;
+  output pwire [5:0][OUTDATA_WIDTH-1:0] read_data1;
+  output pwire [5:0][OUTDATA_WIDTH-1:0] read_data2;
+  output pwire [5:0][2:0]               read_way;
+  output pwire [2:0] read_lru;
+  output pwire [2:0] read_lruW;
+  output pwire [5:0] read_hit;
+  output pwire [5:0] read_hitL;
   input [VADDR_WIDTH-17:0] write_addr;
   input [OUTDATA_WIDTH-1:0] write_data0;
   input [OUTDATA_WIDTH-1:0] write_data1;
@@ -178,22 +178,22 @@ module dmlb_way(
   input init;
   input [3:0] initCount;
   
-  wire valid[5:0];
-  wire shared[5:0];
-  wire [VADDR_WIDTH-17:0] vaddr[5:0];
-  wire validh[5:0];
-  wire sharedh[5:0];
-  wire [VADDR_WIDTH-30:0] vaddrh[5:0];
-  wire write_wen_ram;
-  wire write_wen_ramH;
-  wire [DATA_WIDTH-1:0] read_data_ram[5:0];
-  wire [DATAH_WIDTH-1:0] read_data_haram[5:0];
-  wire [DATA_WIDTH-1:0] write_data_ram;
-  wire [DATA_WIDTH-1:0] write_data_new;
-  wire [DATAH_WIDTH-1:0] write_data_hram;
-  wire [DATAH_WIDTH-1:0] write_data_hnew;
+  pwire valid[5:0];
+  pwire shared[5:0];
+  pwire [VADDR_WIDTH-17:0] vaddr[5:0];
+  pwire validh[5:0];
+  pwire sharedh[5:0];
+  pwire [VADDR_WIDTH-30:0] vaddrh[5:0];
+  pwire write_wen_ram;
+  pwire write_wen_ramH;
+  pwire [DATA_WIDTH-1:0] read_data_ram[5:0];
+  pwire [DATAH_WIDTH-1:0] read_data_haram[5:0];
+  pwire [DATA_WIDTH-1:0] write_data_ram;
+  pwire [DATA_WIDTH-1:0] write_data_new;
+  pwire [DATAH_WIDTH-1:0] write_data_hram;
+  pwire [DATAH_WIDTH-1:0] write_data_hnew;
 
-  wire [2:0] write_lru;
+  pwire [2:0] write_lru;
   
   
 
@@ -335,10 +335,10 @@ module dmlb(
   input [5:0][VADDR_WIDTH-15:0] addr;
   input [5:0][3:0] attr;
   input [20:0] sproc;
-  output [5:0][OUTDATA_WIDTH-1:0] read_data;
-  output [5:0][OUTDATA_WIDTH-1:0] read_data_next;
-  output [5:0][2:0] read_way;
-  output [5:0]read_hit;
+  output pwire [5:0][OUTDATA_WIDTH-1:0] read_data;
+  output pwire [5:0][OUTDATA_WIDTH-1:0] read_data_next;
+  output pwire [5:0][2:0] read_way;
+  output pwire [5:0]read_hit;
   //output [1:0] read_2M;
   input [VADDR_WIDTH-15:0] write_addr;
   input [OUTDATA_WIDTH-1:0] write_data0;
@@ -350,33 +350,33 @@ module dmlb(
   input force_way_en;
   input [2:0] force_way;
   
-  wire [2:0] hitLru;
-  wire [7:0][2:0] lru_way;
-  wire [7:0][2:0] newLru;
-  wire [7:0][2:0] lru_wayW;
-  wire [2:0] hitLruW;
+  pwire [2:0] hitLru;
+  pwire [7:0][2:0] lru_way;
+  pwire [7:0][2:0] newLru;
+  pwire [7:0][2:0] lru_wayW;
+  pwire [2:0] hitLruW;
 
-  wire [7:0][5:0] read_hit_way;
-  wire [7:0][5:0] read_hitL_way;
-
-  
-  wire [5:0][OUTDATA_WIDTH-1:0] read_data0;
-  wire [5:0][OUTDATA_WIDTH-1:0] read_data1;
-  wire [5:0][OUTDATA_WIDTH-1:0] read_data2;
-
-  wire [OUTDATA_WIDTH-1:0] pmm_data0[11:0];
-  wire [OUTDATA_WIDTH-1:0] pmm_data1[11:0];
-  wire [OUTDATA_WIDTH-1:0] pmm_data2[11:0];
+  pwire [7:0][5:0] read_hit_way;
+  pwire [7:0][5:0] read_hitL_way;
 
   
-  wire [5:0]read_hitL,read_hitH;
+  pwire [5:0][OUTDATA_WIDTH-1:0] read_data0;
+  pwire [5:0][OUTDATA_WIDTH-1:0] read_data1;
+  pwire [5:0][OUTDATA_WIDTH-1:0] read_data2;
 
-  wire [3:0] wrAddrNxt;
+  pwire [OUTDATA_WIDTH-1:0] pmm_data0[11:0];
+  pwire [OUTDATA_WIDTH-1:0] pmm_data1[11:0];
+  pwire [OUTDATA_WIDTH-1:0] pmm_data2[11:0];
+
+  
+  pwire [5:0]read_hitL,read_hitH;
+
+  pwire [3:0] wrAddrNxt;
   reg [3:0] initCount;
   reg init;
   
   genvar k;
-  wire [5:0][VADDR_WIDTH-16:0] addr0;
+  pwire [5:0][VADDR_WIDTH-16:0] addr0;
   assign addr0[0]=addr[0][VADDR_WIDTH-15:1];
   assign addr0[1]=addr[1][VADDR_WIDTH-15:1];
   assign addr0[2]=addr[2][VADDR_WIDTH-15:1];

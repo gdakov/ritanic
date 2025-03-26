@@ -26,53 +26,53 @@ module fcmpd(clk,rst,
   input invExcpt;
   input isExt,isDbl,isSng;
   input afm; //alternative flag mode
-  output [5:0] flags;
+  output pwire [5:0] flags;
   input paired;
   input int_srch;
   input [1:0] srch_sz;
   input vec;
   input [4:0] jumpType;
   input [1:0] cmod;
-  output [67:0] res_pkd;
-  wire cmpC,x_cmpC;
+  output pwire [67:0] res_pkd;
+  pwire cmpC,x_cmpC;
 
-  wire [15:0] extA;
-  wire [15:0] extB;
-  wire fEQl;
-  wire A_s,B_s;
-  wire [1:0] A_h,B_h;
-  wire[15:0] emsk;
+  pwire [15:0] extA;
+  pwire [15:0] extB;
+  pwire fEQl;
+  pwire A_s,B_s;
+  pwire [1:0] A_h,B_h;
+  pwire[15:0] emsk;
   
-  wire [67:0] res_pkd_X;
+  pwire [67:0] res_pkd_X;
   assign res_pkd=res_pkd_X;
 
-  wire res_unord;
-  wire res_S,res_C,res_Z;
-  wire COA,COB;
-  wire [5:0] flags_other;
+  pwire res_unord;
+  pwire res_S,res_C,res_Z;
+  pwire COA,COB;
+  pwire [5:0] flags_other;
 
-  wire [8:0] x_extA={A[63],A[65],A[62:56]};
-  wire [8:0] x_extB={B[63],B[65],B[62:56]};
-  wire x_fEQl;
-  wire A_x_s,B_x_s;
-  wire [1:0] A_x_h,B_x_h;
+  pwire [8:0] x_extA={A[63],A[65],A[62:56]};
+  pwire [8:0] x_extB={B[63],B[65],B[62:56]};
+  pwire x_fEQl;
+  pwire A_x_s,B_x_s;
+  pwire [1:0] A_x_h,B_x_h;
 
-  wire res_x_unord;
-  wire res_x_S,res_x_C,res_x_Z;
-  wire x_COA,x_COB;
+  pwire res_x_unord;
+  pwire res_x_S,res_x_C,res_x_Z;
+  pwire x_COA,x_COB;
 
-  wire A_zero,A_infty,A_nan,A_x_zero,A_x_infty,A_x_nan;
-  wire B_zero,B_infty,B_nan,B_x_zero,B_x_infty,B_x_nan;
-  wire [1:0] vres;
-  wire vres1;
+  pwire A_zero,A_infty,A_nan,A_x_zero,A_x_infty,A_x_nan;
+  pwire B_zero,B_infty,B_nan,B_x_zero,B_x_infty,B_x_nan;
+  pwire [1:0] vres;
+  pwire vres1;
   reg [1:0] vres_reg;
   reg ven_reg;
   reg [1:0] vtype_reg;
-  wire [3:0][15:0] srchbits;
-  wire [15:0] s_first;
-  wire s_has;
+  pwire [3:0][15:0] srchbits;
+  pwire [15:0] s_first;
+  pwire s_has;
 
-  wire [3:0] res_first;
+  pwire [3:0] res_first;
 
   assign srchbits[0]={B[64],B[56],B[48],B[40],B[32],B[23],B[15],B[7],
 	  A[64],A[56],A[48],A[40],A[32],A[23],A[15],A[7]};

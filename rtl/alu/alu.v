@@ -37,8 +37,8 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   input [5:0] sub; //high power fat wire
   input dataEn;//1=coming data from rs
   input nDataAlt;//0=feeding data through multiclk unit
-  output wire [EXCEPT_WIDTH-1:0] retData;
-  output retEn;
+  output pwire [EXCEPT_WIDTH-1:0] retData;
+  output pwire retEn;
   input [2:0][65:0] val1;
   input [2:0][65:0] val2;
   input [5:0] valS;//flag
@@ -50,33 +50,33 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
 
   reg [64:0] valRes_reg;
 
-  wire [64:0] valRes1;  
-  wire [7:0] valRes8;
-  wire [64:0] valRes2;  
+  pwire [64:0] valRes1;  
+  pwire [7:0] valRes8;
+  pwire [64:0] valRes2;  
 
 
-  wire flag64_ZF;
-  wire flag32_ZF;
+  pwire flag64_ZF;
+  pwire flag32_ZF;
   reg flag64_ZF_reg;
   reg flag32_ZF_reg;
-  wire flag16_ZF;
-  wire flag8_ZF;
+  pwire flag16_ZF;
+  pwire flag8_ZF;
   reg flag16_ZF_reg;
   reg flag8_ZF_reg;
         
-  wire flag8_PF;
+  pwire flag8_PF;
   reg flag8_PF_reg;
-  wire flag8_SF;
+  pwire flag8_SF;
   reg flagAdd8_CF;
   reg flagAdd8_AF;
 
   
-  wire carryAdd44;
-  wire carryAdd64;
-  wire carryAdd32;
-  wire carryAdd16;
-  wire carryAdd8LL;
-  wire carryAdd4LL;
+  pwire carryAdd44;
+  pwire carryAdd64;
+  pwire carryAdd32;
+  pwire carryAdd16;
+  pwire carryAdd8LL;
+  pwire carryAdd4LL;
         
   
   
@@ -113,16 +113,16 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   reg val2_sign16;
   reg val2_sign8;
   
-  wire flagAdd64_OF;
-  wire flagAdd32_OF;
-  wire flagAdd16_OF;
-  wire flagAdd8_OF;
+  pwire flagAdd64_OF;
+  pwire flagAdd32_OF;
+  pwire flagAdd16_OF;
+  pwire flagAdd8_OF;
           
-  wire flagSub64_OF;
-  wire flagSub44_OF;
-  wire flagSub32_OF;
-  wire flagSub16_OF;
-  wire flagSub8_OF;
+  pwire flagSub64_OF;
+  pwire flagSub44_OF;
+  pwire flagSub32_OF;
+  pwire flagSub16_OF;
+  pwire flagSub8_OF;
   
   reg flagAdd64_OF_reg;
   reg flagAdd32_OF_reg;
@@ -132,33 +132,33 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   reg flagSub16_OF_reg;
   reg flagSub8_OF_reg;
 
-  wire [5:0] flags_COASZP;
+  pwire [5:0] flags_COASZP;
 
 
 
-  wire isFlags;
+  pwire isFlags;
   reg isFlags_reg;
-  wire [2:0] reg8flg;
-  wire [7:0] smallOP;
+  pwire [2:0] reg8flg;
+  pwire [7:0] smallOP;
   reg nDataAlt_reg;
 
-  wire [64:0] val_and;
-  wire [64:0] val_or;
-  wire [64:0] val_xor;
+  pwire [64:0] val_and;
+  pwire [64:0] val_or;
+  pwire [64:0] val_xor;
  
-  wire nDataAlt2; 
-  wire [3:0] val1One;
+  pwire nDataAlt2; 
+  pwire [3:0] val1One;
   reg [3:0] val1One_reg;
  
-  wire [4:0] jumpType; 
-  wire doJmp;
+  pwire [4:0] jumpType; 
+  pwire doJmp;
   reg doJmp_reg;
-  wire doJmp2;
+  pwire doJmp2;
 
-  wire add_en;
-  wire shift_en;
-  wire add8_en;
-  wire sahf_en;
+  pwire add_en;
+  pwire shift_en;
+  pwire add8_en;
+  pwire sahf_en;
   reg shift_en_reg;
   
   reg [OPERATION_WIDTH-1:0] retOp;
@@ -166,19 +166,19 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   reg [5:0] val1_reg;
 
   reg dataEn_reg;
-  wire thrinh;
+  pwire thrinh;
   reg thrinh_reg;
   reg except_reg;
   reg except_thread_reg;
-  wire logic_en,spec1_en,spec2_en;
-  wire cmov_en;
+  pwire logic_en,spec1_en,spec2_en;
+  pwire cmov_en;
   reg logic_en_reg;
 
-  wire [2:0] cin_seq;
+  pwire [2:0] cin_seq;
   reg cin_seq_reg;
-  wire is_ptr,is_sub;
-  wire cout_seq;
-  wire [64:0] ptr;
+  pwire is_ptr,is_sub;
+  pwire cout_seq;
+  pwire [64:0] ptr;
   reg [64:0] ptr_reg;
   reg is_ptr_reg;
   reg is_ptr_sub;
@@ -575,14 +575,14 @@ module except_jump_cmp(
 
   input [FLAGS_WIDTH-1:0] flags;
   input [JUMP_TYPE_WIDTH-1:0] jumpType;
-  output reg doJump;
+  output pwire reg doJump;
 
-  wire C;
-  wire O;
-  wire A;
-  wire S;
-  wire Z;
-  wire P;
+  pwire C;
+  pwire O;
+  pwire A;
+  pwire S;
+  pwire Z;
+  pwire P;
 
   assign {C,O,A,S,Z,P}=flags;
 

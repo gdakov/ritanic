@@ -33,11 +33,11 @@ module normalizeD(
   input isEXT;
   input en;
   input clkEn;
-  output [81:0] res;
+  output pwire [81:0] res;
 
-  wire [15:0] expA;
-  wire [15:0] denor_from;
-  wire [15:0] offset;
+  pwire [15:0] expA;
+  pwire [15:0] denor_from;
+  pwire [15:0] offset;
   reg [15:0] offset_reg;
 
   assign expA=isDBL ? {A[65],{4{~A[65]}},A[63:53]} : {A[65],A[80:66]};

@@ -28,7 +28,7 @@ module stq_adata_ram(
   input rst;
   input read_clkEn;
   input [5:0] read_addr;
-  output [WIDTH-1:0] read_data;
+  output pwire [WIDTH-1:0] read_data;
   input [2:0] writeA_wen;
   input [2:0] [5:0] writeA_addr;
   input [2:0] [WIDTH-1:0] writeA_data;

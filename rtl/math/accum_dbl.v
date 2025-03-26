@@ -26,8 +26,8 @@ module accum_buf_one(
     input [67:0] A;
     input [107:0][67:0] B;
     input din_en;
-    output [67:0] res;
-    output res_en; //one clock before res
+    output pwire [67:0] res;
+    output pwire res_en; //one clock before res
 
     integer kl;
     //reg [108:0][11:0] exp;
@@ -66,7 +66,7 @@ module accum_buf_one(
       end
     endgenerate
 
-    assign res_en=din_en_reg7; //but output on clock 9
+    assign res_en=din_en_reg7; //but output pwire on clock 9
 
     assign {res[51:33],res[31:0]}=din_en_reg8 ? Bxx_reg : 'z;
     assign res[32]=din_en_reg8 ? 1'b0 : 1'bz;

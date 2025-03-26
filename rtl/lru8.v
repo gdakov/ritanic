@@ -25,19 +25,19 @@ module lru_single0(
   parameter [WIDTH-1:0] INITVAL=0;
   
   input [WIDTH-1:0] lru;
-  output [WIDTH-1:0] newLRU;
+  output pwire [WIDTH-1:0] newLRU;
   input [WIDTH-1:0] LRU_hit;
   input init;
   input en;
   
-  wire [WIDTH-1:0] newLRU_X;
+  pwire [WIDTH-1:0] newLRU_X;
   assign newLRU=newLRU_X;
   
-  wire hitThis;
-  wire hitThisOrAfter;
-  wire hitBefore;
-  wire hitAfter;
-  wire [WIDTH-1:0] lru_next;
+  pwire hitThis;
+  pwire hitThisOrAfter;
+  pwire hitBefore;
+  pwire hitAfter;
+  pwire [WIDTH-1:0] lru_next;
   
   assign hitThis=LRU_hit==lru;
   assign hitAfter=hitThisOrAfter & ~hitThis;
@@ -74,13 +74,13 @@ module lru_single(
   localparam COUNT=1<<WIDTH;
   
   input [WIDTH-1:0] lru;
-  output [WIDTH-1:0] newLRU;
+  output pwire [WIDTH-1:0] newLRU;
   input [WIDTH-1:0] LRU_hit;
   input init;
   input en;
 
-  wire [COUNT-1:0][WIDTH-1:0] newLRUa;
-  wire [WIDTH-1:0] newLRU_X;
+  pwire [COUNT-1:0][WIDTH-1:0] newLRUa;
+  pwire [WIDTH-1:0] newLRU_X;
 
   assign newLRU=newLRU_X;
   
@@ -119,22 +119,22 @@ module lru_double(
   parameter [WIDTH-1:0] INITVAL=0;
   
   input [WIDTH-1:0] lru;
-  output [WIDTH-1:0] newLRU;
+  output pwire [WIDTH-1:0] newLRU;
   input [WIDTH-1:0] LRU_hitA;
   input [WIDTH-1:0] LRU_hitB;
   input isDouble;
   input init;
   input en;
   
-  wire hitThisA;
-  wire hitThisB;
-  wire hitThisOrAfterA;
-  wire hitThisOrAfterB;
-  wire hitBefore1;
-  wire hitBefore2;
-  wire hitAfter;
-  wire [WIDTH-1:0] lru_next;
-  wire [WIDTH-1:0] lru_next2;
+  pwire hitThisA;
+  pwire hitThisB;
+  pwire hitThisOrAfterA;
+  pwire hitThisOrAfterB;
+  pwire hitBefore1;
+  pwire hitBefore2;
+  pwire hitAfter;
+  pwire [WIDTH-1:0] lru_next;
+  pwire [WIDTH-1:0] lru_next2;
   
   assign hitThisA=LRU_hitA==lru;
   assign hitThisB=LRU_hitB==lru;

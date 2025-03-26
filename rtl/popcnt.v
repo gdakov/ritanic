@@ -17,7 +17,7 @@ module popcnt5(
   cnt);
 
   input [4:0] bits;
-  output reg [5:0] cnt;
+  output pwire reg [5:0] cnt;
 
   always @*
     begin
@@ -64,7 +64,7 @@ module popcnt6(
   cnt);
 
   input [5:0] bits;
-  output reg [6:0] cnt;
+  output pwire reg [6:0] cnt;
 
   always @*
     begin
@@ -144,7 +144,7 @@ module popcnt3(
   cnt);
 
   input [2:0] bits;
-  output reg [3:0] cnt;
+  output pwire reg [3:0] cnt;
   
   always @* begin
       case(bits)
@@ -161,7 +161,7 @@ module popcnt3_or_more(
   cnt);
 
   input [2:0] bits;
-  output reg [3:1] cnt;
+  output pwire reg [3:1] cnt;
   
   always @* begin
       case(bits)
@@ -179,12 +179,12 @@ module popcnt10(
   cnt);
 
   input [9:0] bits;
-  output [10:0] cnt;
+  output pwire [10:0] cnt;
 
-  wire [5:0] cntA;
-  wire [5:0] cntB;
+  pwire [5:0] cntA;
+  pwire [5:0] cntB;
   
-  wire [10:0] cnt_X;
+  pwire [10:0] cnt_X;
 
   assign cnt=cnt_X;
 
@@ -207,12 +207,12 @@ module popcnt15(
   cnt);
 
   input [14:0] bits;
-  output [15:0] cnt;
+  output pwire [15:0] cnt;
 
-  wire [5:0] cntA;
-  wire [10:0] cntB;
+  pwire [5:0] cntA;
+  pwire [10:0] cntB;
 
-  wire [15:0] cnt_X;
+  pwire [15:0] cnt_X;
 
   assign cnt=cnt_X;
   popcnt5 cntA_mod(bits[4:0],cntA);
@@ -233,10 +233,10 @@ module popcnt20(
   cnt);
 
   input [19:0] bits;
-  output [20:0] cnt;
+  output pwire [20:0] cnt;
 
-  wire [10:0] cntA;
-  wire [10:0] cntB;
+  pwire [10:0] cntA;
+  pwire [10:0] cntB;
 
   popcnt10 cntA_mod(bits[9:0],cntA);
   popcnt10 cntB_mod(bits[19:10],cntB);
@@ -261,12 +261,12 @@ module popcnt16(
   cnt);
 
   input [15:0] bits;
-  output [16:0] cnt;
+  output pwire [16:0] cnt;
 
-  wire [6:0] cntA;
-  wire [10:0] cntB;
+  pwire [6:0] cntA;
+  pwire [10:0] cntB;
 
-  wire [16:0] cnt_X;
+  pwire [16:0] cnt_X;
 
   assign cnt=cnt_X;
   popcnt6 cntA_mod(bits[5:0],cntA);
@@ -290,7 +290,7 @@ module popcnt5_or_less(
   cnt);
 
   input [4:0] bits;
-  output reg [4:0] cnt;
+  output pwire reg [4:0] cnt;
 
   always @*
     begin
@@ -338,11 +338,11 @@ module popcnt10_or_less(
   cnt);
 
   input [9:0] bits;
-  output [9:0] cnt;
+  output pwire [9:0] cnt;
 
-  wire [5:0] cntA;
-  wire [4:0] cntB;
-  wire [9:0] cnt_X;
+  pwire [5:0] cntA;
+  pwire [4:0] cntB;
+  pwire [9:0] cnt_X;
 
   assign cnt=cnt_X;
 
@@ -366,11 +366,11 @@ module popcnt15_or_less(
   cnt);
 
   input [14:0] bits;
-  output [14:0] cnt;
+  output pwire [14:0] cnt;
 
-  wire [5:0] cntA;
-  wire [9:0] cntB;
-  wire [14:0] cnt_X;
+  pwire [5:0] cntA;
+  pwire [9:0] cntB;
+  pwire [14:0] cnt_X;
 
   assign cnt=cnt_X;
 
@@ -392,10 +392,10 @@ module popcnt20_or_less(
   cnt);
 
   input [19:0] bits;
-  output [19:0] cnt;
+  output pwire [19:0] cnt;
 
-  wire [9:0] cntA;
-  wire [9:0] cntB;
+  pwire [9:0] cntA;
+  pwire [9:0] cntB;
 
   popcnt10 cntA_mod(bits[9:0],cntA);
   popcnt10_or_less cntB_mod(bits[19:10],cntB);
@@ -420,11 +420,11 @@ module popcnt16_or_less(
   cnt);
 
   input [15:0] bits;
-  output [15:0] cnt;
+  output pwire [15:0] cnt;
 
-  wire [6:0] cntA;
-  wire [9:0] cntB;
-  wire [15:0] cnt_X;
+  pwire [6:0] cntA;
+  pwire [9:0] cntB;
+  pwire [15:0] cnt_X;
 
   assign cnt=cnt_X;
 
@@ -448,7 +448,7 @@ module popcnt5_or_more(
   cnt);
 
   input [4:0] bits;
-  output reg [5:1] cnt;
+  output pwire reg [5:1] cnt;
 
   always @*
     begin
@@ -496,11 +496,11 @@ module popcnt10_or_more(
   cnt);
 
   input [9:0] bits;
-  output [9:0] cnt;
+  output pwire [9:0] cnt;
 
-  wire [5:0] cntA;
-  wire [5:1] cntB;
-  wire [9:0] cnt_X;
+  pwire [5:0] cntA;
+  pwire [5:1] cntB;
+  pwire [9:0] cnt_X;
 
   assign cnt=cnt_X;
 
@@ -524,11 +524,11 @@ module popcnt15_or_more(
   cnt);
 
   input [14:0] bits;
-  output [14:0] cnt;
+  output pwire [14:0] cnt;
 
-  wire [5:0] cntA;
-  wire [10:1] cntB;
-  wire [14:0] cnt_X;
+  pwire [5:0] cntA;
+  pwire [10:1] cntB;
+  pwire [14:0] cnt_X;
 
   assign cnt=cnt_X;
 
@@ -551,10 +551,10 @@ module popcnt20_or_more(
   cnt);
 
   input [19:0] bits;
-  output [19:0] cnt;
+  output pwire [19:0] cnt;
 
-  wire [10:0] cntA;
-  wire [10:1] cntB;
+  pwire [10:0] cntA;
+  pwire [10:1] cntB;
 
   popcnt10 cntA_mod(bits[9:0],cntA);
   popcnt10_or_more cntB_mod(bits[19:10],cntB);
@@ -580,11 +580,11 @@ module popcnt16_or_more(
   cnt);
 
   input [15:0] bits;
-  output [15:0] cnt;
+  output pwire [15:0] cnt;
 
-  wire [6:0] cntA;
-  wire [10:1] cntB;
-  wire [15:0] cnt_X;
+  pwire [6:0] cntA;
+  pwire [10:1] cntB;
+  pwire [15:0] cnt_X;
 
   assign cnt=cnt_X;
 

@@ -34,9 +34,9 @@ module instrQextra_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr0;
-  output [DATA_WIDTH-1:0] read_data0;
+  output pwire [DATA_WIDTH-1:0] read_data0;
   input [ADDR_WIDTH-1:0] read_addr1;
-  output [DATA_WIDTH-1:0] read_data1;
+  output pwire [DATA_WIDTH-1:0] read_data1;
 
   input [ADDR_WIDTH-1:0] write_addr0;
   input [DATA_WIDTH-1:0] write_data0;
@@ -80,11 +80,11 @@ module iqe_inc_addr(
   inc_en
   );
   input [3:0] addr;
-  output [3:0] new_addr;
+  output pwire [3:0] new_addr;
   input [4:0] inc;
   input inc_en;
 
-  wire [4:0] inc2=(~inc_en) ? 5'd1 : inc;
+  pwire [4:0] inc2=(~inc_en) ? 5'd1 : inc;
 
   generate
     genvar v;
@@ -105,11 +105,11 @@ module iqe_up_down(
   input [2:0] dec;
   input dec_en;
   input [4:0] count;
-  output [4:0] count_new;
+  output pwire [4:0] count_new;
   
-  wire  [4:-2] cnt;
-  wire [4:0] inc2;
-  wire [2:0] dec2;
+  pwire  [4:-2] cnt;
+  pwire [4:0] inc2;
+  pwire [2:0] dec2;
   
   assign inc2=(~inc_en) ? 5'd1 : inc;
   assign dec2=(~dec_en) ? 3'd1 : dec;
@@ -162,12 +162,12 @@ module instrQextra(
   input except;
   input except_thread;
   input fStall;
-  output doFStall;
+  output pwire doFStall;
   input stall;
   input read_thread;
   input [2:0] read_cnt;
-  output [DATA_WIDTH-1:0] read_data0;
-  output [DATA_WIDTH-1:0] read_data1;
+  output pwire [DATA_WIDTH-1:0] read_data0;
+  output pwire [DATA_WIDTH-1:0] read_data1;
   input write_wen;
   input write_thread;
   input [4:0] write_cnt;
@@ -184,20 +184,20 @@ module instrQextra(
   reg [3:0] write_addr2[1:0];
   reg [3:0] write_addr3[1:0];
   
-  wire [1:0][3:0] read_addr0_d;
-  wire [1:0][3:0] read_addr1_d;
-  wire [1:0][3:0] write_addr0_d;
-  wire [1:0][3:0] write_addr1_d;
-  wire [1:0][3:0] write_addr2_d;
-  wire [1:0][3:0] write_addr3_d;
+  pwire [1:0][3:0] read_addr0_d;
+  pwire [1:0][3:0] read_addr1_d;
+  pwire [1:0][3:0] write_addr0_d;
+  pwire [1:0][3:0] write_addr1_d;
+  pwire [1:0][3:0] write_addr2_d;
+  pwire [1:0][3:0] write_addr3_d;
   
-  wire [DATA_WIDTH-1:0] write_data0x;
-  wire [DATA_WIDTH-1:0] write_data1x;
-  wire [DATA_WIDTH-1:0] write_data2x;
-  wire [DATA_WIDTH-1:0] write_data3x;
+  pwire [DATA_WIDTH-1:0] write_data0x;
+  pwire [DATA_WIDTH-1:0] write_data1x;
+  pwire [DATA_WIDTH-1:0] write_data2x;
+  pwire [DATA_WIDTH-1:0] write_data3x;
 
   reg [4:0] cnt[1:0];
-  wire [1:0][4:0] cnt_d;
+  pwire [1:0][4:0] cnt_d;
 
   assign write_data0x=write_start[0] ? write_data0 : 'z;
   assign write_data0x=write_start[1] ? write_data1 : 'z;

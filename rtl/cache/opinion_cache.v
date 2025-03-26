@@ -35,10 +35,10 @@ module cc_ram0(
   input rst;
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
-  output [DATA_WIDTH-1:0] readA_data;
+  output pwire [DATA_WIDTH-1:0] readA_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
-  output [DATA_WIDTH-1:0] readB_data;
+  output pwire [DATA_WIDTH-1:0] readB_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -90,10 +90,10 @@ module cc_ram(
   input rst;
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
-  output [DATA_WIDTH-1:0] readA_data;
+  output pwire [DATA_WIDTH-1:0] readA_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
-  output [DATA_WIDTH-1:0] readB_data;
+  output pwire [DATA_WIDTH-1:0] readB_data;
   input [ADDR_WIDTH-1:0] write_addrE;
   input [ADDR_WIDTH-1:0] write_addrO;
   input [DATA_WIDTH-1:0] write_data;
@@ -158,12 +158,12 @@ module cc_ram_block(
   input rst;
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
-  output [DATA_WIDTH-1:0] readA_data;
-  output [152:0] readAZ_data;
+  output pwire [DATA_WIDTH-1:0] readA_data;
+  output pwire [152:0] readAZ_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
-  output [DATA_WIDTH-1:0] readB_data;
-  output [152:0] readBZ_data;
+  output pwire [DATA_WIDTH-1:0] readB_data;
+  output pwire [152:0] readBZ_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input [152:0] write_xdata;
@@ -235,10 +235,10 @@ module ccX_ram0(
   input rst;
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
-  output [DATA_WIDTH-1:0] readA_data;
+  output pwire [DATA_WIDTH-1:0] readA_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
-  output [DATA_WIDTH-1:0] readB_data;
+  output pwire [DATA_WIDTH-1:0] readB_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -286,12 +286,12 @@ module ccX_ram(
   input rst;
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
-  output [DATA_WIDTH-1:0] readA_data;
-  output [7:0] readAZ_data;
+  output pwire [DATA_WIDTH-1:0] readA_data;
+  output pwire [7:0] readAZ_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
-  output [DATA_WIDTH-1:0] readB_data;
-  output [7:0] readBZ_data;
+  output pwire [DATA_WIDTH-1:0] readB_data;
+  output pwire [7:0] readBZ_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input [4:0] write_addrZ;
@@ -378,35 +378,35 @@ module ccRam_way(
   input [IP_WIDTH-6:0] readA_IP;
   input [3:0] readA_IP_low;
   input readA_set_flag;
-  output [DATA_WIDTH-1:0] readA_data;
+  output pwire [DATA_WIDTH-1:0] readA_data;
   input [DATA_WIDTH-1:0] readA_data_in;
-  output [`wport-1:0] readA_dataX;
+  output pwire [`wport-1:0] readA_dataX;
   input [`wport-1:0] readA_dataX_in;
-  output [36:0] expun_addr;
+  output pwire [36:0] expun_addr;
   input [36:0] expun_addr_in;
-  output readA_hit;
-  output expun_hit;
+  output pwire readA_hit;
+  output pwire expun_hit;
   input readB_clkEn;
   input [IP_WIDTH-6:0] readB_IP;
   input [3:0] readB_IP_low;
   input readB_set_flag;
-  output [DATA_WIDTH-1:0] readB_data;
+  output pwire [DATA_WIDTH-1:0] readB_data;
   input [DATA_WIDTH-1:0] readB_data_in;
-  output [`wport-1:0] readB_dataX;
+  output pwire [`wport-1:0] readB_dataX;
   input [`wport-1:0] readB_dataX_in;
-  output readB_hit;
-  output [2:0] read_NRU;
+  output pwire readB_hit;
+  output pwire [2:0] read_NRU;
   input [2:0] read_NRU_in;
   input [2:0] read_NRU_reg;
   input [IP_WIDTH-6:0] chkCL_IP;
   input chkCL_clkEn;
-  output chkCL_hit;
+  output pwire chkCL_hit;
   input [IP_WIDTH-6:0] write_IP;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
   input invalidate;
 
-  output ErrA,ErrB;
+  output pwire ErrA,ErrB;
   input write_wen_noins;
   input [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
   input [`wport-1:0]write_hitE0; //+1 cycle
@@ -416,14 +416,14 @@ module ccRam_way(
 
   reg init;
 
-  wire [DATA_WIDTH-1:0] readA_data_ram;
-  wire [DATA_WIDTH-1:0] readB_data_ram;
+  pwire [DATA_WIDTH-1:0] readA_data_ram;
+  pwire [DATA_WIDTH-1:0] readB_data_ram;
   reg [IP_WIDTH-6:0] write_IP_reg;
   
-  wire [`wport-1:0] readXA_data_ram;
-  wire [`wport-1:0] readXB_data_ram;
+  pwire [`wport-1:0] readXA_data_ram;
+  pwire [`wport-1:0] readXB_data_ram;
   reg [`wport-1:0] writeX_data;
-  wire [6:0] writeX_addr;
+  pwire [6:0] writeX_addr;
 
   integer k,j;
   reg readA_clkEn_reg;
@@ -432,14 +432,14 @@ module ccRam_way(
   reg readB_set_flag_reg;
   reg [3:0] readA_IP_low_reg;
   reg [9:0] readA_IP_reg;
-  wire read_hitC0; 
+  pwire read_hitC0; 
   reg [3:0] readB_IP_low_reg;
   reg [9:0] readB_IP_reg;
-  wire write_hit; 
+  pwire write_hit; 
 
-  wire [36:0] expun_naddr;
+  pwire [36:0] expun_naddr;
 
-  wire [6:0] initCountNext;
+  pwire [6:0] initCountNext;
   reg [6:0] initCount;
 
   reg [DATA_WIDTH-1:0] write_data_reg;
@@ -512,7 +512,7 @@ module ccRam_way(
   .write_wen(write_hit|init)
   );
 
-  wire errAx,errBx;
+  pwire errAx,errBx;
 
   assign errA=^readA_data_ram[64:0] || ^readA_data_ram[64+65:0+65] || ^readA_data_ram[64+130:0+130] || ^readA_data_ram[64+195:195] || 
     ^readA_data_ram[64+260:260] || ^readA_data_ram[64+325:325] || ^readA_data_ram[64+390:390] || ^readA_data_ram[64+455:455] || 
@@ -656,26 +656,26 @@ module ccRam_half(
   input readA_clkEn;
   input [IP_WIDTH-2:0] readA_IP;
   input readA_set_flag;
-  output [DATA_WIDTH-1:0] readA_data;
-  output [`wport-1:0] readA_dataX;
-  output [7:0] readA_hit_way;
+  output pwire [DATA_WIDTH-1:0] readA_data;
+  output pwire [`wport-1:0] readA_dataX;
+  output pwire [7:0] readA_hit_way;
   input readB_clkEn;
   input [IP_WIDTH-2:0] readB_IP;
   input readB_set_flag;
-  output [DATA_WIDTH-1:0] readB_data;
-  output [`wport-1:0] readB_dataX;
-  output [7:0] readB_hit_way;
-  output [36:0] expun_addr;
-  output readA_hit,readB_hit,expun_hit;
+  output pwire [DATA_WIDTH-1:0] readB_data;
+  output pwire [`wport-1:0] readB_dataX;
+  output pwire [7:0] readB_hit_way;
+  output pwire [36:0] expun_addr;
+  output pwire readA_hit,readB_hit,expun_hit;
   input [IP_WIDTH-6:0] chkCL_IP;
   input chkCL_clkEn;
-  output chkCL_hit;
+  output pwire chkCL_hit;
   input [IP_WIDTH-6:0] write_IP;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
   input invalidate;
-  output [7:0] tagErrA;
-  output [7:0] tagErrB;
+  output pwire [7:0] tagErrA;
+  output pwire [7:0] tagErrB;
   input write_wen_noins;
   input [ADDR_WIDTH-1:0] write_addrE0;
   input write_hitE0; //+1 cycle
@@ -700,10 +700,10 @@ module ccRam_half(
   input [255:0] write_data0;
   input [255:0] write_data1;
   
-  wire [7:0] chkCL_hit_way;
-  wire [7:0] readA_hit_way;
-  wire [7:0] readB_hit_way;
-  wire [7:0] expun_hit_way;
+  pwire [7:0] chkCL_hit_way;
+  pwire [7:0] readA_hit_way;
+  pwire [7:0] readB_hit_way;
+  pwire [7:0] expun_hit_way;
   
 
   reg [2:0] read_NRU_reg;
@@ -712,8 +712,8 @@ module ccRam_half(
   generate
       genvar k,b,q;
       for(b=0;b<32;b=b+1) begin : banks_gen
-          wire [7:0] wr0;
-          wire [7:0] wr1;
+          pwire [7:0] wr0;
+          pwire [7:0] wr1;
           for(q=0;q<8;q=q+1) begin
               assign wr0[q]=((b-q)&5'h1f)==write_begin0 && write_clkEn0 && write_bank0[b];
               assign wr1[q]=((b-q)&5'h1f)==write_begin1 && write_clkEn1 && write_bank1[b];
@@ -726,12 +726,12 @@ module ccRam_half(
               ^write_new_data[b*32+8+:8],write_new_data[b*32+8+:8],^write_new_data[b*32+:8],write_new_data[b*32+:8]};
       end
       for(k=0;k<9;k=k+1) begin : way_gen
-          wire [DATA_WIDTH-1:0] readA_dataP;
-          wire [`wport-1:0] readA_dataXP;
-          wire [DATA_WIDTH-1:0] readB_dataP;
-          wire [`wport-1:0] readB_dataXP;
-          wire [2:0] read_NRUP;
-          wire [36:0] expun_addrP;
+          pwire [DATA_WIDTH-1:0] readA_dataP;
+          pwire [`wport-1:0] readA_dataXP;
+          pwire [DATA_WIDTH-1:0] readB_dataP;
+          pwire [`wport-1:0] readB_dataXP;
+          pwire [2:0] read_NRUP;
+          pwire [36:0] expun_addrP;
           if (k) ccRam_way #(k-1) way_mod(
           .clk(clk),
           .rst(rst),

@@ -27,7 +27,7 @@ module bob_ram0(
   
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
@@ -62,12 +62,12 @@ module bob_ram(
   
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
-  wire dummyW0,dummyW1,dummyW2,dummyW3;
+  pwire dummyW0,dummyW1,dummyW2,dummyW3;
   //verilator lint_off WIDTH
   bob_ram0 ram0(
   clk,
@@ -117,19 +117,19 @@ module bob_addr(
   input rst;
   input except;
   input new_en;
-  output reg [5:0] new_addr;
+  output pwire reg [5:0] new_addr;
   input stall;
-  output doStall;
-  output reg hasRetire;
+  output pwire doStall;
+  output pwire reg hasRetire;
   input doRetire;
-  output reg [5:0] retire_addr;
+  output pwire reg [5:0] retire_addr;
 
   reg [5:0] retire_addr0;
-  wire [5:0] retire0_inc;
+  pwire [5:0] retire0_inc;
   reg [5:0] cnt;
-  wire [5:0] cnt_inc;
-  wire [5:0] cnt_dec;
-  wire [5:0] new_addr_d;
+  pwire [5:0] cnt_inc;
+  pwire [5:0] cnt_dec;
+  pwire [5:0] new_addr_d;
   reg except_reg;
   adder_inc #(6) add1_mod(retire_addr0,retire0_inc,1'b1,);
   adder_inc #(6) add2_mod(cnt,cnt_inc,1'b1,);

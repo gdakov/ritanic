@@ -4,10 +4,10 @@ module insconv(
    bundle_out);
 
    input [255:0] bundle;
-   output [255:0] bundle_out;
+   output pwire [255:0] bundle_out;
 
 
-   wire [14:-1] stp;
+   pwire [14:-1] stp;
 
    assign bundle_out[239:0]=bundle[239:0];
    assign bundle_out[255]=bundle[255];

@@ -38,7 +38,7 @@ module lsq_req_ram(
 
 
   input [ADDR_WIDTH-1:0] read_addr;
-  output reg [DATA_WIDTH-1:0] read_data;
+  output pwire reg [DATA_WIDTH-1:0] read_data;
   input read_clkEn;
   
 
@@ -142,12 +142,12 @@ module lsq_req_block(
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
   
-  output [DATA_WIDTH-1:0]  read0_data;
-  output [DATA_WIDTH-1:0]  read1_data;
-  output [DATA_WIDTH-1:0]  read2_data;
-  output [DATA_WIDTH-1:0]  read3_data;
-  output [DATA_WIDTH-1:0]  read4_data;
-  output [DATA_WIDTH-1:0]  read5_data;
+  output pwire [DATA_WIDTH-1:0]  read0_data;
+  output pwire [DATA_WIDTH-1:0]  read1_data;
+  output pwire [DATA_WIDTH-1:0]  read2_data;
+  output pwire [DATA_WIDTH-1:0]  read3_data;
+  output pwire [DATA_WIDTH-1:0]  read4_data;
+  output pwire [DATA_WIDTH-1:0]  read5_data;
   
 
   input [ADDR2_WIDTH-1:0] write0_addr;
@@ -177,7 +177,7 @@ module lsq_req_block(
   input [ADDR_WIDTH-1:0] write6_addr;
   input write6_wen;
 
-  wire [DATA_WIDTH-1:0]  read_data[5:0];
+  pwire [DATA_WIDTH-1:0]  read_data[5:0];
   
   
   assign read0_data=read_data[0];
@@ -237,7 +237,7 @@ module lsq_ex_ram(
 
 
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input read_clkEn;
   
 
@@ -335,12 +335,12 @@ module lsq_ex_block(
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
   
-  output [DATA_WIDTH-1:0]  read0_data;
-  output [DATA_WIDTH-1:0]  read1_data;
-  output [DATA_WIDTH-1:0]  read2_data;
-  output [DATA_WIDTH-1:0]  read3_data;
-  output [DATA_WIDTH-1:0]  read4_data;
-  output [DATA_WIDTH-1:0]  read5_data;
+  output pwire [DATA_WIDTH-1:0]  read0_data;
+  output pwire [DATA_WIDTH-1:0]  read1_data;
+  output pwire [DATA_WIDTH-1:0]  read2_data;
+  output pwire [DATA_WIDTH-1:0]  read3_data;
+  output pwire [DATA_WIDTH-1:0]  read4_data;
+  output pwire [DATA_WIDTH-1:0]  read5_data;
   
 
   input [ADDR2_WIDTH-1:0] write0_addr;
@@ -371,7 +371,7 @@ module lsq_ex_block(
   input [DATA_WIDTH-1:0] write6_data;
   input write6_wen;
 
-  wire [DATA_WIDTH-1:0]  read_data[5:0];
+  pwire [DATA_WIDTH-1:0]  read_data[5:0];
   
   
   assign read0_data=read_data[0];
@@ -426,7 +426,7 @@ module lsq_shared_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -464,7 +464,7 @@ module lsq_sharedB_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -506,7 +506,7 @@ module lsq_pend_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr0;
   input [DATA_WIDTH-1:0] write_data0;
   input write_wen0;
@@ -605,72 +605,72 @@ module lsq_req(
   input rst;
 
   input stall;
-  output doStall;
-  output [1:0] doRsPause;
+  output pwire doStall;
+  output pwire [1:0] doRsPause;
 
   input except;
   input except_thread;
 
   input aStall,readA_clkEn;
-  output readA_rdy,readA_rdyP,readA_thr;
+  output pwire readA_rdy,readA_rdyP,readA_thr;
   
-  output [DATA_WIDTH-1:0]  read0A_data;
-  output read0A_enOut;
-  output [DATA_WIDTH-1:0]  read1A_data;
-  output read1A_enOut;
-  output [DATA_WIDTH-1:0]  read2A_data;
-  output read2A_enOut;
-  output [DATA_WIDTH-1:0]  read3A_data;
-  output read3A_enOut;
-  output [DATA_WIDTH-1:0]  read4A_data;
-  output read4A_enOut;
-  output [DATA_WIDTH-1:0]  read5A_data;
-  output read5A_enOut;
+  output pwire [DATA_WIDTH-1:0]  read0A_data;
+  output pwire read0A_enOut;
+  output pwire [DATA_WIDTH-1:0]  read1A_data;
+  output pwire read1A_enOut;
+  output pwire [DATA_WIDTH-1:0]  read2A_data;
+  output pwire read2A_enOut;
+  output pwire [DATA_WIDTH-1:0]  read3A_data;
+  output pwire read3A_enOut;
+  output pwire [DATA_WIDTH-1:0]  read4A_data;
+  output pwire read4A_enOut;
+  output pwire [DATA_WIDTH-1:0]  read5A_data;
+  output pwire read5A_enOut;
 
-  output [135:0] read0A_DATA;
-  output [127:0] read0A_DATAU;
-  output [1:0]   read0A_dEn;
-  output [135:0] read1A_DATA;
-  output [127:0] read1A_DATAU;
-  output [1:0]   read1A_dEn;
-  output [135:0] read2A_DATA;
-  output [127:0] read2A_DATAU;
-  output [1:0]   read2A_dEn;
-  output [135:0] read3A_DATA;
-  output [127:0] read3A_DATAU;
-  output [1:0]   read3A_dEn;
-  output [135:0] read4A_DATA;
-  output [127:0] read4A_DATAU;
-  output [1:0]   read4A_dEn;
-  output [135:0] read5A_DATA;
-  output [127:0] read5A_DATAU;
-  output [1:0]   read5A_dEn;
+  output pwire [135:0] read0A_DATA;
+  output pwire [127:0] read0A_DATAU;
+  output pwire [1:0]   read0A_dEn;
+  output pwire [135:0] read1A_DATA;
+  output pwire [127:0] read1A_DATAU;
+  output pwire [1:0]   read1A_dEn;
+  output pwire [135:0] read2A_DATA;
+  output pwire [127:0] read2A_DATAU;
+  output pwire [1:0]   read2A_dEn;
+  output pwire [135:0] read3A_DATA;
+  output pwire [127:0] read3A_DATAU;
+  output pwire [1:0]   read3A_dEn;
+  output pwire [135:0] read4A_DATA;
+  output pwire [127:0] read4A_DATAU;
+  output pwire [1:0]   read4A_dEn;
+  output pwire [135:0] read5A_DATA;
+  output pwire [127:0] read5A_DATAU;
+  output pwire [1:0]   read5A_dEn;
 
   input [5:0] readA_conflIn_l;
   input [5:0] readA_conflInMSI;
 
-  output [SDATA_WIDTH-1:0] read_data_shr;
+  output pwire [SDATA_WIDTH-1:0] read_data_shr;
   input write_thread_shr;
   input  [SDATA_WIDTH-1:0] write_data_shr;
   input write_wen_shr;
-  output reg [ADDR_WIDTH:0] write_addr_shr;
+  output pwire reg [ADDR_WIDTH:0] write_addr_shr;
 
-  output [XDATA_WIDTH-1:0]  read0B_xdata;
-  output read0B_enOut;
-  output [XDATA_WIDTH-1:0]  read1B_xdata;
-  output read1B_enOut;
-  output [XDATA_WIDTH-1:0]  read2B_xdata;
-  output read2B_enOut;
-  output [XDATA_WIDTH-1:0]  read3B_xdata;
-  output read3B_enOut;
-  output [XDATA_WIDTH-1:0]  read4B_xdata;
-  output read4B_enOut;
-  output [XDATA_WIDTH-1:0]  read5B_xdata;
-  output read5B_enOut;
-  output [SDATA_WIDTH-1:0] read_data_shrB;
-  output [5:0] readB_ldconfl;
-  output [5:0] readB_smpconfl;
-  output readB_rdy_en;
+  output pwire [XDATA_WIDTH-1:0]  read0B_xdata;
+  output pwire read0B_enOut;
+  output pwire [XDATA_WIDTH-1:0]  read1B_xdata;
+  output pwire read1B_enOut;
+  output pwire [XDATA_WIDTH-1:0]  read2B_xdata;
+  output pwire read2B_enOut;
+  output pwire [XDATA_WIDTH-1:0]  read3B_xdata;
+  output pwire read3B_enOut;
+  output pwire [XDATA_WIDTH-1:0]  read4B_xdata;
+  output pwire read4B_enOut;
+  output pwire [XDATA_WIDTH-1:0]  read5B_xdata;
+  output pwire read5B_enOut;
+  output pwire [SDATA_WIDTH-1:0] read_data_shrB;
+  output pwire [5:0] readB_ldconfl;
+  output pwire [5:0] readB_smpconfl;
+  output pwire readB_rdy_en;
   input readB_clkEn;
 
   input [ADDR2_WIDTH-1:0] write0_addr;
@@ -735,26 +735,26 @@ module lsq_req(
   reg [ADDR_WIDTH:0] readA_addr;
   reg [ADDR_WIDTH:0] readB_addr;
   reg [ADDR_WIDTH:0] readA_addr_reg;
-  wire [2*ADDR_COUNT-1:0] firstB;
+  pwire [2*ADDR_COUNT-1:0] firstB;
   reg [2*ADDR_COUNT-1:0] curB;
-  wire foundB;
-  wire [2*ADDR_COUNT-1:0] firstBN;
-  wire foundBN;
-  wire [ADDR_WIDTH:0] readB_addr_d;
+  pwire foundB;
+  pwire [2*ADDR_COUNT-1:0] firstBN;
+  pwire foundBN;
+  pwire [ADDR_WIDTH:0] readB_addr_d;
   reg onSameValidB;
-  wire [2*ADDR_COUNT-1:0] firstA;
+  pwire [2*ADDR_COUNT-1:0] firstA;
   reg [2*ADDR_COUNT-1:0] curA;
-  wire foundA;
-  wire [2*ADDR_COUNT-1:0] firstAN;
-  wire foundAN;
-  wire [ADDR_WIDTH:0] readA_addr_d;
+  pwire foundA;
+  pwire [2*ADDR_COUNT-1:0] firstAN;
+  pwire foundAN;
+  pwire [ADDR_WIDTH:0] readA_addr_d;
   reg onSameValidA;
   
-  wire [SDATA_WIDTH-1:0] read_data_shrB_ram;
-  wire [SDATA_WIDTH-1:0] read_data_shr_ram;
+  pwire [SDATA_WIDTH-1:0] read_data_shrB_ram;
+  pwire [SDATA_WIDTH-1:0] read_data_shr_ram;
 
-  wire [2:0] write4_aux;
-  wire [2:0] write5_aux;
+  pwire [2:0] write4_aux;
+  pwire [2:0] write5_aux;
   
   reg [ADDR2_WIDTH-1:0] write0_addr_reg;
   reg [ADDR2_WIDTH-1:0] write1_addr_reg;
@@ -848,10 +848,10 @@ module lsq_req(
   reg write5_wen_REG4;
   reg [2:0] write5_dly_REG4;
 
-  wire enableA;
-  wire enableB;
-  wire enableA0;
-  wire enableB0;
+  pwire enableA;
+  pwire enableB;
+  pwire enableA0;
+  pwire enableB0;
 
   reg flipA;
   reg flipB;
@@ -859,60 +859,60 @@ module lsq_req(
   reg flipA_REH;
   reg [5:0] readA_addr_REH;
 
-  wire [5:0] readA_flip;
-  wire [5:0] readA_enItem;
+  pwire [5:0] readA_flip;
+  pwire [5:0] readA_enItem;
   reg [5:0] readA_enItem_reg;
-  wire [5:0] readA_enItemP;
+  pwire [5:0] readA_enItemP;
   reg [5:0] readA_enItemP_reg;
-  wire [5:0] readA_st;
+  pwire [5:0] readA_st;
   reg [5:0] readA_st_reg;
-  wire [5:0] readA_flag;
+  pwire [5:0] readA_flag;
   reg [5:0] readA_flag_reg;
-  wire [5:0] readA_pconfl;
+  pwire [5:0] readA_pconfl;
   reg [5:0] readA_pconfl_reg;
-  wire readA_clkEn0;
+  pwire readA_clkEn0;
   reg readA_clkEn_reg,readA_clkEn0_reg;
-  wire [5:0] readA_unal;
+  pwire [5:0] readA_unal;
   reg  [5:0] readA_unal_reg;
   
-  wire [5:0] readB_flip;
-  wire [5:0] readB_enItem;
-  wire [5:0] readB_ldconfl2;
-  wire readB_rdy;
+  pwire [5:0] readB_flip;
+  pwire [5:0] readB_enItem;
+  pwire [5:0] readB_ldconfl2;
+  pwire readB_rdy;
   reg readA_rdy_reg;
 
-  wire [31:0] firstBx;
-  wire [31:0] firstAx;
-  wire        foundBx;
-  wire        foundAx;
-  wire [31:0] firstBx2;
-  wire [31:0] firstAx2;
-  wire        foundBx2;
-  wire        foundAx2;
+  pwire [31:0] firstBx;
+  pwire [31:0] firstAx;
+  pwire        foundBx;
+  pwire        foundAx;
+  pwire [31:0] firstBx2;
+  pwire [31:0] firstAx2;
+  pwire        foundBx2;
+  pwire        foundAx2;
   
- // wire doStallB;
-  wire readB_clkEn;
+ // pwire doStallB;
+  pwire readB_clkEn;
 
-  wire [ADDR_WIDTH:0] write_addr_shr_next;
+  pwire [ADDR_WIDTH:0] write_addr_shr_next;
 
-  wire [31:0] firstANt;
-  wire [31:0] firstBNt;
-  wire foundANt;
-  wire foundBNt;
-  wire foundANq;
-  wire foundBNq;
+  pwire [31:0] firstANt;
+  pwire [31:0] firstBNt;
+  pwire foundANt;
+  pwire foundBNt;
+  pwire foundANq;
+  pwire foundBNq;
 
-  wire reenabA,reenabB;
+  pwire reenabA,reenabB;
 /*  reg toflipA,toflipB;*/
   reg exceptA_fix;
   reg exceptB_fix;
 
   reg init;
   reg [5:0] initCount;
-  wire [5:0] initCount_next;
+  pwire [5:0] initCount_next;
 
-  wire [YDATA_WIDTH-1:0] read_dataY;
-  wire [YDATA_WIDTH-1:0] write_dataY;
+  pwire [YDATA_WIDTH-1:0] read_dataY;
+  pwire [YDATA_WIDTH-1:0] write_dataY;
    
   assign readA_rdyP=readA_clkEn0 && ~init;
    

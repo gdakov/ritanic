@@ -39,10 +39,10 @@ module tbufcam_buf(
   input new_thread;
   input new_en;
   input [WIDTH-1:0] chk_addr0;
-  output chk_match0;
+  output pwire chk_match0;
   input [WIDTH-1:0] chk_addr1;
-  output chk_match1;
-  output reg free;
+  output pwire chk_match1;
+  output pwire reg free;
   
   reg [WIDTH-1:0] addr;
   reg thread;
@@ -95,17 +95,17 @@ module tbufcam(
   input new_thread;
   input new_en;
   input [WIDTH-1:0] chk_addr0;
-  output chk_match0;
+  output pwire chk_match0;
   input [WIDTH-1:0] chk_addr1;
-  output chk_match1;
-  output free;
+  output pwire chk_match1;
+  output pwire free;
 
-  wire [BUF_COUNT-1:0] new_en_buf[1:0];
-  wire [BUF_COUNT*2-1:0] chk_match0_buf;
-  wire [BUF_COUNT*2-1:0] chk_match1_buf;
-  wire [BUF_COUNT-1:0] free_buf[1:0];
-  wire [BUF_COUNT-1:0] first[1:0];
-  wire freeA,freeB;
+  pwire [BUF_COUNT-1:0] new_en_buf[1:0];
+  pwire [BUF_COUNT*2-1:0] chk_match0_buf;
+  pwire [BUF_COUNT*2-1:0] chk_match1_buf;
+  pwire [BUF_COUNT-1:0] free_buf[1:0];
+  pwire [BUF_COUNT-1:0] first[1:0];
+  pwire freeA,freeB;
   
   generate
       genvar k;

@@ -31,13 +31,13 @@ module simd_non_socialiste(
   input [12:0] operation;
   input [67:0] A;
   input [67:0] B;
-  output [67:0] res;
+  output pwire [67:0] res;
   
-  wire [67:0] res_X;
+  pwire [67:0] res_X;
   assign res=res_X;
 
   reg out8,out16,out32,out64,outL;
-  wire [4:1][63:0] resD;
+  pwire [4:1][63:0] resD;
   reg  [4:1][63:0] resD_reg;
   reg is_sign,is_sat,is_min,is_max,is_sub,is_simpl,is_subcmp,is_cmp;
   reg [3:0] jump_type;
@@ -46,12 +46,12 @@ module simd_non_socialiste(
   reg [64:0] resL;
   reg [12:0] operation_reg;
   reg shSH_reg;
-  wire shSH;
+  pwire shSH;
   reg [64:0] resSH_reg;
-  wire [64:0] resSH;
+  pwire [64:0] resSH;
   reg en_reg;
   reg en_reg2;
-  wire [64:0] resh;
+  pwire [64:0] resh;
 
   assign resh=out32&~outL ? resD_reg[3] : 64'bz;
   assign resh=out64&outL ? resD_reg[4] : 64'bz;
@@ -66,9 +66,9 @@ module simd_non_socialiste(
               sub_sat #(8) 
 add32_mod(A_reg[d*8+:8],B_reg[d*8+:8],resD[3][d*8+:8],is_sign,is_sat,is_min,is_max,
 	        is_sub,is_simpl,is_subcmp,is_cmp,jump_type);
-              wire signed [7:0] A_op;
-              wire signed [7:0] B_op;
-              wire signed [15:0] C_op;
+              pwire signed [7:0] A_op;
+              pwire signed [7:0] B_op;
+              pwire signed [15:0] C_op;
               assign C_op=A_op*B_op;
               assign A_op=A_reg[d*8+:8];
               assign B_op=B_reg[d*8+:8];
@@ -78,9 +78,9 @@ add32_mod(A_reg[d*8+:8],B_reg[d*8+:8],resD[3][d*8+:8],is_sign,is_sat,is_min,is_m
               mul_sat #(4) 
 add64_mod(A_reg[d*4+:4],B_reg[d*4+:4],resD[4][d*4+:4],is_sign,is_sat,is_min,is_max,
 	        is_sub,is_simpl,is_subcmp,is_cmp,jump_type);
-              wire signed [3:0] A_op;
-              wire signed [3:0] B_op;
-              wire signed [7:0] C_op;
+              pwire signed [3:0] A_op;
+              pwire signed [3:0] B_op;
+              pwire signed [7:0] C_op;
               assign C_op=A_op*B_op;
               assign A_op=A_reg[d*4+:4];
               assign B_op=B_reg[d*4+:4];

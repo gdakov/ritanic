@@ -21,104 +21,104 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   input [31:0] instr;
   input [3:0] magic;
   input flag;
-  output FMA_mul;
+  output pwire FMA_mul;
   input prev_FMA_mul;
   input thread;
-  output [12:0] class_;
-  output isLNK;
-  output isRet;
-  output [4:0] LNK;
+  output pwire [12:0] class_;
+  output pwire isLNK;
+  output pwire isRet;
+  output pwire [4:0] LNK;
 
-  wire clsIndir;
-  wire clsJump;
-  wire clsALU;
-  wire clsShift;
-  wire clsMul;
-  wire clsLoad;
-  wire clsStore;
-  wire clsStore2;
-  wire clsFPU;
-  wire clsLoadFPU;
-  wire clsSys;
-  wire clsPos0;
-  wire clsFMA;
+  pwire clsIndir;
+  pwire clsJump;
+  pwire clsALU;
+  pwire clsShift;
+  pwire clsMul;
+  pwire clsLoad;
+  pwire clsStore;
+  pwire clsStore2;
+  pwire clsFPU;
+  pwire clsLoadFPU;
+  pwire clsSys;
+  pwire clsPos0;
+  pwire clsFMA;
   
-  wire [7:0] opcode_main;
+  pwire [7:0] opcode_main;
 
-  wire subIsBasicALU;
-  wire subIsMovOrExt;
-  wire subIsBasicShift;
-  wire subIsCmpTest;
-  wire subIsCJ;
-  wire subIsFPUD;
-  wire subIsFPUPD;
-  wire subIsFPUE;
-  wire subIsFPUSngl;
-  wire subIsSIMD;
-  wire subIsLinkRet;
-  wire subIsBasicXOR;
-  wire isBasicXOR;
+  pwire subIsBasicALU;
+  pwire subIsMovOrExt;
+  pwire subIsBasicShift;
+  pwire subIsCmpTest;
+  pwire subIsCJ;
+  pwire subIsFPUD;
+  pwire subIsFPUPD;
+  pwire subIsFPUE;
+  pwire subIsFPUSngl;
+  pwire subIsSIMD;
+  pwire subIsLinkRet;
+  pwire subIsBasicXOR;
+  pwire isBasicXOR;
 
   
-  wire isBasicALU;
-  wire isBasicALUExcept;
-  wire isBasicShift;
-  wire isBasicShiftExcept;
-  wire isBasicCmpTest;
-//  wire isCmpTestExtra;   
+  pwire isBasicALU;
+  pwire isBasicALUExcept;
+  pwire isBasicShift;
+  pwire isBasicShiftExcept;
+  pwire isBasicCmpTest;
+//  pwire isCmpTestExtra;   
   
-  wire isBaseLoadStore;
-  wire isBaseIndexLoadStore;
-  wire isBaseSpecLoad;
-  wire isBaseIndexSpecLoad;
-  wire isBaseSpecStore;
-  wire isBaseIndexSpecStore;
-  wire isImmLoadStore;
-  wire isBasicMUL;
-  wire isLeaIPRel;
+  pwire isBaseLoadStore;
+  pwire isBaseIndexLoadStore;
+  pwire isBaseSpecLoad;
+  pwire isBaseIndexSpecLoad;
+  pwire isBaseSpecStore;
+  pwire isBaseIndexSpecStore;
+  pwire isImmLoadStore;
+  pwire isBasicMUL;
+  pwire isLeaIPRel;
 
-  wire isBasicCJump;
-  wire isInvCJumpLong;
-  wire isSelfTestCJump;
-  wire isLongCondJump;
-  wire isUncondJump;
+  pwire isBasicCJump;
+  pwire isInvCJumpLong;
+  pwire isSelfTestCJump;
+  pwire isLongCondJump;
+  pwire isUncondJump;
   
-  wire isIndirJump;
-  wire isCall;
+  pwire isIndirJump;
+  pwire isCall;
   
-  wire isMovOrExt;
-  wire isMovOrExtExcept;
-  wire isCmov;
-  wire isCSet;
-  wire isBasicAddNoFl;
-  wire isAddNoFlExtra;
-  wire isShiftNoFl;
+  pwire isMovOrExt;
+  pwire isMovOrExtExcept;
+  pwire isCmov;
+  pwire isCSet;
+  pwire isBasicAddNoFl;
+  pwire isAddNoFlExtra;
+  pwire isShiftNoFl;
 
-  wire isCexALU;
+  pwire isCexALU;
 
-  wire isSimdInt; 
-  wire isFPUreor;
+  pwire isSimdInt; 
+  pwire isFPUreor;
 
-  wire isShlAddMulLike;
-  wire isPtrSec;
-  wire isJalR;
+  pwire isShlAddMulLike;
+  pwire isPtrSec;
+  pwire isJalR;
 
-  wire isBasicFPUScalarA;
-  wire isBasicFPUScalarB;
-  wire isBasicFPUScalarC;
-  wire isBasicFPUScalarCmp;
-  wire isBasicFPUScalarCmp2;
-  wire isBasicFPUScalarCmp3;
+  pwire isBasicFPUScalarA;
+  pwire isBasicFPUScalarB;
+  pwire isBasicFPUScalarC;
+  pwire isBasicFPUScalarCmp;
+  pwire isBasicFPUScalarCmp2;
+  pwire isBasicFPUScalarCmp3;
 
-  wire isGA; 
+  pwire isGA; 
 
-  wire isBasicSysInstr;
+  pwire isBasicSysInstr;
   
-  wire isCallPrep;
+  pwire isCallPrep;
 
-  wire [5:0] opcode_sub;
+  pwire [5:0] opcode_sub;
 
-  wire thisSpecLoad;
+  pwire thisSpecLoad;
   
   assign subIsBasicALU=(!|opcode_sub[5:4] || opcode_sub[5:2]==4'b0100) & ~magic[0];
   assign subIsBasicShift=(~opcode_sub[5] && ~subIsBasicALU && opcode_sub[0]) & ~magic[0];
@@ -409,68 +409,68 @@ module predecoder_get(
     input [7:0] bnext_tail;
     input has_next;
     input [3:0] startOff;
-    output [3:0] startOff_override;
-    output [15:0][79:0] instr0;
-    output [15:0][3:0] magic0;
-    output [15:0][3:0] off0;
-    output [15:0][12:0] class0;
-    output [15:0] instrEn;
-    output reg _splitinsn;
-    output hasJumps;
-    output last_is_FMAMul;
-    output reg error;
-    output reg jerror;
+    output pwire [3:0] startOff_override;
+    output pwire [15:0][79:0] instr0;
+    output pwire [15:0][3:0] magic0;
+    output pwire [15:0][3:0] off0;
+    output pwire [15:0][12:0] class0;
+    output pwire [15:0] instrEn;
+    output pwire reg _splitinsn;
+    output pwire hasJumps;
+    output pwire last_is_FMAMul;
+    output pwire reg error;
+    output pwire reg jerror;
     
-    output [3:0][79:0] Jinstr0;
-    output [3:0][3:0] Jmagic0;
-    output [3:0][3:0] Joff0;
-    output [3:0][12:0] Jclass0;
+    output pwire [3:0][79:0] Jinstr0;
+    output pwire [3:0][3:0] Jmagic0;
+    output pwire [3:0][3:0] Joff0;
+    output pwire [3:0][12:0] Jclass0;
     
-    output [3:0] Jen;
-    output [3:0][4:0] lnkLink0;
-    output [3:0][4:0] lnkOff0;
-    output [3:0][3:0] lnkMagic0;
-    output [3:0]      lnkRet0;
-    output [3:0][4:0] lnkJumps0;
+    output pwire [3:0] Jen;
+    output pwire [3:0][4:0] lnkLink0;
+    output pwire [3:0][4:0] lnkOff0;
+    output pwire [3:0][3:0] lnkMagic0;
+    output pwire [3:0]      lnkRet0;
+    output pwire [3:0][4:0] lnkJumps0;
 
     reg [19:-1] instrEnd;
     reg [19:-1] instrEndF;
     
-    wire [19:-2][15:0] cntEnd;
-    wire [19:-1] mask;
+    pwire [19:-2][15:0] cntEnd;
+    pwire [19:-1] mask;
  
-    wire [19:0] cntEnd2;
-    wire [20:1] cntEnd3;
-    wire [14:0] cntEnd2_15;
-    wire [15:1] cntEnd3_15;
+    pwire [19:0] cntEnd2;
+    pwire [20:1] cntEnd3;
+    pwire [14:0] cntEnd2_15;
+    pwire [15:1] cntEnd3_15;
     
-    wire [19:0][12:0] class_ ;
-    wire [255+16+64:0] bundle0;
-    wire [255+16+64:0] bundleF;
+    pwire [19:0][12:0] class_ ;
+    pwire [255+16+64:0] bundle0;
+    pwire [255+16+64:0] bundleF;
 
-    wire [19:0] is_jmp;
-    wire [19:0] is_jmpX;
-    wire [20:-1][15:0] cntJEnd;
-    wire [19:0] jcnt_or_less;
-    wire [14:0] jcnt_or_less_15;
-    wire [20:1] jcnt_or_more;
+    pwire [19:0] is_jmp;
+    pwire [19:0] is_jmpX;
+    pwire [20:-1][15:0] cntJEnd;
+    pwire [19:0] jcnt_or_less;
+    pwire [14:0] jcnt_or_less_15;
+    pwire [20:1] jcnt_or_more;
     
-    wire [19:0] is_lnk0;
-    wire [19:0] is_lnk;
+    pwire [19:0] is_lnk0;
+    pwire [19:0] is_lnk;
     reg [19:0] is_lnk_reg;
-    wire [19:0] first_lnk;
-    wire has_lnk;
-    wire [19:0][4:0] LNK;
-    wire [19:0] lcnt_or_less;
-    wire [19:-1][15:0] lcnt;
-    wire [19:0] is_ret0;
-    wire [19:0] is_ret;
+    pwire [19:0] first_lnk;
+    pwire has_lnk;
+    pwire [19:0][4:0] LNK;
+    pwire [19:0] lcnt_or_less;
+    pwire [19:-1][15:0] lcnt;
+    pwire [19:0] is_ret0;
+    pwire [19:0] is_ret;
     reg [19:0] is_ret_reg;
     reg [19:0] flag_bits0;
-    wire [19:0] mask0;
+    pwire [19:0] mask0;
 
-    wire [19:-1] FMAmul;
-    wire [11:0] FMAmulI;
+    pwire [19:-1] FMAmul;
+    pwire [11:0] FMAmulI;
 
     function [255+64+16:0] boogy_baboogy;
         input [3:0] bstop;
@@ -498,7 +498,7 @@ module predecoder_get(
                ((k+3)==startOff && instrEnd[k+:3]==3'b000) ||
                ((k+4)==startOff && instrEnd[k+:4]==4'b0000);
             assign brk=cntEnd[k][12] ? k[3:0] && k[4] : 4'bz;
-            wire [4:0] kk;
+            pwire [4:0] kk;
             //verilator lint_off WIDTH
             assign kk=boogy_baboogy(bstop[3:0],k==0 && bundle0[255],5'hf,5'he,5'hd,5'hc,k[4:0]);
             //verilator lint_on WIDTH

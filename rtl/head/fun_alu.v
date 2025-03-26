@@ -64,8 +64,8 @@ module fu_alu(
   (* bus=WB bus_spacing=10 *)input [64:0]          u1_B;
   input [5:0]           u1_S;
   input [17:0]          u1_op;
-  output [8:0]          u1_ret;
-  output                u1_rten;
+  output pwire [8:0]          u1_ret;
+  output pwire                u1_rten;
   input                 u1_clkEn;
   input [3:0]           u1_A_fufwd;
   input [3:0]           u1_A_fuufwd;
@@ -79,8 +79,8 @@ module fu_alu(
   (* bus=WB bus_spacing=10 *)input [64:0]          u2_B;
   input [5:0]           u2_S;
   input [17:0]          u2_op;
-  output [8:0]          u2_ret;
-  output                u2_rten;
+  output pwire [8:0]          u2_ret;
+  output pwire                u2_rten;
   input                 u2_clkEn;
   input [3:0]           u2_A_fufwd;
   input [3:0]           u2_A_fuufwd;
@@ -93,8 +93,8 @@ module fu_alu(
   (* bus=WB bus_spacing=10 *) input [64:0]          u3_B;
   input [5:0]           u3_S;
   input [17:0]          u3_op;
-  output [8:0]          u3_ret;
-  output                u3_rten;
+  output pwire [8:0]          u3_ret;
+  output pwire                u3_rten;
   input                 u3_clkEn;
   input [3:0]           u3_A_fufwd;
   input [3:0]           u3_A_fuufwd;
@@ -108,8 +108,8 @@ module fu_alu(
   (* bus=WB bus_spacing=10 *)input [64:0]          u4_B;
   input [5:0]           u4_S;
   input [17:0]          u4_op;
-  output [8:0]          u4_ret;
-  output                u4_rten;
+  output pwire [8:0]          u4_ret;
+  output pwire                u4_rten;
   input                 u4_clkEn;
   input [3:0]           u4_A_fufwd;
   input [3:0]           u4_A_fuufwd;
@@ -123,8 +123,8 @@ module fu_alu(
   input [5:0]           u5_S;
   input                 u5_nDataAlt;
   input [17:0]          u5_op;
-  output [8:0]          u5_ret;
-  output                u5_rten;
+  output pwire [8:0]          u5_ret;
+  output pwire                u5_rten;
   input                 u5_clkEn;
   input [3:0]           u5_A_fufwd;
   input [3:0]           u5_A_fuufwd;
@@ -138,8 +138,8 @@ module fu_alu(
   (* bus=WB bus_spacing=10 *)input [64:0]          u6_B;
   input [5:0]           u6_S;
   input [17:0]          u6_op;
-  output [8:0]          u6_ret;
-  output                u6_rten;
+  output pwire [8:0]          u6_ret;
+  output pwire                u6_rten;
   input                 u6_clkEn;
   input [3:0]           u6_A_fufwd;
   input [3:0]           u6_A_fuufwd;
@@ -153,12 +153,12 @@ module fu_alu(
   (* register equiload  bus=WB bus_spacing=10  *) input [64:0] FU1;
   (* register equiload  bus=WB bus_spacing=10  *) input [64:0] FU2;
   (* register equiload  bus=WB bus_spacing=10  *) input [64:0] FU3;
-  (* register equiload  bus=WB bus_spacing=10  *) output [64:0] FU4;
-  (* register equiload  bus=WB bus_spacing=10  *) output [64:0] FU5;
-  (* register equiload  bus=WB bus_spacing=10  *) output [64:0] FU6;
-  (* register equiload  bus=WB bus_spacing=10  *) output [64:0] FU7;
-  (* register equiload  bus=WB bus_spacing=10  *) output [64:0] FU8;
-  (* register equiload  bus=WB bus_spacing=10  *) output [64:0] FU9;
+  (* register equiload  bus=WB bus_spacing=10  *) output pwire [64:0] FU4;
+  (* register equiload  bus=WB bus_spacing=10  *) output pwire [64:0] FU5;
+  (* register equiload  bus=WB bus_spacing=10  *) output pwire [64:0] FU6;
+  (* register equiload  bus=WB bus_spacing=10  *) output pwire [64:0] FU7;
+  (* register equiload  bus=WB bus_spacing=10  *) output pwire [64:0] FU8;
+  (* register equiload  bus=WB bus_spacing=10  *) output pwire [64:0] FU9;
 
   (* register equiload *) input [5:0] FUS1;
   (* register equiload *) input [5:0] FUS2;
@@ -172,8 +172,8 @@ module fu_alu(
 
   input fxFRT_alten_reg;
 
-  output [83:0] fcvtout;
-  output [1:0] DataAlt;
+  output pwire [83:0] fcvtout;
+  output pwire [1:0] DataAlt;
   input [64:0] FUCVTIN;
   input [15:0] msrss_addr;
   input [64:0] msrss_data;
@@ -237,32 +237,32 @@ module fu_alu(
   reg u5_eaen_reg;
 
 
-  wire [2:0][64:0] uu_A1;
-  wire [2:0][64:0] uu_B1;
-  wire [2:0][64:0] uu_A2;
-  wire [2:0][64:0] uu_B2;
-  wire [2:0][64:0] uu_A3;
-  wire [2:0][64:0] uu_B3;
-  wire [2:0][64:0] uu_A4;
-  wire [2:0][64:0] uu_B4;
-  wire [2:0][64:0] uu_A5;
-  wire [2:0][64:0] uu_B5;
-  wire [2:0][64:0] uu_A6;
-  wire [2:0][64:0] uu_B6;
-  wire [2:0][64:0] uu_A6m;
-  wire [2:0][64:0] uu_B6m;
+  pwire [2:0][64:0] uu_A1;
+  pwire [2:0][64:0] uu_B1;
+  pwire [2:0][64:0] uu_A2;
+  pwire [2:0][64:0] uu_B2;
+  pwire [2:0][64:0] uu_A3;
+  pwire [2:0][64:0] uu_B3;
+  pwire [2:0][64:0] uu_A4;
+  pwire [2:0][64:0] uu_B4;
+  pwire [2:0][64:0] uu_A5;
+  pwire [2:0][64:0] uu_B5;
+  pwire [2:0][64:0] uu_A6;
+  pwire [2:0][64:0] uu_B6;
+  pwire [2:0][64:0] uu_A6m;
+  pwire [2:0][64:0] uu_B6m;
 
-  wire [5:0] uu_S1;
-  wire [5:0] uu_S2;
-  wire [5:0] uu_S3;
-  wire [5:0] uu_S4;
-  wire [5:0] uu_S5;
-  wire [5:0] uu_S6;
+  pwire [5:0] uu_S1;
+  pwire [5:0] uu_S2;
+  pwire [5:0] uu_S3;
+  pwire [5:0] uu_S4;
+  pwire [5:0] uu_S5;
+  pwire [5:0] uu_S6;
 
-  wire [81:0] FUCVT2_0;
-  wire [1:0] FUTYPE_0;
-  wire [64:0] FUMUL;
-  wire [5:0] MULFL;
+  pwire [81:0] FUCVT2_0;
+  pwire [1:0] FUTYPE_0;
+  pwire [64:0] FUMUL;
+  pwire [5:0] MULFL;
   reg [64:0] FUMUL_reg;
   reg [5:0] MULFL_reg;
 
@@ -310,18 +310,18 @@ module fu_alu(
   reg u5_error_reg;
   reg u6_error_reg;
 
-  wire u1_error=^u1_A || ^u1_B;
-  wire u2_error=^u2_A || ^u2_B;
-  wire u3_error=^u3_A || ^u3_B;
-  wire u4_error=^u4_A || ^u4_B;
-  wire u5_error=^u5_A || ^u5_B;
-  wire u6_error=^u6_A || ^u6_B;
+  pwire u1_error=^u1_A || ^u1_B;
+  pwire u2_error=^u2_A || ^u2_B;
+  pwire u3_error=^u3_A || ^u3_B;
+  pwire u4_error=^u4_A || ^u4_B;
+  pwire u5_error=^u5_A || ^u5_B;
+  pwire u6_error=^u6_A || ^u6_B;
 
   reg [8:0] u6_ret_reg;
   reg [8:0] u6_ret_reg2;
   reg [8:0] u6_ret_reg3;
 
-  wire [1:0][63:0] mflags;
+  pwire [1:0][63:0] mflags;
 
   msrss_watch #(`csr_mflags,64'h0) mflags_mod(clk,rst,msrss_addr,msrss_data[63:0],msrss_en,mflags);
 
@@ -717,9 +717,9 @@ module fu_alu(
   );
 
 
-  wire p0_sec_in;
-  wire p1_sec_in;
-  wire p2_sec_in;
+  pwire p0_sec_in;
+  pwire p1_sec_in;
+  pwire p2_sec_in;
 
   alu alu0(clk,rst,except,1'b0,1'b0,u1_op_reg[12:0],u1_op_reg[17:13],u1_isSub_reg,u1_clkEn_reg,1'b1,
     u1_ret,u1_rten,uu_A1,uu_B1,uu_S1,FU4,p0_sec_in,u1_error_reg,{2'b11,~u1_isSub_reg[1]});

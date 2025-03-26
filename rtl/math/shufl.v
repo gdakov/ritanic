@@ -43,35 +43,35 @@ module fperm(
   input [2:0] xtra;
   input [67:0] A;
   input [67:0] B;
-  output [67:0] res;
+  output pwire [67:0] res;
 
   localparam [11:0] BIAS_D=12'd2047;
   localparam [8:0] BIAS_S=9'd255;
 
-  wire [67:0] resX;
-  wire [67:0] resY;
-  wire [67:0] res0;
+  pwire [67:0] resX;
+  pwire [67:0] resY;
+  pwire [67:0] res0;
   reg [67:0] res0_reg;
   reg [67:0] res0_reg2;
   reg [67:0] res0_reg3;
   reg en_reg,en_reg2,en_reg3;
 
-  wire [11:0] exp_D;
-  wire [8:0] exp_X1;
-  wire [8:0] exp_X;
+  pwire [11:0] exp_D;
+  pwire [8:0] exp_X1;
+  pwire [8:0] exp_X;
 
-  wire [11:0] df;
-  wire df_has;
-  wire [8:0] dsf0;
-  wire dsf0_has;
-  wire [8:0] dsf1;
-  wire dsf1_has;
-  wire [11:0] valDF;
-  wire [11:0] expDF;
-  wire [8:0] valDSF0;
-  wire [8:0] expDSF0;
-  wire [8:0] valDSF1;
-  wire [8:0] expDSF1;
+  pwire [11:0] df;
+  pwire df_has;
+  pwire [8:0] dsf0;
+  pwire dsf0_has;
+  pwire [8:0] dsf1;
+  pwire dsf1_has;
+  pwire [11:0] valDF;
+  pwire [11:0] expDF;
+  pwire [8:0] valDSF0;
+  pwire [8:0] expDSF0;
+  pwire [8:0] valDSF1;
+  pwire [8:0] expDSF1;
 
   bit_find_last_bit #(12) dblF({B[63],B[65],B[62:53]},df,df_has);
   bit_find_last_bit #(9) snglF0({B[63],B[65],B[62:56]},dsf0,dsf0_has);

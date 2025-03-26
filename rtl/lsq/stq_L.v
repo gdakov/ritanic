@@ -52,8 +52,8 @@ module stq_buf_L(
   input [3:0] chk0_bytes;
   input chk0_subBNK;
   input chk0_subBNK2;
-  output chk0_match;
-  output chk0_partial;
+  output pwire chk0_match;
+  output pwire chk0_partial;
 
   input chk1_en;
   input [WIDTH-1:0] chk1_addrEO;
@@ -61,8 +61,8 @@ module stq_buf_L(
   input [3:0] chk1_bytes;
   input chk1_subBNK;
   input chk1_subBNK2;
-  output chk1_match;
-  output chk1_partial;
+  output pwire chk1_match;
+  output pwire chk1_partial;
 
   input chk2_en;
   input [WIDTH-1:0] chk2_addrEO;
@@ -70,8 +70,8 @@ module stq_buf_L(
   input [3:0] chk2_bytes;
   input chk2_subBNK;
   input chk2_subBNK2;
-  output chk2_match;
-  output chk2_partial;
+  output pwire chk2_match;
+  output pwire chk2_partial;
 
   input chk3_en;
   input [WIDTH-1:0] chk3_addrEO;
@@ -79,8 +79,8 @@ module stq_buf_L(
   input [3:0] chk3_bytes;
   input chk3_subBNK;
   input chk3_subBNK2;
-  output chk3_match;
-  output chk3_partial;
+  output pwire chk3_match;
+  output pwire chk3_partial;
 
   input chk4_en;
   input [WIDTH-1:0] chk4_addrEO;
@@ -88,8 +88,8 @@ module stq_buf_L(
   input [3:0] chk4_bytes;
   input chk4_subBNK;
   input chk4_subBNK2;
-  output chk4_match;
-  output chk4_partial;
+  output pwire chk4_match;
+  output pwire chk4_partial;
 
   input chk5_en;
   input [WIDTH-1:0] chk5_addrEO;
@@ -97,16 +97,16 @@ module stq_buf_L(
   input [3:0] chk5_bytes;
   input chk5_subBNK;
   input chk5_subBNK2;
-  output chk5_match;
-  output chk5_partial;
+  output pwire chk5_match;
+  output pwire chk5_partial;
 
   input upd0_en;
   input upd1_en;
 
   input free_en;
-  output reg free;
-  output reg upd;
-  output reg passe;
+  output pwire reg free;
+  output pwire reg upd;
+  output pwire reg passe;
   input passe_en;
   
 //  reg [WIDTH-1:0] addrEO;
@@ -115,12 +115,12 @@ module stq_buf_L(
   reg subBNK2;
   reg [3:0] odd;
 //  reg upd;
-  wire chk0_match0;
-  wire chk1_match0;
-  wire chk2_match0;
-  wire chk3_match0;
-  wire chk4_match0;
-  wire chk5_match0;
+  pwire chk0_match0;
+  pwire chk1_match0;
+  pwire chk2_match0;
+  pwire chk3_match0;
+  pwire chk4_match0;
+  pwire chk5_match0;
   
   assign chk0_match0=chk0_addrEO[chk0_odd[0]] && (chk0_subBNK2&subBNK2)!=0 && chk0_odd[0]==odd[0];
   assign chk1_match0=chk1_addrEO[chk1_odd[0]] && (chk1_subBNK2&subBNK2)!=0 && chk1_odd[0]==odd[0];
@@ -237,10 +237,10 @@ module stq_buf_L_array(
   input [3:0] chk0_bytes;
   input chk0_subBNK;
   input chk0_subBNK2;
-  output [BUF_COUNT-1:0] chk0_match;
-  output [BUF_COUNT-1:0] chk0_partial;
-  output [1:0] chk0_matchW;
-  output [1:0] chk0_partialW;
+  output pwire [BUF_COUNT-1:0] chk0_match;
+  output pwire [BUF_COUNT-1:0] chk0_partial;
+  output pwire [1:0] chk0_matchW;
+  output pwire [1:0] chk0_partialW;
   input chk0_pre0;
   input chk0_pre1;
 
@@ -250,10 +250,10 @@ module stq_buf_L_array(
   input [3:0] chk1_bytes;
   input chk1_subBNK;
   input chk1_subBNK2;
-  output [BUF_COUNT-1:0] chk1_match;
-  output [BUF_COUNT-1:0] chk1_partial;
-  output [1:0] chk1_matchW;
-  output [1:0] chk1_partialW;
+  output pwire [BUF_COUNT-1:0] chk1_match;
+  output pwire [BUF_COUNT-1:0] chk1_partial;
+  output pwire [1:0] chk1_matchW;
+  output pwire [1:0] chk1_partialW;
   input chk1_pre0;
   input chk1_pre1;
 
@@ -263,10 +263,10 @@ module stq_buf_L_array(
   input [3:0] chk2_bytes;
   input chk2_subBNK;
   input chk2_subBNK2;
-  output [BUF_COUNT-1:0] chk2_match;
-  output [BUF_COUNT-1:0] chk2_partial;
-  output [1:0] chk2_matchW;
-  output [1:0] chk2_partialW;
+  output pwire [BUF_COUNT-1:0] chk2_match;
+  output pwire [BUF_COUNT-1:0] chk2_partial;
+  output pwire [1:0] chk2_matchW;
+  output pwire [1:0] chk2_partialW;
   input chk2_pre0;
   input chk2_pre1;
 
@@ -276,10 +276,10 @@ module stq_buf_L_array(
   input [3:0] chk3_bytes;
   input chk3_subBNK;
   input chk3_subBNK2;
-  output [BUF_COUNT-1:0] chk3_match;
-  output [BUF_COUNT-1:0] chk3_partial;
-  output [1:0] chk3_matchW;
-  output [1:0] chk3_partialW;
+  output pwire [BUF_COUNT-1:0] chk3_match;
+  output pwire [BUF_COUNT-1:0] chk3_partial;
+  output pwire [1:0] chk3_matchW;
+  output pwire [1:0] chk3_partialW;
   input chk3_pre0;
   input chk3_pre1;
 
@@ -289,10 +289,10 @@ module stq_buf_L_array(
   input [3:0] chk4_bytes;
   input chk4_subBNK;
   input chk4_subBNK2;
-  output [BUF_COUNT-1:0] chk4_match;
-  output [BUF_COUNT-1:0] chk4_partial;
-  output [1:0] chk4_matchW;
-  output [1:0] chk4_partialW;
+  output pwire [BUF_COUNT-1:0] chk4_match;
+  output pwire [BUF_COUNT-1:0] chk4_partial;
+  output pwire [1:0] chk4_matchW;
+  output pwire [1:0] chk4_partialW;
   input chk4_pre0;
   input chk4_pre1;
 
@@ -302,10 +302,10 @@ module stq_buf_L_array(
   input [3:0] chk5_bytes;
   input chk5_subBNK;
   input chk5_subBNK2;
-  output [BUF_COUNT-1:0] chk5_match;
-  output [BUF_COUNT-1:0] chk5_partial;
-  output [1:0] chk5_matchW;
-  output [1:0] chk5_partialW;
+  output pwire [BUF_COUNT-1:0] chk5_match;
+  output pwire [BUF_COUNT-1:0] chk5_partial;
+  output pwire [1:0] chk5_matchW;
+  output pwire [1:0] chk5_partialW;
   input chk5_pre0;
   input chk5_pre1;
 
@@ -313,23 +313,23 @@ module stq_buf_L_array(
   input [BUF_COUNT-1:0] upd1_en;
 
   input  [BUF_COUNT-1:0] free_en;
-  output [BUF_COUNT-1:0] free;
-  output [BUF_COUNT-1:0] upd;
-  output [BUF_COUNT-1:0] passe;
+  output pwire [BUF_COUNT-1:0] free;
+  output pwire [BUF_COUNT-1:0] upd;
+  output pwire [BUF_COUNT-1:0] passe;
   input  [BUF_COUNT-1:0] passe_en;
   
-  wire wrt0_match0;
-  wire wrt1_match0;
-  wire wrt0_match1;
-  wire wrt1_match1;
-  wire wrt0_match2;
-  wire wrt1_match2;
-  wire wrt0_match3;
-  wire wrt1_match3;
-  wire wrt0_match4;
-  wire wrt1_match4;
-  wire wrt0_match5;
-  wire wrt1_match5;
+  pwire wrt0_match0;
+  pwire wrt1_match0;
+  pwire wrt0_match1;
+  pwire wrt1_match1;
+  pwire wrt0_match2;
+  pwire wrt1_match2;
+  pwire wrt0_match3;
+  pwire wrt1_match3;
+  pwire wrt0_match4;
+  pwire wrt1_match4;
+  pwire wrt0_match5;
+  pwire wrt1_match5;
   generate
       genvar t;
       for(t=0;t<BUF_COUNT;t=t+1) begin : buf_gen

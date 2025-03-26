@@ -18,7 +18,7 @@ module DFF(clk,en,d,q);
   input clk;
   input en;
   input [WIDTH-1:0] d;
-  output reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
+  output pwire reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
   
   always @(posedge clk)
     begin
@@ -35,7 +35,7 @@ module DFF2(clk,rst,en,d,q);
   input rst;
   input en;
   input [WIDTH-1:0] d;
-  output reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
+  output pwire reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
   
   always @(posedge clk)
     begin
@@ -50,7 +50,7 @@ module muxx3(out,hitA,wf,inA,inB,inF);
 
   parameter WIDTH=1;
 
-  output [WIDTH-1:0] out;
+  output pwire [WIDTH-1:0] out;
   input hitA;
   input wf;
   input [WIDTH-1:0] inA;
@@ -72,7 +72,7 @@ module optional_register(
   
   input clk;
   input  [WIDTH-1:0] dataIn;
-  output [WIDTH-1:0] dataOut;
+  output pwire [WIDTH-1:0] dataOut;
   
   reg [WIDTH-1:0] first;
   reg [WIDTH-1:0] second;

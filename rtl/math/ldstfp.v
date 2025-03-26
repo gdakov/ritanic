@@ -24,25 +24,25 @@ module ldD2nativeD(
   input en;
   input to_dbl;
   input to_ext;
-  output [80:0] res;
+  output pwire [80:0] res;
 
-  wire [51:0] denor;
-  wire [51:0] last;
-  wire [6:0] lastB;
-  wire hasB,has;
-  wire [11:0] exp;
-  wire [64:0] resX;
-  wire [80:0] resY;
-  wire A_z;
+  pwire [51:0] denor;
+  pwire [51:0] last;
+  pwire [6:0] lastB;
+  pwire hasB,has;
+  pwire [11:0] exp;
+  pwire [64:0] resX;
+  pwire [80:0] resY;
+  pwire A_z;
   bit_find_last_bit #(52) last_mod(A[51:0],last,has);
   bit_find_last_bit #(7) lastB_mod({|A[51:48],|A[47:40],|A[39:32],|A[31:24],|A[23:16],|A[15:8],|A[7:0]},lastB,hasB);
   generate
       genvar l,l1;
       for(l=0;l<7;l=l+1) begin
-              wire [51:0] denorK;
-	      wire [11:0] expK;
+              pwire [51:0] denorK;
+	      pwire [11:0] expK;
               for(l1=0;l1<((l==6) ? 4 : 8);l1=l1+1) begin
-	          wire [11:0] natExp=12'h3ff-l*8-l1;
+	          pwire [11:0] natExp=12'h3ff-l*8-l1;
 		  //verilator lint_off WIDTH
                   assign denorK=last[l*8+l1] ? A[l*8+l1:0]<<(52-(l*8+l1)) : 52'bz;
 		  //verilator lint_on WIDTH
@@ -85,27 +85,27 @@ module ldS2nativeS(
   input to_sngl;
   input to_dbl;
   input to_ext;
-  output [81:0] res;
+  output pwire [81:0] res;
 
-  wire [22:0] denor;
-  wire [22:0] last;
-  wire [2:0] lastB;
-  wire hasB,has;
-  wire [11:0] exp;
-  wire [32:0] resX;
-  wire [64:0] resY;
-  wire [80:0] resZ;
-  wire A_z;
+  pwire [22:0] denor;
+  pwire [22:0] last;
+  pwire [2:0] lastB;
+  pwire hasB,has;
+  pwire [11:0] exp;
+  pwire [32:0] resX;
+  pwire [64:0] resY;
+  pwire [80:0] resZ;
+  pwire A_z;
 
   bit_find_last_bit #(23) last_mod(A[22:0],last,has);
   bit_find_last_bit #(3) lastB_mod({|A[22:16],|A[15:8],|A[7:0]},lastB,hasB);
   generate
       genvar l,l1;
       for(l=0;l<3;l=l+1) begin
-              wire [22:0] denorK;
-	      wire [11:0] expK;
+              pwire [22:0] denorK;
+	      pwire [11:0] expK;
               for(l1=0;l1<((l==2) ? 7 : 8);l1=l1+1) begin
-	          wire [11:0] natExp=12'h3ff-l*8-l1;
+	          pwire [11:0] natExp=12'h3ff-l*8-l1;
 		  //verilator lint_off WIDTH
                   assign denorK=last[l*8+l1] ? A[l*8+l1:0]<<(23-(l*8+l1)) : 23'bz;
 		  //verilator lint_on WIDTH
@@ -145,19 +145,19 @@ module stNativeD2D(A,en,from_dbl,from_ext,res);
   input en; 
   input from_dbl;
   input from_ext;
-  output [64:0] res;
+  output pwire [64:0] res;
 
-  wire [15:0] expA=from_dbl ? {A[62],A[64],{4{~A[64]}},A[61:52]} : {A[79],A[64],A[78:65]};
-  wire [15:0] expOff;
-  wire [15:0] expOff1;
-  wire is_den;
-  wire is_zero;
-  wire is_overflow;
-  wire is_nan;
-  wire [51:0] shf0;
-  wire [51:0] shf1;
-  wire [51:0] A_1=from_dbl ? A[51:0] : A[62:11];
-  wire sgn=from_dbl ? A[63] : A[80];
+  pwire [15:0] expA=from_dbl ? {A[62],A[64],{4{~A[64]}},A[61:52]} : {A[79],A[64],A[78:65]};
+  pwire [15:0] expOff;
+  pwire [15:0] expOff1;
+  pwire is_den;
+  pwire is_zero;
+  pwire is_overflow;
+  pwire is_nan;
+  pwire [51:0] shf0;
+  pwire [51:0] shf1;
+  pwire [51:0] A_1=from_dbl ? A[51:0] : A[62:11];
+  pwire sgn=from_dbl ? A[63] : A[80];
 
   adder #(16) expAddD_mod(DEN,~expA,expOff,1'b1,1'b1,is_den,,,);
   adder #(16) expAddZ_mod(DEN-16'd51,~expA,expOff1,1'b1,1'b1,is_zero,,,);
@@ -188,19 +188,19 @@ module stNativeS2S(A,en,from_sngl,from_dbl,from_ext,res);
   input from_sngl;
   input from_dbl;
   input from_ext;
-  output [31:0] res;
+  output pwire [31:0] res;
 
-  wire [15:0] expA;
-  wire [15:0] expOff;
-  wire [15:0] expOff1;
-  wire sgn;
-  wire is_den;
-  wire is_zero;
-  wire is_overflow;
-  wire is_nan;
-  wire [22:0] A_1;
-  wire [22:0] shf0;
-  wire [22:0] shf1;
+  pwire [15:0] expA;
+  pwire [15:0] expOff;
+  pwire [15:0] expOff1;
+  pwire sgn;
+  pwire is_den;
+  pwire is_zero;
+  pwire is_overflow;
+  pwire is_nan;
+  pwire [22:0] A_1;
+  pwire [22:0] shf0;
+  pwire [22:0] shf1;
   
   
   assign expA=from_dbl ? {A[62],A[64],{4{~A[64]}},A[61:52]} : 16'bz;

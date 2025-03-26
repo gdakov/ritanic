@@ -43,16 +43,16 @@ module WQ_wakeUP_logic(
   input     FUWQen0;
   input [5:0] FUWQ1;
   input     FUWQen1;
-  output isData;
+  output pwire isData;
 
   reg port_en;
   reg [5:0] WQ;
 
-  wire [5:0] WQ_d;
-  wire newRsSelectAny;
-  wire port_en_d;
-  wire [1:0] eq;
-  wire [1:0] eq_new;
+  pwire [5:0] WQ_d;
+  pwire newRsSelectAny;
+  pwire port_en_d;
+  pwire [1:0] eq;
+  pwire [1:0] eq_new;
 
   assign newRsSelectAny=newRsSelect0|newRsSelect1|newRsSelect2;
 
@@ -112,7 +112,7 @@ module WQ_wakeUP_logic_array(
   input     FUWQen0;
   input [5:0] FUWQ1;
   input     FUWQen1;
-  output [31:0] isData;
+  output pwire [31:0] isData;
   generate
       genvar x;
       for(x=0;x<32;x=x+1) begin : BUF
@@ -169,70 +169,70 @@ module rss_buf(
   input [2:0] newRsSelect0;
   input [2:0][8:0] newPort0;
 
-// output data to functional units
+// output pwire data to functional units
 
   input [2:0] outRsSelect0;
-  output wire [2:0] portReady0;
-  output [2:0][3:0] outDataEn0;
-  output [2:0] outThread0;
-  output [2:0] outZeroB0;
+  output pwire [2:0] portReady0;
+  output pwire [2:0][3:0] outDataEn0;
+  output pwire [2:0] outThread0;
+  output pwire [2:0] outZeroB0;
     
   input [3:0] fuFwdA;
   input [3:0] fuFwdB;
 
   input [2:0] isDataA;
 
-  output wire bufFree;
+  output pwire bufFree;
   
   
 
-  wire [1:0] portReady0_d;
-  wire [1:0] portReady0_q;
+  pwire [1:0] portReady0_d;
+  pwire [1:0] portReady0_q;
 
 
-  wire [2:0][8:0] portNo_new;
+  pwire [2:0][8:0] portNo_new;
 
-  wire [2:0] port0_d;
-  wire [2:0] port0_en;
-  wire [2:0] port0_q;
+  pwire [2:0] port0_d;
+  pwire [2:0] port0_en;
+  pwire [2:0] port0_q;
 
-  wire [1:0][REG_WIDTH-1:0] regA_q;
-  wire [1:0][REG_WIDTH-1:0] regA_d;
+  pwire [1:0][REG_WIDTH-1:0] regA_q;
+  pwire [1:0][REG_WIDTH-1:0] regA_d;
 
-  wire newRsSelectAny=newRsSelect0 | newRsSelect1 | newRsSelect2;
+  pwire newRsSelectAny=newRsSelect0 | newRsSelect1 | newRsSelect2;
 
-  wire [1:0] dataAPending_en;
-  wire [1:0] dataAPending_d;
-  wire [1:0] dataAPending_q;
-  wire [1:0] dataAPending_gather;
-  wire [1:0] dataAPending_new;
+  pwire [1:0] dataAPending_en;
+  pwire [1:0] dataAPending_d;
+  pwire [1:0] dataAPending_q;
+  pwire [1:0] dataAPending_gather;
+  pwire [1:0] dataAPending_new;
 
 // wires - end new data
 
 // wires - gather data
-  wire isReady;
+  pwire isReady;
 // wires - free bit
-  wire bufFree_d;
-  wire bufFree_en;
+  pwire bufFree_d;
+  pwire bufFree_en;
   
-  wire stall_n;
+  pwire stall_n;
   
   
-  wire unFwdCheck;
-  wire [3:0] fwdCheck0;
+  pwire unFwdCheck;
+  pwire [3:0] fwdCheck0;
 
-  wire unCheckA;
-  wire unCheckB;
+  pwire unCheckA;
+  pwire unCheckB;
 
-  wire forgetUpdate;
+  pwire forgetUpdate;
   
-  wire thread_q;
-  wire FP_q;
-  wire Vec_q;
+  pwire thread_q;
+  pwire FP_q;
+  pwire Vec_q;
   
-  wire nonDataRst0;
+  pwire nonDataRst0;
   
-  wire new_stall_n;
+  pwire new_stall_n;
     
   assign stall_n=~stall;  
   assign nonDataRst0=(rst_thread) ? nonDataRst & thread_q || dataRst : nonDataRst &~thread_q || dataRst;
@@ -283,7 +283,7 @@ module rss_buf(
   
 // end new data input into buffer
 
-// output from buffer
+// output pwire from buffer
 
 //outputs use inverting 3-state buffer, because it's faster and smaller than non-inverting
 // issue port 0 -addrcalc
@@ -344,74 +344,74 @@ module rss_D_buf(
   input [2:0] newRsSelect0;
   input [2:0][6:0] newPort0;
 
-// output data to functional units
+// output pwire data to functional units
 
     
   input outRsSelect1;
-  output wire portReady1;
-  output [3:0] outDataEn1;
-  output outThread1;
+  output pwire portReady1;
+  output pwire [3:0] outDataEn1;
+  output pwire outThread1;
 
   input [3:0] fuFwdA;
 
   input isDataA;
 
 // free output
-  output wire bufFree;
+  output pwire bufFree;
 // wires
 // wires - new data
   
   
 
-  wire portReady1_d;
-  wire portReady1_q;
+  pwire portReady1_d;
+  pwire portReady1_q;
 
 
-  wire [8:0] portNo_new;
+  pwire [8:0] portNo_new;
 
-  wire port1A_d;
-  wire port1A_en;
-  wire port1A_q;
-
-
-  wire dataAPunding_new,dataAPunding_q; 
+  pwire port1A_d;
+  pwire port1A_en;
+  pwire port1A_q;
 
 
-  wire newRsSelectAny=newRsSelect0 | newRsSelect1 | newRsSelect2;
+  pwire dataAPunding_new,dataAPunding_q; 
 
-  wire dataAPending1_en;
-  wire dataAPending1_d;
-  wire dataAPending1_q;
-  wire dataAPending1_new;
-  wire dataAPending1_gather;
+
+  pwire newRsSelectAny=newRsSelect0 | newRsSelect1 | newRsSelect2;
+
+  pwire dataAPending1_en;
+  pwire dataAPending1_d;
+  pwire dataAPending1_q;
+  pwire dataAPending1_new;
+  pwire dataAPending1_gather;
 
 // wires - end new data
 
 // wires - gather data
-  wire isReady0;
+  pwire isReady0;
 // wires - free bit
-  wire bufFree_d;
-  wire bufFree_en;
+  pwire bufFree_d;
+  pwire bufFree_en;
   
-  wire stall_n;
+  pwire stall_n;
   
   
-  wire unFwdCheck;
-  wire [3:0] fwdCheck0;
+  pwire unFwdCheck;
+  pwire [3:0] fwdCheck0;
 
-  wire unCheckA;
+  pwire unCheckA;
 
-  wire forgetUpdate;
+  pwire forgetUpdate;
   
-  wire thread_q;
-  wire FPA_q;
-  wire VecA_q;
-  wire FPB_q;
-  wire VecB_q;
+  pwire thread_q;
+  pwire FPA_q;
+  pwire VecA_q;
+  pwire FPB_q;
+  pwire VecB_q;
   
-  wire nonDataRst0;
+  pwire nonDataRst0;
   
-  wire new_stall_n;
+  pwire new_stall_n;
     
   assign stall_n=~stall;  
   assign nonDataRst0=rst_thread ? nonDataRst & thread_q || dataRst : nonDataRst &~thread_q || dataRst;
@@ -507,7 +507,7 @@ module rss_array_helper(
   input sel;
   input inp;
   inout [SIZE-1:0] outp;
-  output [SIZE-1:0] out2;
+  output pwire [SIZE-1:0] out2;
 
   assign outp=sel ? 'z : '0;
   assign out2=sel ? outp : 'z;
@@ -554,15 +554,15 @@ module rss_array(
   input [2:0][BUF_COUNT-1:0] newRsSelect0;
   input [2:0][8:0] newPort0;
 
-// output data to functional units
+// output pwire data to functional units
 
   input [1:0][BUF_COUNT-1:0] outRsSelect0;
   input [1:0][3:0] outRsBank0;
   input [1:0]outFound0;
-  output [1:0][BUF_COUNT-1:0] portReady0;
-  output [1:0][3:0] outDataEn0;
-  output [1:0] outThread0;
-  output [1:0] outZeroB0;
+  output pwire [1:0][BUF_COUNT-1:0] portReady0;
+  output pwire [1:0][3:0] outDataEn0;
+  output pwire [1:0] outThread0;
+  output pwire [1:0] outZeroB0;
     
   input [BUF_COUNT*4-1:0] fuFwdA;
   input [BUF_COUNT*4-1:0] fuFwdB;
@@ -570,15 +570,15 @@ module rss_array(
   input [1:0][BUF_COUNT-1:0] isDataA;
 
 // free output
-  output [BUF_COUNT-1:0]  bufFree;
+  output pwire [BUF_COUNT-1:0]  bufFree;
 // wires
 // wires - new data
   generate
       genvar k,j;
       for (j=0;j<4;j=j+1) begin : banks_gen
-          wire [1:0][3:0] outDataEn0a;
-          wire [1:0] outThread0a;
-          wire [1:0] outZeroB0a;
+          pwire [1:0][3:0] outDataEn0a;
+          pwire [1:0] outThread0a;
+          pwire [1:0] outZeroB0a;
           for(k=0;k<8;k=k+1) begin : buffers_gen
               rss_buf buf_mod(
               clk,
@@ -666,14 +666,14 @@ module rss_D_array(
   input [BUF_COUNT-1:0] newRsSelect2;
   input [6:0] newPort2;  
 
-// output data to functional units
+// output pwire data to functional units
 
   input [BUF_COUNT-1:0] outRsSelect1;
   input [3:0] outRsBank1;
   input outFound1;
-  output [BUF_COUNT-1:0] portReady1;
-  output [3:0] outDataEn1;
-  output outThread1;
+  output pwire [BUF_COUNT-1:0] portReady1;
+  output pwire [3:0] outDataEn1;
+  output pwire outThread1;
 
   input [BUF_COUNT*4-1:0] fuFwdA;
 
@@ -681,14 +681,14 @@ module rss_D_array(
   input [BUF_COUNT-1:0] isDataB;
 
 // free output
-  output [BUF_COUNT-1:0]  bufFree;
+  output pwire [BUF_COUNT-1:0]  bufFree;
 // wires
 // wires - new data
   generate
       genvar k,j;
       for (j=0;j<4;j=j+1) begin : banks_gen
-          wire [3:0] outDataEn1a;
-          wire outThread1a;
+          pwire [3:0] outDataEn1a;
+          pwire outThread1a;
           for(k=0;k<8;k=k+1) begin : buffers_gen
               rss_D_buf #(B) buf_mod(
               clk,
@@ -830,7 +830,7 @@ module rs_s(
   input nonDataRst;
   input rst_thread;
   input stall;
-  output doStall;
+  output pwire doStall;
   input FU0Hit;
   input FU1Hit;
   input FU2Hit;
@@ -916,59 +916,59 @@ module rs_s(
   input newLSFlag2;
   input [ATTR_WIDTH-1:0] newAttr2;
 
-  output wire [DATA_WIDTH-1:0]       outDataA0;//base
-  output wire [DATA_WIDTH-1:0]       outDataB0;
-  output wire [CONST_WIDTH-1:0]      outDataC0;
-  output wire [OPERATION_WIDTH-1:0]   outOp0;
-  output wire [II_WIDTH-1:0] outInstrIndex0;
-  output [3:0] outFuFwdA0;
-  output [3:0] outFuFwdB0;
-  output [3:0] outFuuFwdA0;
-  output [3:0] outFuuFwdB0;
-  output [LSQ_WIDTH-1:0] outLSQ0;
-  output [3:0] outDataEn0;
-  output outThread0;
-  output [WQ_WIDTH-1:0] outWQ0;
-  output outLSFlag0;
-  output [ATTR_WIDTH-1:0] outAttr0;
+  output pwire [DATA_WIDTH-1:0]       outDataA0;//base
+  output pwire [DATA_WIDTH-1:0]       outDataB0;
+  output pwire [CONST_WIDTH-1:0]      outDataC0;
+  output pwire [OPERATION_WIDTH-1:0]   outOp0;
+  output pwire [II_WIDTH-1:0] outInstrIndex0;
+  output pwire [3:0] outFuFwdA0;
+  output pwire [3:0] outFuFwdB0;
+  output pwire [3:0] outFuuFwdA0;
+  output pwire [3:0] outFuuFwdB0;
+  output pwire [LSQ_WIDTH-1:0] outLSQ0;
+  output pwire [3:0] outDataEn0;
+  output pwire outThread0;
+  output pwire [WQ_WIDTH-1:0] outWQ0;
+  output pwire outLSFlag0;
+  output pwire [ATTR_WIDTH-1:0] outAttr0;
 
-  output wire [DATA_WIDTH-1:0]       outDataB1;
-  output wire [OPERATION_WIDTH-1:0]   outOp1;
-  output wire [II_WIDTH-1:0] outInstrIndex1;
-  output [3:0] outFuFwdB1;
-  output [3:0] outFuuFwdB1;
-  output [LSQ_WIDTH-1:0] outLSQ1;
-  output [3:0] outDataEn1;
-  output outThread1;
-  output [WQ_WIDTH-1:0] outWQ1;
-  output [ATTR_WIDTH-1:0] outAttr1;
+  output pwire [DATA_WIDTH-1:0]       outDataB1;
+  output pwire [OPERATION_WIDTH-1:0]   outOp1;
+  output pwire [II_WIDTH-1:0] outInstrIndex1;
+  output pwire [3:0] outFuFwdB1;
+  output pwire [3:0] outFuuFwdB1;
+  output pwire [LSQ_WIDTH-1:0] outLSQ1;
+  output pwire [3:0] outDataEn1;
+  output pwire outThread1;
+  output pwire [WQ_WIDTH-1:0] outWQ1;
+  output pwire [ATTR_WIDTH-1:0] outAttr1;
 
-  output wire [DATA_WIDTH-1:0]       outDataA2;
-  output wire [DATA_WIDTH-1:0]       outDataB2;//base
-  output wire [CONST_WIDTH-1:0]      outDataC2;
-  output wire [OPERATION_WIDTH-1:0]   outOp2;
-  output wire [II_WIDTH-1:0] outInstrIndex2;
-  output [3:0] outFuFwdA2;
-  output [3:0] outFuFwdB2;
-  output [3:0] outFuuFwdA2;
-  output [3:0] outFuuFwdB2;
-  output [LSQ_WIDTH-1:0] outLSQ2;
-  output [3:0] outDataEn2;
-  output outThread2;
-  output [WQ_WIDTH-1:0] outWQ2;
-  output outLSFlag2;
-  output [ATTR_WIDTH-1:0] outAttr2;
+  output pwire [DATA_WIDTH-1:0]       outDataA2;
+  output pwire [DATA_WIDTH-1:0]       outDataB2;//base
+  output pwire [CONST_WIDTH-1:0]      outDataC2;
+  output pwire [OPERATION_WIDTH-1:0]   outOp2;
+  output pwire [II_WIDTH-1:0] outInstrIndex2;
+  output pwire [3:0] outFuFwdA2;
+  output pwire [3:0] outFuFwdB2;
+  output pwire [3:0] outFuuFwdA2;
+  output pwire [3:0] outFuuFwdB2;
+  output pwire [LSQ_WIDTH-1:0] outLSQ2;
+  output pwire [3:0] outDataEn2;
+  output pwire outThread2;
+  output pwire [WQ_WIDTH-1:0] outWQ2;
+  output pwire outLSFlag2;
+  output pwire [ATTR_WIDTH-1:0] outAttr2;
 
-  output wire [DATA_WIDTH-1:0]       outDataA3;
-  output wire [OPERATION_WIDTH-1:0]   outOp3;
-  output wire [II_WIDTH-1:0] outInstrIndex3;
-  output [3:0] outFuFwdA3;
-  output [3:0] outFuuFwdA3;
-  output [LSQ_WIDTH-1:0] outLSQ3;
-  output [3:0] outDataEn3;
-  output outThread3;
-  output [WQ_WIDTH-1:0] outWQ3;
-  output [ATTR_WIDTH-1:0] outAttr3;
+  output pwire [DATA_WIDTH-1:0]       outDataA3;
+  output pwire [OPERATION_WIDTH-1:0]   outOp3;
+  output pwire [II_WIDTH-1:0] outInstrIndex3;
+  output pwire [3:0] outFuFwdA3;
+  output pwire [3:0] outFuuFwdA3;
+  output pwire [LSQ_WIDTH-1:0] outLSQ3;
+  output pwire [3:0] outDataEn3;
+  output pwire outThread3;
+  output pwire [WQ_WIDTH-1:0] outWQ3;
+  output pwire [ATTR_WIDTH-1:0] outAttr3;
 
   //functional units inputs/outputs
   input [DATA_WIDTH-1:0] FU0;
@@ -1051,18 +1051,18 @@ module rs_s(
   input [16+SIMD_WIDTH-1:0] newDataFB2L;
   
 
-  output [SIMD_WIDTH-1:0] outDataVB1H;
-  output [SIMD_WIDTH-1:0] outDataVB1L;
+  output pwire [SIMD_WIDTH-1:0] outDataVB1H;
+  output pwire [SIMD_WIDTH-1:0] outDataVB1L;
   
-  output [SIMD_WIDTH-1:0] outDataVA3H;
-  output [SIMD_WIDTH-1:0] outDataVA3L;
+  output pwire [SIMD_WIDTH-1:0] outDataVA3H;
+  output pwire [SIMD_WIDTH-1:0] outDataVA3L;
   
   
-  output [SIMD_WIDTH-1:0] outDataFB1H;
-  output [16+SIMD_WIDTH-1:0] outDataFB1L;
+  output pwire [SIMD_WIDTH-1:0] outDataFB1H;
+  output pwire [16+SIMD_WIDTH-1:0] outDataFB1L;
   
-  output [SIMD_WIDTH-1:0] outDataFA3H;
-  output [16+SIMD_WIDTH-1:0] outDataFA3L;
+  output pwire [SIMD_WIDTH-1:0] outDataFA3H;
+  output pwire [16+SIMD_WIDTH-1:0] outDataFA3L;
   
   input [SIMD_WIDTH-1:0] FUF0H;
   input [16+SIMD_WIDTH-1:0] FUF0L;
@@ -1128,55 +1128,55 @@ module rs_s(
   
   
   
-  wire [BUF_COUNT-1:0] bufFree;
-  wire [BUF_COUNT-1:0] bufFreeA;
-  wire [BUF_COUNT-1:0] bufFreeB;
+  pwire [BUF_COUNT-1:0] bufFree;
+  pwire [BUF_COUNT-1:0] bufFreeA;
+  pwire [BUF_COUNT-1:0] bufFreeB;
   
-  wire [BUF_COUNT-1:0] newRsSelect0;
-  wire [BUF_COUNT-1:0] newRsSelect1;
-  wire [BUF_COUNT-1:0] newRsSelect2;
+  pwire [BUF_COUNT-1:0] newRsSelect0;
+  pwire [BUF_COUNT-1:0] newRsSelect1;
+  pwire [BUF_COUNT-1:0] newRsSelect2;
   
-  wire [3:0][BUF_COUNT-1:0] outRsSelect;
-  wire [BUF_COUNT-1:0] portReady[3:0];
-  wire [3:0][3:0] outBank;
-  wire [3:0] portEn;
-  wire [3:0] rsFound;
+  pwire [3:0][BUF_COUNT-1:0] outRsSelect;
+  pwire [BUF_COUNT-1:0] portReady[3:0];
+  pwire [3:0][3:0] outBank;
+  pwire [3:0] portEn;
+  pwire [3:0] rsFound;
   
-  wire [127:0] fuFwdA;
-  wire [127:0] fuFwdB;
-  wire [BUF_COUNT-1:0] isDataA;
-  wire [BUF_COUNT-1:0] isDataB;
-  wire [BUF_COUNT-1:0] isDataWQA;
-  wire [BUF_COUNT-1:0] isDataWQB;
+  pwire [127:0] fuFwdA;
+  pwire [127:0] fuFwdB;
+  pwire [BUF_COUNT-1:0] isDataA;
+  pwire [BUF_COUNT-1:0] isDataB;
+  pwire [BUF_COUNT-1:0] isDataWQA;
+  pwire [BUF_COUNT-1:0] isDataWQB;
 
-  wire [64:0] outDataA2P;
-  wire [64:0] outDataB0P;
-  wire outZeroB0,outZeroA2;
+  pwire [64:0] outDataA2P;
+  pwire [64:0] outDataB0P;
+  pwire outZeroB0,outZeroA2;
 
-  wire [6*BUF_COUNT-1:0] outEqA;
-  wire [6*BUF_COUNT-1:0] outEqB;
-  wire [6*BUF_COUNT-1:0] outEqA_reg;
-  wire [6*BUF_COUNT-1:0] outEqB_reg;
-  wire [BUF_COUNT-1:0] newRsSelect0_reg;
-  wire [BUF_COUNT-1:0] newRsSelect1_reg;
-  wire [BUF_COUNT-1:0] newRsSelect2_reg;
-  wire [BUF_COUNT-1:0] outRsSelect_reg[3:0];
-  wire [3:0] outBank_reg[3:0];
-  wire [3:0] rsFound_reg;
-  wire [6*BUF_COUNT-1:0] outEqA_reg2;
-  wire [6*BUF_COUNT-1:0] outEqB_reg2;
-  wire [BUF_COUNT-1:0] newRsSelect0_reg2;
-  wire [BUF_COUNT-1:0] newRsSelect1_reg2;
-  wire [BUF_COUNT-1:0] newRsSelect2_reg2;
-  wire [BUF_COUNT-1:0] outRsSelect_reg2[3:0];
-  wire [3:0] outBank_reg2[3:0];
-  wire [3:0] rsFound_reg2;
+  pwire [6*BUF_COUNT-1:0] outEqA;
+  pwire [6*BUF_COUNT-1:0] outEqB;
+  pwire [6*BUF_COUNT-1:0] outEqA_reg;
+  pwire [6*BUF_COUNT-1:0] outEqB_reg;
+  pwire [BUF_COUNT-1:0] newRsSelect0_reg;
+  pwire [BUF_COUNT-1:0] newRsSelect1_reg;
+  pwire [BUF_COUNT-1:0] newRsSelect2_reg;
+  pwire [BUF_COUNT-1:0] outRsSelect_reg[3:0];
+  pwire [3:0] outBank_reg[3:0];
+  pwire [3:0] rsFound_reg;
+  pwire [6*BUF_COUNT-1:0] outEqA_reg2;
+  pwire [6*BUF_COUNT-1:0] outEqB_reg2;
+  pwire [BUF_COUNT-1:0] newRsSelect0_reg2;
+  pwire [BUF_COUNT-1:0] newRsSelect1_reg2;
+  pwire [BUF_COUNT-1:0] newRsSelect2_reg2;
+  pwire [BUF_COUNT-1:0] outRsSelect_reg2[3:0];
+  pwire [3:0] outBank_reg2[3:0];
+  pwire [3:0] rsFound_reg2;
   
   
-  wire [2:0] newIsFpA;
-  wire [2:0] newIsFpB;
-  wire [2:0] newIsVA;
-  wire [2:0] newIsVB;
+  pwire [2:0] newIsFpA;
+  pwire [2:0] newIsFpB;
+  pwire [2:0] newIsVA;
+  pwire [2:0] newIsVB;
 
   assign outRsSelect_reg[2]=32'b0;
   assign outRsSelect_reg[0]=32'b0;

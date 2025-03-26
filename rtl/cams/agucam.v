@@ -33,7 +33,7 @@ module addrcalccam_ram0(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -70,7 +70,7 @@ module addrcalccam_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -177,7 +177,7 @@ module addrcalccam(
   input except;
   input except_thread;
   input read_clkEn;
-  output reg doSkip;
+  output pwire reg doSkip;
   input rsStall;
 
   input conflict0;
@@ -228,56 +228,56 @@ module addrcalccam(
   input mOp2_lsflag;
   input [3:0] mOp2_attr;
 
-  output [VADDR_WIDTH-1:0] mOpR_addrMain;
-  output [PADDR_WIDTH-9:0] mOpR_addrEven;
-  output [PADDR_WIDTH-9:0] mOpR_addrOdd;
-  output mOpR_lsfw;
-  output [REG_WIDTH-1:0] mOpR_regNo;
-  output [1:0] mOpR_type;
-  output mOpR_odd;
-  output [1:0] mOpR_low;
-  output [4:0] mOpR_sz;
-  output mOpR_invmlb;
-  output mOpR_split;
-  output mOpR_en;
-  output [4:0] mOpR_bank0;
-  output [8:0] mOpR_LSQ;
-  output [9:0] mOpR_II;
-  output [5:0] mOpR_WQ;
-  output mOpR_thread;
-  output mOpR_lsflag;
-  output [3:0] mOpR_attr;
+  output pwire [VADDR_WIDTH-1:0] mOpR_addrMain;
+  output pwire [PADDR_WIDTH-9:0] mOpR_addrEven;
+  output pwire [PADDR_WIDTH-9:0] mOpR_addrOdd;
+  output pwire mOpR_lsfw;
+  output pwire [REG_WIDTH-1:0] mOpR_regNo;
+  output pwire [1:0] mOpR_type;
+  output pwire mOpR_odd;
+  output pwire [1:0] mOpR_low;
+  output pwire [4:0] mOpR_sz;
+  output pwire mOpR_invmlb;
+  output pwire mOpR_split;
+  output pwire mOpR_en;
+  output pwire [4:0] mOpR_bank0;
+  output pwire [8:0] mOpR_LSQ;
+  output pwire [9:0] mOpR_II;
+  output pwire [5:0] mOpR_WQ;
+  output pwire mOpR_thread;
+  output pwire mOpR_lsflag;
+  output pwire [3:0] mOpR_attr;
 
-  wire [2:0] curConfl;
- // wire [3:0] write_confl;
-  wire [2:0] read_conflA;
-  wire [2:0] read_confl;
-  wire [2:0] sel;  
-  wire conflFound;
-  wire doStep;
+  pwire [2:0] curConfl;
+ // pwire [3:0] write_confl;
+  pwire [2:0] read_conflA;
+  pwire [2:0] read_confl;
+  pwire [2:0] sel;  
+  pwire conflFound;
+  pwire doStep;
   
   reg [ADDR_WIDTH-1:0] read_addr;
-  wire [ADDR_WIDTH-1:0] read_addr_d;
-  wire [ADDR_WIDTH-1:0] read_addrU_d;
-  wire [ADDR_WIDTH-1:0] read_addrA_d;
-  wire [ADDR_WIDTH-1:0] read_addrB_d;
+  pwire [ADDR_WIDTH-1:0] read_addr_d;
+  pwire [ADDR_WIDTH-1:0] read_addrU_d;
+  pwire [ADDR_WIDTH-1:0] read_addrA_d;
+  pwire [ADDR_WIDTH-1:0] read_addrB_d;
   reg [ADDR_WIDTH-1:0] write_addr;
-  wire [ADDR_WIDTH-1:0] write_addr_d;
-  wire [10:0] count;
-  wire [10:1] cmore;
-  wire wen;
+  pwire [ADDR_WIDTH-1:0] write_addr_d;
+  pwire [10:0] count;
+  pwire [10:1] cmore;
+  pwire wen;
   
-  wire [MOP_WIDTH-1:0] write_mop[2:0];
-  wire [DATA_WIDTH-1:0] write_dataA;
-  wire [MDATA_WIDTH-1:0] write_dataB;
-  wire [MOP_WIDTH-1:0] read_mop[2:0];
-  wire [DATA_WIDTH-1:0] read_dataA;
-  wire [MDATA_WIDTH-1:0] read_dataB;
+  pwire [MOP_WIDTH-1:0] write_mop[2:0];
+  pwire [DATA_WIDTH-1:0] write_dataA;
+  pwire [MDATA_WIDTH-1:0] write_dataB;
+  pwire [MOP_WIDTH-1:0] read_mop[2:0];
+  pwire [DATA_WIDTH-1:0] read_dataA;
+  pwire [MDATA_WIDTH-1:0] read_dataB;
 
-  wire [VADDR_WIDTH-1:0] mOpR_addrMain;
- // wire [VADDR_WIDTH-1:0] mOpR_addrNext;
+  pwire [VADDR_WIDTH-1:0] mOpR_addrMain;
+ // pwire [VADDR_WIDTH-1:0] mOpR_addrNext;
   
-//  wire pageIsNext;
+//  pwire pageIsNext;
   
  
   reg [2:0] confl_mask;
@@ -286,7 +286,7 @@ module addrcalccam(
 
   reg init;
   reg [2:0] initCount;
-  wire [2:0] initCount_next;
+  pwire [2:0] initCount_next;
   
   //genvar k;
   
@@ -294,19 +294,19 @@ module addrcalccam(
   reg [DEPTH-1:0] vMask;
   reg [DEPTH-1:0] vMaskN;
   reg vOn_next;
-  wire [7:0] rdvalid1;
-  wire [7:0] rdvalid0;
-  wire drvalid1_found;
-  wire drvalid0_found;
-  wire [7:0] rdxvalid1;
-  wire [7:0] rdxvalid0;
-  wire drxvalid_1_found;
-  wire drxvalid_0_found;
-  wire [2:0] write_addr_inc;
+  pwire [7:0] rdvalid1;
+  pwire [7:0] rdvalid0;
+  pwire drvalid1_found;
+  pwire drvalid0_found;
+  pwire [7:0] rdxvalid1;
+  pwire [7:0] rdxvalid0;
+  pwire drxvalid_1_found;
+  pwire drxvalid_0_found;
+  pwire [2:0] write_addr_inc;
 
-  wire excpt_fwd; 
-  wire thrmask;
-  wire [2:0] in_mask;
+  pwire excpt_fwd; 
+  pwire thrmask;
+  pwire [2:0] in_mask;
   
   assign write_dataA={conflict2&in_mask[2],conflict1&in_mask[1],conflict0&in_mask[0],
 	  write_mop_reg[2],write_mop_reg[1],write_mop_reg[0]};

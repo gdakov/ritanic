@@ -18,9 +18,9 @@ module dff_up_to_reg3(clk,rst,cond1,val,val_reg,val_reg2,val_reg3);
   input rst;
   input cond1;
   input val;
-  output logic val_reg;
-  output logic val_reg2;
-  output logic val_reg3;
+  output pwire logic val_reg;
+  output pwire logic val_reg2;
+  output pwire logic val_reg3;
 
   always @(posedge clk) begin
   end
@@ -147,47 +147,47 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   input [9:0] bus_slot;
   input bus_en;
   
-  output [37:0] req_addr;
-  output [9:0] req_slot;
-  output req_en;
-  output req_mlbEn;
-  output [3:0] req_mlbAttr;
+  output pwire [37:0] req_addr;
+  output pwire [9:0] req_slot;
+  output pwire req_en;
+  output pwire req_mlbEn;
+  output pwire [3:0] req_mlbAttr;
 
   input [`cmlbData_width-1:0] bus_mlb_data;
   input [9:0] bus_mlb_slot;
   input bus_mlb_en;
 
-  output miss_now;
-  output mlbMiss_now;
+  output pwire miss_now;
+  output pwire mlbMiss_now;
   input miss_now_in;
 
-  output [9:0][INSTR_WIDTH-1:0] instr0;
+  output pwire [9:0][INSTR_WIDTH-1:0] instr0;
 
-  output [9:0][`instrQ_width-1:0] extra0;
+  output pwire [9:0][`instrQ_width-1:0] extra0;
 
 
   input [9:0] instrEat;
-  output [9:0] iAvail;
+  output pwire [9:0] iAvail;
   input stall;
   
   input [2:0] btbl_step;
-  output [IP_WIDTH-2:0] btbl_IP0;
-  output [IP_WIDTH-2:0] btbl_IP1;
-  output [3:0] btbl_mask0;
-  output [3:0] btbl_mask1;
-  output [3:0] btbl_attr0;
-  output [3:0] btbl_attr1;
-  output       btbl_clp0;
-  output       btbl_clp1;
+  output pwire [IP_WIDTH-2:0] btbl_IP0;
+  output pwire [IP_WIDTH-2:0] btbl_IP1;
+  output pwire [3:0] btbl_mask0;
+  output pwire [3:0] btbl_mask1;
+  output pwire [3:0] btbl_attr0;
+  output pwire [3:0] btbl_attr1;
+  output pwire       btbl_clp0;
+  output pwire       btbl_clp1;
   
   input msrss_en;
   input [15:0] msrss_addr;
   input [64:0] msrss_data;
-  output cc_instrEn=instrEn;
-  output cc_read_set_flag=read_set_flag_reg;
-  output cc_fstall=fstall;
-  output cc_except=ixcept;
-  output [PHYS_WIDTH-1:0] cc_IP_phys=IP_phys_reg;
+  output pwire cc_instrEn=instrEn;
+  output pwire cc_read_set_flag=read_set_flag_reg;
+  output pwire cc_fstall=fstall;
+  output pwire cc_except=ixcept;
+  output pwire [PHYS_WIDTH-1:0] cc_IP_phys=IP_phys_reg;
   input cc_read_hit;
   input cc_read_tagErr;
   input [DATA_WIDTH/2+128+8-1:0] cc_read_data;
@@ -195,32 +195,32 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   input [20:0] cc_read_dataX;
   assign read_dataX=cc_read_dataX[14:0];
   input cc_err;
-  output [PHYS_WIDTH-1:0] cc_write_IP={write_IP,5'b0};
-  output cc_write_wen=bus_match_reg;
-  output cc_invalidate=1'b0;
-  output [DATA_WIDTH-1:0] cc_write_data;
+  output pwire [PHYS_WIDTH-1:0] cc_write_IP={write_IP,5'b0};
+  output pwire cc_write_wen=bus_match_reg;
+  output pwire cc_invalidate=1'b0;
+  output pwire [DATA_WIDTH-1:0] cc_write_data;
   
   input [36:0] MSI_expAddr;
   input MSI_expAddr_en;
-  output MSI_expAddr_hit;
-  output [36:0] expun_addr;
-  output expun_wen;
+  output pwire MSI_expAddr_hit;
+  output pwire [36:0] expun_addr;
+  output pwire expun_wen;
 
-  wire [DATA_WIDTH/2-1:0] read_data;
-  wire [14:0] read_dataX;
-  wire [16:0] read_dataY; 
-  wire [DATA_WIDTH/2-1:0] read_data_reg;
-  wire instrFed;
+  pwire [DATA_WIDTH/2-1:0] read_data;
+  pwire [14:0] read_dataX;
+  pwire [16:0] read_dataY; 
+  pwire [DATA_WIDTH/2-1:0] read_data_reg;
+  pwire instrFed;
   reg instrFed_reg;
 
-  wire [15:0] exceptJumpGHT2;
+  pwire [15:0] exceptJumpGHT2;
 
-  wire [15:0] pff;
-  wire pff1;
+  pwire [15:0] pff;
+  pwire pff1;
 
   reg btb_indir_reg;
 
-  wire do_seq_any,do_seq_miss;
+  pwire do_seq_any,do_seq_miss;
 
   function [255:0] splice256;
     (* keep *) input [255:0] in_data;
@@ -238,9 +238,9 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   endfunction
 
   assign cc_write_data=splice256w(write_data);
-  wire [64:0] cc_read_IP_d;
-//  wire [64:0] tr_read_IP_d;
-  wire do_seq;
+  pwire [64:0] cc_read_IP_d;
+//  pwire [64:0] tr_read_IP_d;
+  pwire do_seq;
   reg do_seq_reg;
   reg do_seq_reg2;
   reg do_seq_reg3;
@@ -259,27 +259,27 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
  // reg [47:0] cc_read_IP_REG4;
   reg  [64:0] cc_base_IP;
   reg  [64:0] cc_base_IP_reg;
-  wire [64:0] cc_base_IP_d;
-  wire [8:0] cc_base_dummy9;
-  wire [8:0] cc_base_dummy9dec;
-  wire cc_base_sec;
-  wire cc_base_tick;
+  pwire [64:0] cc_base_IP_d;
+  pwire [8:0] cc_base_dummy9;
+  pwire [8:0] cc_base_dummy9dec;
+  pwire cc_base_sec;
+  pwire cc_base_tick;
   reg cc_base_tick_reg;
   reg cc_base_tick_reg2;
   reg cc_base_tick_reg3;
   reg cc_base_tick_reg4;
   reg proturberan;
-  wire [3:0] cc_base_off;
+  pwire [3:0] cc_base_off;
   reg [3:0] cc_base_off_reg;
   reg [3:0] cc_base_off_reg2;
   reg [3:0] cc_base_off_reg3;
   reg [3:0] cc_base_off_reg4;
  
   reg [3:0]  cc_attr;
-  wire [3:0] btbx_attr; 
+  pwire [3:0] btbx_attr; 
 
-  wire [3:0] cc_attr_d;
-  wire [3:0] ixceptAttr;
+  pwire [3:0] cc_attr_d;
+  pwire [3:0] ixceptAttr;
   reg [64:0] miss_IP;
   //reg [47:0] link_IP;
   reg [23:0] proc;
@@ -291,100 +291,100 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg instrEn_reg3;
   reg new_instrEn;
  
-  wire cc_read_hit;
-  wire miss_recover;
+  pwire cc_read_hit;
+  pwire miss_recover;
 
- // wire [47:0] link_IP_d;
+ // pwire [47:0] link_IP_d;
   
-  wire [`cmlbData_width-1:0] mlb_data;
+  pwire [`cmlbData_width-1:0] mlb_data;
   reg [`cmlbData_width-1:0] mlb_data_reg;
   reg [`cmlbData_width-1:0] mlb_data_reg2;
   reg [`cmlbData_width-1:0] mlb_data_reg3;
-  wire [`cmlbData_width-1:0] mlb_data3;
-  wire [PHYS_WIDTH-14:0] mlb_phys;
-  wire mlb_nx;
-  wire mlb_na;
-  wire mlb_sys;
-  wire mlb_match;
+  pwire [`cmlbData_width-1:0] mlb_data3;
+  pwire [PHYS_WIDTH-14:0] mlb_phys;
+  pwire mlb_nx;
+  pwire mlb_na;
+  pwire mlb_sys;
+  pwire mlb_match;
 
   reg [PHYS_WIDTH-14:0] mlb_phys_reg;
 
-  wire [PHYS_WIDTH-14:0] read_physOut;
+  pwire [PHYS_WIDTH-14:0] read_physOut;
   reg miss_seq;
   reg [4:0] miss_cnt;
-  wire [4:0] miss_cnt_next;
+  pwire [4:0] miss_cnt_next;
   reg [2:0] miss_slot;
-  wire [2:0] miss_slot_next;
+  pwire [2:0] miss_slot_next;
 
   reg [PHYS_WIDTH-15:0] miss_phys;
   
-  wire req_en0,req_en1;
+  pwire req_en0,req_en1;
   //wire overpage;
   reg IP_chg,IP_chg_reg,IP_chg_reg2,IP_chg_reg3,IP_chg_reg4;
   
-  wire mlb_hit;
+  pwire mlb_hit;
   reg mlb_hit_reg;
   reg mlb_hit_reg2;
   reg mlb_hit_reg3;
   reg mlb_hit_reg4;
  
-  wire [PHYS_WIDTH-1:0] IP_phys; 
-  wire [DATA_WIDTH-1:0] write_data;
+  pwire [PHYS_WIDTH-1:0] IP_phys; 
+  pwire [DATA_WIDTH-1:0] write_data;
   reg [BUS_WIDTH-1:0] bus_data_reg;
-  wire bus_match;
+  pwire bus_match;
   reg bus_match_reg;
   reg [PHYS_WIDTH-1:0] IP_phys_reg; 
   reg [PHYS_WIDTH-1:0] IP_phys_reg2; 
   reg [PHYS_WIDTH-1:0] IP_phys_reg3; 
   
-  wire [VIRT_WIDTH-26:0] write_IP;
-  wire [VIRT_WIDTH-28:0] req_addrR;
-  wire [PHYS_WIDTH-14:0] req_addrP;
-  wire [VIRT_WIDTH:0] mlb_IP;
+  pwire [VIRT_WIDTH-26:0] write_IP;
+  pwire [VIRT_WIDTH-28:0] req_addrR;
+  pwire [PHYS_WIDTH-14:0] req_addrP;
+  pwire [VIRT_WIDTH:0] mlb_IP;
   
-  wire bus_mlb_match;
+  pwire bus_mlb_match;
   reg bus_mlb_match_reg;
   reg bus_mlb_match_reg2;
   reg bus_mlb_match_reg3;
   reg [`cmlbData_width-1:0] bus_mlb_data_reg;
   
-  wire [7:0] cc_tagErr;
+  pwire [7:0] cc_tagErr;
   
   reg init;
   reg [8:0] initCount;
-  wire [8:0] initCount_next;
+  pwire [8:0] initCount_next;
   
   
-  wire bus_match0;
+  pwire bus_match0;
   reg bus_match0_reg;
   reg bus_match0_reg2;
   reg bus_match0_reg3;
   reg bus_match0_reg4;
   
-  wire [15:0] pre_instrEn;
-  wire [15:0][INSTR_WIDTH-1:0] pre_instr0;
+  pwire [15:0] pre_instrEn;
+  pwire [15:0][INSTR_WIDTH-1:0] pre_instr0;
 
   reg [15:0] pre_instrEn_reg/*verilator public*/;
   reg [15:0][INSTR_WIDTH-1:0] pre_instr0_reg/*verilator public*/;
 
-  wire [15:0][3:0] pre_off/*verilator public*/;
+  pwire [15:0][3:0] pre_off/*verilator public*/;
   reg [3:0] pre_off_reg[15:0]/*verilator public*/;
   
-  wire [15:0][3:0] pre_magic/*verilator public*/;
+  pwire [15:0][3:0] pre_magic/*verilator public*/;
   reg  [3:0] pre_magic_reg[15:0]/*verilator public*/;
-  wire [15:0][`instrQ_width-1:0] pre_other/*verilator public*/;
+  pwire [15:0][`instrQ_width-1:0] pre_other/*verilator public*/;
 //  reg [`instrQ_width-1:0] pre_other_reg[11:0];
   
-  wire pre__splitinsn;
+  pwire pre__splitinsn;
   reg pre__splitinsn_reg;
   reg cc_err_reg;
-  wire [15:0][CLS_WIDTH-1:0] pre_class;
+  pwire [15:0][CLS_WIDTH-1:0] pre_class;
   reg [CLS_WIDTH-1:0] pre_class_reg[11:0]/*verilator public*/;
-  wire pre_has_jumps;
- // wire [3:0] jFirst;
- // wire [4:0] jmpCount;
+  pwire pre_has_jumps;
+ // pwire [3:0] jFirst;
+ // pwire [4:0] jmpCount;
   
-  wire pre_error;
+  pwire pre_error;
   
   reg [15:0] dreq; 
   reg [15:0] dreq_reg; 
@@ -405,24 +405,24 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg except_jmask_en_save;
   reg ixcept;
   reg ixcept_reg;
-  wire uxcept;
-  wire [VIRT_WIDTH-1:0] ixceptIP;
-  wire ixceptThread;
-  wire ixceptDueJump;
-  wire ixceptLDConfl;
-  wire ixcept_indir;
-  wire [7:0] ixceptJumpGHT;
-  wire [15:0] ixceptJumpGHT2;
-  wire [3:0] ixcept_jmask;
-  wire ixcept_jmask_en;
+  pwire uxcept;
+  pwire [VIRT_WIDTH-1:0] ixceptIP;
+  pwire ixceptThread;
+  pwire ixceptDueJump;
+  pwire ixceptLDConfl;
+  pwire ixcept_indir;
+  pwire [7:0] ixceptJumpGHT;
+  pwire [15:0] ixceptJumpGHT2;
+  pwire [3:0] ixcept_jmask;
+  pwire ixcept_jmask_en;
 //  reg ixcept_reg;
 //  reg ixceptLDConfl_reg;
 
-  wire fstall;
-  wire fmstall;
-  wire iq_fstall;
-  wire jq_fstall;
-  wire btbFStall;
+  pwire fstall;
+  pwire fmstall;
+  pwire iq_fstall;
+  pwire jq_fstall;
+  pwire btbFStall;
   reg btbFStall_save;
   reg btbFStall_reg;
   reg btbFStall_reg2;
@@ -434,64 +434,64 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg btbFStall_recover_reg;
   reg btbFStall_recover_reg2;
     
-  wire [3:0][3:0] jmp_off;
+  pwire [3:0][3:0] jmp_off;
   reg [3:0] jmp_off_reg[3:0];
-  wire [3:0][63:0] jdec_const;
-  wire [3:0] jdec_is_jmp;
-  wire [3:0] jdec_cntk;
-  wire [3:0] jdec_clp;
+  pwire [3:0][63:0] jdec_const;
+  pwire [3:0] jdec_is_jmp;
+  pwire [3:0] jdec_cntk;
+  pwire [3:0] jdec_clp;
   reg [64:0] jdec_const_reg[3:0];
-  wire [3:0] jdec_bkjump;
-  wire [3:0][1:0] jdec_clvcnt;//00=reserved; otherwise cleave cnt
-  wire [3:0][2:0] jdec_clvoffnext;//111=not in next bundle
-  wire [3:0][INSTR_WIDTH-1:0] jmp_instr;
-  wire [3:0][3:0] jmp_magic;
-  wire [3:0][CLS_WIDTH-1:0] jmp_class;
-  wire [3:0] jdec_push;
-  wire [3:0] jdec_pop;
-  wire [3:0][4:0] jdec_type;
-  wire [3:0][3:0] jdec_attr;
-  wire [4:0] jdec_link0;
-  wire [4:0] jdec_link1;
-  wire [4:0] jdec_link2;
-  wire [4:0] jdec_link3;
-  wire btb_way;
+  pwire [3:0] jdec_bkjump;
+  pwire [3:0][1:0] jdec_clvcnt;//00=reserved; otherwise cleave cnt
+  pwire [3:0][2:0] jdec_clvoffnext;//111=not in next bundle
+  pwire [3:0][INSTR_WIDTH-1:0] jmp_instr;
+  pwire [3:0][3:0] jmp_magic;
+  pwire [3:0][CLS_WIDTH-1:0] jmp_class;
+  pwire [3:0] jdec_push;
+  pwire [3:0] jdec_pop;
+  pwire [3:0][4:0] jdec_type;
+  pwire [3:0][3:0] jdec_attr;
+  pwire [4:0] jdec_link0;
+  pwire [4:0] jdec_link1;
+  pwire [4:0] jdec_link2;
+  pwire [4:0] jdec_link3;
+  pwire btb_way;
   reg  btb_way_reg;
   reg  btb_way_reg2;
-  wire [3:0][3:0] jmp_moff;
+  pwire [3:0][3:0] jmp_moff;
   reg [3:0] jmp_moff_reg[3:0];
-  wire [3:0][43:1] jmp_par0;
-  wire [3:0][43:1] jmp_par1;
-  wire [3:0][43:1] jmp_tpar0;
-  wire [3:0][43:1] jmp_tpar1;
-  wire [3:0][63:1] jdec_target;
-  wire [3:0] jdec_sec;
-  wire [3:0][3:0] jmp_mask;
+  pwire [3:0][43:1] jmp_par0;
+  pwire [3:0][43:1] jmp_par1;
+  pwire [3:0][43:1] jmp_tpar0;
+  pwire [3:0][43:1] jmp_tpar1;
+  pwire [3:0][63:1] jdec_target;
+  pwire [3:0] jdec_sec;
+  pwire [3:0][3:0] jmp_mask;
   reg [3:0] jmp_mask_reg[3:0];
   reg [3:0] jmp_mask_reg2[3:0];
   reg [3:0] jmp_mask_reg3[3:0];
   reg [3:0] jmp_mask_reg4[3:0];
-  wire [3:0] jmp_en;
-  wire [4:0] lnk_link0;
-  wire [4:0] lnk_link1;
-  wire [4:0] lnk_link2;
-  wire [4:0] lnk_link3;
-  wire [4:0] lnk_off0;
-  wire [4:0] lnk_off1;
-  wire [4:0] lnk_off2;
-  wire [4:0] lnk_off3;
-  wire lnk_isRet0;
-  wire lnk_isRet1;
-  wire lnk_isRet2;
-  wire lnk_isRet3;
-  wire [4:0] lnk_jpos0;
-  wire [4:0] lnk_jpos1;
-  wire [4:0] lnk_jpos2;
-  wire [4:0] lnk_jpos3;
-  wire [3:0] lnk_magic0;
-  wire [3:0] lnk_magic1;
-  wire [3:0] lnk_magic2;
-  wire [3:0] lnk_magic3;
+  pwire [3:0] jmp_en;
+  pwire [4:0] lnk_link0;
+  pwire [4:0] lnk_link1;
+  pwire [4:0] lnk_link2;
+  pwire [4:0] lnk_link3;
+  pwire [4:0] lnk_off0;
+  pwire [4:0] lnk_off1;
+  pwire [4:0] lnk_off2;
+  pwire [4:0] lnk_off3;
+  pwire lnk_isRet0;
+  pwire lnk_isRet1;
+  pwire lnk_isRet2;
+  pwire lnk_isRet3;
+  pwire [4:0] lnk_jpos0;
+  pwire [4:0] lnk_jpos1;
+  pwire [4:0] lnk_jpos2;
+  pwire [4:0] lnk_jpos3;
+  pwire [3:0] lnk_magic0;
+  pwire [3:0] lnk_magic1;
+  pwire [3:0] lnk_magic2;
+  pwire [3:0] lnk_magic3;
   reg [4:0] lnk_link0_reg;
   reg [4:0] lnk_link1_reg;
   reg [4:0] lnk_link2_reg;
@@ -512,28 +512,28 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg [4:0] lnk_jpos1_reg;
   reg [4:0] lnk_jpos2_reg;
   reg [4:0] lnk_jpos3_reg;
-  wire jmp_error;
-  wire lnk_offIn_cc,lnk_offIn_tr,lnk_offIn;
+  pwire jmp_error;
+  pwire lnk_offIn_cc,lnk_offIn_tr,lnk_offIn;
     
-  wire [3:0] taken;
+  pwire [3:0] taken;
   reg [3:0] taken_reg;
   reg [3:0] taken_reg2;
   reg [3:0] taken_reg3;
   reg [3:0] taken_reg4;
   reg [3:0] taken_reg5;
   reg [3:0] taken_REG;
-  wire [3:0] takenA;
-  wire [3:0] takenB;
-  wire btb_hasTK;
+  pwire [3:0] takenA;
+  pwire [3:0] takenB;
+  pwire btb_hasTK;
   reg btb_hasTK_reg;
   reg btb_hasTK_reg2;
   reg btb_hasTK_reg3;
   reg btb_hasTK_reg4;
 
-  wire [7:0] GHT_d;
-  wire [15:0] GHT2_D;
-  wire [7:0] GHTt_d;
-  wire [3:0] GHTx;
+  pwire [7:0] GHT_d;
+  pwire [15:0] GHT2_D;
+  pwire [7:0] GHTt_d;
+  pwire [3:0] GHTx;
   reg [7:0] GHT;
   reg [7:0] GHT_reg;
   reg [7:0] GHT_reg2;
@@ -544,29 +544,29 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg [15:0] GHT_mispred_reg2;
   reg [15:0] GHT_mispred_reg3;
   reg [15:0] GHT_mispred_reg4;
-  wire [4:0] start;
-  wire [4:0] start2;
-  wire [4:0] startt;
-  wire [4:0] startx;
+  pwire [4:0] start;
+  pwire [4:0] start2;
+  pwire [4:0] startt;
+  pwire [4:0] startx;
   reg  [4:0] startx_reg;
   reg  [4:0] startx_reg2;
   reg  [4:0] startx_reg3;
   reg  [4:0] startx_reg4;
 
 `define ZERO 4
-  wire [3:0] btb_indir;
-  wire [4:0]       btb_jlink0;
-  wire [`ZERO:0]  btb_jlnpos0;
-  wire [`ZERO:0] btb_jlnjpos0;
-  wire [4:0]       btb_jlink1;
-  wire [`ZERO:0]  btb_jlnpos1;
-  wire [`ZERO:0] btb_jlnjpos1;
-  wire [4:0]       btb_jlink2;
-  wire [`ZERO:0]  btb_jlnpos2;
-  wire [`ZERO:0] btb_jlnjpos2;
-  wire [4:0]       btb_jlink3;
-  wire [`ZERO:0]  btb_jlnpos3;
-  wire [`ZERO:0] btb_jlnjpos3;
+  pwire [3:0] btb_indir;
+  pwire [4:0]       btb_jlink0;
+  pwire [`ZERO:0]  btb_jlnpos0;
+  pwire [`ZERO:0] btb_jlnjpos0;
+  pwire [4:0]       btb_jlink1;
+  pwire [`ZERO:0]  btb_jlnpos1;
+  pwire [`ZERO:0] btb_jlnjpos1;
+  pwire [4:0]       btb_jlink2;
+  pwire [`ZERO:0]  btb_jlnpos2;
+  pwire [`ZERO:0] btb_jlnjpos2;
+  pwire [4:0]       btb_jlink3;
+  pwire [`ZERO:0]  btb_jlnpos3;
+  pwire [`ZERO:0] btb_jlnjpos3;
   reg [4:0]       btb_jlink0_reg;
   reg [`ZERO:0]  btb_jlnpos0_reg;
   reg [`ZERO:0] btb_jlnjpos0_reg;
@@ -615,79 +615,79 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg [4:0]       btb_jlink3_reg4;
   reg [`ZERO:0]  btb_jlnpos3_reg4;
   reg [`ZERO:0] btb_jlnjpos3_reg4;
-  wire btb_in_link,btb_in_ret;
-  wire [11:0] pre_jbefore;
-  wire [11:0] pre_jbefore0;
-  wire [3:0] last_off;
-  wire [3:0][3:0] btb_joff;
+  pwire btb_in_link,btb_in_ret;
+  pwire [11:0] pre_jbefore;
+  pwire [11:0] pre_jbefore0;
+  pwire [3:0] last_off;
+  pwire [3:0][3:0] btb_joff;
   reg [3:0] last_off_reg;
   reg [3:0] last_off_reg2;
   reg [3:0] last_off_reg3;
   reg [3:0] last_off_reg4;
-  wire [67:1] rstack_dataW;
-  wire [67:1] rstack_dataR;
+  pwire [67:1] rstack_dataW;
+  pwire [67:1] rstack_dataR;
   
-  wire btb_has0,btb_has1,btb_has2,btb_has3;
-  wire [1:0] btb_sc0A;
-  wire [1:0] btb_sc1A;
-  wire [1:0] btb_sc2A;
-  wire [1:0] btb_sc3A;
-  wire [1:0] btb_sc0B;
-  wire [1:0] btb_sc1B;
-  wire [1:0] btb_sc2B;
-  wire [1:0] btb_sc3B;
-  wire btb_hit;
+  pwire btb_has0,btb_has1,btb_has2,btb_has3;
+  pwire [1:0] btb_sc0A;
+  pwire [1:0] btb_sc1A;
+  pwire [1:0] btb_sc2A;
+  pwire [1:0] btb_sc3A;
+  pwire [1:0] btb_sc0B;
+  pwire [1:0] btb_sc1B;
+  pwire [1:0] btb_sc2B;
+  pwire [1:0] btb_sc3B;
+  pwire btb_hit;
   reg btb_hit_reg;
   reg btb_hit_reg2;
   reg btb_hit_reg3;
-  wire [3:0] btb_jmask;
-  wire [3:0] btb_jmask2;
-  wire [3:0] btb_chmaskB;
-  wire [3:0] btb_chmaskA;
-  wire [3:0] btb_predB;
-  wire [3:0] btb_predA;
-  wire [3:0] btb_cond;
-  wire [64:0] btb_tgt;
-  wire [62:0] btb_tgt0;
-  wire [62:0] btb_tgt1;
-  wire [62:0] btb_tgt2;
-  wire [62:0] btb_tgt3;
-  wire [1:0] pred_sc0A;
-  wire [1:0] pred_sc1A;
-  wire [1:0] pred_sc2A;
-  wire [1:0] pred_sc3A;
-  wire [1:0] pred_sc0B;
-  wire [1:0] pred_sc1B;
-  wire [1:0] pred_sc2B;
-  wire [1:0] pred_sc3B;
-  wire [1:0] pred_sh0A;
-  wire [1:0] pred_sh1A;
-  wire [1:0] pred_sh2A;
-  wire [1:0] pred_sh3A;
-  wire [1:0] pred_sh0B;
-  wire [1:0] pred_sh1B;
-  wire [1:0] pred_sh2B;
-  wire [1:0] pred_sh3B;
+  pwire [3:0] btb_jmask;
+  pwire [3:0] btb_jmask2;
+  pwire [3:0] btb_chmaskB;
+  pwire [3:0] btb_chmaskA;
+  pwire [3:0] btb_predB;
+  pwire [3:0] btb_predA;
+  pwire [3:0] btb_cond;
+  pwire [64:0] btb_tgt;
+  pwire [62:0] btb_tgt0;
+  pwire [62:0] btb_tgt1;
+  pwire [62:0] btb_tgt2;
+  pwire [62:0] btb_tgt3;
+  pwire [1:0] pred_sc0A;
+  pwire [1:0] pred_sc1A;
+  pwire [1:0] pred_sc2A;
+  pwire [1:0] pred_sc3A;
+  pwire [1:0] pred_sc0B;
+  pwire [1:0] pred_sc1B;
+  pwire [1:0] pred_sc2B;
+  pwire [1:0] pred_sc3B;
+  pwire [1:0] pred_sh0A;
+  pwire [1:0] pred_sh1A;
+  pwire [1:0] pred_sh2A;
+  pwire [1:0] pred_sh3A;
+  pwire [1:0] pred_sh0B;
+  pwire [1:0] pred_sh1B;
+  pwire [1:0] pred_sh2B;
+  pwire [1:0] pred_sh3B;
   
-  wire btb_can_ins;
+  pwire btb_can_ins;
   
-  wire [3:0] btbx_jmask;
-  wire [1:0] predx_sc0;
-  wire [1:0] predx_sc1;
-  wire [1:0] predx_sc2;
-  wire [1:0] predx_sc3;
-  wire [1:0] predy_sc0;
-  wire [1:0] predy_sc1;
-  wire [1:0] predy_sc2;
-  wire [1:0] predy_sc3;
-  wire [1:0] predx_sh0;
-  wire [1:0] predx_sh1;
-  wire [1:0] predx_sh2;
-  wire [1:0] predx_sh3;
-  wire [1:0] predy_sh0;
-  wire [1:0] predy_sh1;
-  wire [1:0] predy_sh2;
-  wire [1:0] predy_sh3;
+  pwire [3:0] btbx_jmask;
+  pwire [1:0] predx_sc0;
+  pwire [1:0] predx_sc1;
+  pwire [1:0] predx_sc2;
+  pwire [1:0] predx_sc3;
+  pwire [1:0] predy_sc0;
+  pwire [1:0] predy_sc1;
+  pwire [1:0] predy_sc2;
+  pwire [1:0] predy_sc3;
+  pwire [1:0] predx_sh0;
+  pwire [1:0] predx_sh1;
+  pwire [1:0] predx_sh2;
+  pwire [1:0] predx_sh3;
+  pwire [1:0] predy_sh0;
+  pwire [1:0] predy_sh1;
+  pwire [1:0] predy_sh2;
+  pwire [1:0] predy_sh3;
   reg [1:0] predx_sc0_reg;
   reg [1:0] predx_sc1_reg;
   reg [1:0] predx_sc2_reg;
@@ -723,37 +723,37 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
  
   reg [3:0] btbx_jmask_reg;
   reg [3:0] btbx_jmask_REG;
-  wire [3:0] iqe_jbits;
-  wire [5:0] iqe_jcnt;
-  wire [3:0] iqe_jbitZ;
-  wire [5:0] iqe_jcnD;
+  pwire [3:0] iqe_jbits;
+  pwire [5:0] iqe_jcnt;
+  pwire [3:0] iqe_jbitZ;
+  pwire [5:0] iqe_jcnD;
   reg [5:0] iqe_jcnt_reg;
   reg [5:0] iqe_jcnt_reg2;
 
 
-  wire [64:0] btbx_tgt;
-  wire [4:0]       btbx_jlink0;
-  wire [`ZERO:0]  btbx_jlnpos0;
-  wire [`ZERO:0] btbx_jlnjpos0;
-  wire [4:0]       btbx_jlink1;
-  wire [`ZERO:0]  btbx_jlnpos1;
-  wire [`ZERO:0] btbx_jlnjpos1;
-  wire [4:0]       btbx_jlink2;
-  wire [`ZERO:0]  btbx_jlnpos2;
-  wire [`ZERO:0] btbx_jlnjpos2;
-  wire [4:0]       btbx_jlink3;
-  wire [`ZERO:0]  btbx_jlnpos3;
-  wire [`ZERO:0] btbx_jlnjpos3;
-  wire [3:0][3:0] btbx_joff;
+  pwire [64:0] btbx_tgt;
+  pwire [4:0]       btbx_jlink0;
+  pwire [`ZERO:0]  btbx_jlnpos0;
+  pwire [`ZERO:0] btbx_jlnjpos0;
+  pwire [4:0]       btbx_jlink1;
+  pwire [`ZERO:0]  btbx_jlnpos1;
+  pwire [`ZERO:0] btbx_jlnjpos1;
+  pwire [4:0]       btbx_jlink2;
+  pwire [`ZERO:0]  btbx_jlnpos2;
+  pwire [`ZERO:0] btbx_jlnjpos2;
+  pwire [4:0]       btbx_jlink3;
+  pwire [`ZERO:0]  btbx_jlnpos3;
+  pwire [`ZERO:0] btbx_jlnjpos3;
+  pwire [3:0][3:0] btbx_joff;
   reg  [3:0] btbx_joff_reg[3:0];
   reg  [3:0] btbx_joff_reg2[3:0];
   reg  [3:0] btbx_joff_reg3[3:0];
   reg  [3:0] btbx_joff_reg4[3:0];
   reg  btbxx_way_reg;
-  wire [62:0] btbx_tgt0;
-  wire [62:0] btbx_tgt1;
-  wire [62:0] btbx_tgt2;
-  wire [62:0] btbx_tgt3;
+  pwire [62:0] btbx_tgt0;
+  pwire [62:0] btbx_tgt1;
+  pwire [62:0] btbx_tgt2;
+  pwire [62:0] btbx_tgt3;
   reg [62:0] btbx_tgt0_reg;
   reg [62:0] btbx_tgt1_reg;
   reg [62:0] btbx_tgt2_reg;
@@ -770,7 +770,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg [62:0] btbx_tgt1_reg4;
   reg [62:0] btbx_tgt2_reg4;
   reg [62:0] btbx_tgt3_reg4;
-  wire [3:0] btbx_cond;
+  pwire [3:0] btbx_cond;
   reg [3:0] btbx_cond_reg;
   reg [3:0] btbx_cond_reg2;
   reg [3:0] btbx_cond_reg3;
@@ -783,9 +783,9 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg btbt_can_ins_reg3;
   reg btb_can_ins_reg4;
   
-  wire btbt_can_ins;
+  pwire btbt_can_ins;
   
-  wire btb_hold_except;
+  pwire btb_hold_except;
   reg read_set_flag,read_set_flag_reg;
   
   reg [7:0][3:0] btbx_attr_reg;
@@ -793,50 +793,50 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   reg [7:0][3:0] btbx_attr_reg3;
   reg [7:0][3:0] btbx_attr_reg4;
 
-  wire jlnin,jlnint,jlninx;  
+  pwire jlnin,jlnint,jlninx;  
   
-  wire [511:0] bus_data_cvt;
+  pwire [511:0] bus_data_cvt;
 
-  wire [5:0] lpar30;
-  wire [5:0] lpar31;
-  wire [5:0] lpar20;
-  wire [5:0] lpar21;
-  wire [5:0] lpar10;
-  wire [5:0] lpar11;
-  wire [5:0] lpar00;
-  wire [5:0] lpar01;
- // wire [5:0] lcpar0;
+  pwire [5:0] lpar30;
+  pwire [5:0] lpar31;
+  pwire [5:0] lpar20;
+  pwire [5:0] lpar21;
+  pwire [5:0] lpar10;
+  pwire [5:0] lpar11;
+  pwire [5:0] lpar00;
+  pwire [5:0] lpar01;
+ // pwire [5:0] lcpar0;
   //wire [5:0] lcpar1;
-//  wire instrEn2=instr
-  wire jumpTK_btb_fstall;
+//  pwire instrEn2=instr
+  pwire jumpTK_btb_fstall;
   reg jumpTK_en;
   reg [64:0] jumpTK_addr;
   reg [3:0] jumpTK_attr;
 
-  wire [3:0] btb_attr0;
-  wire [3:0] btb_attr1;
-  wire [3:0] btb_attr2;
-  wire [3:0] btb_attr3;
-  wire [3:0] btbx_attr0;
-  wire [3:0] btbx_attr1;
-  wire [3:0] btbx_attr2;
-  wire [3:0] btbx_attr3;
-  wire [3:0] btb_attr;
+  pwire [3:0] btb_attr0;
+  pwire [3:0] btb_attr1;
+  pwire [3:0] btb_attr2;
+  pwire [3:0] btb_attr3;
+  pwire [3:0] btbx_attr0;
+  pwire [3:0] btbx_attr1;
+  pwire [3:0] btbx_attr2;
+  pwire [3:0] btbx_attr3;
+  pwire [3:0] btb_attr;
 
-  wire jlninx0,jlninx1,jlninx2,jlninx3;
-  wire jlnin0,jlnin1,jlnin2,jlnin3;
-  wire [4:0] btbx_jlnoff;
-  wire [4:0] btb_jlnoff;
-  wire [4:0] btbx_lnpos0;
-  wire [4:0] btbx_lnpos1;
-  wire [4:0] btbx_lnpos2;
-  wire [4:0] btbx_lnpos3;
-  wire [4:0] btb_lnpos0;
-  wire [4:0] btb_lnpos1;
-  wire [4:0] btb_lnpos2;
-  wire [4:0] btb_lnpos3;
-  wire btb_jlnin0,btb_jlnin1,btb_jlnin2,btb_jlnin3;
-  wire [3:0] tbuf_error;
+  pwire jlninx0,jlninx1,jlninx2,jlninx3;
+  pwire jlnin0,jlnin1,jlnin2,jlnin3;
+  pwire [4:0] btbx_jlnoff;
+  pwire [4:0] btb_jlnoff;
+  pwire [4:0] btbx_lnpos0;
+  pwire [4:0] btbx_lnpos1;
+  pwire [4:0] btbx_lnpos2;
+  pwire [4:0] btbx_lnpos3;
+  pwire [4:0] btb_lnpos0;
+  pwire [4:0] btb_lnpos1;
+  pwire [4:0] btb_lnpos2;
+  pwire [4:0] btb_lnpos3;
+  pwire btb_jlnin0,btb_jlnin1,btb_jlnin2,btb_jlnin3;
+  pwire [3:0] tbuf_error;
   reg [3:0] tbuf_error_reg;
   reg [2:0] p_inv_stored;
   reg [2:0][43:0] p_inv_data;
@@ -847,7 +847,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   generate
       genvar k,j;
       for(k=0;k<4;k=k+1) begin : ecc_strip_gen
-          wire par0,par1;
+          pwire par0,par1;
           //front_strip_ECC ecc0_mod(bus_data_reg[39*2*k+:39],write_data[65*k+:32],par0);
           //front_strip_ECC ecc1_mod(bus_data_reg[39*2*k+39+:39],write_data[65*k+32+:32],par1);
           assign write_data[65*k+:64]=bus_data_cvt[64*k+:64];
@@ -897,7 +897,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   
       end
       for (j=0;j<12;j=j+1) begin :INSN
-          wire [3:0] isJ;
+          pwire [3:0] isJ;
           assign halt_d[0]=isJ[0] ? pre_jbefore[j] && jdec_halt[0] : 1'bz
           assign halt_d[1]=isJ[0] ? pre_jbefore[j] && jdec_halt[1] : 1'bz
           assign halt_d[2]=isJ[0] ? pre_jbefore[j] && jdec_halt[2] : 1'bz
@@ -1569,7 +1569,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   .write1_wen(jupd1_en&jupd1_ght_en)
   );
 
-  wire [5:0] rnd1;
+  pwire [5:0] rnd1;
 
   LFSR16_6 lfsr0_mod(
   clk,
@@ -1619,7 +1619,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   .write_wen(btb_in_link & btb_hit&instrEn&~fstall)
   );
  
-  wire kkk;
+  pwire kkk;
 
   assign kkk=pff==16'hfe47;
   
@@ -2557,7 +2557,7 @@ module frontReq_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -2579,7 +2579,7 @@ endmodule
 
 module front_strip_ECC(dataIn,dataOut,par);
   input [39:1] dataIn;
-  output [31:0] dataOut;
+  output pwire [31:0] dataOut;
   output par;
   
   assign dataOut={dataIn[38:33],dataIn[31:17],dataIn[15:9],dataIn[7:5],dataIn[3]};

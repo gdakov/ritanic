@@ -36,21 +36,21 @@ module cvt_FP_I_mod(
   input isSNG;
   input is32b;
   input verbatim;
-  output [64:0] res;
-  output alt;
+  output pwire [64:0] res;
+  output pwire alt;
 
-  wire [15:0] shift;
-  wire [64:0] bits;
-  wire [64:0] bits2;
-  wire [71:0] val_imm;
+  pwire [15:0] shift;
+  pwire [64:0] bits;
+  pwire [64:0] bits2;
+  pwire [71:0] val_imm;
   reg [71:0] val_imm_reg;
-  wire [64:0] val;
+  pwire [64:0] val;
   reg [15:0] shift_reg;
-  wire sign;
+  pwire sign;
   reg sign_reg;
   reg is32b_reg;
   reg clkEn_reg;
-  wire coUP,coNUP;
+  pwire coUP,coNUP;
   reg coUP_reg,coNUP_reg;
 
   assign shift=isEXT ? {A[79],A[81],A[78:65]} : 16'bz;

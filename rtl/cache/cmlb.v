@@ -30,7 +30,7 @@ module cmlb_ram(
   input clk;
   input rst;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -80,9 +80,9 @@ module cmlb_way(
   input [IP_WIDTH-1:0] addr;
   input tr_jump;
   input [20:0] sproc;
-  output [OUTDATA_WIDTH-1:0] read_data;
-  output [2:0] read_lru;
-  output read_hit;
+  output pwire [OUTDATA_WIDTH-1:0] read_data;
+  output pwire [2:0] read_lru;
+  output pwire read_hit;
   input [OUTDATA_WIDTH-1:0] write_data;
   input write_wen;
   input write_tr;
@@ -90,18 +90,18 @@ module cmlb_way(
   input init;
   input [2:0] newLRU;
   
-  wire valid;
-  wire [IP_WIDTH-1:0] ip;
-  wire write_wen_ram;
-  wire [DATA_WIDTH-1:0] read_data_ram;
-  wire [DATA_WIDTH-1:0] write_data_ram;
-  wire [DATA_WIDTH-1:0] write_data_new;
-  wire [DATA_WIDTH-1:0] write_data_same;
-  wire [DATA_WIDTH-1:0] write_data_init;
+  pwire valid;
+  pwire [IP_WIDTH-1:0] ip;
+  pwire write_wen_ram;
+  pwire [DATA_WIDTH-1:0] read_data_ram;
+  pwire [DATA_WIDTH-1:0] write_data_ram;
+  pwire [DATA_WIDTH-1:0] write_data_new;
+  pwire [DATA_WIDTH-1:0] write_data_same;
+  pwire [DATA_WIDTH-1:0] write_data_init;
 
-  wire [OUTDATA_WIDTH-1:0] mlb_data;
+  pwire [OUTDATA_WIDTH-1:0] mlb_data;
 
-  wire validN;
+  pwire validN;
   
   reg [IP_WIDTH-1:0] addr_reg;
 
@@ -223,30 +223,30 @@ module cmlb(
   input read_thread;
   input fStall;
   input [IP_WIDTH-1:0] addr;
-  output [OUTDATA_WIDTH-1:0] read_data;
+  output pwire [OUTDATA_WIDTH-1:0] read_data;
   input transl_jump;
-  output read_hit;
+  output pwire read_hit;
   input [OUTDATA_WIDTH-1:0] write_data;
   input write_wen;
   input msrss_en;
   input [15:0] msrss_addr;
   input [64:0] msrss_data;
   
-  wire [3:0][2:0] newLRU;
-  wire [3:0][2:0] oldLRU;
-  wire [2:0] LRU_hit;
-  wire [3:0] read_hit_way;
+  pwire [3:0][2:0] newLRU;
+  pwire [3:0][2:0] oldLRU;
+  pwire [2:0] LRU_hit;
+  pwire [3:0] read_hit_way;
   reg init_pending;
   reg [5:0] init_count;
   reg init_pending_reg;
-  wire [5:0] init_count_d;
-  wire [23:0] sproc;
-  wire [1:0][23:0] pproc;
-  wire [1:0][39:0] dummy_pproc;
-  wire [1:0][23:0] vmproc;
-  wire [1:0][39:0] dummy_vmproc;
-  wire [1:0][63:0] mflags;
-  wire  [OUTDATA_WIDTH-1:0] read_data_pmm;
+  pwire [5:0] init_count_d;
+  pwire [23:0] sproc;
+  pwire [1:0][23:0] pproc;
+  pwire [1:0][39:0] dummy_pproc;
+  pwire [1:0][23:0] vmproc;
+  pwire [1:0][39:0] dummy_vmproc;
+  pwire [1:0][63:0] mflags;
+  pwire  [OUTDATA_WIDTH-1:0] read_data_pmm;
   reg [IP_WIDTH-1:0] addr_reg;
   
   reg read_clkEn_reg;

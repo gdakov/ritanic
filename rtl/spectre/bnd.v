@@ -15,20 +15,20 @@ module bnd(
   input rst,
   input [64:0] A,
   input [64:0] B,
-  output reg [64:0] C
+  output pwire reg [64:0] C
   );
-  wire [43:0] DB;
-  wire [43:0] DA;
+  pwire [43:0] DB;
+  pwire [43:0] DA;
   reg [43:0] DB_reg;
   reg [43:0] DA_reg;
   reg [43:0] DB_reg2;
   reg [43:0] A_reg;
   reg [43:0] A_reg2;
-  wire cout0;
-  wire [4:0] sh;
+  pwire cout0;
+  pwire [4:0] sh;
   reg [4:0] sh_reg;
-  wire [31:0] first;
-  wire has;
+  pwire [31:0] first;
+  pwire has;
 
   adder #(44) sub0_mod(B[43:0],~A[43:0],DA,1'b1,B[64],cout0,,,);
   adder #(44) add0_mod(B[43:0],A[43:0],DB,1'b1,~B[64],,,,);

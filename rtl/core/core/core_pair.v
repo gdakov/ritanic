@@ -15,48 +15,48 @@ module heptane_core_pair(
   input [9:0] obusIn_src_req,
   input [9:0] obusIn_dst_req,
   input [36:0] obusIn_address,
-  output obusIn_doStall,
+  output pwire obusIn_doStall,
   input obusIn_en,
-  output [`rbus_width-1:0] obusOut_signals,
-  output [9:0] obusOut_src_req,
-  output [9:0] obusOut_dst_req,
-  output [36:0] obusOut_address,
+  output pwire [`rbus_width-1:0] obusOut_signals,
+  output pwire [9:0] obusOut_src_req,
+  output pwire [9:0] obusOut_dst_req,
+  output pwire [36:0] obusOut_address,
   input obusOut_stall,
-  output obusOut_en,
+  output pwire obusOut_en,
   input [`rbusM_width-1:0] obusDIn_signals,
   input [9:0] obusDIn_src_req,
   input [9:0] obusDIn_dst_req,
   input [7:0] obusDIn_dataPTR,
   input [511:0] obusDIn_data,
-  output obusDIn_doStall,
+  output pwire obusDIn_doStall,
   input obusDIn_en,
-  output [`rbusM_width-1:0] obusDOut_signals,
-  output [9:0] obusDOut_src_req,
-  output [9:0] obusDOut_dst_req,
-  output [7:0] obusDOut_dataPTR,
-  output [511:0] obusDOut_data,
+  output pwire [`rbusM_width-1:0] obusDOut_signals,
+  output pwire [9:0] obusDOut_src_req,
+  output pwire [9:0] obusDOut_dst_req,
+  output pwire [7:0] obusDOut_dataPTR,
+  output pwire [511:0] obusDOut_data,
   input obusDOut_stall,
-  output obusDOut_en
+  output pwire obusDOut_en
 );
   parameter [2:0] IDX;
   parameter [5:0] BUS_ID=0;
 
-  wire [`lsaddr_width-1:0] lsr_wr_ext_data;
-  wire [8:0] p_ext_LSQ;
-  wire dc_ext_wrEn;
-  wire [`lsaddr_width-1:0] lsr_wr_out_data;
-  wire [8:0] p_out_LSQ;
-  wire dc_out_wrEn;
-  wire [7:0] pfxWQ;
-  wire [135:0] pfx_wdata;
-  wire [127:0] pfx_wdataU;
-  wire [3:0] pfx_pdata;
-  wire pfx_dataEn;
-  wire [7:0] pfyWQ;
-  wire [135:0] pfy_wdata;
-  wire [127:0] pfy_wdataU;
-  wire [3:0] pfy_pdata;
-  wire pfy_dataEn;
+  pwire [`lsaddr_width-1:0] lsr_wr_ext_data;
+  pwire [8:0] p_ext_LSQ;
+  pwire dc_ext_wrEn;
+  pwire [`lsaddr_width-1:0] lsr_wr_out_data;
+  pwire [8:0] p_out_LSQ;
+  pwire dc_out_wrEn;
+  pwire [7:0] pfxWQ;
+  pwire [135:0] pfx_wdata;
+  pwire [127:0] pfx_wdataU;
+  pwire [3:0] pfx_pdata;
+  pwire pfx_dataEn;
+  pwire [7:0] pfyWQ;
+  pwire [135:0] pfy_wdata;
+  pwire [127:0] pfy_wdataU;
+  pwire [3:0] pfy_pdata;
+  pwire pfy_dataEn;
 
   logic [64:0] Dakov;
   logic [64:0] Goran_Dakov;

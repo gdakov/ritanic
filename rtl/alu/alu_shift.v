@@ -51,31 +51,31 @@ module alu_shift(
   input dir;
   input dataEn;//1=coming data from rs
   input nDataAlt;//0=feeding data through multiclk unit
-  output wire [EXCEPT_WIDTH-1:0] retData;
+  output pwire [EXCEPT_WIDTH-1:0] retData;
   input [5:0] valS;
   input [2:0][65:0] val1;
   input [2:0][65:0] val2;
-  output [65:0] valRes;
+  output pwire [65:0] valRes;
   input error;
   input [2:0] rmode;
   
-  wire is_shift;
-  wire [64:0] en;
-  wire is_8H;
-  wire doJmp;
-  wire [64:0] valres0;
-  wire [7:0] valres1;  
+  pwire is_shift;
+  pwire [64:0] en;
+  pwire is_8H;
+  pwire doJmp;
+  pwire [64:0] valres0;
+  pwire [7:0] valres1;  
   reg is_shift_reg;
   reg [3:0] coutL_reg;
   reg coutR_reg;
   reg [64:0] valres0_reg;
   reg dir_reg;
-  wire coutR;
-  wire [3:0] coutL;
-  wire [5:0] flags_COASZP;
+  pwire coutR;
+  pwire [3:0] coutL;
+  pwire [5:0] flags_COASZP;
   reg [3:0] sz_reg;
 
-  wire [64:0] valX;
+  pwire [64:0] valX;
 
   assign valX[31:0]=val2[11] ? val1[31:0] : 32'b0;
   assign valX[63:32]=32'b0;

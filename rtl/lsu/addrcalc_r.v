@@ -113,7 +113,7 @@ module addrcalc_r(
   input clk;
   input rst;
   input except;
-  output doStall;
+  output pwire doStall;
   input bus_hold;
   input pause_miss;
   input rsStall;
@@ -144,12 +144,12 @@ module addrcalc_r(
   input reqmlb_en;
   input [29:0] reqmlb_addr;
   input [3:0] reqmlb_attr;
-  output reqmlb_ack;
+  output pwire reqmlb_ack;
   input [30:0] reqC_addr;
   input [3:0] reqC_attr;
   input reqC_mlbEn;
-  output [`cmlbData_width-1:0] busC_mlb_data;
-  output busC_mlb_en;
+  output pwire [`cmlbData_width-1:0] busC_mlb_data;
+  output pwire busC_mlb_en;
   input [15:0] msrss_no;
   input msrss_en;
   input msrss_thread;
@@ -157,79 +157,79 @@ module addrcalc_r(
 
   output pageFault;
   output pageFaultX;
-  output [7:0] faultCode;
-  output [8:0] faultNo;
-  output [PADDR_WIDTH-1:8] mOp_addrEven;
-  output [PADDR_WIDTH-1:8] mOp_addrOdd;
-  output [4:0] mOp_sz;
-  output mOp_st;
-  output mOp_en;
-  output mOp_rsEn;
-  output mOp_ioEn;
-//  output mOp_thread;
-  output mOp_lsflag;
-  output [BANK_COUNT-1:0] mOp_banks;
-  output [4:0] mOp_bank0;
-  output mOp_odd;
-  output [1:0] mOp_addr_low;
-  output mOp_split;
-  output [8:0] mOp_regNo;
-  output [8:0] mOp_LSQ;
-  output [9:0] mOp_II;
-  output [5:0] mOp_WQ;
-  output mOp_lsfwd;
-  output [2:0] mOp_type;
-  output [3+1:0] mOp_bread;
-  output [127+8:0] mOp_data;
-  output [1:0] mOp_pbit;
-  output mOp_mlb_miss;
-  output mOp_skip_LDQ;
+  output pwire [7:0] faultCode;
+  output pwire [8:0] faultNo;
+  output pwire [PADDR_WIDTH-1:8] mOp_addrEven;
+  output pwire [PADDR_WIDTH-1:8] mOp_addrOdd;
+  output pwire [4:0] mOp_sz;
+  output pwire mOp_st;
+  output pwire mOp_en;
+  output pwire mOp_rsEn;
+  output pwire mOp_ioEn;
+//  output pwire mOp_thread;
+  output pwire mOp_lsflag;
+  output pwire [BANK_COUNT-1:0] mOp_banks;
+  output pwire [4:0] mOp_bank0;
+  output pwire mOp_odd;
+  output pwire [1:0] mOp_addr_low;
+  output pwire mOp_split;
+  output pwire [8:0] mOp_regNo;
+  output pwire [8:0] mOp_LSQ;
+  output pwire [9:0] mOp_II;
+  output pwire [5:0] mOp_WQ;
+  output pwire mOp_lsfwd;
+  output pwire [2:0] mOp_type;
+  output pwire [3+1:0] mOp_bread;
+  output pwire [127+8:0] mOp_data;
+  output pwire [1:0] mOp_pbit;
+  output pwire mOp_mlb_miss;
+  output pwire mOp_skip_LDQ;
   input FU3Hit;
   input [8:0] FU3reg;
   input [127+8:0] FU3Data;
   input extern_feed;
-  output [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP;
-  output [2:0] writeTlb_wen;
-  output [2:0] [2:0] writeTlb_force_way;
-  output [2:0]  writeTlb_force_way_en;
-  output [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data0;
-  output [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data1;
-  output [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data2;
-  output mlb_clkEn;
-  output cout_secq;
-  output  [TLB_IP_WIDTH-1:0] addrTlb;
-  output [23:0] sproc;
+  output pwire [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP;
+  output pwire [2:0] writeTlb_wen;
+  output pwire [2:0] [2:0] writeTlb_force_way;
+  output pwire [2:0]  writeTlb_force_way_en;
+  output pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data0;
+  output pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data1;
+  output pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data2;
+  output pwire mlb_clkEn;
+  output pwire cout_secq;
+  output pwire  [TLB_IP_WIDTH-1:0] addrTlb;
+  output pwire [23:0] sproc;
   input [TLB_DATA_WIDTH-1:0] mlb_data0;
   input [TLB_DATA_WIDTH-1:0] mlb_data1;
   input mlb_hit;
   input [2:0] mlb_way;
 
-  wire [2:0]new_en;
-  wire [2:0] new_can;
+  pwire [2:0]new_en;
+  pwire [2:0] new_can;
   reg [2:0] new_can_reg;
   reg [2:0] new_can_reg2;
-  wire [2:0] [47:0] new_addr;
-  wire [2:0] [3:0] new_attr;
-  wire [2:0] new_indir;
-  wire [2:0] new_inv;
-  wire [2:0] new_permReq;
+  pwire [2:0] [47:0] new_addr;
+  pwire [2:0] [3:0] new_attr;
+  pwire [2:0] new_indir;
+  pwire [2:0] new_inv;
+  pwire [2:0] new_permReq;
 
-  wire mlb_clkEn;
+  pwire mlb_clkEn;
 
-  wire [2:0] writeTlb_wenC0;
-  wire [2:0] writeTlb_wenHC0;
-  wire [2:0] writeTlb_low0;
+  pwire [2:0] writeTlb_wenC0;
+  pwire [2:0] writeTlb_wenHC0;
+  pwire [2:0] writeTlb_low0;
   reg [2:0] writeTlb_low0_reg;
   reg [2:0] writeTlb_wenC0_reg;
   reg [2:0] writeTlb_wenHC0_reg;
 
-  wire writeTlb_low;
+  pwire writeTlb_low;
 
-  wire [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP0;
-  wire [2:0] writeTlb_wen0;
-  wire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data00;
-  wire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data10;
-  wire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data20;
+  pwire [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP0;
+  pwire [2:0] writeTlb_wen0;
+  pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data00;
+  pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data10;
+  pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data20;
 
   reg [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP0_reg;
   reg [2:0] writeTlb_wen0_reg;
@@ -273,23 +273,23 @@ module addrcalc_r(
   reg [1:0] mOp0_pbit_reg;
   reg error_reg;
 
-  wire [29:0] addrInPage;
-  wire [29:0] addrOffPage;
+  pwire [29:0] addrInPage;
+  pwire [29:0] addrOffPage;
   reg reqmlb_en_reg,mlb_hit_reg,reqmlb_en_reg2;
 //  reg [VADDR_WIDTH-14:0] reqmlb_addr_reg;
   reg mlb_clkEn_reg;
 
-  wire [TLB_DATA_WIDTH-1:0] mlb_data;
-  wire [TLB_DATA_WIDTH-1:0] mlb_data_next;
-  wire mlb_hit;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data_next;
+  pwire mlb_hit;
   
-  wire [14:0] addrMain;
-  wire [13:0] addrNext;
+  pwire [14:0] addrMain;
+  pwire [13:0] addrNext;
 
   reg [2:0] opsize;
-  wire hasBankNext=1'b0;
+  pwire hasBankNext=1'b0;
  
-  wire [2:0] mlb_way;
+  pwire [2:0] mlb_way;
   reg  [2:0] mlb_way_reg;
   reg mlb_is_inv,mlb_is_inv_reg,mlb_is_inv_reg2;
 
@@ -301,9 +301,9 @@ module addrcalc_r(
   reg pause_miss_reg;
   reg pause_miss_reg2;
   
-  wire page_carry;
+  pwire page_carry;
   
-  wire req_bus,req_can;
+  pwire req_bus,req_can;
   reg mlb_proceed;
 
   reg reqmlb_next;
@@ -317,19 +317,19 @@ module addrcalc_r(
   reg [1:0][23:0] vproc;
   reg [1:0][63:0] mflags;
 
-  wire [1:0] fault_mlb;
-  wire [1:0] fault_mlb_next;
+  pwire [1:0] fault_mlb;
+  pwire [1:0] fault_mlb_next;
   //wire [4:0] lastSz;
-  wire [1:0] pageFault_t;
+  pwire [1:0] pageFault_t;
   reg [1:0] pageFault_t_reg; 
-  wire fault_cann;
+  pwire fault_cann;
   reg fault_cann_reg;
   reg mOp_en_reg;
   reg bus_hold_reg;
 
   integer i;
 
-  wire new_miss;
+  pwire new_miss;
 
   assign new_en[0]=reqmlb_en;
   assign new_en[1]=reqC_mlbEn;
@@ -341,7 +341,7 @@ module addrcalc_r(
   assign new_attr[1]=reqC_attr;
   assign new_attr[2]=mOp0_attr_reg;
  
-  wire mop_ack;
+  pwire mop_ack;
 
   assign reqmlb_ack=new_can[0] & ~new_can_reg[0]; 
   assign busC_mlb_en=new_can[1] & ~new_can_reg[1]; 

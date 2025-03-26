@@ -33,7 +33,7 @@ module dcache2_tag_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -79,7 +79,7 @@ module dc2_thag_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write0_addr;
   input [DATA_WIDTH-1:0] write0_data;
   input                  write0_wen;
@@ -152,28 +152,28 @@ module dcache2_tag(
   input req_wodd;
   input req_split;
   inout req_hitE,req_hitO;
-  output req_shitE,req_shitO;
-  output req_exclE,req_exclO;
-  output req_dir_ins_E,req_dir_ins_O;
-  output reg req_hitEL;
-  output reg req_hitOL;
-  output reg req_hitEH;
-  output reg req_hitOH;
+  output pwire req_shitE,req_shitO;
+  output pwire req_exclE,req_exclO;
+  output pwire req_dir_ins_E,req_dir_ins_O;
+  output pwire reg req_hitEL;
+  output pwire reg req_hitOL;
+  output pwire reg req_hitEH;
+  output pwire reg req_hitOH;
   input [4:0] req_LRUe;
   input [4:0] req_LRUo;
   input write_wen;
   input write_dupl;
-  output write_hit;
+  output pwire write_hit;
   input write_exp;
   input write_excl;
   input write_dir_ins;
-  output [35:0] expun_addrE;
-  output [35:0] expun_addrO;
+  output pwire [35:0] expun_addrE;
+  output pwire [35:0] expun_addrO;
   input init;
   input [7:0] initCount;
 
-  wire hitE,hitO;
-  wire write_hitE,write_hitO;
+  pwire hitE,hitO;
+  pwire write_hitE,write_hitO;
   reg [PADDR_WIDTH-9:0] req_addrE_reg;
   reg [PADDR_WIDTH-9:0] req_addrO_reg;
   reg req_odd_reg,req_split_reg;
@@ -182,10 +182,10 @@ module dcache2_tag(
   reg req_wodd_reg,req_wsplit_reg;
   reg write_wen_reg,req_wrtEn_reg;
   reg write_excl_reg,write_dir_ins_reg;
-  wire [`dc2Tag_width-1:0] tag_dataE;
-  wire [`dc2Tag_width-1:0] tag_dataO;
-  wire [`dc2Tag_width-1:0] tag_wDataE;
-  wire [`dc2Tag_width-1:0] tag_wDataO;
+  pwire [`dc2Tag_width-1:0] tag_dataE;
+  pwire [`dc2Tag_width-1:0] tag_dataO;
+  pwire [`dc2Tag_width-1:0] tag_wDataE;
+  pwire [`dc2Tag_width-1:0] tag_wDataO;
   reg req_en_reg;
   reg write_dupl_reg,write_exp_req;
   
@@ -211,7 +211,7 @@ module dcache2_tag(
   .write_wen(write_wen_reg & write_hit & req_wodd_reg || req_en_reg & req_odd_reg || init)
   );
 
-  wire [5:0] POOG;
+  pwire [5:0] POOG;
 
   LFSR16_6 #(16'hf0fe) p_mod(clk,rst,POOG);
 

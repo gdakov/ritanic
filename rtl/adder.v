@@ -19,7 +19,7 @@ module aoi21_array(a11,a12,a2,b);
   input [WIDTH-1:0] a11;
   input [WIDTH-1:0] a12;
   input [WIDTH-1:0] a2;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=((a11 & a12)|a2);
 
@@ -30,7 +30,7 @@ module oai21_array(a11,a12,a2,b);
   input [WIDTH-1:0] a11;
   input [WIDTH-1:0] a12;
   input [WIDTH-1:0] a2;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=((a11 & a12)|a2);
 
@@ -40,7 +40,7 @@ module nor_array(a1,a2,b);
   parameter WIDTH=1;
   input [WIDTH-1:0] a1;
   input [WIDTH-1:0] a2;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=~(a1 | a2);
 
@@ -50,7 +50,7 @@ module nand_array(a1,a2,b);
   parameter WIDTH=1;
   input [WIDTH-1:0] a1;
   input [WIDTH-1:0] a2;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=~(a1 & a2);
 
@@ -60,7 +60,7 @@ module xor_array(a1,a2,b);
   parameter WIDTH=1;
   input [WIDTH-1:0] a1;
   input [WIDTH-1:0] a2;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=a1 ^ a2;
 
@@ -70,7 +70,7 @@ module nxor_array(a1,a2,b);
   parameter WIDTH=1;
   input [WIDTH-1:0] a1;
   input [WIDTH-1:0] a2;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=a1 ~^ a2;
 
@@ -79,7 +79,7 @@ endmodule
 module not_array(a,b);
   parameter WIDTH=1;
   input [WIDTH-1:0] a;
-  output [WIDTH-1:0] b;
+  output pwire [WIDTH-1:0] b;
 
   assign b=a;
 
@@ -89,47 +89,47 @@ endmodule
   parameter WIDTH=44;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out;
-  output [43:0] c_s;
+  output pwire [WIDTH-1:0] out;
+  output pwire [43:0] c_s;
   input cin;
   input en;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
   input [WIDTH-1:0] nP0;
   input [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
 
   assign c_s=C[43:0];
  
@@ -263,47 +263,47 @@ endmodule
   parameter WIDTH=32;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out;
+  output pwire [WIDTH-1:0] out;
   input cin;
   input en;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
 
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
 
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
 
 
   genvar i;
@@ -441,47 +441,47 @@ endmodule
   parameter WIDTH=32;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out;
+  output pwire [WIDTH-1:0] out;
   input cin;
   input en;
-  output cout;
-  output cout11;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout11;
+  output pwire cout16;
+  output pwire cout32;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   genvar i;
@@ -618,56 +618,56 @@ endmodule
   parameter WIDTH=64;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out;
+  output pwire [WIDTH-1:0] out;
   input sub;
   input en;
   input [3:0] ben;
-  output cout;
-  output cout4;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout4;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;//carry in
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;//carry in
+  pwire [WIDTH-1:0] nC1;
  
-  wire [WIDTH-1:0] xb;
+  pwire [WIDTH-1:0] xb;
 
-  wire [WIDTH-1:0] bitEn;
+  pwire [WIDTH-1:0] bitEn;
 
-  wire exp;
+  pwire exp;
   
-  wire cin;
+  pwire cin;
   
   genvar i;
   
@@ -822,82 +822,82 @@ endmodule
   parameter WIDTH=64;
   input [64:0] a;
   input [64:0] b;
-  output [65:0] out;
+  output pwire [65:0] out;
   input [5:0] sub;
   input cin;
   input en;
   input sxtEn;
   input pooh;
   input [1:0] ben;
-  output cout;
-  output cout4;
-  output cout8LL;
-  output cout16;
-  output cout32;
-  output [2:0] cout_sec;
-  output ndiff;
-  output cout44;
+  output pwire cout;
+  output pwire cout4;
+  output pwire cout8LL;
+  output pwire cout16;
+  output pwire cout32;
+  output pwire [2:0] cout_sec;
+  output pwire ndiff;
+  output pwire cout44;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
-  wire [WIDTH-1:0] X1;
-  wire [WIDTH-1:0] nX1;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X1;
+  pwire [WIDTH-1:0] nX1;
   
-  wire [WIDTH-1:0] C1;//carry in
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;//carry in
+  pwire [WIDTH-1:0] nC1;
  
-  wire [WIDTH-1:0] xb;
-  wire [WIDTH-1:0] xa;
+  pwire [WIDTH-1:0] xb;
+  pwire [WIDTH-1:0] xa;
 
-  wire [WIDTH-1:0] bitEn;
+  pwire [WIDTH-1:0] bitEn;
 
-  wire [39:0] unptr;
-  wire [64:0] ptr;
-  wire [3:0] pos_ack;
-  wire [3:0] neg_ack;
-  wire [2:0] pos_flip;
-  wire [2:0] neg_flip;
-  wire cout_sec0;
-  wire [19:0] exbits;
-  wire [11:0] exbits2;
-  wire is_ptr;
-  wire err;
+  pwire [39:0] unptr;
+  pwire [64:0] ptr;
+  pwire [3:0] pos_ack;
+  pwire [3:0] neg_ack;
+  pwire [2:0] pos_flip;
+  pwire [2:0] neg_flip;
+  pwire cout_sec0;
+  pwire [19:0] exbits;
+  pwire [11:0] exbits2;
+  pwire is_ptr;
+  pwire err;
 
-  wire [2:0] pos_flip;
-  wire [2:0] neg_flip;
+  pwire [2:0] pos_flip;
+  pwire [2:0] neg_flip;
 
-  wire exp;
-  wire ndiff;
+  pwire exp;
+  pwire ndiff;
   
-  wire cin;
+  pwire cin;
   
   genvar i;
   
@@ -1087,24 +1087,24 @@ endmodule
 (* align_width="a,out" *) module adder_inc(a,out,en,cout);
   parameter WIDTH=32;
   input [WIDTH-1:0] a;
-  output [WIDTH-1:0] out;
+  output pwire [WIDTH-1:0] out;
   input en;
-  output cout;
+  output pwire cout;
   
 
-  (* align_width *) wire [WIDTH-1:0] P0;
-  (* align_width *) wire [WIDTH-1:0] nP1;
-  (* align_width *) wire [WIDTH-1:0] P2;
-  (* align_width *) wire [WIDTH-1:0] nP3;
-  (* align_width *) wire [WIDTH-1:0] P4;
-  (* align_width *) wire [WIDTH-1:0] nP5;
-  (* align_width *) wire [WIDTH-1:0] P6;
+  (* align_width *) pwire [WIDTH-1:0] P0;
+  (* align_width *) pwire [WIDTH-1:0] nP1;
+  (* align_width *) pwire [WIDTH-1:0] P2;
+  (* align_width *) pwire [WIDTH-1:0] nP3;
+  (* align_width *) pwire [WIDTH-1:0] P4;
+  (* align_width *) pwire [WIDTH-1:0] nP5;
+  (* align_width *) pwire [WIDTH-1:0] P6;
 
-  wire [WIDTH-1:0] P;
-  wire [WIDTH-1:0] nP;
+  pwire [WIDTH-1:0] P;
+  pwire [WIDTH-1:0] nP;
     
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   genvar i;
@@ -1204,8 +1204,8 @@ endmodule
 module adder_FA1(a,b,out,cout);
   input a;
   input b;
-  output out;
-  output cout;
+  output pwire out;
+  output pwire cout;
   
   assign out=a~^b;
   assign cout=a|b;
@@ -1214,8 +1214,8 @@ endmodule
 module adder_FA0(a,b,out,cout);
   input a;
   input b;
-  output out;
-  output cout;
+  output pwire out;
+  output pwire cout;
   
   assign out=a^b;
   assign cout=a&b;
@@ -1227,8 +1227,8 @@ module adder_constCSA(a,b,out1,out2);
   parameter [WIDTH-1:0] CONST=0;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH:0] out1;
-  output [WIDTH:0] out2;
+  output pwire [WIDTH:0] out1;
+  output pwire [WIDTH:0] out2;
   
   genvar i;
   
@@ -1250,8 +1250,8 @@ module adder_CSA(a1,a2,a3,out1,out2);
   input [WIDTH-1:0] a1;
   input [WIDTH-1:0] a2;
   input [WIDTH-1:0] a3;
-  output reg [WIDTH:0] out1;
-  output reg [WIDTH:0] out2;
+  output pwire reg [WIDTH:0] out1;
+  output pwire reg [WIDTH:0] out2;
   
   integer i;
   
@@ -1278,38 +1278,38 @@ module get_carry(a,b,cin,cout); //cout=a bigger or equal than b if b inv, cin=1
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
   input cin;
-  output cout;
+  output pwire cout;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   
@@ -1440,36 +1440,36 @@ endmodule
   input [64:0] b;
   input [64:0] c; //index
   //output [64:0] ptr;
-  output [63+PTRBIT:0] out;
-  output cout_sec;
-  output ndiff;
+  output pwire [63+PTRBIT:0] out;
+  output pwire cout_sec;
+  output pwire ndiff;
   input en;  
   input [3:0] shift;
   input [1:0] sh2;
   inpu swppr;
 
-  wire [WIDTH-1:0] tmp1;
-  wire [WIDTH:0] tmp2;
-  wire [WIDTH-1:0] c1;
-  wire [WIDTH-1:0] c2;
-  wire [WIDTH-1:0] c3;
+  pwire [WIDTH-1:0] tmp1;
+  pwire [WIDTH:0] tmp2;
+  pwire [WIDTH-1:0] c1;
+  pwire [WIDTH-1:0] c2;
+  pwire [WIDTH-1:0] c3;
 
-  wire dummy1;
-  wire dummy2;
+  pwire dummy1;
+  pwire dummy2;
   
-  wire [WIDTH-1:0] xorab;
-  wire [WIDTH-1:0] nxorab;
-  wire [WIDTH-1:0] andab;
-  wire [WIDTH-1:0] orab;
-  wire cout_sec0,cout_sec1;
-  wire [3:0] pos_ack;
-  wire [3:0] neg_ack;
-  wire err=a[64] ~^ c[64] || c[64] & ~shift[0];
+  pwire [WIDTH-1:0] xorab;
+  pwire [WIDTH-1:0] nxorab;
+  pwire [WIDTH-1:0] andab;
+  pwire [WIDTH-1:0] orab;
+  pwire cout_sec0,cout_sec1;
+  pwire [3:0] pos_ack;
+  pwire [3:0] neg_ack;
+  pwire err=a[64] ~^ c[64] || c[64] & ~shift[0];
 
-  wire [43:0] c_s;
+  pwire [43:0] c_s;
 
-  wire [63+PTRBIT:0] ptr=(c[64] & shift==4'b1) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
-  wire [64:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
+  pwire [63+PTRBIT:0] ptr=(c[64] & shift==4'b1) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
+  pwire [64:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
 
   genvar k;
   
@@ -1508,51 +1508,51 @@ endmodule
   input clk;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out1;
-  output [WIDTH-1:0] out2;
+  output pwire [WIDTH-1:0] out1;
+  output pwire [WIDTH-1:0] out2;
   input cin;
   input en1,en2;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
   reg [WIDTH-1:0] nP4_reg;
   reg [WIDTH-1:0] nG4_reg;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   genvar i;
@@ -1694,51 +1694,51 @@ endmodule
   parameter WIDTH=32;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out0;
-  output [WIDTH-1:0] out1;
-  output [31:0] out2;
+  output pwire [WIDTH-1:0] out0;
+  output pwire [WIDTH-1:0] out1;
+  output pwire [31:0] out2;
   input cin;
   input en0;
   input en1;
   input low32;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   genvar i;
@@ -1891,49 +1891,49 @@ endmodule
   input [WIDTH-1:0] biten;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out0;
-  output [WIDTH-1:0] out1;
+  output pwire [WIDTH-1:0] out0;
+  output pwire [WIDTH-1:0] out1;
   input cin;
   input en0;
   input en1;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   genvar i;
@@ -2070,49 +2070,49 @@ endmodule
   parameter WIDTH=32;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out0;
-  output [WIDTH-1:0] out1;
+  output pwire [WIDTH-1:0] out0;
+  output pwire [WIDTH-1:0] out1;
   input cin;
   input en0;
   input en1;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1;
-  wire [WIDTH-1:0] nC1;
+  pwire [WIDTH-1:0] C1;
+  pwire [WIDTH-1:0] nC1;
  
   
   genvar i;
@@ -2250,50 +2250,50 @@ endmodule
   parameter WIDTH=32;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out0;
-  output [WIDTH-1:0] out1;
+  output pwire [WIDTH-1:0] out0;
+  output pwire [WIDTH-1:0] out1;
   input cin0,cin1;
   input en0,en1;
-  output cout0,cout1;
-  output cout0_53,cout1_53;
+  output pwire cout0,cout1;
+  output pwire cout0_53,cout1_53;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] Ca;
-  wire [WIDTH-1:0] nCa;
-  wire [WIDTH-1:0] Cb;
-  wire [WIDTH-1:0] nCb;
+  pwire [WIDTH-1:0] Ca;
+  pwire [WIDTH-1:0] nCa;
+  pwire [WIDTH-1:0] Cb;
+  pwire [WIDTH-1:0] nCb;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1a;
-  wire [WIDTH-1:0] nC1a;
-  wire [WIDTH-1:0] C1b;
-  wire [WIDTH-1:0] nC1b;
+  pwire [WIDTH-1:0] C1a;
+  pwire [WIDTH-1:0] nC1a;
+  pwire [WIDTH-1:0] C1b;
+  pwire [WIDTH-1:0] nC1b;
  
   
   genvar i;
@@ -2454,48 +2454,48 @@ endmodule
   parameter WIDTH=32;
   input [WIDTH:0] a;
   input [WIDTH:0] b;
-  output [WIDTH:0] out0;
-  output [WIDTH:0] out1;
+  output pwire [WIDTH:0] out0;
+  output pwire [WIDTH:0] out1;
   input cin;
   input en0;
   input en1;
-  output cout;
-  output cout8;
-  output cout16;
-  output cout32;
+  output pwire cout;
+  output pwire cout8;
+  output pwire cout16;
+  output pwire cout32;
   
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] C;
-  wire [WIDTH-1:0] nC;
+  pwire [WIDTH-1:0] C;
+  pwire [WIDTH-1:0] nC;
 
-  wire [WIDTH:0] X;
-  wire [WIDTH:0] nX;
+  pwire [WIDTH:0] X;
+  pwire [WIDTH:0] nX;
   
-  wire [WIDTH:0] C1;
-  wire [WIDTH:0] nC1;
+  pwire [WIDTH:0] C1;
+  pwire [WIDTH:0] nC1;
  
   
   genvar i;
@@ -2634,53 +2634,53 @@ endmodule
   input clk;
   input [WIDTH-1:0] a;
   input [WIDTH-1:0] b;
-  output [WIDTH-1:0] out0;
-  output [WIDTH-1:0] out1;
+  output pwire [WIDTH-1:0] out0;
+  output pwire [WIDTH-1:0] out1;
   input cin0,cin1;
   input en0,en1;
-  output cout0,cout1;
-  output cout0_53,cout1_53;
+  output pwire cout0,cout1;
+  output pwire cout0_53,cout1_53;
   
 
-  (* align_width *) wire [WIDTH-1:0] nP0;
-  (* align_width *) wire [WIDTH-1:0] nG0;
+  (* align_width *) pwire [WIDTH-1:0] nP0;
+  (* align_width *) pwire [WIDTH-1:0] nG0;
 
-  (* align_width *) wire [WIDTH-1:0] P1;
-  (* align_width *) wire [WIDTH-1:0] G1;
+  (* align_width *) pwire [WIDTH-1:0] P1;
+  (* align_width *) pwire [WIDTH-1:0] G1;
 
-  (* align_width *) wire [WIDTH-1:0] nP2;
-  (* align_width *) wire [WIDTH-1:0] nG2;
+  (* align_width *) pwire [WIDTH-1:0] nP2;
+  (* align_width *) pwire [WIDTH-1:0] nG2;
 
-  (* align_width *) wire [WIDTH-1:0] P3;
-  (* align_width *) wire [WIDTH-1:0] G3;
+  (* align_width *) pwire [WIDTH-1:0] P3;
+  (* align_width *) pwire [WIDTH-1:0] G3;
 
-  (* align_width *) wire [WIDTH-1:0] nP4;
-  (* align_width *) wire [WIDTH-1:0] nG4;
+  (* align_width *) pwire [WIDTH-1:0] nP4;
+  (* align_width *) pwire [WIDTH-1:0] nG4;
 
   reg [WIDTH-1:0] nP4_reg;
   reg [WIDTH-1:0] nG4_reg;
   
-  (* align_width *) wire [WIDTH-1:0] P5;
-  (* align_width *) wire [WIDTH-1:0] G5;
+  (* align_width *) pwire [WIDTH-1:0] P5;
+  (* align_width *) pwire [WIDTH-1:0] G5;
 
-  (* align_width *) wire [WIDTH-1:0] nP6;
-  (* align_width *) wire [WIDTH-1:0] nG6;
+  (* align_width *) pwire [WIDTH-1:0] nP6;
+  (* align_width *) pwire [WIDTH-1:0] nG6;
 
-  (* align_width *) wire [WIDTH-1:0] P7;
-  (* align_width *) wire [WIDTH-1:0] G7;
+  (* align_width *) pwire [WIDTH-1:0] P7;
+  (* align_width *) pwire [WIDTH-1:0] G7;
 
-  wire [WIDTH-1:0] Ca;
-  wire [WIDTH-1:0] nCa;
-  wire [WIDTH-1:0] Cb;
-  wire [WIDTH-1:0] nCb;
+  pwire [WIDTH-1:0] Ca;
+  pwire [WIDTH-1:0] nCa;
+  pwire [WIDTH-1:0] Cb;
+  pwire [WIDTH-1:0] nCb;
 
-  wire [WIDTH-1:0] X;
-  wire [WIDTH-1:0] nX;
+  pwire [WIDTH-1:0] X;
+  pwire [WIDTH-1:0] nX;
   
-  wire [WIDTH-1:0] C1a;
-  wire [WIDTH-1:0] nC1a;
-  wire [WIDTH-1:0] C1b;
-  wire [WIDTH-1:0] nC1b;
+  pwire [WIDTH-1:0] C1a;
+  pwire [WIDTH-1:0] nC1a;
+  pwire [WIDTH-1:0] C1b;
+  pwire [WIDTH-1:0] nC1b;
  
   
   genvar i;

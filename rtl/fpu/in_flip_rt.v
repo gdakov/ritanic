@@ -23,9 +23,9 @@ module in_flip_rt(
   input in_en;
   output pause;
   input [WIDTH-1:0] d_in;
-  output [WIDTH-1:0] d_out;
+  output pwire [WIDTH-1:0] d_out;
   input dout_en;
-  output do_;
+  output pwire do_;
 
   reg [CNT-1:0] free;
   reg [WIDTH-1:0] data[CNT-1:0];
@@ -33,15 +33,15 @@ module in_flip_rt(
   reg [CNT-1:0] den_reg;
   reg [CNT-1:0] den_reg2;
  // reg [CNT-1:0] den_reg3;
-  wire [CNT-1:0] first;
-  wire has;
-  wire [CNT-1:0] firstN;
-  wire hasN;
+  pwire [CNT-1:0] first;
+  pwire has;
+  pwire [CNT-1:0] firstN;
+  pwire hasN;
   reg [CNT-1:0] firstN_reg;
   reg hasN_reg;
   reg [CNT-1:0] firstN_reg2;
   reg hasN_reg2;
-  wire [4:0] cntFree_or_less;
+  pwire [4:0] cntFree_or_less;
 //  reg [CNT-1:0] firstN_reg3;
 //  reg hasN_reg3;
   integer t;

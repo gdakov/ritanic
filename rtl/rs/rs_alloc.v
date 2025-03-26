@@ -29,15 +29,15 @@ module rsAlloc2(
   input alloc0;
   input alloc1;
   input [WIDTH-1:0] bufFree;
-  output [WIDTH-1:0] newRsSelect0;
-  output [WIDTH-1:0] newRsSelect1;
-  output doStall;
+  output pwire [WIDTH-1:0] newRsSelect0;
+  output pwire [WIDTH-1:0] newRsSelect1;
+  output pwire doStall;
 
-  wire [WIDTH-1:0] select0;
-  wire [WIDTH-1:0] select1;
-  wire found0;
-  wire found1;
-  wire selectsEqual;
+  pwire [WIDTH-1:0] select0;
+  pwire [WIDTH-1:0] select1;
+  pwire found0;
+  pwire found1;
+  pwire selectsEqual;
 
   
   bit_find_first_bit first_mod(
@@ -79,19 +79,19 @@ module rsAlloc3(
   input alloc1;
   input alloc2;
   input [WIDTH-1:0] bufFree;
-  output [WIDTH-1:0] newRsSelect0;
-  output [WIDTH-1:0] newRsSelect1;
-  output [WIDTH-1:0] newRsSelect2;
-  output doStall;
+  output pwire [WIDTH-1:0] newRsSelect0;
+  output pwire [WIDTH-1:0] newRsSelect1;
+  output pwire [WIDTH-1:0] newRsSelect2;
+  output pwire doStall;
   input stall;
 
-  wire [WIDTH-1:0] select0;
-  wire [WIDTH-1:0] select1;
-  wire [WIDTH-1:0] select2;
-  wire found0;
-  wire found1;
-  wire found2;
-  wire error;
+  pwire [WIDTH-1:0] select0;
+  pwire [WIDTH-1:0] select1;
+  pwire [WIDTH-1:0] select2;
+  pwire found0;
+  pwire found1;
+  pwire found2;
+  pwire error;
 
   
   bit_find_first_bit #(WIDTH) first_mod(

@@ -33,7 +33,7 @@ module wtmiss_ram(
   input rst;
   input read_clkEn;
   input [ADDR_WIDTH-1:0] read_addr;
-  output [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -152,7 +152,7 @@ module wtmiss(
   input except;
   input except_thread;
   input read_clkEn;
-  output reg doSkip;
+  output pwire reg doSkip;
 
   input miss0;
   input mOp0_en;
@@ -171,20 +171,20 @@ module wtmiss(
   input [3:0] mOp0_attr;
   input mOp0_lsflag;
 
-  output mOp0_en_o;
-  output mOp0_thread_o;
+  output pwire mOp0_en_o;
+  output pwire mOp0_thread_o;
   //input [VADDR_WIDTH-1:0] mOp0_addrMain_o;
-  output [1:0] mOp0_type_o;
-  output [4:0] mOp0_sz_o;
-  output [BANK_COUNT-1:0] mOp0_banks_o;
-  output [4:0] mOp0_bank0_o;
-  output mOp0_odd_o;
-  output [1:0] mOp0_addr_low_o;
-  output mOp0_split_o;
-  output [8:0] mOp0_LSQ_o;
-  output [9:0] mOp0_II_o;
-  output [5:0] mOp0_WQ_o;
-  output mOp0_lsflag_o;
+  output pwire [1:0] mOp0_type_o;
+  output pwire [4:0] mOp0_sz_o;
+  output pwire [BANK_COUNT-1:0] mOp0_banks_o;
+  output pwire [4:0] mOp0_bank0_o;
+  output pwire mOp0_odd_o;
+  output pwire [1:0] mOp0_addr_low_o;
+  output pwire mOp0_split_o;
+  output pwire [8:0] mOp0_LSQ_o;
+  output pwire [9:0] mOp0_II_o;
+  output pwire [5:0] mOp0_WQ_o;
+  output pwire mOp0_lsflag_o;
 
   input miss1;
   input mOp1_en;
@@ -203,54 +203,54 @@ module wtmiss(
   input [3:0] mOp1_attr;
   input mOp1_lsflag;
   
-  output mOp1_en_o;
-  output mOp1_thread_o;
-  output [4:0] mOp1_sz_o;
-  output [BANK_COUNT-1:0] mOp1_banks_o;
-  output [1:0] mOp1_type_o;
-  output [4:0] mOp1_bank0_o;
-  output mOp1_odd_o;
-  output [1:0] mOp1_addr_low_o;
-  output mOp1_split_o;
-  output [8:0] mOp1_LSQ_o;
-  output [9:0] mOp1_II_o;
-  output [5:0] mOp1_WQ_o;
-  output mOp1_lsflag_o;
+  output pwire mOp1_en_o;
+  output pwire mOp1_thread_o;
+  output pwire [4:0] mOp1_sz_o;
+  output pwire [BANK_COUNT-1:0] mOp1_banks_o;
+  output pwire [1:0] mOp1_type_o;
+  output pwire [4:0] mOp1_bank0_o;
+  output pwire mOp1_odd_o;
+  output pwire [1:0] mOp1_addr_low_o;
+  output pwire mOp1_split_o;
+  output pwire [8:0] mOp1_LSQ_o;
+  output pwire [9:0] mOp1_II_o;
+  output pwire [5:0] mOp1_WQ_o;
+  output pwire mOp1_lsflag_o;
   
-  output [VADDR_WIDTH-1:0] mEx0_addr;
-  output [4:0] mEx0_sz;
-  output [3:0] mEx0_attr;
-  output mEx0_en;
-  output [VADDR_WIDTH-1:0] mEx1_addr;
-  output [4:0] mEx1_sz;
-  output [3:0] mEx1_attr;
-  output mEx1_en;
-  output mlbreq_en;
-  output [VADDR_WIDTH-15:0] mlbreq_addr;
-  output [3:0] mlbreq_attr;
+  output pwire [VADDR_WIDTH-1:0] mEx0_addr;
+  output pwire [4:0] mEx0_sz;
+  output pwire [3:0] mEx0_attr;
+  output pwire mEx0_en;
+  output pwire [VADDR_WIDTH-1:0] mEx1_addr;
+  output pwire [4:0] mEx1_sz;
+  output pwire [3:0] mEx1_attr;
+  output pwire mEx1_en;
+  output pwire mlbreq_en;
+  output pwire [VADDR_WIDTH-15:0] mlbreq_addr;
+  output pwire [3:0] mlbreq_attr;
   input mlbreq_ack;
 
-  wire [VADDR_WIDTH-1:0] RaddrMain[1:0];
-  wire enOut,last_out,enOutNull;
+  pwire [VADDR_WIDTH-1:0] RaddrMain[1:0];
+  pwire enOut,last_out,enOutNull;
   reg [2:0] cnt;
   reg [2:0] cnt_reg;
   reg [3:0] stepW;
-  wire [2:0] cnt_plus;
-  wire [2:0] cnt_minus;
+  pwire [2:0] cnt_plus;
+  pwire [2:0] cnt_minus;
   reg  [1:0] read_addr;
-  wire [1:0] read_addr_d;
+  pwire [1:0] read_addr_d;
   reg  [1:0] write_addr;
-  wire [1:0] write_addr_d;
+  pwire [1:0] write_addr_d;
   reg doSkip_reg,doSkip_reg2,doSkip_reg3;
 
-  wire [MOP_WIDTH-1:0] read_mop[1:0];
+  pwire [MOP_WIDTH-1:0] read_mop[1:0];
   reg [MOP_WIDTH-1:0] read_mop_reg[1:0];
-  wire [MOP_WIDTH-1:0] write_mop[1:0];
-  wire [1:0] rdmiss;
+  pwire [MOP_WIDTH-1:0] write_mop[1:0];
+  pwire [1:0] rdmiss;
   reg [1:0] rdmiss_reg;
   reg [1:0] rdm_done;
   reg [1:0] rdm_xdone;
-  wire [1:0] pause;//can add bit 2 for pause until l2 mlb can respond
+  pwire [1:0] pause;//can add bit 2 for pause until l2 mlb can respond
   reg [1:0] pause_reg;
   reg missP;
   reg missQ;
@@ -261,10 +261,10 @@ module wtmiss(
   reg [3:0] invalid_reg[1:0];
   reg inIt;
   reg [1:0] inIt_cnt;
-  wire [1:0] inIt_cnt_d;
+  pwire [1:0] inIt_cnt_d;
   reg [1:0] read_addr_reg;
-  wire [3:0] mOp0_attr_o;
-  wire [3:0] mOp1_attr_o;
+  pwire [3:0] mOp0_attr_o;
+  pwire [3:0] mOp1_attr_o;
 
   wtmiss_ram ramA_mod(
   .clk(clk),

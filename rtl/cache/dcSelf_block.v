@@ -36,7 +36,7 @@ module dcache1_ram(
   input rst;
   input [3:0] read_nClkEn;
   input [3:0] [ADDR_WIDTH-1:0] read_addr;
-  output [3:0] [DATA_WIDTH-1:0] read_data;
+  output pwire [3:0] [DATA_WIDTH-1:0] read_data;
   input [`wport-1:0][ADDR_WIDTH-1:0] write_addr;
   input [`wport-1:0][DATA_WIDTH-1:0] write_data;
   input [`wport-1:0] write_wen;
@@ -104,9 +104,9 @@ module dcache1_bank(
   input [3:0] read_hitO0; //+1 cycle
   input [3:0] read_bankEn0;
   input [3:0] read_odd0;
-  output [3:0][1:0][76:0] read_data;
+  output pwire [3:0][1:0][76:0] read_data;
   input [3:0][1:0][76:0][DATA_WIDTH-1:0] read_data_in;
-  output read_err;
+  output pwire read_err;
   input read_err_in;
 
   input [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
@@ -122,11 +122,11 @@ module dcache1_bank(
   input ins_hit;
   input init;
   
-  wire [3:0][1:0][ADDR_WIDTH-1:0] read_addr;
-  wire [3:0][1:0][DATA_WIDTH-1:0] read_data_ram;
-  wire [3:0]enE,enO;
-  wire [3:0]onE,onO;
-  wire [3:0][1:0][DATA_WIDTH-1:0] read_dataP;
+  pwire [3:0][1:0][ADDR_WIDTH-1:0] read_addr;
+  pwire [3:0][1:0][DATA_WIDTH-1:0] read_data_ram;
+  pwire [3:0]enE,enO;
+  pwire [3:0]onE,onO;
+  pwire [3:0][1:0][DATA_WIDTH-1:0] read_dataP;
 
   reg [3:0] read_bankEn0_reg;
 
@@ -152,7 +152,7 @@ module dcache1_bank(
   assign error[0]=^read_data_ram[0][8:0]|^read_data_ram[0][17:9]|^read_data_ram[0][26:18]|^read_data_ram[0][35:27];
   assign error[1]=^read_data_ram[1][8:0]|^read_data_ram[1][17:9]|^read_data_ram[1][26:18]|^read_data_ram[1][35:27];
 
-  wire read_errX;
+  pwire read_errX;
 
   always @* begin
     for(k=0;k<60;k=k+1) begin
@@ -286,23 +286,23 @@ module dcache1_way(
   input [3:0][ADDR_WIDTH-2:0] read_addrO0;
   input [3:0][BANK_COUNT-1:0] read_bank0;
   input [3:0]read_clkEn0;
-  output [3:0][1:0] read_hit0;
+  output pwire [3:0][1:0] read_hit0;
   input [3:0]read_odd0;
   input [3:0]read_split0;
-  output [3:0][1:0] read_pbit0;
+  output pwire [3:0][1:0] read_pbit0;
   input [3:0][1:0] read_pbit0_in;
-  output [3:0] read0_err;
+  output pwire [3:0] read0_err;
   
 
   input [BANK_COUNT-1:0] read_bankNoRead;//bits are 1 if other bank reads are 0
   
   input read_invalidate; 
 
-  output [BANK_COUNT-1:0] read_bankHit;
+  output pwire [BANK_COUNT-1:0] read_bankHit;
   
-  output [3:0][1:0][76:0] read_data;
+  output pwire [3:0][1:0][76:0] read_data;
   input [3:0][1:0][76:0] read_data_in;
-  output [3:0] read_err;
+  output pwire [3:0] read_err;
   input [3:0] read_err_in;
  
   input [3:0][4:0] read_begin0;
@@ -324,11 +324,11 @@ module dcache1_way(
   input [`wport-1:0]write_hit0;
   input [`wport-1:0][1:0] write_pbit0;
   input [`wport-1:0]write_d128_0;
-  output [`wport-1:0][1:0] write_hitCl0;
-  output [`wport-1:0][1:0] write_dupl0;
+  output pwire [`wport-1:0][1:0] write_hitCl0;
+  output pwire [`wport-1:0][1:0] write_dupl0;
   input [`wport-1:0]write_split0;
   input [`wport-1:0]write_odd0;
-  output [`wport-1:0] write0_err;
+  output pwire [`wport-1:0] write0_err;
   
   input write_insert_early;
   input [36:0] write_addr;
@@ -341,49 +341,49 @@ module dcache1_way(
 
 
   
-  output [5:0] err_tag;
+  output pwire [5:0] err_tag;
   
   input recent_in;
-  output recent_out;
+  output pwire recent_out;
   input [5:0] insert_rand;
 
-  output insert_hit;
+  output pwire insert_hit;
  
-  output [ADDR_WIDTH-1:0] wb_addr;
-  output wb_valid;  
+  output pwire [ADDR_WIDTH-1:0] wb_addr;
+  output pwire wb_valid;  
   input [5:0][6:0] puke_addr;
   input [5:0] puke_en;
   
-  wire [3:0] recent;
+  pwire [3:0] recent;
   
-  wire [5:0] ins_hit;
-  wire [5:0] errH;
-  wire [5:0] errL;
-  wire dirtyE,dirtyO;
+  pwire [5:0] ins_hit;
+  pwire [5:0] errH;
+  pwire [5:0] errL;
+  pwire dirtyE,dirtyO;
   
   reg [`wport-1:0][4:0] write_begin0_reg;
   reg [`wport-1:0][4:0] write_end0_reg;
   reg [`wport-1:0][3:0] write_bBen0_reg;
   reg [`wport-1:0][3:0] write_enBen0_reg;
 
-  wire [3:0] read_hitEL;
-  wire [3:0] read_hitOL;
-  wire [3:0] read_hitEH;
-  wire [3:0] read_hitOH;
-  wire [3:0] read_hitE;
-  wire [3:0] read_hitO;
+  pwire [3:0] read_hitEL;
+  pwire [3:0] read_hitOL;
+  pwire [3:0] read_hitEH;
+  pwire [3:0] read_hitOH;
+  pwire [3:0] read_hitE;
+  pwire [3:0] read_hitO;
 
-  wire [1:0] write_hitEL;
-  wire [1:0] write_hitOL;
-  wire [1:0] write_hitEH;
-  wire [1:0] write_hitOH;
+  pwire [1:0] write_hitEL;
+  pwire [1:0] write_hitOL;
+  pwire [1:0] write_hitEH;
+  pwire [1:0] write_hitOH;
 
-//  wire [3:0] read_clkEn={read_clkEn3,read_clkEn2,read_clkEn1,read_clkEn0};
-//  wire [3:0] read_odd={read_odd3,read_odd2,read_odd1,read_odd0};
-//  wire [3:0] read_split={read_split3,read_split2,read_split1,read_split0};
+//  pwire [3:0] read_clkEn={read_clkEn3,read_clkEn2,read_clkEn1,read_clkEn0};
+//  pwire [3:0] read_odd={read_odd3,read_odd2,read_odd1,read_odd0};
+//  pwire [3:0] read_split={read_split3,read_split2,read_split1,read_split0};
   
-//  wire [ADDR_WIDTH-2:0] read_addrE[3:0];
-//  wire [ADDR_WIDTH-2:0] read_addrO[3:0];
+//  pwire [ADDR_WIDTH-2:0] read_addrE[3:0];
+//  pwire [ADDR_WIDTH-2:0] read_addrO[3:0];
  
 
   reg [3:0][4:0] read_begin0_reg;
@@ -397,7 +397,7 @@ module dcache1_way(
   
   reg read_invalidate_reg;
   
-  wire [`wport-1:0] write_reqE0,write_reqO0;
+  pwire [`wport-1:0] write_reqE0,write_reqO0;
   
   reg [`wport-1:0] write_clkEn0_reg;
   reg [`wport-1:0] write_clkEn0_reg2;
@@ -407,20 +407,20 @@ module dcache1_way(
   reg [3:0][ADDR_WIDTH-2:0] read_addrE0_reg;
   reg [3:0][ADDR_WIDTH-2:0] read_addrO0_reg;
   reg [3:0]read_clkEn0_reg;
-  wire [`wport-1:0][1:0] write_hitO;
-  wire [`wport-1:0][1:0] write_hitE;
+  pwire [`wport-1:0][1:0] write_hitO;
+  pwire [`wport-1:0][1:0] write_hitE;
   reg ins_hit_reg;
  
-  wire [1:0] write_dupl[1:0][`wport-1:0];
+  pwire [1:0] write_dupl[1:0][`wport-1:0];
   
-  wire [3:0][1:0] read_pbit0P;
+  pwire [3:0][1:0] read_pbit0P;
   
-  wire [3:0][1:0] read0_pbitP;
+  pwire [3:0][1:0] read0_pbitP;
  
   reg init;
   reg init_dirty;
   reg [5:0] initCount;
-  wire [5:0] initCount_d;
+  pwire [5:0] initCount_d;
   generate
     genvar b,r,w;
     for (b=0;b<BANK_COUNT;b=b+1) begin : banks
@@ -715,12 +715,12 @@ module dcache1(
   input [3:0][ADDR_WIDTH-2:0] read_addrO0;
   input [3:0][BANK_COUNT-1:0] read_bank0;
   input [3:0]read_clkEn0;
-  output reg [3:0] read_hit0;
-  output reg [3:0] [1:0] read_hitCl0;
+  output pwire reg [3:0] read_hit0;
+  output pwire reg [3:0] [1:0] read_hitCl0;
   input [3:0]read_odd0;
   input [3:0]read_split0;
-  output [3:0][127+8:0] read_dataA0;
-  output [3:0][1:0] read_pbit0;
+  output pwire [3:0][127+8:0] read_dataA0;
+  output pwire [3:0][1:0] read_pbit0;
   input [3:0][4:0] read_beginA0;
   input [3:0][1:0] read_low0;
   input [3:0][4:0] read_sz0;
@@ -736,9 +736,9 @@ module dcache1(
   input [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
   input [`wport-1:0][BANK_COUNT-1:0] write_bank0;
   input [`wport-1:0]write_clkEn0;
-  output reg [`wport-1:0]write_hit0;
-  output reg [`wport-1:0][1:0] write_hitCl0;
-  output reg [`wport-1:0][1:0] write_dupl0;
+  output pwire reg [`wport-1:0]write_hit0;
+  output pwire reg [`wport-1:0][1:0] write_hitCl0;
+  output pwire reg [`wport-1:0][1:0] write_dupl0;
   input [`wport-1:0]write_split0;
   input [`wport-1:0]write_odd0;
   input [`wport-1:0][4:0] write_begin0;
@@ -758,29 +758,29 @@ module dcache1(
   input [511:0] busIns_data;
   input [7:0] busIns_dataPTR;
   input insbus_A,insbus_B;
-  output [ADDR_WIDTH-1:0] expun_addr;
-  output expun_en;
+  output pwire [ADDR_WIDTH-1:0] expun_addr;
+  output pwire expun_en;
   input msrss_en;
   input [15:0] msrss_addr;
   input [64:0] msrss_data;
   //embedded segment register
   reg [64:0] emsr;
 
-  wire [1023:0] write_data;
-  wire [1023:0] write_dataM;
-//  wire [LINE_WIDTH-1:0] read_data;
+  pwire [1023:0] write_data;
+  pwire [1023:0] write_dataM;
+//  pwire [LINE_WIDTH-1:0] read_data;
   reg read3_pf;
   reg read3_pf_reg;
   reg [135:0] pwndata[3:0];
 
-  wire [LINE_WIDTH-1:0] read_dataP;
+  pwire [LINE_WIDTH-1:0] read_dataP;
   reg [LINE_WIDTH-1:0] read_dataP_reg;
   reg [LINE_WIDTH-1:0] read_dataP_reg2;
-  wire [BANK_COUNT*32-1:0] read_data_strip;
-  wire [1:0] read_pbit0P[8:0];
-  wire [1:0] read_pbit1P[8:0];
-  wire [1:0] read_pbit2P[8:0];
-  wire [1:0] read_pbit3P[8:0];
+  pwire [BANK_COUNT*32-1:0] read_data_strip;
+  pwire [1:0] read_pbit0P[8:0];
+  pwire [1:0] read_pbit1P[8:0];
+  pwire [1:0] read_pbit2P[8:0];
+  pwire [1:0] read_pbit3P[8:0];
   
   reg [1:0] read_pbit0P_reg;
   reg [1:0] read_pbit0P_reg2;
@@ -791,81 +791,81 @@ module dcache1(
   reg [1:0] read_pbit3P_reg;
   reg [1:0] read_pbit3P_reg2;
 
-  wire [5:0][6:0] puke_addr;
-  wire [5:0] puke_en;
-  wire [5:0] err_tag[7:0];
-  wire rderr1;
-  wire rderr2;
-  wire [3:0][15:0] rxerr0;
-  wire [3:0][15:0] rxerr1;
-  wire [3:0][15:0] rxerr2;
-  wire [3:0][15:0] rxerr3;
-  wire [3:0][15:0] rxerr4;
-  wire [3:0][15:0] rxerr5;
-  wire [3:0][15:0] rxerr6;
-  wire [3:0][15:0] rxerr7;
-  wire [3:0][15:0] rxerr7B;
-  wire [3:0][15:0] rxerr;
-  wire recent_in;
-  wire [7:0] recent_out;
+  pwire [5:0][6:0] puke_addr;
+  pwire [5:0] puke_en;
+  pwire [5:0] err_tag[7:0];
+  pwire rderr1;
+  pwire rderr2;
+  pwire [3:0][15:0] rxerr0;
+  pwire [3:0][15:0] rxerr1;
+  pwire [3:0][15:0] rxerr2;
+  pwire [3:0][15:0] rxerr3;
+  pwire [3:0][15:0] rxerr4;
+  pwire [3:0][15:0] rxerr5;
+  pwire [3:0][15:0] rxerr6;
+  pwire [3:0][15:0] rxerr7;
+  pwire [3:0][15:0] rxerr7B;
+  pwire [3:0][15:0] rxerr;
+  pwire recent_in;
+  pwire [7:0] recent_out;
 
-  wire [5:0] insert_rand;
+  pwire [5:0] insert_rand;
   
-  wire [BANK_COUNT-1:0] read_bankHit_way[7:0];
-  wire [BANK_COUNT-1:0] bank_hit;
+  pwire [BANK_COUNT-1:0] read_bankHit_way[7:0];
+  pwire [BANK_COUNT-1:0] bank_hit;
 
-  wire [7:0] insert_hit_way;
+  pwire [7:0] insert_hit_way;
   
-  wire [1:0] read_hit0_way[7:0];
-  wire [1:0] read_hit1_way[7:0];
-  wire [1:0] read_hit2_way[7:0];
-  wire [1:0] read_hit3_way[7:0];
+  pwire [1:0] read_hit0_way[7:0];
+  pwire [1:0] read_hit1_way[7:0];
+  pwire [1:0] read_hit2_way[7:0];
+  pwire [1:0] read_hit3_way[7:0];
   
-  wire [1:0] read_hitCl0Q;
-  wire [1:0] read_hitCl1Q;
-  wire [1:0] read_hitCl2Q;
-  wire [1:0] read_hitCl3Q;
+  pwire [1:0] read_hitCl0Q;
+  pwire [1:0] read_hitCl1Q;
+  pwire [1:0] read_hitCl2Q;
+  pwire [1:0] read_hitCl3Q;
 
-  wire [1:0] read_hitCl0P;
-  wire [1:0] read_hitCl1P;
-  wire [1:0] read_hitCl2P;
-  wire [1:0] read_hitCl3P;
+  pwire [1:0] read_hitCl0P;
+  pwire [1:0] read_hitCl1P;
+  pwire [1:0] read_hitCl2P;
+  pwire [1:0] read_hitCl3P;
 
   reg [1:0] read_hitCl0P_reg;
   reg [1:0] read_hitCl1P_reg;
   reg [1:0] read_hitCl2P_reg;
   reg [1:0] read_hitCl3P_reg;
 
-  wire read_hit0P;
-  wire read_hit1P;
-  wire read_hit2P;
-  wire read_hit3P;
+  pwire read_hit0P;
+  pwire read_hit1P;
+  pwire read_hit2P;
+  pwire read_hit3P;
 
   reg read_hit0P_reg;
   reg read_hit1P_reg;
   reg read_hit2P_reg;
   reg read_hit3P_reg;
 
-  wire [1:0] write_hit0_way[7:0];
-  wire [1:0] write_hit1_way[7:0];
+  pwire [1:0] write_hit0_way[7:0];
+  pwire [1:0] write_hit1_way[7:0];
 
-  wire write_hit0P;
-  wire write_hit1P;
+  pwire write_hit0P;
+  pwire write_hit1P;
 
   reg write_hit0P_reg;
   reg write_hit1P_reg;
 
-  wire [1:0] write_hitCl0P;
-  wire [1:0] write_hitCl1P;
+  pwire [1:0] write_hitCl0P;
+  pwire [1:0] write_hitCl1P;
 
   reg [1:0] write_hitCl0P_reg;
   reg [1:0] write_hitCl1P_reg;
   
-  wire [1:0] write_dupl0_way[7:0];
-  wire [1:0] write_dupl1_way[7:0];
+  pwire [1:0] write_dupl0_way[7:0];
+  pwire [1:0] write_dupl1_way[7:0];
 
-  wire [1:0] write_dupl0P;
-  wire [1:0] write_dupl1P;
+  pwire [1:0] write_dupl0P;
+  pwire [1:0] write_dupl1P;
   reg [1:0] write_dupl0P_reg;
   reg [1:0] write_dupl1P_reg;
   
@@ -950,9 +950,9 @@ module dcache1(
   reg insert_dirty_reg2;
   reg [1023:0] write_data_reg2;
   reg [1023:0] write_dataM_reg2;
-  wire [LINE_WIDTH-1:0] write_data_ecc;
-  wire [LINE_WIDTH-1:0] write_dataM0_ecc;
-  wire [LINE_WIDTH-1:0] write_dataM_ecc;
+  pwire [LINE_WIDTH-1:0] write_data_ecc;
+  pwire [LINE_WIDTH-1:0] write_dataM0_ecc;
+  pwire [LINE_WIDTH-1:0] write_dataM_ecc;
   reg [15:0] write_dataPTR_reg;
   reg [15:0] write_dataPTR_reg2;
   reg [BANK_COUNT-1:0] write_bank0_reg2;
@@ -960,29 +960,29 @@ module dcache1(
   
   reg insert_en_reg2;
 
-  wire [255:0] rxdata0[3:0];
-  wire [255:0] rxdata1[3:0];
-  wire [255:0] rxdata2[3:0];
-  wire [255:0] rxdata3[3:0];
-  wire [255:0] rxdata4[3:0];
-  wire [255:0] rxdata5[3:0];
-  wire [255:0] rxdata6[3:0];
-  wire [255:0] rxdata7[3:0];
-  wire [255:0] rxdata[3:0];
-  wire [3:0][127+8:0] rddata1;
-  wire [3:0][127:0] rddata2;
-//  wire [4:0] rdcan[3:0];
-  wire [3:0][127+8:0] read_dataA;
+  pwire [255:0] rxdata0[3:0];
+  pwire [255:0] rxdata1[3:0];
+  pwire [255:0] rxdata2[3:0];
+  pwire [255:0] rxdata3[3:0];
+  pwire [255:0] rxdata4[3:0];
+  pwire [255:0] rxdata5[3:0];
+  pwire [255:0] rxdata6[3:0];
+  pwire [255:0] rxdata7[3:0];
+  pwire [255:0] rxdata[3:0];
+  pwire [3:0][127+8:0] rddata1;
+  pwire [3:0][127:0] rddata2;
+//  pwire [4:0] rdcan[3:0];
+  pwire [3:0][127+8:0] read_dataA;
   reg [5:0] mskdata1[3:0];
   reg swpdata[3:0];
   reg [4:0] read_sz[3:0];
   reg [4:0] read_sz_reg[3:0];
 
-  wire [7:0] write_back_way;
-  wire [7:0] write_back2_way;
+  pwire [7:0] write_back_way;
+  pwire [7:0] write_back2_way;
   
-  wire write_back;
-  wire write_back2;
+  pwire write_back;
+  pwire write_back2;
 
   reg write_back_P;
   reg write_back2_P;
@@ -1006,29 +1006,29 @@ module dcache1(
   reg write_clkEn0_reg2;
   reg write_clkEn1_reg2;
  
-  wire [7:0] read_errT0; 
-  wire [7:0] read_errT1; 
-  wire [7:0] read_errT2; 
-  wire [7:0] read_errT3; 
+  pwire [7:0] read_errT0; 
+  pwire [7:0] read_errT1; 
+  pwire [7:0] read_errT2; 
+  pwire [7:0] read_errT3; 
   reg [7:0] read_errP_reg;
   reg [7:0] read_errP_reg2;
   reg read_clkEnAny;
 //  reg wb_en_reg,wb_en_reg2,wb_en_reg3;
-  wire [ADDR_WIDTH-1:0] wb_addr;
+  pwire [ADDR_WIDTH-1:0] wb_addr;
   reg [ADDR_WIDTH-1:0] wb_addr_reg;
   reg [ADDR_WIDTH-1:0] wb_addr_reg2;
-  wire wb_enOut;
+  pwire wb_enOut;
   reg wb_enOut_reg;
   reg wb_enOut_reg2;
   generate
       genvar w,b,p,q;
       for (w=0;w<9;w=w+1) begin : ways_gen
-          wire [LINE_WIDTH-1:0] read_dataP;
-          wire [7:0] read_errP;
-          wire [1:0] read_pbit0P;
-          wire [1:0] read_pbit1P;
-          wire [1:0] read_pbit2P;
-          wire [1:0] read_pbit3P;
+          pwire [LINE_WIDTH-1:0] read_dataP;
+          pwire [7:0] read_errP;
+          pwire [1:0] read_pbit0P;
+          pwire [1:0] read_pbit1P;
+          pwire [1:0] read_pbit2P;
+          pwire [1:0] read_pbit3P;
           if (w) dcache1_way #(w-1) way_mod(
           clk,
           rst,
@@ -1100,8 +1100,8 @@ module dcache1(
 
 	  assign write_dataM_ecc[b*DATA_WIDTH+:DATA_WIDTH]=~write_dataM0_ecc[b*DATA_WIDTH+:DATA_WIDTH];
           
-          wire [4:0] wr0;
-          wire [4:0] wr1;
+          pwire [4:0] wr0;
+          pwire [4:0] wr1;
           for(q=0;q<5;q=q+1) begin
               assign wr0[q]=((b-q)&5'h1f)==write_begin0 && write_clkEn0 && write_bank0[b];
               assign wr1[q]=((b-q)&5'h1f)==write_begin1 && write_clkEn1 && write_bank1[b];
@@ -1631,7 +1631,7 @@ endmodule
 
 module dc1_strip_ECC(dataIn,dataOut);
   input [39:1] dataIn;
-  output [31:0] dataOut;
+  output pwire [31:0] dataOut;
   
   assign dataOut={dataIn[38:33],dataIn[31:17],dataIn[15:9],dataIn[7:5],dataIn[3]};
   

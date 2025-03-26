@@ -37,10 +37,10 @@ module imul(
   input [64:0] R;
   input [64:0] C;
   input [3:0] attr;
-  output [64:0] Res;
-  output reg alt;
-  output reg alt_jxcross;
-  output [5:0] flg;
+  output pwire [64:0] Res;
+  output pwire reg alt;
+  output pwire reg alt_jxcross;
+  output pwire [5:0] flg;
   input [64:0] jxcross_in;
 
   reg and1,is_sig,sig,sm_sig,upper,short;
@@ -62,23 +62,23 @@ module imul(
   reg [64:0] swp_res_reg2;
 
   reg ptr_reg,ptr_reg2;
-  wire [64:0] swp_res;
-  wire [64:0] sec_res;
-  wire [127:0] A_out;
-  wire [127:0] B_out;
+  pwire [64:0] swp_res;
+  pwire [64:0] sec_res;
+  pwire [127:0] A_out;
+  pwire [127:0] B_out;
   reg [127:0] A_out_reg;
   reg [127:0] B_out_reg;
-  wire [64:0] dummy;
-  wire [64:0] dummy2;
+  pwire [64:0] dummy;
+  pwire [64:0] dummy2;
   reg [64:0] Res_reg;
   reg [64:0] dummy2_reg;
   reg [64:0] dummy_reg;
   //reg [7:0] dummy8_reg;
-  wire resz;
-  wire resp;
-  wire [31:0] resx;
+  pwire resz;
+  pwire resp;
+  pwire [31:0] resx;
   reg [31:0] resx_reg;
-  wire [64:0] sec_res;
+  pwire [64:0] sec_res;
   //wire [64:0] resB;
   //reg bnd,bnd_reg,bnd_reg2,bnd_reg3;
 
@@ -100,7 +100,7 @@ module imul(
     ~|resx_reg&~Res_reg[31]),1'b0,Res_reg[31],resz,resp} : 6'bz;
 
 
-  wire [64:0] Cix;
+  pwire [64:0] Cix;
 
   assign Cix=and1 & !sm_sig ? C>>32 : C;
 
@@ -124,7 +124,7 @@ module imul(
 
   addrcalcsec_mul msec(R[63:0],C[11:0],attr,sec_res);
 
-  wire [64:0] dec_res;
+  pwire [64:0] dec_res;
   reg is_dec,is_dec_reg;
   reg is_mlb;
 
