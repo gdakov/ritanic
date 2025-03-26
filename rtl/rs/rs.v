@@ -285,8 +285,8 @@ module rs_wakeUp_logic(
   assign isV_d=(newRsSelect2 & ~stall) ? newIsV2 : 1'bz;
   assign isV_d=(~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2 || stall) ? isV : 1'bz;
   
-  assign eq[0]=(register==Treg0) & Twen0 & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2 & eq_mask[0];
-  assign eq[1]=(register==Treg1) & Twen1 & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2 & eq_mask[1];
+  assign eq[0]=(pwh#(32)::cmpEQ(register,Treg0)) & Twen0 & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2 & eq_mask[0];
+  assign eq[1]=(pwh#(32)::cmpEQ(register,Treg1)) & Twen1 & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2 & eq_mask[1];
 
   assign eq_new=eq|({2{newRsSelect0&~stall}}&newEQ0)|({2{newRsSelect1&~stall}}&newEQ1)|
     ({2{newRsSelect2&~stall}}&newEQ2);
@@ -1298,8 +1298,8 @@ module rs_wakeUpS_logic(
   assign isFP_d=(newRsSelect2 & ~stall) ? newIsFP2 : 1'bz;
   assign isFP_d=(~newRsSelect1 & ~newRsSelect2 || stall) ? isFP : 1'bz;
 
-  assign eq[0]=(register==Treg0) & Twen0 & ~newRsSelect1 & ~newRsSelect2 &eq_mask[0];
-  assign eq[1]=(register==Treg1) & Twen1 & ~newRsSelect1 & ~newRsSelect2 &eq_mask[1];
+  assign eq[0]=(pwh#(32)::cmpEQ(register,Treg0)) & Twen0 & ~newRsSelect1 & ~newRsSelect2 &eq_mask[0];
+  assign eq[1]=(pwh#(32)::cmpEQ(register,Treg1)) & Twen1 & ~newRsSelect1 & ~newRsSelect2 &eq_mask[1];
 
   assign eq_new=eq|({2{newRsSelect1&~stall}}&newEQ1)|({2{newRsSelect2&~stall}}&newEQ2);
 
@@ -1976,7 +1976,7 @@ module rs_buf(
           assign outDataEn0[regno]=outRsSelect0[regno] ? {4{~unFwdCheck}} &{FP_q,Vec_q,~FP_q&~Vec_q,1'b1} : 4'bz;
           assign outThread0[regno]=outRsSelect0[regno] ? thread_q : 1'bz;
       for(loadno=0;loadno<4;loadno=loadno+1) begin : ld_gen
-         assign fwdCheck0[loadno]=fuFwdA==loadno || fuFwdB==loadno; 
+         assign fwdCheck0[loadno]=pwh#(32)::cmpEQ(fuFwdA,loadno) || pwh#(32)::cmpEQ(fuFwdB,loadno); 
       end
   engenerate    
 

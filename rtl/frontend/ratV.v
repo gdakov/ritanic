@@ -297,53 +297,53 @@ module ratV_buf(
   pwire match_rd7;
   pwire match_rd8;
   
-  assign match_new0=(writeNew0_addr==INDEX) & writeNew0_wen;    
-  assign match_new1=(writeNew1_addr==INDEX) & writeNew1_wen;    
-  assign match_new2=(writeNew2_addr==INDEX) & writeNew2_wen;    
-  assign match_new3=(writeNew3_addr==INDEX) & writeNew3_wen;    
-  assign match_new4=(writeNew4_addr==INDEX) & writeNew4_wen;    
-  assign match_new5=(writeNew5_addr==INDEX) & writeNew5_wen;    
-  assign match_new6=(writeNew6_addr==INDEX) & writeNew6_wen;    
-  assign match_new7=(writeNew7_addr==INDEX) & writeNew7_wen;    
-  assign match_new8=(writeNew8_addr==INDEX) & writeNew8_wen;    
+  assign match_new0=(pwh#(32)::cmpEQ(writeNew0_addr,INDEX)) & writeNew0_wen;    
+  assign match_new1=(pwh#(32)::cmpEQ(writeNew1_addr,INDEX)) & writeNew1_wen;    
+  assign match_new2=(pwh#(32)::cmpEQ(writeNew2_addr,INDEX)) & writeNew2_wen;    
+  assign match_new3=(pwh#(32)::cmpEQ(writeNew3_addr,INDEX)) & writeNew3_wen;    
+  assign match_new4=(pwh#(32)::cmpEQ(writeNew4_addr,INDEX)) & writeNew4_wen;    
+  assign match_new5=(pwh#(32)::cmpEQ(writeNew5_addr,INDEX)) & writeNew5_wen;    
+  assign match_new6=(pwh#(32)::cmpEQ(writeNew6_addr,INDEX)) & writeNew6_wen;    
+  assign match_new7=(pwh#(32)::cmpEQ(writeNew7_addr,INDEX)) & writeNew7_wen;    
+  assign match_new8=(pwh#(32)::cmpEQ(writeNew8_addr,INDEX)) & writeNew8_wen;    
 
   assign match_new=|{match_new0,match_new1,match_new2,match_new3,match_new4,match_new5
     ,match_new6,match_new7,match_new8};
 
-  assign match_ret0=(~writeRet0_addr==robAddr_ret) & writeRet0_wen;    
-  assign match_ret1=(~writeRet1_addr==robAddr_ret) & writeRet1_wen;    
-  assign match_ret2=(~writeRet2_addr==robAddr_ret) & writeRet2_wen;    
-  assign match_ret3=(~writeRet3_addr==robAddr_ret) & writeRet3_wen;    
-  assign match_ret4=(~writeRet4_addr==robAddr_ret) & writeRet4_wen;    
-  assign match_ret5=(~writeRet5_addr==robAddr_ret) & writeRet5_wen;    
-  assign match_ret6=(~writeRet6_addr==robAddr_ret) & writeRet6_wen;    
-  assign match_ret7=(~writeRet7_addr==robAddr_ret) & writeRet7_wen;    
-  assign match_ret8=(~writeRet8_addr==robAddr_ret) & writeRet8_wen;
+  assign match_ret0=(~pwh#(32)::cmpEQ(writeRet0_addr,robAddr_ret)) & writeRet0_wen;    
+  assign match_ret1=(~pwh#(32)::cmpEQ(writeRet1_addr,robAddr_ret)) & writeRet1_wen;    
+  assign match_ret2=(~pwh#(32)::cmpEQ(writeRet2_addr,robAddr_ret)) & writeRet2_wen;    
+  assign match_ret3=(~pwh#(32)::cmpEQ(writeRet3_addr,robAddr_ret)) & writeRet3_wen;    
+  assign match_ret4=(~pwh#(32)::cmpEQ(writeRet4_addr,robAddr_ret)) & writeRet4_wen;    
+  assign match_ret5=(~pwh#(32)::cmpEQ(writeRet5_addr,robAddr_ret)) & writeRet5_wen;    
+  assign match_ret6=(~pwh#(32)::cmpEQ(writeRet6_addr,robAddr_ret)) & writeRet6_wen;    
+  assign match_ret7=(~pwh#(32)::cmpEQ(writeRet7_addr,robAddr_ret)) & writeRet7_wen;    
+  assign match_ret8=(~pwh#(32)::cmpEQ(writeRet8_addr,robAddr_ret)) & writeRet8_wen;
   
 
   assign match_ret=|{match_ret0,match_ret1,match_ret2,match_ret3,
     match_ret4,match_ret5,match_ret6,match_ret7,match_ret8};
 
 	
-  assign match_rd0=read0_addr==INDEX;
-  assign match_rd1=read1_addr==INDEX;
-  assign match_rd2=read2_addr==INDEX;
-  assign match_rd3=read3_addr==INDEX;
-  assign match_rd4=read4_addr==INDEX;
-  assign match_rd5=read5_addr==INDEX;
-  assign match_rd6=read6_addr==INDEX;
-  assign match_rd7=read7_addr==INDEX;
-  assign match_rd8=read8_addr==INDEX;
+  assign match_rd0=pwh#(32)::cmpEQ(read0_addr,INDEX);
+  assign match_rd1=pwh#(32)::cmpEQ(read1_addr,INDEX);
+  assign match_rd2=pwh#(32)::cmpEQ(read2_addr,INDEX);
+  assign match_rd3=pwh#(32)::cmpEQ(read3_addr,INDEX);
+  assign match_rd4=pwh#(32)::cmpEQ(read4_addr,INDEX);
+  assign match_rd5=pwh#(32)::cmpEQ(read5_addr,INDEX);
+  assign match_rd6=pwh#(32)::cmpEQ(read6_addr,INDEX);
+  assign match_rd7=pwh#(32)::cmpEQ(read7_addr,INDEX);
+  assign match_rd8=pwh#(32)::cmpEQ(read8_addr,INDEX);
 
-  assign match_retp0=writeRet0_paddr==INDEX && writeRet0_wenp;    
-  assign match_retp1=writeRet1_paddr==INDEX && writeRet1_wenp;    
-  assign match_retp2=writeRet2_paddr==INDEX && writeRet2_wenp;    
-  assign match_retp3=writeRet3_paddr==INDEX && writeRet3_wenp;    
-  assign match_retp4=writeRet4_paddr==INDEX && writeRet4_wenp;    
-  assign match_retp5=writeRet5_paddr==INDEX && writeRet5_wenp;    
-  assign match_retp6=writeRet6_paddr==INDEX && writeRet6_wenp;    
-  assign match_retp7=writeRet7_paddr==INDEX && writeRet7_wenp;    
-  assign match_retp8=writeRet8_paddr==INDEX && writeRet8_wenp;    
+  assign match_retp0=pwh#(32)::cmpEQ(writeRet0_paddr,INDEX) && writeRet0_wenp;    
+  assign match_retp1=pwh#(32)::cmpEQ(writeRet1_paddr,INDEX) && writeRet1_wenp;    
+  assign match_retp2=pwh#(32)::cmpEQ(writeRet2_paddr,INDEX) && writeRet2_wenp;    
+  assign match_retp3=pwh#(32)::cmpEQ(writeRet3_paddr,INDEX) && writeRet3_wenp;    
+  assign match_retp4=pwh#(32)::cmpEQ(writeRet4_paddr,INDEX) && writeRet4_wenp;    
+  assign match_retp5=pwh#(32)::cmpEQ(writeRet5_paddr,INDEX) && writeRet5_wenp;    
+  assign match_retp6=pwh#(32)::cmpEQ(writeRet6_paddr,INDEX) && writeRet6_wenp;    
+  assign match_retp7=pwh#(32)::cmpEQ(writeRet7_paddr,INDEX) && writeRet7_wenp;    
+  assign match_retp8=pwh#(32)::cmpEQ(writeRet8_paddr,INDEX) && writeRet8_wenp;    
 
   assign match_retp=|{match_retp0,match_retp1,match_retp2,match_retp3,
     match_retp4,match_retp5,match_retp6,match_retp7,match_retp8};

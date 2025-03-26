@@ -121,10 +121,10 @@ module lsq_decide_ret(
     end
   endgenerate
 
-//  assign dataB_enOut0=dataB_ready && (doRetire && cntrl_II==dataB_II0_reg[9:4]) | 
-//    (ret_ret && cntrl_II==dataB_II0[9:4]);
-  assign dataB_enOut=dataB_ready && (doRetire && cntrl_II==dataB_II && ~bStall);
-  assign retire_enOut=retire_enOutP & {10{ cntrl_II==dataB_II}};
+//  assign dataB_enOut0=dataB_ready && (doRetire && pwh#(32)::cmpEQ(cntrl_II,dataB_II0_reg)[9:4]) | 
+//    (ret_ret && pwh#(32)::cmpEQ(cntrl_II,dataB_II0)[9:4]);
+  assign dataB_enOut=dataB_ready && (doRetire && pwh#(32)::cmpEQ(cntrl_II,dataB_II) && ~bStall);
+  assign retire_enOut=retire_enOutP & {10{ pwh#(32)::cmpEQ(cntrl_II,dataB_II)}};
   assign out_II=dataB_II;
   //assign out_II=ret_ret ? dataB_II : dataB_II_reg;
   always @(*) begin

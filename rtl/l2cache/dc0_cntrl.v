@@ -30,7 +30,7 @@ module pfoff_buf(clk,rst,write_en,write_addr,read_en,read_addr,free_en,free,purg
 
   assign read_data=read_en ? addr : 37'bz;
 
-  assign chk_en=chk_addr==addr && !free;
+  assign chk_en=pwh#(32)::cmpEQ(chk_addr,addr) && !free;
 
   always @(posedge clk) begin
     if (rst) begin

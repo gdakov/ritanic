@@ -47,8 +47,8 @@ module tbufcam_buf(
   pwire [WIDTH-1:0] addr;
   pwire thread;
   
-  assign chk_match0=chk_addr0==addr && ~free;
-  assign chk_match1=chk_addr1==addr && ~free;
+  assign chk_match0=pwh#(32)::cmpEQ(chk_addr0,addr) && ~free;
+  assign chk_match1=pwh#(32)::cmpEQ(chk_addr1,addr) && ~free;
   
   always @(posedge clk) begin
       if (rst) begin
@@ -61,7 +61,7 @@ module tbufcam_buf(
               addr<=new_addr;
               free<=1'b0;
           end 
-          if (except && except_thread==thread) free<=1'b1;
+          if (except && pwh#(32)::cmpEQ(except_thread,thread)) free<=1'b1;
       end
   end
 

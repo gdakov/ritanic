@@ -137,14 +137,14 @@ module dmisscam_buf(
   pwire [4:0] bbank;
   pwire [1:0] low;
   
-  assign fill_match_o0=fill_addr0==addr && busy && fill_en0;
-  assign fill_match_o1=fill_addr1==addr && busy && fill_en1;
-  assign fill_match_o2=fill_addr2==addr && busy && fill_en2;
-  assign fill_match_o3=fill_addr3==addr && busy && fill_en3;
-  assign fill_match_o4=fill_addr4==addr && busy && fill_en4;
-  assign fill_match_o5=fill_addr5==addr && busy && fill_en5;
+  assign fill_match_o0=pwh#(32)::cmpEQ(fill_addr0,addr) && busy && fill_en0;
+  assign fill_match_o1=pwh#(32)::cmpEQ(fill_addr1,addr) && busy && fill_en1;
+  assign fill_match_o2=pwh#(32)::cmpEQ(fill_addr2,addr) && busy && fill_en2;
+  assign fill_match_o3=pwh#(32)::cmpEQ(fill_addr3,addr) && busy && fill_en3;
+  assign fill_match_o4=pwh#(32)::cmpEQ(fill_addr4,addr) && busy && fill_en4;
+  assign fill_match_o5=pwh#(32)::cmpEQ(fill_addr5,addr) && busy && fill_en5;
  
-  assign ins_addr_o=(ins_en && ins_req==REQ) ? addr : 37'bz;
+  assign ins_addr_o=(ins_en && pwh#(32)::cmpEQ(ins_req,REQ)) ? addr : 37'bz;
 
   assign read_addr=read_en ? addr : 37'bz;
   assign read_sz=read_en ? sz : 5'bz;
@@ -185,7 +185,7 @@ module dmisscam_buf(
           bbank<=fill_bbank;
           low<=fill_low;
       end else begin
-          if (ins_en && ins_req==REQ) begin
+          if (ins_en && pwh#(32)::cmpEQ(ins_req,REQ)) begin
               filled<=1'b0;
           end
           if (unlock) busy<=1'b0;

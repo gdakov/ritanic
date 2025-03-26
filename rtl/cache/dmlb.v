@@ -408,7 +408,7 @@ module dmlb(
         .write_wen(write_wen),
         .write_xstant(write_xstant),
         .write_invl(write_invl),
-        .force_way_on(k==force_way && force_way_en),
+        .force_way_on(pwh#(32)::cmpEQ(k,force_way) && force_way_en),
         .force_way_off(k!=force_way && force_way_en),
         .newLRU(newLru[k]),
         .init(init),

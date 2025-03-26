@@ -284,7 +284,7 @@ module decoder_aux_const(
   assign riscmode=csr_mflags[thread][21];
   assign disstruss=csr_mflags[thread][22];
 
-  assign doStall=msrss_en && msrss_addr==`csr_pinvoke && ~thread && fat_stall_en;
+  assign doStall=msrss_en && pwh#(32)::cmpEQ(msrss_addr,`csr_pinvoke) && ~thread && fat_stall_en;
 
   always @(posedge clk) begin
       if (rst) begin
@@ -341,7 +341,7 @@ module decoder_aux_const(
       end else begin
           if (!stall & !doStall) thread_reg<=thread;
           if (msrss_en && ((csr_mflags[msrss_no[15]][`mflags_priv]==2'b0 && ~csr_mflags[msrss_no[15]][`mflags_vm]) ||
-            msrss_no==`csr_FPU || msrss_no==`csr_pinvoke || msrss_no[14:0]==`csr_pkill)) begin
+            pwh#(32)::cmpEQ(msrss_no,`csr_FPU) || pwh#(32)::cmpEQ(msrss_no,`csr_pinvoke) || msrss_no[14:0]==`csr_pkill)) begin
               case(msrss_no[14:0])
       `csr_retIP: 		csr_retIP[msrss_no[15]]<=msrss_data[63:0];
       `csr_excStackSave: 	csr_excStackSave[msrss_no[15]]<=msrss_data;
@@ -3241,15 +3241,15 @@ module decoder_find_single_dep(
   pwire [8:0] bitDep;
   pwire [8:0] bitDepF;
   
-  assign allCmp[0]=(chkReg==instr0_rT);
-  assign allCmp[1]=(chkReg==instr1_rT);
-  assign allCmp[2]=(chkReg==instr2_rT);
-  assign allCmp[3]=(chkReg==instr3_rT);
-  assign allCmp[4]=(chkReg==instr4_rT);
-  assign allCmp[5]=(chkReg==instr5_rT);
-  assign allCmp[6]=(chkReg==instr6_rT);
-  assign allCmp[7]=(chkReg==instr7_rT);
-  assign allCmp[8]=(chkReg==instr8_rT);
+  assign allCmp[0]=(pwh#(32)::cmpEQ(chkReg,instr0_rT));
+  assign allCmp[1]=(pwh#(32)::cmpEQ(chkReg,instr1_rT));
+  assign allCmp[2]=(pwh#(32)::cmpEQ(chkReg,instr2_rT));
+  assign allCmp[3]=(pwh#(32)::cmpEQ(chkReg,instr3_rT));
+  assign allCmp[4]=(pwh#(32)::cmpEQ(chkReg,instr4_rT));
+  assign allCmp[5]=(pwh#(32)::cmpEQ(chkReg,instr5_rT));
+  assign allCmp[6]=(pwh#(32)::cmpEQ(chkReg,instr6_rT));
+  assign allCmp[7]=(pwh#(32)::cmpEQ(chkReg,instr7_rT));
+  assign allCmp[8]=(pwh#(32)::cmpEQ(chkReg,instr8_rT));
   
   assign allDeps[0]=allCmp[0] & instr0_rT_use & ~chk_useF;
   assign allDeps[1]=allCmp[1] & instr1_rT_use & ~chk_useF;
@@ -3339,15 +3339,15 @@ module decoder_find_alloc(
   pwire [9:1] cmp;
   
   assign cmp={
-    instr9_rT==chkReg,
-    instr8_rT==chkReg,
-    instr7_rT==chkReg,
-    instr6_rT==chkReg,
-    instr5_rT==chkReg,
-    instr4_rT==chkReg,
-    instr3_rT==chkReg,
-    instr2_rT==chkReg,
-    instr1_rT==chkReg};
+    pwh#(32)::cmpEQ(instr9_rT,chkReg),
+    pwh#(32)::cmpEQ(instr8_rT,chkReg),
+    pwh#(32)::cmpEQ(instr7_rT,chkReg),
+    pwh#(32)::cmpEQ(instr6_rT,chkReg),
+    pwh#(32)::cmpEQ(instr5_rT,chkReg),
+    pwh#(32)::cmpEQ(instr4_rT,chkReg),
+    pwh#(32)::cmpEQ(instr3_rT,chkReg),
+    pwh#(32)::cmpEQ(instr2_rT,chkReg),
+    pwh#(32)::cmpEQ(instr1_rT,chkReg)};
     
   assign alloc=chkReg_use &
     ~(|{ 

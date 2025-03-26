@@ -474,11 +474,11 @@ module wtmiss(
           end
           if (except) begin
               for(k=0;k<4;k=k+1) begin
-                  if (except_thread==thr[0][k]) invalid[0][k]<=1'b1;
-                  if (except_thread==thr[1][k]) invalid[1][k]<=1'b1;
+                  if (pwh#(32)::cmpEQ(except_thread,thr)[0][k]) invalid[0][k]<=1'b1;
+                  if (pwh#(32)::cmpEQ(except_thread,thr)[1][k]) invalid[1][k]<=1'b1;
 		  if (miss0|miss1) begin
-                      if (except_thread==thr[0][write_addr]) invalid[0][write_addr]<=1'b1;
-                      if (except_thread==thr[1][write_addr]) invalid[1][write_addr]<=1'b1;
+                      if (pwh#(32)::cmpEQ(except_thread,thr)[0][write_addr]) invalid[0][write_addr]<=1'b1;
+                      if (pwh#(32)::cmpEQ(except_thread,thr)[1][write_addr]) invalid[1][write_addr]<=1'b1;
 		  end
               end
               //if (({4{except_thread}}^thr[0]&~invalid[0]|{4{except_thread}}^thr[1]&~invalid[1])==4'b0)
@@ -487,8 +487,8 @@ module wtmiss(
           if (miss0|miss1 && ~enOut_reg && ~except) begin
               thr[0][write_addr]<=mOp0_thread;
               thr[1][write_addr]<=mOp1_thread;
-              invalid[0][write_addr]<=except && except_thread==mOp0_thread;
-              invalid[1][write_addr]<=except && except_thread==mOp1_thread;
+              invalid[0][write_addr]<=except && pwh#(32)::cmpEQ(except_thread,mOp0_thread);
+              invalid[1][write_addr]<=except && pwh#(32)::cmpEQ(except_thread,mOp1_thread);
           end
           read_mop_reg[0]<=read_mop[0];
           read_mop_reg[1]<=read_mop[1];

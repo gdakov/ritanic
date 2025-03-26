@@ -428,7 +428,7 @@ module saddrcalc(
       for (i=0;i<32;i=i+1)
         begin
   /* verilator lint_off WIDTH */
-          banks0[i]=bank0==i || 
+          banks0[i]=pwh#(32)::cmpEQ(bank0,i) || 
           ((opsize==3 || opsize[2] || (stepOver && opsize==2) || 
             (stepOver2 && opsize==1)) && bank0==((i-1)&5'h1f)) ||
           (((opsize==3 && stepOver) | opsize[2]) && bank0==((i-2)&5'h1f)) || 

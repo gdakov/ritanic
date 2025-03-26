@@ -129,12 +129,12 @@ module stq_buf_L(
   assign chk4_match0=chk4_addrEO[chk4_odd[0]] && (chk4_subBNK2&subBNK2)!=0 && chk4_odd[0]==odd[0];
   assign chk5_match0=chk5_addrEO[chk5_odd[0]] && (chk5_subBNK2&subBNK2)!=0 && chk5_odd[0]==odd[0];
   
-  assign chk0_match=chk0_match0 && chk0_en && ~free && ~passe && (chk0_bytes&~bytes)==0 && upd && chk0_odd==odd && (chk0_subBNK&subBNK)!=0;
-  assign chk1_match=chk1_match0 && chk1_en && ~free && ~passe && (chk1_bytes&~bytes)==0 && upd && chk1_odd==odd && (chk1_subBNK&subBNK)!=0;
-  assign chk2_match=chk2_match0 && chk2_en && ~free && ~passe && (chk2_bytes&~bytes)==0 && upd && chk2_odd==odd && (chk2_subBNK&subBNK)!=0;
-  assign chk3_match=chk3_match0 && chk3_en && ~free && ~passe && (chk3_bytes&~bytes)==0 && upd && chk3_odd==odd && (chk3_subBNK&subBNK)!=0;
-  assign chk4_match=chk4_match0 && chk4_en && ~free && ~passe && (chk4_bytes&~bytes)==0 && upd && chk4_odd==odd && (chk4_subBNK&subBNK)!=0;
-  assign chk5_match=chk5_match0 && chk5_en && ~free && ~passe && (chk5_bytes&~bytes)==0 && upd && chk5_odd==odd && (chk5_subBNK&subBNK)!=0;
+  assign chk0_match=chk0_match0 && chk0_en && ~free && ~passe && (chk0_bytes&~bytes)==0 && upd && pwh#(32)::cmpEQ(chk0_odd,odd) && (chk0_subBNK&subBNK)!=0;
+  assign chk1_match=chk1_match0 && chk1_en && ~free && ~passe && (chk1_bytes&~bytes)==0 && upd && pwh#(32)::cmpEQ(chk1_odd,odd) && (chk1_subBNK&subBNK)!=0;
+  assign chk2_match=chk2_match0 && chk2_en && ~free && ~passe && (chk2_bytes&~bytes)==0 && upd && pwh#(32)::cmpEQ(chk2_odd,odd) && (chk2_subBNK&subBNK)!=0;
+  assign chk3_match=chk3_match0 && chk3_en && ~free && ~passe && (chk3_bytes&~bytes)==0 && upd && pwh#(32)::cmpEQ(chk3_odd,odd) && (chk3_subBNK&subBNK)!=0;
+  assign chk4_match=chk4_match0 && chk4_en && ~free && ~passe && (chk4_bytes&~bytes)==0 && upd && pwh#(32)::cmpEQ(chk4_odd,odd) && (chk4_subBNK&subBNK)!=0;
+  assign chk5_match=chk5_match0 && chk5_en && ~free && ~passe && (chk5_bytes&~bytes)==0 && upd && pwh#(32)::cmpEQ(chk5_odd,odd) && (chk5_subBNK&subBNK)!=0;
 
   assign chk0_partial=chk0_match0 && chk0_en && ~free && ~passe && ((chk0_bytes&~bytes)!=0 || ~upd);
   assign chk1_partial=chk1_match0 && chk1_en && ~free && ~passe && ((chk1_bytes&~bytes)!=0 || ~upd);
@@ -365,17 +365,17 @@ module stq_buf_L_array(
   assign wrt1_match5=chk5_addrEO[wrt1_WQ][wrt1_odd[0]] && (wrt1_subBNK2&chk5_subBNK2)!=0 && wrt1_odd[0]==chk5_odd[0];
   
   assign chk0_matchW[0]=wrt0_match0 && chk0_en && chk0_pre0 && wrt0_any &&(chk0_bytes&~wrt0_bytes)==0 && (upd&wrt0_en)!=64'b0 &&
-	  chk0_odd==wrt0_odd && (chk0_subBNK&wrt0_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk0_odd,wrt0_odd) && (chk0_subBNK&wrt0_subBNK)!=0;
   assign chk1_matchW[0]=wrt0_match1 && chk1_en && chk1_pre0 && wrt0_any &&(chk1_bytes&~wrt0_bytes)==0 && (upd&wrt0_en)!=64'b0 &&
-	  chk1_odd==wrt0_odd && (chk1_subBNK&wrt0_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk1_odd,wrt0_odd) && (chk1_subBNK&wrt0_subBNK)!=0;
   assign chk2_matchW[0]=wrt0_match2 && chk2_en && chk2_pre0 && wrt0_any &&(chk2_bytes&~wrt0_bytes)==0 && (upd&wrt0_en)!=64'b0 &&
-	  chk2_odd==wrt0_odd && (chk2_subBNK&wrt0_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk2_odd,wrt0_odd) && (chk2_subBNK&wrt0_subBNK)!=0;
   assign chk3_matchW[0]=wrt0_match3 && chk3_en && chk3_pre0 && wrt0_any &&(chk3_bytes&~wrt0_bytes)==0 && (upd&wrt0_en)!=64'b0 &&
-	  chk3_odd==wrt0_odd && (chk3_subBNK&wrt0_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk3_odd,wrt0_odd) && (chk3_subBNK&wrt0_subBNK)!=0;
   assign chk4_matchW[0]=wrt0_match4 && chk4_en && chk4_pre0 && wrt0_any &&(chk4_bytes&~wrt0_bytes)==0 && (upd&wrt0_en)!=64'b0 &&
-	  chk4_odd==wrt0_odd && (chk4_subBNK&wrt0_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk4_odd,wrt0_odd) && (chk4_subBNK&wrt0_subBNK)!=0;
   assign chk5_matchW[0]=wrt0_match5 && chk5_en && chk5_pre0 && wrt0_any &&(chk5_bytes&~wrt0_bytes)==0 && (upd&wrt0_en)!=64'b0 &&
-	  chk5_odd==wrt0_odd && (chk5_subBNK&wrt0_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk5_odd,wrt0_odd) && (chk5_subBNK&wrt0_subBNK)!=0;
 
   assign chk0_partialW[0]=wrt0_match0 && chk0_en && chk0_pre0 && wrt0_any && ((chk0_bytes&~wrt0_bytes)!=0 || (upd&wrt0_en)==64'b0);
   assign chk1_partialW[0]=wrt0_match1 && chk1_en && chk1_pre0 && wrt0_any && ((chk1_bytes&~wrt0_bytes)!=0 || (upd&wrt0_en)==64'b0);
@@ -385,17 +385,17 @@ module stq_buf_L_array(
   assign chk5_partialW[0]=wrt0_match5 && chk5_en && chk5_pre0 && wrt0_any && ((chk5_bytes&~wrt0_bytes)!=0 || (upd&wrt0_en)==64'b0);
   
   assign chk0_matchW[1]=wrt1_match0 && chk0_en && chk0_pre1 && wrt1_any &&(chk0_bytes&~wrt1_bytes)==0 && (upd&wrt1_en)!=64'b0 &&
-	  chk0_odd==wrt1_odd && (chk0_subBNK&wrt1_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk0_odd,wrt1_odd) && (chk0_subBNK&wrt1_subBNK)!=0;
   assign chk1_matchW[1]=wrt1_match1 && chk1_en && chk1_pre1 && wrt1_any &&(chk1_bytes&~wrt1_bytes)==0 && (upd&wrt1_en)!=64'b0 &&
-	  chk1_odd==wrt1_odd && (chk1_subBNK&wrt1_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk1_odd,wrt1_odd) && (chk1_subBNK&wrt1_subBNK)!=0;
   assign chk2_matchW[1]=wrt1_match2 && chk2_en && chk2_pre1 && wrt1_any &&(chk2_bytes&~wrt1_bytes)==0 && (upd&wrt1_en)!=64'b0 &&
-	  chk2_odd==wrt1_odd && (chk2_subBNK&wrt1_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk2_odd,wrt1_odd) && (chk2_subBNK&wrt1_subBNK)!=0;
   assign chk3_matchW[1]=wrt1_match3 && chk3_en && chk3_pre1 && wrt1_any &&(chk3_bytes&~wrt1_bytes)==0 && (upd&wrt1_en)!=64'b0 &&
-	  chk3_odd==wrt1_odd && (chk3_subBNK&wrt1_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk3_odd,wrt1_odd) && (chk3_subBNK&wrt1_subBNK)!=0;
   assign chk4_matchW[1]=wrt1_match4 && chk4_en && chk4_pre1 && wrt1_any &&(chk4_bytes&~wrt1_bytes)==0 && (upd&wrt1_en)!=64'b0 &&
-	  chk4_odd==wrt1_odd && (chk4_subBNK&wrt1_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk4_odd,wrt1_odd) && (chk4_subBNK&wrt1_subBNK)!=0;
   assign chk5_matchW[1]=wrt1_match5 && chk5_en && chk5_pre1 && wrt1_any &&(chk5_bytes&~wrt1_bytes)==0 && (upd&wrt1_en)!=64'b0 &&
-	  chk5_odd==wrt1_odd && (chk5_subBNK&wrt1_subBNK)!=0;
+	  pwh#(32)::cmpEQ(chk5_odd,wrt1_odd) && (chk5_subBNK&wrt1_subBNK)!=0;
 
   assign chk0_partialW[1]=wrt1_match0 && chk0_en && chk0_pre1 && wrt1_any && ((chk0_bytes&~wrt1_bytes)!=0 || (upd&wrt1_en)==64'b0);
   assign chk1_partialW[1]=wrt1_match1 && chk1_en && chk1_pre1 && wrt1_any && ((chk1_bytes&~wrt1_bytes)!=0 || (upd&wrt1_en)==64'b0);

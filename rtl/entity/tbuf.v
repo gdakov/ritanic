@@ -88,7 +88,7 @@ module tbuf_ram1(
   pwire [5:0] data_rand;
   pwire match;
   
-  assign read_data=save && read_addr_reg==write_addr_save ? write_data_save : ram[read_addr_reg];
+  assign read_data=save && pwh#(32)::cmpEQ(read_addr_reg,write_addr_save) ? write_data_save : ram[read_addr_reg];
 
   LFSR_16_6 #(init_lfsr) rand_mod(clk,rst,data_rand);
 
@@ -848,8 +848,8 @@ module tbuf_way(
   assign write_dataW[`btb_tgt_jmask2]=4'b0;
   assign write_dataW[`btb_tgt_jmask3]=4'b0;
   
-  assign IP_match=read_src==nextIP_reg[43:15];
-  assign read_hit=IP_match && read_valid && ~init && HALF==nextIP_reg[14];
+  assign IP_match=pwh#(32)::cmpEQ(read_src,nextIP_reg)[43:15];
+  assign read_hit=IP_match && read_valid && ~init && pwh#(32)::cmpEQ(HALF,nextIP_reg)[14];
   
   assign way_hit=oen ? read_LRU : 1'bz;
   
@@ -1028,7 +1028,7 @@ module tbuf_way(
 
 //  assign read_LRU_hit=read_hit ? read_LRU : 1'bz;
   
-  assign ram_wen=write_wen & read_hit || write_insert & (write_way==WAY) || 
+  assign ram_wen=write_wen & read_hit || write_insert & (pwh#(32)::cmpEQ(write_way,WAY)) || 
     (mStall && ~write_wen && ~write_insert && taken_reg!=0 && ~except_reg) || except_reg & except_indir_reg & 
     (update_taken_reg[0] ? update_addr0_reg[0]==WAY : update_addr1_reg[0]==WAY && update_taken_reg[1]);
 
@@ -1102,7 +1102,7 @@ module tbuf_way(
   .write_addr(write_insert ? IP_wbits[8:0] : update_addr_reg[8:0]),
   .write_data(extra_dataW),
   .write_wen(((update_en_reg2|has_saved_reg&&update_addr_reg[9]==HALF)|
-    (write_insert&&write_way==WAY&&IP_wbits[9]==HALF))||init)
+    (write_insert&&pwh#(32)::cmpEQ(write_way,WAY)&&IP_wbits[9]==HALF))||init)
   );
 
   tbufExtra_ram ex1_mod(
@@ -1114,7 +1114,7 @@ module tbuf_way(
   .write_addr(write_insert ? IP_wbits[8:0] : update_addr_reg[8:0]),
   .write_data(extra_dataW),
   .write_wen(((update_en_reg2|has_saved_reg&&update_addr_reg[9]==HALF)|
-      (write_insert&&write_way==WAY&&IP_wbits[9]==HALF))||init)
+      (write_insert&&pwh#(32)::cmpEQ(write_way,WAY)&&IP_wbits[9]==HALF))||init)
   );
 
   freq_update fq0_mod(upd_freq0,updW_freq0);
@@ -1443,8 +1443,8 @@ module tbuf_way_2(
   
   pwire write_way_reg,write_insert_reg,write_wen_reg;
   
-  assign read_hit=read_hit0 | read_hit1 | (read_write_fwd && write_way_reg==WAY) ;
-  assign way_hit=read_write_fwd ? write_way_reg==WAY : 1'bz;
+  assign read_hit=read_hit0 | read_hit1 | (read_write_fwd && pwh#(32)::cmpEQ(write_way_reg,WAY)) ;
+  assign way_hit=read_write_fwd ? pwh#(32)::cmpEQ(write_way_reg,WAY) : 1'bz;
 
 
     tbuf_way #(WAY,1'b0) way0(

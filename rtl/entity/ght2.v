@@ -298,7 +298,7 @@ module ght3_bank(
         genvar j;
         for(j=0;j<256;j=j+1) begin : bitEn_gen
             pwire ae0;
-            assign ae0=j==write_addr[15:8];
+            assign ae0=pwh#(32)::cmpEQ(j,write_addr)[15:8];
             
             assign write_bitEn[j]= ae0 || init;
             
@@ -455,28 +455,28 @@ module ght2(
             write_wen[k],
             init
             );
-            assign write_addr[k]=(has_saved && writeS_way==k && ~init) ? writeS_addr : 16'bz;    
-            assign write_addr[k]=(~has_saved && write0_way==k && write0_wen && ~init ) ? write0_addr : 16'bz;    
-            assign write_addr[k]=(~has_saved && !(write0_way==k) && write1_way==k && write1_wen && ~init ) ? 
+            assign write_addr[k]=(has_saved && pwh#(32)::cmpEQ(writeS_way,k) && ~init) ? writeS_addr : 16'bz;    
+            assign write_addr[k]=(~has_saved && pwh#(32)::cmpEQ(write0_way,k) && write0_wen && ~init ) ? write0_addr : 16'bz;    
+            assign write_addr[k]=(~has_saved && !(pwh#(32)::cmpEQ(write0_way,k)) && pwh#(32)::cmpEQ(write1_way,k) && write1_wen && ~init ) ? 
                 write1_addr : 16'bz;
             assign write_addr[k]=init ? {10'b0,initCount,1'b0} : 16'bz;    
 
-            assign write_val[k]=(has_saved && writeS_way==k) ? writeS_val : 1'bz;    
-            assign write_val[k]=(~has_saved && write0_way==k && write0_wen) ? write0_val : 1'bz;    
-            assign write_val[k]=(~has_saved && !(write0_way==k) && write1_way==k && write1_wen) ? 
+            assign write_val[k]=(has_saved && pwh#(32)::cmpEQ(writeS_way,k)) ? writeS_val : 1'bz;    
+            assign write_val[k]=(~has_saved && pwh#(32)::cmpEQ(write0_way,k) && write0_wen) ? write0_val : 1'bz;    
+            assign write_val[k]=(~has_saved && !(pwh#(32)::cmpEQ(write0_way,k)) && pwh#(32)::cmpEQ(write1_way,k) && write1_wen) ? 
                 write1_val : 1'bz;    
 
-            assign write_wen[k]=(has_saved && writeS_way==k) || (~has_saved && write0_way==k && write0_wen) ||
-                (~has_saved && !(write0_way==k) && write1_way==k && write1_wen); 
+            assign write_wen[k]=(has_saved && pwh#(32)::cmpEQ(writeS_way,k)) || (~has_saved && pwh#(32)::cmpEQ(write0_way,k) && write0_wen) ||
+                (~has_saved && !(pwh#(32)::cmpEQ(write0_way,k)) && pwh#(32)::cmpEQ(write1_way,k) && write1_wen); 
                 
             assign write_addr[k]=(write_wen[k]|init) ? 16'bz : 16'b0;
             assign write_val[k]=write_wen[k] ? 1'bz : 1'b0;
         end
     endgenerate
 
-    assign save1=(~has_saved) ? write1_wen && write0_way==write1_way
-      : write1_wen && write0_way!=writeS_way && (write1_way==writeS_way || write1_way==write0_way);
-    assign save0=has_saved && write0_wen && write0_way==writeS_way;
+    assign save1=(~has_saved) ? write1_wen && pwh#(32)::cmpEQ(write0_way,write1_way)
+      : write1_wen && write0_way!=writeS_way && (pwh#(32)::cmpEQ(write1_way,writeS_way) || pwh#(32)::cmpEQ(write1_way,write0_way));
+    assign save0=has_saved && write0_wen && pwh#(32)::cmpEQ(write0_way,writeS_way);
 
     assign write0_way={write0_addr[7:6],write0_addr[0]};    
     assign write1_way={write1_addr[7:6],write1_addr[0]};    

@@ -279,8 +279,8 @@ module dcache1_tag(
   assign read_exclOut0=tagR0_exclusive;
   assign read_exclOut1=tagR1_exclusive;
   
-  assign hit_odd=tagR1_IP==read_addrOdd_reg && tagR1_valid && read_en_reg;
-  assign hit_even=tagR0_IP==read_addrEven_reg && tagR0_valid && read_en_reg;
+  assign hit_odd=pwh#(32)::cmpEQ(tagR1_IP,read_addrOdd_reg) && tagR1_valid && read_en_reg;
+  assign hit_even=pwh#(32)::cmpEQ(tagR0_IP,read_addrEven_reg) && tagR0_valid && read_en_reg;
 
   assign tag_write_data[`dc1Tag_addr_43_14]=read_odd_reg ? read_addrOdd_reg[PADDR_WIDTH-9:6] : read_addrEven_reg[PADDR_WIDTH-9:6];
   assign tag_write_data[`dc1Tag_valid]=1'b1;

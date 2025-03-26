@@ -51,13 +51,13 @@ module ght_buf(
   pwire thread;
   pwire [12:0] addr;
 
-  assign read_hit0=read_addr0==addr && ~free; 
-  assign read_hit1=read_addr1==addr && ~free; 
-  assign read_hit2=read_addr2==addr && ~free; 
-  assign read_hit3=read_addr3==addr && ~free; 
+  assign read_hit0=pwh#(32)::cmpEQ(read_addr0,addr) && ~free; 
+  assign read_hit1=pwh#(32)::cmpEQ(read_addr1,addr) && ~free; 
+  assign read_hit2=pwh#(32)::cmpEQ(read_addr2,addr) && ~free; 
+  assign read_hit3=pwh#(32)::cmpEQ(read_addr3,addr) && ~free; 
 
   always @(posedge clk) begin
-    if (rst||(except&&except_thread==thread)) begin
+    if (rst||(except&&pwh#(32)::cmpEQ(except_thread,thread))) begin
         free<=1'b1;
         thread<=1'b0;
         addr<=13'b0;

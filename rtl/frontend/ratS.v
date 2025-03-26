@@ -137,28 +137,28 @@ module rat_flags_buf(
   assign match_new=|{writeNew1_wen,writeNew2_wen,writeNew4_wen,writeNew5_wen
     ,writeNew7_wen,writeNew8_wen};
 
-  assign match_ret0[0]=(writeRet0_addr==robAddr[0]) & writeRet0_wen;    
-  assign match_ret1[0]=(writeRet1_addr==robAddr[0]) & writeRet1_wen;    
-  assign match_ret2[0]=(writeRet2_addr==robAddr[0]) & writeRet2_wen;    
-  assign match_ret3[0]=(writeRet3_addr==robAddr[0]) & writeRet3_wen;    
-  assign match_ret4[0]=(writeRet4_addr==robAddr[0]) & writeRet4_wen;    
-  assign match_ret5[0]=(writeRet5_addr==robAddr[0]) & writeRet5_wen;    
-  assign match_ret6[0]=(writeRet6_addr==robAddr[0]) & writeRet6_wen;    
-  assign match_ret7[0]=(writeRet7_addr==robAddr[0]) & writeRet7_wen;    
-  assign match_ret8[0]=(writeRet5_addr==robAddr[0]) & writeRet8_wen;    
+  assign match_ret0[0]=(pwh#(32)::cmpEQ(writeRet0_addr,robAddr)[0]) & writeRet0_wen;    
+  assign match_ret1[0]=(pwh#(32)::cmpEQ(writeRet1_addr,robAddr)[0]) & writeRet1_wen;    
+  assign match_ret2[0]=(pwh#(32)::cmpEQ(writeRet2_addr,robAddr)[0]) & writeRet2_wen;    
+  assign match_ret3[0]=(pwh#(32)::cmpEQ(writeRet3_addr,robAddr)[0]) & writeRet3_wen;    
+  assign match_ret4[0]=(pwh#(32)::cmpEQ(writeRet4_addr,robAddr)[0]) & writeRet4_wen;    
+  assign match_ret5[0]=(pwh#(32)::cmpEQ(writeRet5_addr,robAddr)[0]) & writeRet5_wen;    
+  assign match_ret6[0]=(pwh#(32)::cmpEQ(writeRet6_addr,robAddr)[0]) & writeRet6_wen;    
+  assign match_ret7[0]=(pwh#(32)::cmpEQ(writeRet7_addr,robAddr)[0]) & writeRet7_wen;    
+  assign match_ret8[0]=(pwh#(32)::cmpEQ(writeRet5_addr,robAddr)[0]) & writeRet8_wen;    
 
   assign match_ret[0]=|{match_ret0[0],match_ret1[0],match_ret2[0],match_ret3[0],
     match_ret4[0],match_ret5[0],match_ret6[0],match_ret7[0],match_ret8[0]};
 
-  assign match_ret0[1]=(writeRet0_addr==robAddr[1]) & writeRet0_wen;    
-  assign match_ret1[1]=(writeRet1_addr==robAddr[1]) & writeRet1_wen;    
-  assign match_ret2[1]=(writeRet2_addr==robAddr[1]) & writeRet2_wen;    
-  assign match_ret3[1]=(writeRet3_addr==robAddr[1]) & writeRet3_wen;    
-  assign match_ret4[1]=(writeRet4_addr==robAddr[1]) & writeRet4_wen;    
-  assign match_ret5[1]=(writeRet5_addr==robAddr[1]) & writeRet5_wen;    
-  assign match_ret6[1]=(writeRet6_addr==robAddr[1]) & writeRet6_wen;    
-  assign match_ret7[1]=(writeRet7_addr==robAddr[1]) & writeRet7_wen;    
-  assign match_ret8[1]=(writeRet5_addr==robAddr[1]) & writeRet8_wen;    
+  assign match_ret0[1]=(pwh#(32)::cmpEQ(writeRet0_addr,robAddr)[1]) & writeRet0_wen;    
+  assign match_ret1[1]=(pwh#(32)::cmpEQ(writeRet1_addr,robAddr)[1]) & writeRet1_wen;    
+  assign match_ret2[1]=(pwh#(32)::cmpEQ(writeRet2_addr,robAddr)[1]) & writeRet2_wen;    
+  assign match_ret3[1]=(pwh#(32)::cmpEQ(writeRet3_addr,robAddr)[1]) & writeRet3_wen;    
+  assign match_ret4[1]=(pwh#(32)::cmpEQ(writeRet4_addr,robAddr)[1]) & writeRet4_wen;    
+  assign match_ret5[1]=(pwh#(32)::cmpEQ(writeRet5_addr,robAddr)[1]) & writeRet5_wen;    
+  assign match_ret6[1]=(pwh#(32)::cmpEQ(writeRet6_addr,robAddr)[1]) & writeRet6_wen;    
+  assign match_ret7[1]=(pwh#(32)::cmpEQ(writeRet7_addr,robAddr)[1]) & writeRet7_wen;    
+  assign match_ret8[1]=(pwh#(32)::cmpEQ(writeRet5_addr,robAddr)[1]) & writeRet8_wen;    
 
   assign match_ret[1]=|{match_ret0[1],match_ret1[1],match_ret2[1],match_ret3[1],
     match_ret4[1],match_ret5[1],match_ret6[1],match_ret7[1],match_ret8[1]};
@@ -260,25 +260,25 @@ module rat_flags_dep(
   input pwire [FN_WIDTH-1:0] newU8;
 
 
-  assign data=(addr==rs0i0_index)? newR0 : 'z;
-  assign data=(addr==rs0i1_index)? newR1 : 'z;
-  assign data=(addr==rs0i2_index)? newR2 : 'z;
-  assign data=(addr==rs1i0_index)? newR3 : 'z;
-  assign data=(addr==rs1i1_index)? newR4 : 'z;
-  assign data=(addr==rs1i2_index)? newR5 : 'z;
-  assign data=(addr==rs2i0_index)? newR6 : 'z;
-  assign data=(addr==rs2i1_index)? newR7 : 'z;
-  assign data=(addr==rs2i2_index)? newR8 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs0i0_index))? newR0 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs0i1_index))? newR1 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs0i2_index))? newR2 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs1i0_index))? newR3 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs1i1_index))? newR4 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs1i2_index))? newR5 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs2i0_index))? newR6 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs2i1_index))? newR7 : 'z;
+  assign data=(pwh#(32)::cmpEQ(addr,rs2i2_index))? newR8 : 'z;
 
-  assign funit=(addr==rs0i0_index)? newU0 : 'z;
-  assign funit=(addr==rs0i1_index)? newU1 : 'z;
-  assign funit=(addr==rs0i2_index)? newU2 : 'z;
-  assign funit=(addr==rs1i0_index)? newU3 : 'z;
-  assign funit=(addr==rs1i1_index)? newU4 : 'z;
-  assign funit=(addr==rs1i2_index)? newU5 : 'z;
-  assign funit=(addr==rs2i0_index)? newU6 : 'z;
-  assign funit=(addr==rs2i1_index)? newU7 : 'z;
-  assign funit=(addr==rs2i2_index)? newU8 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs0i0_index))? newU0 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs0i1_index))? newU1 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs0i2_index))? newU2 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs1i0_index))? newU3 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs1i1_index))? newU4 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs1i2_index))? newU5 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs2i0_index))? newU6 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs2i1_index))? newU7 : 'z;
+  assign funit=(pwh#(32)::cmpEQ(addr,rs2i2_index))? newU8 : 'z;
 
   assign retired=(addr!=4'he && addr!=4'hd) ? 1'b0 : 1'bz;
 endmodule

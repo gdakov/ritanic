@@ -84,7 +84,7 @@ module cvt_FP_I_mod(
     genvar k;
     for(k=0;k<8;k=k+1) begin : shifter_gen
 	    //verilator lint_off WIDTH
-	assign val_imm=(shift[7:3]==k[4:0]) ? {{64{sign}},bits2}>>((7-k)*8) : 72'bz;
+	assign val_imm=(pwh#(5)::cmpEQ(shift[7:3],k)[4:0]) ? {{64{sign}},bits2}>>((7-k)*8) : 72'bz;
 	assign val_imm=(shift[7:3]==(k[4:0]+5'd16)) ? {{8{sign}},bits2}<<(k*8+8) : 72'bz;
 	assign val=(shift_reg[2:0]==k) ?
 	       	{val_imm_reg,1'b0}>>(7-k) : 64'bz;

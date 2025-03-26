@@ -141,7 +141,7 @@ module dcache1_bank(
  
   generate
     for(p=0;p<4;p=p+1) begin
-        assign write_ben[p]=(write_bankEn0[p] && write_begin0==INDEX && ~init) ? write_bBen0[p] : 4'bz;
+        assign write_ben[p]=(write_bankEn0[p] && pwh#(32)::cmpEQ(write_begin0,INDEX) && ~init) ? write_bBen0[p] : 4'bz;
         assign write_ben[p]=(write_bankEn0[p] && write_end0[p]==INDEX && ~init) ?   write_enBen0[p] : 4'bz;
         assign write_ben[p]=((write_bankEn0[p] && write_begin0[p]!=INDEX && write_end0[p]!=INDEX) || init) ? 4'b1111 : 4'bz;
         assign write_ben[p]=(~write_bankEn0[p] && ~init) ? 4'b0 : 4'bz;

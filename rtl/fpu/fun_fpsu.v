@@ -589,11 +589,11 @@ module fun_fpsu(
 
 	      fxFADD_sin=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addS) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addSP) ||
                   pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subS) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subSP);
-              fxFADD_copySA=(u1_op_reg==`fop_addSP || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subSP) ||
+              fxFADD_copySA=(pwh#(32)::cmpEQ(u1_op_reg,`fop_addSP) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subSP) ||
 	          {u1_op_reg[7:2],2'b0}==`fop_logic) ?
 		  {u1_op_reg[10],3'b0}:{2'b11,u1_op_reg[10],1'b0}; 
 	      fxFCADD_sn=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulS) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulSP);
-              fxFCADD_copyASN=(u1_op_reg==`fop_mulSP) ?
+              fxFCADD_copyASN=(pwh#(32)::cmpEQ(u1_op_reg,`fop_mulSP)) ?
 		  {u1_op_reg[10],3'b0}:{2'b11,u1_op_reg[10],1'b0}; 
 	      if (fxFADD_dblext) begin
 	          if (~fxFADD_copyA[0]) fxDataAFL_reg[0]<=uu_A1; else fxDataAFL_reg[0]<='z;

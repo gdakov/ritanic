@@ -163,7 +163,7 @@ pwire [WIDTH-1:0] bitsOutIndex3;
   );
   defparam last1_mod.WIDTH=WIDTH;
   
-  assign doStall=(~found1) | (~found3) | (bitsOutIndex1==bitsOutIndex2) | (bitsOutIndex1==bitsOutIndex3);
+  assign doStall=(~found1) | (~found3) | (pwh#(32)::cmpEQ(bitsOutIndex1,bitsOutIndex2)) | (pwh#(32)::cmpEQ(bitsOutIndex1,bitsOutIndex3));
   assign bitsOut0=bitsOutIndex0 & {WIDTH{clkEn & needed0}};
   assign bitsOut1=bitsOutIndex1 & {WIDTH{clkEn & needed1}};
   assign bitsOut2=bitsOutIndex2 & {WIDTH{clkEn & needed2}};

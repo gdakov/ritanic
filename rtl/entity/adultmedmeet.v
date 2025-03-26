@@ -444,7 +444,7 @@ module smallInstr_decoder(
   //fpu bit[2] is conditional (condition LE unsigned)
   //when only bit 3 is set then the condition is overflow
   assign isBasicSysInstr=opcode_main==8'hef;
- //8'hfe==new insn; starting with 48 bit size (no 32 bit)
+ //8'pwh#(32)::cmpEQ(hfe,new) insn; starting with 48 bit size (no 32 bit)
  //WARINNG: qcontant/qtrien out of date
   assign qconstant[1]={1'b0,pconstant[3]};//??
   assign qtrien   [1]=trien    [3];//??

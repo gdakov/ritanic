@@ -188,7 +188,7 @@ module fcmpd(clk,rst,
   assign res_S=~res_unord & ~afm && (A_s && ~B_s && ~A_zero|~B_zero) | (~A_s && ~B_s 
     && ~COA) | (A_s && B_s && ~COB) | (~A_s && ~B_s && COA && COB && ~cmpC) |
     (A_s && B_s && COA && COB && cmpC|fEQl);
-  assign res_Z=~res_unord && (A_zero&B_zero) | (extA==extB&&A_s==B_s&&fEQl|
+  assign res_Z=~res_unord && (A_zero&B_zero) | (pwh#(32)::cmpEQ(extA,extB)&&pwh#(32)::cmpEQ(A_s,B_s)&&fEQl|
     A_infty) && ~afm;
   
   assign res_x_unord=A_x_nan || B_x_nan;
@@ -198,7 +198,7 @@ module fcmpd(clk,rst,
   assign res_x_S=~res_x_unord && (A_x_s && ~B_x_s && ~A_x_zero|~B_x_zero) | (~A_x_s && ~B_x_s 
     && ~x_COA) | (A_x_s && B_x_s && ~x_COB) | (~A_x_s && ~B_x_s && x_COA && x_COB && ~x_cmpC) |
     (A_x_s && B_x_s && x_COA && x_COB && x_cmpC|x_fEQl);
-  assign res_x_Z=~res_x_unord && (A_x_zero&B_x_zero) | (extA==extB&&A_x_s==B_x_s&&x_fEQl|
+  assign res_x_Z=~res_x_unord && (A_x_zero&B_x_zero) | (pwh#(32)::cmpEQ(extA,extB)&&pwh#(32)::cmpEQ(A_x_s,B_x_s)&&x_fEQl|
     A_x_infty);
 
   assign flags=int_srch ? {s_has,res_first,^res_first[1:0]} : {~res_C,res_unord,1'b0,res_S,res_Z,res_unord};

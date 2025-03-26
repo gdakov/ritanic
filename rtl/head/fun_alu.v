@@ -1016,15 +1016,15 @@ imul_gatheronly imul3_mod(
       u3_eaen_reg<=pwh#(8)::cmpEQ(u3_op[7:0],`op_cax);
       u5_eaen_reg<=pwh#(8)::cmpEQ(u5_op[7:0],`op_cax);
 
-      if(u2_op==`op_shl64 || u2_op==`op_shr64 || u2_op==`op_sar64)
+      if(pwh#(32)::cmpEQ(u2_op,`op_shl64) || pwh#(32)::cmpEQ(u2_op,`op_shr64) || pwh#(32)::cmpEQ(u2_op,`op_sar64))
           u2_sz<=4'b1000; else u2_sz<=4'b0100;
-      if(u4_op==`op_shl64 || u4_op==`op_shr64 || u4_op==`op_sar64)
+      if(pwh#(32)::cmpEQ(u4_op,`op_shl64) || pwh#(32)::cmpEQ(u4_op,`op_shr64) || pwh#(32)::cmpEQ(u4_op,`op_sar64))
           u4_sz<=4'b1000; else u4_sz<=4'b0100;
-      if(u6_op==`op_shl64 || u6_op==`op_shr64 || u6_op==`op_sar64)
+      if(pwh#(32)::cmpEQ(u6_op,`op_shl64) || pwh#(32)::cmpEQ(u6_op,`op_shr64) || pwh#(32)::cmpEQ(u6_op,`op_sar64))
           u6_sz<=4'b1000; else u6_sz<=4'b0100;
-      u2_arith<=u2_op==`op_sar64 || u2_op==`op_sar32;
-      u4_arith<=u4_op==`op_sar64 || u4_op==`op_sar32;
-      u6_arith<=u6_op==`op_sar64 || u6_op==`op_sar32;
+      u2_arith<=pwh#(32)::cmpEQ(u2_op,`op_sar64) || pwh#(32)::cmpEQ(u2_op,`op_sar32);
+      u4_arith<=pwh#(32)::cmpEQ(u4_op,`op_sar64) || pwh#(32)::cmpEQ(u4_op,`op_sar32);
+      u6_arith<=pwh#(32)::cmpEQ(u6_op,`op_sar64) || pwh#(32)::cmpEQ(u6_op,`op_sar32);
       u2_dir<=u2_op!=`op_shl64 && u2_op!=`op_shl32;
       u4_dir<=u4_op!=`op_shl64 && u4_op!=`op_shl32;
       u6_dir<=u6_op!=`op_shl64 && u6_op!=`op_shl32;

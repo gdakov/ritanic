@@ -88,7 +88,7 @@ module rbus(
               rbusPrev_src_req_reg<=rbusPrev_src_req;
               rbusPrev_dst_req_reg<=rbusPrev_dst_req;
               rbusPrev_address_reg<=rbusPrev_address;
-              if (rbusPrev_src_req==IDA || rbusPrev_src_req==IDB) 
+              if (pwh#(32)::cmpEQ(rbusPrev_src_req,IDA) || pwh#(32)::cmpEQ(rbusPrev_src_req,IDB)) 
                 rbusPrev_signals_reg[`rbus_used]<=1'b0;
           end
           if (rbus_rdyOutA && rbus_rdyIn) begin

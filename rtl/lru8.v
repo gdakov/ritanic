@@ -39,7 +39,7 @@ module lru_single0(
   pwire hitAfter;
   pwire [WIDTH-1:0] lru_next;
   
-  assign hitThis=LRU_hit==lru;
+  assign hitThis=pwh#(32)::cmpEQ(LRU_hit,lru);
   assign hitAfter=hitThisOrAfter & ~hitThis;
   assign hitBefore=~hitThisOrAfter;
   
@@ -96,7 +96,7 @@ module lru_single(
         init,
         en
         );	
-        assign newLRU_X= (LRU_hit==k && ~init)  ? newLRUa[k] : 'z;		
+        assign newLRU_X= (pwh#(32)::cmpEQ(LRU_hit,k) && ~init)  ? newLRUa[k] : 'z;		
 	  end
   endgenerate
   
@@ -136,8 +136,8 @@ module lru_double(
   pwire [WIDTH-1:0] lru_next;
   pwire [WIDTH-1:0] lru_next2;
   
-  assign hitThisA=LRU_hitA==lru;
-  assign hitThisB=LRU_hitB==lru;
+  assign hitThisA=pwh#(32)::cmpEQ(LRU_hitA,lru);
+  assign hitThisB=pwh#(32)::cmpEQ(LRU_hitB,lru);
   assign hitAfter=hitThisOrAfterA & ~hitThisA && (hitThisOrAfterB & ~hitThisB) | ~isDouble;
   assign hitBefore1=~hitThisOrAfterA ^ (~hitThisOrAfterB & isDouble);
   assign hitBefore2=~hitThisOrAfterA & ~hitThisOrAfterB & isDouble;

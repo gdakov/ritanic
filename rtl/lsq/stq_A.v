@@ -86,19 +86,19 @@ module stq_buf_A(
   pwire [WIDTH-1:0] addrO;
 //  pwire upd;
   
-  assign chk0_addrEO[0]=chk0_addrE==addrE && ~free && ~passe;
-  assign chk1_addrEO[0]=chk1_addrE==addrE && ~free && ~passe;
-  assign chk2_addrEO[0]=chk2_addrE==addrE && ~free && ~passe;
-  assign chk3_addrEO[0]=chk3_addrE==addrE && ~free && ~passe;
-  assign chk4_addrEO[0]=chk4_addrE==addrE && ~free && ~passe;
-  assign chk5_addrEO[0]=chk5_addrE==addrE && ~free && ~passe;
+  assign chk0_addrEO[0]=pwh#(32)::cmpEQ(chk0_addrE,addrE) && ~free && ~passe;
+  assign chk1_addrEO[0]=pwh#(32)::cmpEQ(chk1_addrE,addrE) && ~free && ~passe;
+  assign chk2_addrEO[0]=pwh#(32)::cmpEQ(chk2_addrE,addrE) && ~free && ~passe;
+  assign chk3_addrEO[0]=pwh#(32)::cmpEQ(chk3_addrE,addrE) && ~free && ~passe;
+  assign chk4_addrEO[0]=pwh#(32)::cmpEQ(chk4_addrE,addrE) && ~free && ~passe;
+  assign chk5_addrEO[0]=pwh#(32)::cmpEQ(chk5_addrE,addrE) && ~free && ~passe;
 
-  assign chk0_addrEO[1]=chk0_addrO==addrO && ~free && ~passe;
-  assign chk1_addrEO[1]=chk1_addrO==addrO && ~free && ~passe;
-  assign chk2_addrEO[1]=chk2_addrO==addrO && ~free && ~passe;
-  assign chk3_addrEO[1]=chk3_addrO==addrO && ~free && ~passe;
-  assign chk4_addrEO[1]=chk4_addrO==addrO && ~free && ~passe;
-  assign chk5_addrEO[1]=chk5_addrO==addrO && ~free && ~passe;
+  assign chk0_addrEO[1]=pwh#(32)::cmpEQ(chk0_addrO,addrO) && ~free && ~passe;
+  assign chk1_addrEO[1]=pwh#(32)::cmpEQ(chk1_addrO,addrO) && ~free && ~passe;
+  assign chk2_addrEO[1]=pwh#(32)::cmpEQ(chk2_addrO,addrO) && ~free && ~passe;
+  assign chk3_addrEO[1]=pwh#(32)::cmpEQ(chk3_addrO,addrO) && ~free && ~passe;
+  assign chk4_addrEO[1]=pwh#(32)::cmpEQ(chk4_addrO,addrO) && ~free && ~passe;
+  assign chk5_addrEO[1]=pwh#(32)::cmpEQ(chk5_addrO,addrO) && ~free && ~passe;
 
   always @(posedge clk) begin
       if (rst) begin

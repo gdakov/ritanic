@@ -90,19 +90,19 @@ module cntrl_jump_upto(
     genvar k;
     for(k=0;k<10;k=k+1) begin : jcmp_gen
         except_jump_cmp cmp_mod(flags[k],jumpType,jumpTaken_x[k]);
-        assign mispred_x[k]=(jumpTaken_x[k] ^ jumpPredTk) | (indirMismatch && jumpType==5'h11) | jumpTbufMiss && INDEX==jumpIndex;
-        assign jumpTaken=(flagLast[k] && INDEX==jumpIndex) ? jumpTaken_x[k]&~jumpTbufMiss : 1'bz;
+        assign mispred_x[k]=(jumpTaken_x[k] ^ jumpPredTk) | (indirMismatch && jumpType==5'h11) | jumpTbufMiss && pwh#(32)::cmpEQ(INDEX,jumpIndex);
+        assign jumpTaken=(flagLast[k] && pwh#(32)::cmpEQ(INDEX,jumpIndex)) ? jumpTaken_x[k]&~jumpTbufMiss : 1'bz;
         assign jumpMisPred=flagLast[k] ? mispred_x[k] : 1'bz; 
-        assign flagOut=(flagLast[k] && INDEX==jumpIndex) ? flags[k] : 'z;
+        assign flagOut=(flagLast[k] && pwh#(32)::cmpEQ(INDEX,jumpIndex)) ? flags[k] : 'z;
         assign flagOutN=flagLast[k] ? flags[k] : 'z;
     end
   endgenerate
 
   except_jump_cmp cmp_mod(prevFlags,jumpType,jumpTaken_0);
-  assign mispred_0=(jumpTaken_0 ^ jumpPredTk) | (indirMismatch && jumpType==5'h11) && INDEX==jumpIndex;
-  assign jumpTaken=(~nFlagIsPrev  && INDEX==jumpIndex) ? jumpTaken_0 : 1'bz;
+  assign mispred_0=(jumpTaken_0 ^ jumpPredTk) | (indirMismatch && jumpType==5'h11) && pwh#(32)::cmpEQ(INDEX,jumpIndex);
+  assign jumpTaken=(~nFlagIsPrev  && pwh#(32)::cmpEQ(INDEX,jumpIndex)) ? jumpTaken_0 : 1'bz;
   assign jumpMisPred=(~nFlagIsPrev) ? mispred_0 : 1'bz; 
-  assign flagOut=(~nFlagIsPrev && INDEX==jumpIndex) ? prevFlags : 'z;
+  assign flagOut=(~nFlagIsPrev && pwh#(32)::cmpEQ(INDEX,jumpIndex)) ? prevFlags : 'z;
   assign flagOutN=(~nFlagIsPrev) ? prevFlags : 'z;
 
 endmodule
@@ -795,7 +795,7 @@ module cntrl_find_outcome(
     genvar k,j;
     for(k=0;k<10;k=k+1) begin : jumps_gen
       assign flagSet[k]=ret_data[k][`except_setsFlags];
-      assign flagSetY[k]=ret_data[k][`except_setsFlags] && !(k==jump0Ind && jump0CLP) && !(k==jump1Ind && jump1CLP);
+      assign flagSetY[k]=ret_data[k][`except_setsFlags] && !(pwh#(32)::cmpEQ(k,jump0Ind) && jump0CLP) && !(pwh#(32)::cmpEQ(k,jump1Ind) && jump1CLP);
       assign pending[k]=ret_data[k][`except_status]==2'd0 && !(mem_match & mem_II_bits_ret[k]);
       assign exceptn[k]=(ret_data[k][`except_status]==2'd1 && ~ret_data[k][14]) || (mem_match & mem_II_bits_except[k]) || GORQ_enX_reg
           ||(break_jump0&jump0_attr[`attr_vec]||break_jump1&jump1_attr[`attr_vec]);
@@ -804,9 +804,9 @@ module cntrl_find_outcome(
       assign done[k]=ret_data[k][`except_status]==2'd2 || (mem_match & mem_II_bits_fine[k] & mem_II_bits_ret[k]);
       assign fpudone[k]=ret_data[k][`except_status]==2'd3;//with exception flags set
           
-      assign btb_miss[k]=(jump0Pos==k && jump0Miss) || (jump1Pos==k && jump1Miss);
-      assign jump0_here[k]=jump0Pos==k;
-      assign jump1_here[k]=jump1Pos==k;
+      assign btb_miss[k]=(pwh#(32)::cmpEQ(jump0Pos,k) && jump0Miss) || (pwh#(32)::cmpEQ(jump1Pos,k) && jump1Miss);
+      assign jump0_here[k]=pwh#(32)::cmpEQ(jump0Pos,k);
+      assign jump1_here[k]=pwh#(32)::cmpEQ(jump1Pos,k);
       pwire [9:0] flag_last;
       pwire flag_has;
       /* verilator lint_off WIDTH */
@@ -920,9 +920,9 @@ module cntrl_find_outcome(
       assign from_IP=(tk_after[k] & jump0Pred) ? {jump0BND,jump0IP[42:0]} : 63'bz;
       assign from_IP=(tk_after[k] & jump1Pred) ? {jump1BND,jump1IP[42:0]} : 63'bz;
 
-      assign breakIP=break_[k]||(break_jump0&jump0_attr[`attr_vec]&(k==jump0_ind)||break_jump1&jump1_attr[`attr_vec] & (k==jump1_ind))
+      assign breakIP=break_[k]||(break_jump0&jump0_attr[`attr_vec]&(pwh#(32)::cmpEQ(k,jump0_ind))||break_jump1&jump1_attr[`attr_vec] & (pwh#(32)::cmpEQ(k,jump1_ind)))
           &~IRQ_enX_reg ? nextIP[k][42:0] : 43'bz;
-      assign bbaseIP=break_[k]||(break_jump0&jump0_attr[`attr_vec]&(k==jump0_ind)||break_jump1&jump1_attr[`attr_vec] & (k==jump1_ind))
+      assign bbaseIP=break_[k]||(break_jump0&jump0_attr[`attr_vec]&(pwh#(32)::cmpEQ(k,jump0_ind))||break_jump1&jump1_attr[`attr_vec] & (pwh#(32)::cmpEQ(k,jump1_ind)))
           &~IRQ_enX_reg ? nextIP[k][62:43] : 20'bz;
 
       assign lastIP=break_[k] ? last_instr[k] : 1'bz;
@@ -940,8 +940,8 @@ module cntrl_find_outcome(
       cntrl_get_shortIP shortIP_mod(
       .baseIP(from_IP[19:0]),
       .srcIPOff(IPOff[k]),
-      .jupd0_IP(jupd0_IP), .jupd0_en(jump0Pos==k),
-      .jupd1_IP(jupd1_IP), .jupd1_en(jump1Pos==k)
+      .jupd0_IP(jupd0_IP), .jupd0_en(pwh#(32)::cmpEQ(jump0Pos,k)),
+      .jupd1_IP(jupd1_IP), .jupd1_en(pwh#(32)::cmpEQ(jump1Pos,k))
       );
     end
   endgenerate
@@ -1259,7 +1259,7 @@ module cntrl_find_outcome(
   assign tire_rFl[1][3:0]=4'd1;
   assign tire_rFl[0][3:0]=4'd0;
 
-  assign mem_match=mem_II_upper==tire_addr_reg && ~has_stores|(mem_II_upper2==tire_addr_reg)|(mem_II_upper!=mem_II_upper2);
+  assign mem_match=pwh#(32)::cmpEQ(mem_II_upper,tire_addr_reg) && ~has_stores|(pwh#(32)::cmpEQ(mem_II_upper2,tire_addr_reg))|(mem_II_upper!=mem_II_upper2);
   assign mem_II_upper_out=tire_addr_reg;
 
   bob_ram bob_mod(
@@ -1381,7 +1381,7 @@ module cntrl_find_outcome(
       end
       if (rst) begin
 	  excpt_fpu=11'b0;
-      end else if (msrss_en && msrss_no==`csr_FPU) begin
+      end else if (msrss_en && pwh#(32)::cmpEQ(msrss_no,`csr_FPU)) begin
 	  excpt_fpu=msrss_data[10:0];
       end else if (has_some) begin
 	  if (~xbreak[0]&fpudone[0]) excpt_fpu=excpt_fpu|ret_data[0][13:3]; 

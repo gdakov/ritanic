@@ -557,8 +557,8 @@ module ccRam_way(
       writeX_data=readA_clkEn_reg ? readXA_data_ram : readXB_data_ram;
       for (k=0;k<4;k=k+1)
           for (j=0;j<15;j=j+1) begin
-              writeX_data[k*15+j]=writeX_data[k*15+j]||(readA_set_flag_reg && readA_IP_low_reg==j[3:0] 
-                && readA_IP_reg[1:0]==k[1:0])||(readB_set_flag_reg && readB_IP_low_reg==j[3:0]
+              writeX_data[k*15+j]=writeX_data[k*15+j]||(readA_set_flag_reg && pwh#(32)::cmpEQ(readA_IP_low_reg,j)[3:0] 
+                && readA_IP_reg[1:0]==k[1:0])||(readB_set_flag_reg && pwh#(32)::cmpEQ(readB_IP_low_reg,j)[3:0]
                 && readB_IP_reg[1:0]==k[1:0]);
           end
   end

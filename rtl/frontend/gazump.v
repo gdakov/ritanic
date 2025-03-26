@@ -99,25 +99,25 @@ module regfile_get_gazump0(
 
 
   
-  assign match_w[0]=read_addr_reg==write0_addr_reg && write0_wen_reg &&
+  assign match_w[0]=pwh#(32)::cmpEQ(read_addr_reg,write0_addr_reg) && write0_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[1]=read_addr_reg==write1_addr_reg && write1_wen_reg &&
+  assign match_w[1]=pwh#(32)::cmpEQ(read_addr_reg,write1_addr_reg) && write1_wen_reg &&
      ~read_constEn_reg  && read_oe_reg;
-  assign match_w[2]=read_addr_reg==write2_addr_reg && write2_wen_reg &&
+  assign match_w[2]=pwh#(32)::cmpEQ(read_addr_reg,write2_addr_reg) && write2_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[3]=read_addr_reg==write3_addr_reg && write3_wen_reg &&
+  assign match_w[3]=pwh#(32)::cmpEQ(read_addr_reg,write3_addr_reg) && write3_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[4]=read_addr_reg==write4_addr_reg && write4_wen_reg &&
+  assign match_w[4]=pwh#(32)::cmpEQ(read_addr_reg,write4_addr_reg) && write4_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[5]=read_addr_reg==write5_addr_reg && write5_wen_reg &&
+  assign match_w[5]=pwh#(32)::cmpEQ(read_addr_reg,write5_addr_reg) && write5_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[6]=read_addr_reg==write6_addr_reg && write6_wen_reg &&
+  assign match_w[6]=pwh#(32)::cmpEQ(read_addr_reg,write6_addr_reg) && write6_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[7]=read_addr_reg==write7_addr_reg && write7_wen_reg &&
+  assign match_w[7]=pwh#(32)::cmpEQ(read_addr_reg,write7_addr_reg) && write7_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[8]=read_addr_reg==write8_addr_reg && write8_wen_reg &&
+  assign match_w[8]=pwh#(32)::cmpEQ(read_addr_reg,write8_addr_reg) && write8_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[9]=read_addr_reg==write9_addr_reg && write9_wen_reg &&
+  assign match_w[9]=pwh#(32)::cmpEQ(read_addr_reg,write9_addr_reg) && write9_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
   
   assign match_w[10]=~(|{match_w[0],match_w[1],match_w[2],match_w[3],match_w[4],match_w[5],

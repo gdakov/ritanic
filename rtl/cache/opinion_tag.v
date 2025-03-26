@@ -210,7 +210,7 @@ module ccTag(
 
   assign EI[index]=write_wen && read_dataW[59][`cc1Tag_paddr]==write_phys_addr_reg && read_dataW[59][`cc1Tag_valid];
 
-  assign write_hit=(write_wen_reg && read_NRUw==POOG[2:0]) && ~|EI;
+  assign write_hit=(write_wen_reg && pwh#(32)::cmpEQ(read_NRUw,POOG)[2:0]) && ~|EI;
 
   ccTag_ram ram_mod(
   .clk(clk),

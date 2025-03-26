@@ -886,49 +886,49 @@ module reginfl_zero_cycle_write(
 
   assign read_data_new=(match | ~read_oe_reg) ? 1'bz : read_data_ram & match_w[10] & ~read_constEn_reg;
   
-  assign match_w[0]=read_addr_reg==write0_addr_reg && write0_wen_reg &&
+  assign match_w[0]=pwh#(32)::cmpEQ(read_addr_reg,write0_addr_reg) && write0_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[1]=read_addr_reg==write1_addr_reg && write1_wen_reg &&
+  assign match_w[1]=pwh#(32)::cmpEQ(read_addr_reg,write1_addr_reg) && write1_wen_reg &&
      ~read_constEn_reg  && read_oe_reg;
-  assign match_w[2]=read_addr_reg==write2_addr_reg && write2_wen_reg &&
+  assign match_w[2]=pwh#(32)::cmpEQ(read_addr_reg,write2_addr_reg) && write2_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[3]=read_addr_reg==write3_addr_reg && write3_wen_reg &&
+  assign match_w[3]=pwh#(32)::cmpEQ(read_addr_reg,write3_addr_reg) && write3_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[4]=read_addr_reg==write4_addr_reg && write4_wen_reg &&
+  assign match_w[4]=pwh#(32)::cmpEQ(read_addr_reg,write4_addr_reg) && write4_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[5]=read_addr_reg==write5_addr_reg && write5_wen_reg &&
+  assign match_w[5]=pwh#(32)::cmpEQ(read_addr_reg,write5_addr_reg) && write5_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[6]=read_addr_reg==write6_addr_reg && write6_wen_reg &&
+  assign match_w[6]=pwh#(32)::cmpEQ(read_addr_reg,write6_addr_reg) && write6_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[7]=read_addr_reg==write7_addr_reg && write7_wen_reg &&
+  assign match_w[7]=pwh#(32)::cmpEQ(read_addr_reg,write7_addr_reg) && write7_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[8]=read_addr_reg==write8_addr_reg && write8_wen_reg &&
+  assign match_w[8]=pwh#(32)::cmpEQ(read_addr_reg,write8_addr_reg) && write8_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_w[9]=read_addr_reg==write9_addr_reg && write9_wen_reg &&
+  assign match_w[9]=pwh#(32)::cmpEQ(read_addr_reg,write9_addr_reg) && write9_wen_reg &&
      ~read_constEn_reg && read_oe_reg;
   
   assign match_w[10]=~(|{match_w[0],match_w[1],match_w[2],match_w[3],match_w[4],match_w[5],
     match_w[6],match_w[7],match_w[8],match_w[9]});
 
- assign match_r0=read_addr_reg==write0_addr_reg2 && write0_wen_reg2 &&
+ assign match_r0=pwh#(32)::cmpEQ(read_addr_reg,write0_addr_reg2) && write0_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r1=read_addr_reg==write1_addr_reg2 && write1_wen_reg2 &&
+  assign match_r1=pwh#(32)::cmpEQ(read_addr_reg,write1_addr_reg2) && write1_wen_reg2 &&
      ~read_constEn_reg  && read_oe_reg;
-  assign match_r2=read_addr_reg==write2_addr_reg2 && write2_wen_reg2 &&
+  assign match_r2=pwh#(32)::cmpEQ(read_addr_reg,write2_addr_reg2) && write2_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r3=read_addr_reg==write3_addr_reg2 && write3_wen_reg2 &&
+  assign match_r3=pwh#(32)::cmpEQ(read_addr_reg,write3_addr_reg2) && write3_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r4=read_addr_reg==write4_addr_reg2 && write4_wen_reg2 &&
+  assign match_r4=pwh#(32)::cmpEQ(read_addr_reg,write4_addr_reg2) && write4_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r5=read_addr_reg==write5_addr_reg2 && write5_wen_reg2 &&
+  assign match_r5=pwh#(32)::cmpEQ(read_addr_reg,write5_addr_reg2) && write5_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r6=read_addr_reg==write6_addr_reg2 && write6_wen_reg2 &&
+  assign match_r6=pwh#(32)::cmpEQ(read_addr_reg,write6_addr_reg2) && write6_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r7=read_addr_reg==write7_addr_reg2 && write7_wen_reg2 &&
+  assign match_r7=pwh#(32)::cmpEQ(read_addr_reg,write7_addr_reg2) && write7_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r8=read_addr_reg==write8_addr_reg2 && write8_wen_reg2 &&
+  assign match_r8=pwh#(32)::cmpEQ(read_addr_reg,write8_addr_reg2) && write8_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
-  assign match_r9=read_addr_reg==write9_addr_reg2 && write9_wen_reg2 &&
+  assign match_r9=pwh#(32)::cmpEQ(read_addr_reg,write9_addr_reg2) && write9_wen_reg2 &&
      ~read_constEn_reg && read_oe_reg;
 
   always @(posedge clk)

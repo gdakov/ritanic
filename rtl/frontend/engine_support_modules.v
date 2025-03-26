@@ -575,35 +575,35 @@ module get_funit(
       genvar k;
       for(k=0;k<10;k=k+1) begin
           pwire [8:0] rs_eq;
-          assign rs_eq[0]= k==rs0i0_index;
-          assign rs_eq[1]= k==rs1i0_index;
-          assign rs_eq[2]= k==rs2i0_index;
-          assign rs_eq[3]= k==rs0i1_index;
-          assign rs_eq[4]= k==rs1i1_index;
-          assign rs_eq[5]= k==rs2i1_index;
-          assign rs_eq[6]= k==rs0i2_index;
-          assign rs_eq[7]= k==rs1i2_index;
-          assign rs_eq[8]= k==rs2i2_index;
+          assign rs_eq[0]= pwh#(32)::cmpEQ(k,rs0i0_index);
+          assign rs_eq[1]= pwh#(32)::cmpEQ(k,rs1i0_index);
+          assign rs_eq[2]= pwh#(32)::cmpEQ(k,rs2i0_index);
+          assign rs_eq[3]= pwh#(32)::cmpEQ(k,rs0i1_index);
+          assign rs_eq[4]= pwh#(32)::cmpEQ(k,rs1i1_index);
+          assign rs_eq[5]= pwh#(32)::cmpEQ(k,rs2i1_index);
+          assign rs_eq[6]= pwh#(32)::cmpEQ(k,rs0i2_index);
+          assign rs_eq[7]= pwh#(32)::cmpEQ(k,rs1i2_index);
+          assign rs_eq[8]= pwh#(32)::cmpEQ(k,rs2i2_index);
           
-          assign funt[k][0]=rs_eq[0] & (rs0i0_port=PORT_LOAD || rs0i0_port==PORT_STORE) ||
-            rs_eq[3] & (rs0i1_port=PORT_LOAD || rs0i1_port==PORT_STORE);
-          assign funt[k][1]=rs_eq[1] & (rs1i0_port=PORT_LOAD || rs1i0_port==PORT_STORE) ||
-            rs_eq[4] & (rs1i1_port=PORT_LOAD || rs1i1_port==PORT_STORE);
-          assign funt[k][2]=rs_eq[2] & (rs2i0_port=PORT_LOAD || rs2i0_port==PORT_STORE) ||
-            rs_eq[5] & (rs2i1_port=PORT_LOAD || rs2i1_port==PORT_STORE);
+          assign funt[k][0]=rs_eq[0] & (rs0i0_port=PORT_LOAD || pwh#(32)::cmpEQ(rs0i0_port,PORT_STORE)) ||
+            rs_eq[3] & (rs0i1_port=PORT_LOAD || pwh#(32)::cmpEQ(rs0i1_port,PORT_STORE));
+          assign funt[k][1]=rs_eq[1] & (rs1i0_port=PORT_LOAD || pwh#(32)::cmpEQ(rs1i0_port,PORT_STORE)) ||
+            rs_eq[4] & (rs1i1_port=PORT_LOAD || pwh#(32)::cmpEQ(rs1i1_port,PORT_STORE));
+          assign funt[k][2]=rs_eq[2] & (rs2i0_port=PORT_LOAD || pwh#(32)::cmpEQ(rs2i0_port,PORT_STORE)) ||
+            rs_eq[5] & (rs2i1_port=PORT_LOAD || pwh#(32)::cmpEQ(rs2i1_port,PORT_STORE));
           assign funt[k][3]=|funt[k][2:0];
           
-          assign funt[k][4]=rs_eq[3] && rs0i1_port==PORT_ALU;
-          assign funt[k][5]=rs_eq[4] && rs1i1_port==PORT_ALU;
-          assign funt[k][6]=(rs_eq[5] && rs2i1_port==PORT_ALU) ||
-             (rs_eq[8] && rs2i2_port==PORT_MUL);
+          assign funt[k][4]=rs_eq[3] && pwh#(32)::cmpEQ(rs0i1_port,PORT_ALU);
+          assign funt[k][5]=rs_eq[4] && pwh#(32)::cmpEQ(rs1i1_port,PORT_ALU);
+          assign funt[k][6]=(rs_eq[5] && pwh#(32)::cmpEQ(rs2i1_port,PORT_ALU)) ||
+             (rs_eq[8] && pwh#(32)::cmpEQ(rs2i2_port,PORT_MUL));
           
           assign funt[k][7]=(rs_eq[6] && rs0i2_port!=PORT_MUL) ||
-            (rs_eq[3]&& rs0i1_port==PORT_SHIFT);
+            (rs_eq[3]&& pwh#(32)::cmpEQ(rs0i1_port,PORT_SHIFT));
           assign funt[k][8]=(rs_eq[7] && rs1i2_port!=PORT_MUL) ||
-            (rs_eq[4]&& rs1i1_port==PORT_SHIFT);
+            (rs_eq[4]&& pwh#(32)::cmpEQ(rs1i1_port,PORT_SHIFT));
           assign funt[k][9]=(rs_eq[8] && rs2i2_port!=PORT_MUL) ||
-            (rs_eq[5]&& rs2i1_port==PORT_SHIFT);
+            (rs_eq[5]&& pwh#(32)::cmpEQ(rs2i1_port,PORT_SHIFT));
       end
   endgenerate  
 endmodule
@@ -703,42 +703,42 @@ module get_funit(
       funit[3][1]=rs1i0_port!=PORT_STORE;
       funit[6][2]=rs2i0_port!=PORT_STORE;
       
-      funit[1][0]=rs0i1_port==PORT_LOAD;
-      funit[4][1]=rs1i1_port==PORT_LOAD;
-      funit[7][2]=rs2i1_port==PORT_LOAD;
+      funit[1][0]=pwh#(32)::cmpEQ(rs0i1_port,PORT_LOAD);
+      funit[4][1]=pwh#(32)::cmpEQ(rs1i1_port,PORT_LOAD);
+      funit[7][2]=pwh#(32)::cmpEQ(rs2i1_port,PORT_LOAD);
 
       funit[0][3]=rs0i0_port!=PORT_STORE;
       funit[3][3]=rs1i0_port!=PORT_STORE;
       funit[6][3]=rs2i0_port!=PORT_STORE;
       
-      funit[1][3]=rs0i1_port==PORT_LOAD;
-      funit[4][3]=rs1i1_port==PORT_LOAD;
-      funit[7][3]=rs2i1_port==PORT_LOAD;
+      funit[1][3]=pwh#(32)::cmpEQ(rs0i1_port,PORT_LOAD);
+      funit[4][3]=pwh#(32)::cmpEQ(rs1i1_port,PORT_LOAD);
+      funit[7][3]=pwh#(32)::cmpEQ(rs2i1_port,PORT_LOAD);
       
-      funit[1][4]=rs0i1_port==PORT_ALU || rs0i1_port==PORT_FADD || rs0i1_port==PORT_FANY 
-        || rs0i1_port==PORT_VADD || rs0i1_port==PORT_VANY;
-      if (rs0i1_port==PORT_ALU && (rs0i2_port==PORT_VADD || rs0i2_port==PORT_FADD)) funit[1][4]=0;
-      funit[4][5]=rs1i1_port==PORT_ALU || rs1i1_port==PORT_FADD || rs1i1_port==PORT_FANY 
-        || rs1i1_port==PORT_VADD || rs1i1_port==PORT_VANY;
-      if (rs1i1_port==PORT_ALU && (rs1i2_port==PORT_VADD || rs1i2_port==PORT_FADD)) funit[4][5]=0;
-      funit[7][6]=rs2i1_port==PORT_ALU || rs2i1_port==PORT_FADD || rs2i1_port==PORT_FANY 
-        || rs2i1_port==PORT_VADD || rs2i1_port==PORT_VANY;
-      if (rs2i1_port==PORT_ALU && (rs2i2_port==PORT_VADD || rs2i2_port==PORT_FADD)) funit[7][6]=0;
+      funit[1][4]=pwh#(32)::cmpEQ(rs0i1_port,PORT_ALU) || pwh#(32)::cmpEQ(rs0i1_port,PORT_FADD) || pwh#(32)::cmpEQ(rs0i1_port,PORT_FANY) 
+        || pwh#(32)::cmpEQ(rs0i1_port,PORT_VADD) || pwh#(32)::cmpEQ(rs0i1_port,PORT_VANY);
+      if (pwh#(32)::cmpEQ(rs0i1_port,PORT_ALU) && (pwh#(32)::cmpEQ(rs0i2_port,PORT_VADD) || pwh#(32)::cmpEQ(rs0i2_port,PORT_FADD))) funit[1][4]=0;
+      funit[4][5]=pwh#(32)::cmpEQ(rs1i1_port,PORT_ALU) || pwh#(32)::cmpEQ(rs1i1_port,PORT_FADD) || pwh#(32)::cmpEQ(rs1i1_port,PORT_FANY) 
+        || pwh#(32)::cmpEQ(rs1i1_port,PORT_VADD) || pwh#(32)::cmpEQ(rs1i1_port,PORT_VANY);
+      if (pwh#(32)::cmpEQ(rs1i1_port,PORT_ALU) && (pwh#(32)::cmpEQ(rs1i2_port,PORT_VADD) || pwh#(32)::cmpEQ(rs1i2_port,PORT_FADD))) funit[4][5]=0;
+      funit[7][6]=pwh#(32)::cmpEQ(rs2i1_port,PORT_ALU) || pwh#(32)::cmpEQ(rs2i1_port,PORT_FADD) || pwh#(32)::cmpEQ(rs2i1_port,PORT_FANY) 
+        || pwh#(32)::cmpEQ(rs2i1_port,PORT_VADD) || pwh#(32)::cmpEQ(rs2i1_port,PORT_VANY);
+      if (pwh#(32)::cmpEQ(rs2i1_port,PORT_ALU) && (pwh#(32)::cmpEQ(rs2i2_port,PORT_VADD) || pwh#(32)::cmpEQ(rs2i2_port,PORT_FADD))) funit[7][6]=0;
 
-      funit[1][7]=rs0i1_port==PORT_SHIFT || rs0i1_port==PORT_VCMP || rs0i1_port==PORT_FMUL;
-      if (rs0i1_port==PORT_ALU && (rs0i2_port==PORT_VADD || rs0i2_port==PORT_FADD)) funit[1][7]=1;
-      funit[4][8]=rs1i1_port==PORT_SHIFT || rs1i1_port==PORT_VCMP || rs1i1_port==PORT_FMUL;
-      if (rs1i1_port==PORT_ALU && (rs1i2_port==PORT_VADD || rs1i2_port==PORT_FADD)) funit[4][8]=1;
-      funit[7][9]=rs2i1_port==PORT_SHIFT || rs2i1_port==PORT_VCMP || rs2i1_port==PORT_FMUL;
-      if (rs2i1_port==PORT_ALU && (rs2i2_port==PORT_VADD || rs2i2_port==PORT_FADD)) funit[7][9]=1;
+      funit[1][7]=pwh#(32)::cmpEQ(rs0i1_port,PORT_SHIFT) || pwh#(32)::cmpEQ(rs0i1_port,PORT_VCMP) || pwh#(32)::cmpEQ(rs0i1_port,PORT_FMUL);
+      if (pwh#(32)::cmpEQ(rs0i1_port,PORT_ALU) && (pwh#(32)::cmpEQ(rs0i2_port,PORT_VADD) || pwh#(32)::cmpEQ(rs0i2_port,PORT_FADD))) funit[1][7]=1;
+      funit[4][8]=pwh#(32)::cmpEQ(rs1i1_port,PORT_SHIFT) || pwh#(32)::cmpEQ(rs1i1_port,PORT_VCMP) || pwh#(32)::cmpEQ(rs1i1_port,PORT_FMUL);
+      if (pwh#(32)::cmpEQ(rs1i1_port,PORT_ALU) && (pwh#(32)::cmpEQ(rs1i2_port,PORT_VADD) || pwh#(32)::cmpEQ(rs1i2_port,PORT_FADD))) funit[4][8]=1;
+      funit[7][9]=pwh#(32)::cmpEQ(rs2i1_port,PORT_SHIFT) || pwh#(32)::cmpEQ(rs2i1_port,PORT_VCMP) || pwh#(32)::cmpEQ(rs2i1_port,PORT_FMUL);
+      if (pwh#(32)::cmpEQ(rs2i1_port,PORT_ALU) && (pwh#(32)::cmpEQ(rs2i2_port,PORT_VADD) || pwh#(32)::cmpEQ(rs2i2_port,PORT_FADD))) funit[7][9]=1;
       
       funit[2][7]=rs0i2_port!=PORT_FADD && rs0i2_port!=PORT_VADD;      
-      funit[5][8]=(rs1i2_port!=PORT_FADD && rs1i2_port!=PORT_VADD) || rs2i2_port==PORT_MUL;      
+      funit[5][8]=(rs1i2_port!=PORT_FADD && rs1i2_port!=PORT_VADD) || pwh#(32)::cmpEQ(rs2i2_port,PORT_MUL);      
       funit[8][9]=rs2i2_port!=PORT_FADD && rs2i2_port!=PORT_VADD && ~mul; 
       
-      funit[2][4]=rs0i2_port==PORT_FADD || rs0i2_port==PORT_VADD;
-      funit[5][5]=rs1i2_port==PORT_FADD || rs1i2_port==PORT_VADD;
-      funit[8][6]=rs2i2_port==PORT_FADD || rs2i2_port==PORT_VADD || mul;     
+      funit[2][4]=pwh#(32)::cmpEQ(rs0i2_port,PORT_FADD) || pwh#(32)::cmpEQ(rs0i2_port,PORT_VADD);
+      funit[5][5]=pwh#(32)::cmpEQ(rs1i2_port,PORT_FADD) || pwh#(32)::cmpEQ(rs1i2_port,PORT_VADD);
+      funit[8][6]=pwh#(32)::cmpEQ(rs2i2_port,PORT_FADD) || pwh#(32)::cmpEQ(rs2i2_port,PORT_VADD) || mul;     
 
   end
 endmodule
@@ -1148,12 +1148,12 @@ module get_LDQ_new_en(
 
   pwire [5:0] in_inc;
 
-  assign in_inc[0]=rs0i0_port==PORT_LOAD && ~rs0i0_ldst_flg;
-  assign in_inc[1]=rs1i0_port==PORT_LOAD && ~rs1i0_ldst_flg;
-  assign in_inc[2]=rs2i0_port==PORT_LOAD && ~rs2i0_ldst_flg;
-  assign in_inc[3]=rs0i1_port==PORT_LOAD && ~rs0i1_ldst_flg;
-  assign in_inc[4]=rs1i1_port==PORT_LOAD && ~rs1i1_ldst_flg;
-  assign in_inc[5]=rs2i1_port==PORT_LOAD && ~rs2i1_ldst_flg;
+  assign in_inc[0]=pwh#(32)::cmpEQ(rs0i0_port,PORT_LOAD) && ~rs0i0_ldst_flg;
+  assign in_inc[1]=pwh#(32)::cmpEQ(rs1i0_port,PORT_LOAD) && ~rs1i0_ldst_flg;
+  assign in_inc[2]=pwh#(32)::cmpEQ(rs2i0_port,PORT_LOAD) && ~rs2i0_ldst_flg;
+  assign in_inc[3]=pwh#(32)::cmpEQ(rs0i1_port,PORT_LOAD) && ~rs0i1_ldst_flg;
+  assign in_inc[4]=pwh#(32)::cmpEQ(rs1i1_port,PORT_LOAD) && ~rs1i1_ldst_flg;
+  assign in_inc[5]=pwh#(32)::cmpEQ(rs2i1_port,PORT_LOAD) && ~rs2i1_ldst_flg;
 
   assign new_mask=in_inc;
 
@@ -1394,9 +1394,9 @@ module wrtdata_combine(data,dataN,pdata,en,odata,odataN,opdata,low,sz,etype);
       genvar c,d;
       for(c=0;c<4;c=c+1) begin : low_gen
 	  //verilator lint_off WIDTH
-          if (c) assign {odataN,odata}=(en && low==c) ? {dataN[127:8],sz==0 || sz==1 || sz==2 ? data[135:128] : dataN[7:0],
+          if (c) assign {odataN,odata}=(en && pwh#(32)::cmpEQ(low,c)) ? {dataN[127:8],sz==0 || sz==1 || sz==2 ? data[135:128] : dataN[7:0],
               data[127:0],{c{8'b0}}} : 256'bz;
-          else assign {odataN,odata}=(en && low==c) ? {dataN[127:8],sz==0 || sz==1 || sz==2 ? data[135:128] : dataN[7:0],
+          else assign {odataN,odata}=(en && pwh#(32)::cmpEQ(low,c)) ? {dataN[127:8],sz==0 || sz==1 || sz==2 ? data[135:128] : dataN[7:0],
               data[127:0]} : 256'bz;
 	  //verilator lint_on WIDTH
       end
@@ -1523,12 +1523,12 @@ module get_lsi_en(
       genvar k;
       for(k=0;k<6;k=k+1) begin 
           assign lsi_en[k]=~(
-            lsi0==k && flag0 ||
-            lsi1==k && flag1 ||
-            lsi2==k && flag2 ||
-            lsi3==k && flag3 ||
-            lsi4==k && flag4 ||
-            lsi5==k && flag5);
+            pwh#(32)::cmpEQ(lsi0,k) && flag0 ||
+            pwh#(32)::cmpEQ(lsi1,k) && flag1 ||
+            pwh#(32)::cmpEQ(lsi2,k) && flag2 ||
+            pwh#(32)::cmpEQ(lsi3,k) && flag3 ||
+            pwh#(32)::cmpEQ(lsi4,k) && flag4 ||
+            pwh#(32)::cmpEQ(lsi5,k) && flag5);
       end
   endgenerate
 endmodule

@@ -258,11 +258,11 @@ module dcache2_bank(
   assign write_addrO=write_bankEn0 ? write_addrO0 : write_addrO1;
   assign write_bankEn=write_bankEn0 | write_bankEn1;
  
-  assign write_ben=(write_bankEn0 && write_begin0==INDEX) ? write_bBen0 : 4'bz;
-  assign write_ben=(write_bankEn0 && write_end0==INDEX) ?   write_enBen0 : 4'bz;
+  assign write_ben=(write_bankEn0 && pwh#(32)::cmpEQ(write_begin0,INDEX)) ? write_bBen0 : 4'bz;
+  assign write_ben=(write_bankEn0 && pwh#(32)::cmpEQ(write_end0,INDEX)) ?   write_enBen0 : 4'bz;
   assign write_ben=((write_bankEn0 && write_begin0!=INDEX && write_end0!=INDEX)) ? 4'b1111 : 4'bz;
-  assign write_ben=(write_bankEn1 && write_begin1==INDEX) ? write_bBen1 : 4'bz;
-  assign write_ben=(write_bankEn1 && write_end1==INDEX) ?   write_enBen1 : 4'bz;
+  assign write_ben=(write_bankEn1 && pwh#(32)::cmpEQ(write_begin1,INDEX)) ? write_bBen1 : 4'bz;
+  assign write_ben=(write_bankEn1 && pwh#(32)::cmpEQ(write_end1,INDEX)) ?   write_enBen1 : 4'bz;
   assign write_ben=(write_bankEn1 && write_begin1!=INDEX && write_end1!=INDEX) ? 4'b1111 : 4'bz;
   assign write_ben=(~write_bankEn1 && ~write_bankEn0) ? 4'b0 : 4'bz;
   
@@ -1032,7 +1032,7 @@ module dcache2_way(
   .write2_bitEn(16'b1<<write_addrE0_reg[6:3])
   );
   
-//  assign ins_hit=rand_reg==ID && rand_en_reg2 && insert_reg;
+//  assign ins_hit=pwh#(32)::cmpEQ(rand_reg,ID) && rand_en_reg2 && insert_reg;
   dcache2_LRU_ram LRUe_mod(
   .clk(clk),
   .rst(rst),

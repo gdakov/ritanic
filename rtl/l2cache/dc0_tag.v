@@ -230,7 +230,7 @@ module dcache2_tag(
   endgenerate
 
   assign write_hit=write_dupl_reg|write_exp_req ? req_hitE|req_hitO : write_wen_reg && 
-	  (req_wodd_reg ? req_LRUo==POOG[4:0] : req_LRUe==POOG[4:0]);
+	  (req_wodd_reg ? pwh#(32)::cmpEQ(req_LRUo,POOG)[4:0] : pwh#(32)::cmpEQ(req_LRUe,POOG)[4:0]);
   assign write_hitE=write_dupl_reg|write_exp_req ? req_hitE : write_wen_reg && req_LRUo==5'd23 && ~req_odd_reg;
   assign write_hitO=write_dupl_reg|write_exp_req ? req_hitO : write_wen_reg && req_LRUe==5'd23 && req_odd_reg;
   

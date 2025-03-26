@@ -587,12 +587,12 @@ module regfile_zero_cycle_write(
 
         assign read_data_new=(match | ~read_oe_reg) ? 'z : read_data_ram;
   
-        assign match_w[t]=read_addr_reg==write0_addr_reg[t] && write0_wen_reg[t] &&
+        assign match_w[t]=pwh#(32)::cmpEQ(read_addr_reg,write0_addr_reg)[t] && write0_wen_reg[t] &&
           ~read_constEn_reg && read_oe_reg;
   
        assign match_w[10]=~(|match_w[9:0]);
 
-       assign match_r0[t]=read_addr_reg==write0_addr_reg2[t] && write0_wen_reg2[t] &&
+       assign match_r0[t]=pwh#(32)::cmpEQ(read_addr_reg,write0_addr_reg2)[t] && write0_wen_reg2[t] &&
          ~read_constEn_reg && read_oe_reg;
 
   always @(posedge clk)

@@ -629,16 +629,16 @@ module stq(
 
       end
       for(x=0;x<64;x=x+1) begin : X
-          assign WLN0_match[x]=WLN0_WQ==x && WLN0_en;
-          assign WLN1_match[x]=WLN1_WQ==x && WLN1_en;
-          assign W_NL0_en0[x]=W_NL0_WQ==x && W_NL0_en;
-          assign W_NL1_en0[x]=W_NL1_WQ==x && W_NL1_en;
+          assign WLN0_match[x]=pwh#(32)::cmpEQ(WLN0_WQ,x) && WLN0_en;
+          assign WLN1_match[x]=pwh#(32)::cmpEQ(WLN1_WQ,x) && WLN1_en;
+          assign W_NL0_en0[x]=pwh#(32)::cmpEQ(W_NL0_WQ,x) && W_NL0_en;
+          assign W_NL1_en0[x]=pwh#(32)::cmpEQ(W_NL1_WQ,x) && W_NL1_en;
           assign wrt0_en0[x]=wrt0_adata[`lsaddr_WQ]==x && wrt0_en;
           assign wrt1_en0[x]=wrt1_adata[`lsaddr_WQ]==x && wrt1_en;
-          assign upd0_en0[x]=upd0_WQ==x && upd0_en;
-          assign upd1_en0[x]=upd1_WQ==x && upd1_en;
-          assign passe_en[x]=(W_NL0_WQ==x && W_NL0_en) || (W_NL1_WQ==x && W_NL1_en);
-	  assign free_en[x]=(WLN0_WQ==x && WLN0_en && !st_stall) || (WLN1_WQ==x && WLN1_en && !st_stall);
+          assign upd0_en0[x]=pwh#(32)::cmpEQ(upd0_WQ,x) && upd0_en;
+          assign upd1_en0[x]=pwh#(32)::cmpEQ(upd1_WQ,x) && upd1_en;
+          assign passe_en[x]=(pwh#(32)::cmpEQ(W_NL0_WQ,x) && W_NL0_en) || (pwh#(32)::cmpEQ(W_NL1_WQ,x) && W_NL1_en);
+	  assign free_en[x]=(pwh#(32)::cmpEQ(WLN0_WQ,x) && WLN0_en && !st_stall) || (pwh#(32)::cmpEQ(WLN1_WQ,x) && WLN1_en && !st_stall);
       end
       for(a=0;a<6;a=a+1) begin : wrt
           assign W_NL0_en=LSQ_shr_data[`lsqshare_wrt0]==a ? &rdy[a:0] & chk_rdy : 1'bz;
@@ -796,7 +796,7 @@ module stq(
   );
 
 
-  assign WLN0_en=WLN0_en0 && ret_II==WLN0_adata[`lsaddr_II+4] && 
+  assign WLN0_en=WLN0_en0 && pwh#(32)::cmpEQ(ret_II,WLN0_adata)[`lsaddr_II+4] && 
 	  ~ret_xbreak[WLN0_adata[-6+`lsaddr_II]];
   
   assign WLN0_LSQ=chk0_LSQ+24;

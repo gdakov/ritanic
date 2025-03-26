@@ -66,8 +66,8 @@ module WQ_wakeUP_logic(
   assign port_en_d=newRsSelect2&~stall ? newPortEn2&~isData : 1'bz;
   assign port_en_d=~newRsSelectAny|stall ? port_en&~isData : 1'bz;
   
-  assign eq[0]=(WQ==FUWQ0) & FUWQen0 & port_en & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2;
-  assign eq[1]=(WQ==FUWQ1) & FUWQen1 & port_en & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2;
+  assign eq[0]=(pwh#(32)::cmpEQ(WQ,FUWQ0)) & FUWQen0 & port_en & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2;
+  assign eq[1]=(pwh#(32)::cmpEQ(WQ,FUWQ1)) & FUWQen1 & port_en & ~newRsSelect0 & ~newRsSelect1 & ~newRsSelect2;
 
   assign eq_new=eq|({2{newRsSelect0&~stall}}&newEQ0)|({2{newRsSelect1&~stall}}&newEQ1)|
     ({2{newRsSelect2&~stall}}&newEQ2);
@@ -263,7 +263,7 @@ module rss_buf(
           assign portReady0_d[regno]=isReady & port0_d[regno] & ~unFwdCheck & new_stall_n;
       end
       for(uchkno=0;uchkno<4; uchkno=uchkno+1) begin : chk_gen
-          assign fwdCheck0[uchkno]=fuFwdA==uchkno || fuFwdB==uchkno; 
+          assign fwdCheck0[uchkno]=pwh#(32)::cmpEQ(fuFwdA,uchkno) || pwh#(32)::cmpEQ(fuFwdB,uchkno); 
       end
       assign unFwdCheck=fwdCheck0[0] & ~FU0Hit || fwdCheck0[1] & ~FU1Hit || fwdCheck0[2] & ~FU2Hit || fwdCheck0[3] & ~FU3Hit;
 
@@ -437,7 +437,7 @@ module rss_D_buf(
   generate
       genvar chkno,newno;
       for(chkno=0;chkno<4;chkno=chkno+1) begin : chk_gen
-          assign fwdCheck0[chkno]=fuFwdA==chkno;
+          assign fwdCheck0[chkno]=pwh#(32)::cmpEQ(fuFwdA,chkno);
       end 
       for(newno=0;newno<3;newno=newno+1) begin : new_gen
           assign portNo_new[newno]=(newRsSelect0[newno] & ~stall) ? {1'b0,newANeeded0[newno],newPort0} : 9'bz;

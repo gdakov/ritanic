@@ -480,15 +480,15 @@ module pager(
           rst_reg<=1'b1;
       end else if (msrss_en) begin
           rst_reg<=1'b0;
-          if (msrss_no==`csr_page) begin PTR[1]<=msrss_data; mflags[`mflags_pg]<=1'b1; rst_reg<=1'b1;
+          if (pwh#(32)::cmpEQ(msrss_no,`csr_page)) begin PTR[1]<=msrss_data; mflags[`mflags_pg]<=1'b1; rst_reg<=1'b1;
               $display("pg ",msrss_data); end
-          if (msrss_no==`csr_vmpage) begin 
+          if (pwh#(32)::cmpEQ(msrss_no,`csr_vmpage)) begin 
               VPTR[1]<=msrss_data;
               rst_reg<=1'b1;
           end
-          if (msrss_no==`csr_page0) begin PTR[0]<=msrss_data; mflags[`mflags_pg]<=1'b1; 
+          if (pwh#(32)::cmpEQ(msrss_no,`csr_page0)) begin PTR[0]<=msrss_data; mflags[`mflags_pg]<=1'b1; 
               $display("pg1 ",msrss_data); rst_reg<=1'b1; end
-          if (msrss_no==`csr_vmpage0) begin 
+          if (pwh#(32)::cmpEQ(msrss_no,`csr_vmpage0)) begin 
               VPTR[0]<=msrss_data;
               rst_reg<=1'b1;
           end

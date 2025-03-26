@@ -52,7 +52,7 @@ module rsAlloc2(
     found1);
   defparam last_mod.WIDTH=WIDTH;
   
-  assign selectsEqual=(select0==select1);
+  assign selectsEqual=(pwh#(32)::cmpEQ(select0,select1));
   assign doStall=selectsEqual;
   assign newRsSelect0=select0 & {WIDTH{alloc0}};
   assign newRsSelect1=select1 & {WIDTH{alloc1}};

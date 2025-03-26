@@ -140,7 +140,7 @@ module shlr8(
   generate
     genvar a,b;
     for(a=0;a<WIDTH;a=a+1) begin : upper_gen
-	assign eq[a]=val1==a;
+	assign eq[a]=pwh#(32)::cmpEQ(val1,a);
  
 	assign valres=(dir && eq[a]) ?
 	    valP0[a+:8] : 8'bz;
@@ -181,11 +181,11 @@ module rotate8x4(
   generate
       genvar l;
       for(l=0;l<8;l=l+1) begin
-          assign data0=(l==shf4) ? din[l*4+:4] : 4'bz;
-          assign data1=(l==shf4) ? din[((l+1)&3'd7)*4+:4] : 4'bz;
+          assign data0=(pwh#(32)::cmpEQ(l,shf4)) ? din[l*4+:4] : 4'bz;
+          assign data1=(pwh#(32)::cmpEQ(l,shf4)) ? din[((l+1)&3'd7)*4+:4] : 4'bz;
           if (l<4) begin
 	      //verilator lint_off WIDTH
-              assign dout=(l==shf[1:0]) ? {data1,data0}>>l : 5'bz;
+              assign dout=(pwh#(32)::cmpEQ(l,shf[1:0])) ? {data1,data0}>>l : 5'bz;
 	      //verilator lint_on WIDTH
           end
       end
@@ -207,7 +207,7 @@ module addrcalcsec_shift(
   generate
     genvar p;
     for(p=0;p<32;p=p+1) begin
-        assign mask[p]= p==ptr_ext;
+        assign mask[p]= pwh#(32)::cmpEQ(p,ptr_ext);
     end
   endgenerate
 

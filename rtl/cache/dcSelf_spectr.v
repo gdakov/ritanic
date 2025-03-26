@@ -261,10 +261,10 @@ always @* begin
       if (~write1_addr_reg[ADDR_WIDTH+4] && k[3:0]!=write1_addr_reg[3:0] && ((k[4:0]-5'd1)!={1'b0,write1_addr_reg[3:0]} || ~write1_d128_reg))
           write_dataBx[0][k]=readB_data_ramx[0][k];
   end
-  if (write0_odd_reg && 4'hf==write0_addr_reg[3:0] && ~|write_ins_reg) write_dataAx[0][0]=write0_pbit_reg[1];
-  if (write1_odd_reg && 4'hf==write1_addr_reg[3:0] && ~|write_ins_reg) write_dataBx[0][0]=write1_pbit_reg[1];
-  if (~write0_odd_reg && 4'hf==write0_addr_reg[3:0] && ~|write_ins_reg) write_dataAx[1][0]=write0_pbit_reg[1];
-  if (~write1_odd_reg && 4'hf==write1_addr_reg[3:0] && ~|write_ins_reg) write_dataBx[1][0]=write1_pbit_reg[1];
+  if (write0_odd_reg && pwh#(4)::cmpEQ(write0_addr_reg[3:0],4'hf) && ~|write_ins_reg) write_dataAx[0][0]=write0_pbit_reg[1];
+  if (write1_odd_reg && pwh#(4)::cmpEQ(write1_addr_reg[3:0],4'hf) && ~|write_ins_reg) write_dataBx[0][0]=write1_pbit_reg[1];
+  if (~write0_odd_reg && pwh#(4)::cmpEQ(write0_addr_reg[3:0],4'hf) && ~|write_ins_reg) write_dataAx[1][0]=write0_pbit_reg[1];
+  if (~write1_odd_reg && pwh#(4)::cmpEQ(write1_addr_reg3[3:0],4'hf) && ~|write_ins_reg) write_dataBx[1][0]=write1_pbit_reg[1];
   if (write_ins_reg[0]) write_dataAx[0][15+16*write0_addr_reg[ADDR_WIDTH+4]+:16]= write_data_reg; 
   if (write_ins_reg[1]) write_dataAx[1][15+16*write0_addr_reg[ADDR_WIDTH+4]+:16]= write_data_reg; 
 end
