@@ -42,7 +42,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   input pwire [2:0][65:0] val1;
   input pwire [2:0][65:0] val2;
   input pwire [5:0] valS;//flag
-  inout  [65:0] valRes;  
+  inout pwire  [65:0] valRes;  
   input pwire sec;
   input pwire error;
   input pwire [2:0] rmode;

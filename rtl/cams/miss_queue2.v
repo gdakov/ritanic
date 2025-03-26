@@ -608,7 +608,7 @@ module missQ(
   input pwire miss4;
   input pwire mOp4_en;
   input pwire [1:0] mOp4_dupl;
- // inout mOp4_thread;
+ // inout pwire mOp4_thread;
   input pwire [PADDR_WIDTH-1:8] mOp4_addrEven;
   input pwire [PADDR_WIDTH-1:8] mOp4_addrOdd;
   input pwire [4:0] mOp4_sz;
@@ -628,7 +628,7 @@ module missQ(
   input pwire [9:0] mOp4_II;
   output pwire mOp4_en_no;
   //output [1:0] mOp4_dupl_no;
- // inout mOp4_thread;
+ // inout pwire mOp4_thread;
   output pwire [PADDR_WIDTH-1:8] mOp4_addrEven_no;
   output pwire [PADDR_WIDTH-1:8] mOp4_addrOdd_no;
   output pwire [4:0] mOp4_sz_no;
@@ -651,7 +651,7 @@ module missQ(
   input pwire miss5;
   input pwire mOp5_en;
   input pwire [1:0] mOp5_dupl;
-//  inout mOp5_thread;
+//  inout pwire mOp5_thread;
   input pwire [PADDR_WIDTH-1:8] mOp5_addrEven;
   input pwire [PADDR_WIDTH-1:8] mOp5_addrOdd;
   input pwire [4:0] mOp5_sz;
@@ -671,7 +671,7 @@ module missQ(
   input pwire [9:0] mOp5_II;
   output pwire mOp5_en_no;
  // output pwire [1:0] mOp5_dupl_no;
-//  inout mOp5_thread;
+//  inout pwire mOp5_thread;
   output pwire [PADDR_WIDTH-1:8] mOp5_addrEven_no;
   output pwire [PADDR_WIDTH-1:8] mOp5_addrOdd_no;
   output pwire [4:0] mOp5_sz_no;

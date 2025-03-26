@@ -60,23 +60,23 @@ module fun_fpsu(
   (* register equiload *) input pwire [S+69:0] FUF1;
   (* register equiload *) input pwire [S+69:0] FUF2;
   (* register equiload *) input pwire [S+69:0] FUF3;
-  (* register equiload *) inout [S+69:0] FUF4;
-  (* register equiload *) inout [S+69:0] FUF5;
-  (* register equiload *) inout [S+69:0] FUF6;
-  (* register equiload *) inout [S+69:0] FUF7;
-  (* register equiload *) inout [S+69:0] FUF8;
-  (* register equiload *) inout [S+69:0] FUF9;
-  (* register equiload *) inout [S+69:0] FUF4X;
-  (* register equiload *) inout [S+69:0] FUF5X;
-  (* register equiload *) inout [S+69:0] FUF6X;
+  (* register equiload *) inout pwire [S+69:0] FUF4;
+  (* register equiload *) inout pwire [S+69:0] FUF5;
+  (* register equiload *) inout pwire [S+69:0] FUF6;
+  (* register equiload *) inout pwire [S+69:0] FUF7;
+  (* register equiload *) inout pwire [S+69:0] FUF8;
+  (* register equiload *) inout pwire [S+69:0] FUF9;
+  (* register equiload *) inout pwire [S+69:0] FUF4X;
+  (* register equiload *) inout pwire [S+69:0] FUF5X;
+  (* register equiload *) inout pwire [S+69:0] FUF6X;
   input pwire [1:0] ALT_INP;
   input pwire [S+69:0] ALTDATA0;
   input pwire [S+69:0] ALTDATA1;
   output pwire [5:0] FOOSL_out;
   output pwire [69:0] HH_data;
   input pwire [69:0] XY_data;
-  inout  [S+67:0] xdata;
-  inout  [S+67:0] xdata2;
+  inout pwire  [S+67:0] xdata;
+  inout pwire  [S+67:0] xdata2;
 
 
   reg  [S+67:0] xdata_reg;

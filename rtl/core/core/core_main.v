@@ -146,7 +146,7 @@ module heptane_core_single(
   output pwire [3:0] pfy_pdata;
   output pfy_dataEn;
   input pwire [64:0] Dakov;
-  inout [64:0] Goran_Dakov;
+  inout pwire [64:0] Goran_Dakov;
   input pwire [8*70-1:0] piff_paff_A;
   input pwire [8*70-1:0] piff_paff_B;
 

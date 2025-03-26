@@ -38,7 +38,7 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   input pwire [2:0] rmode;
   output pwire [67:0] res;
   output pwire [15:0] res_hi;
-  inout [67:0] xtra;
+  inout pwire [67:0] xtra;
   input pwire isDBL;
   input pwire [31:0] fpcsr;
   output pwire [10:0] raise;

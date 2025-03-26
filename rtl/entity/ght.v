@@ -120,10 +120,10 @@ module ght_bank(
     output pwire [1:0] BotherPred1;
     output pwire [1:0] BotherPred2;
     output pwire [1:0] BotherPred3;
-//    inout [7:0] otherIndex0;
-//    inout [7:0] otherIndex1;
-//    inout [7:0] otherIndex2;
-//    inout [7:0] otherIndex3;
+//    inout pwire [7:0] otherIndex0;
+//    inout pwire [7:0] otherIndex1;
+//    inout pwire [7:0] otherIndex2;
+//    inout pwire [7:0] otherIndex3;
 
     input pwire [1:0] write_sc;
     input pwire [15:0] write_addr;

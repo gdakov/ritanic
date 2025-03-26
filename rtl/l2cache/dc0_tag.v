@@ -151,7 +151,7 @@ module dcache2_tag(
   input pwire [PADDR_WIDTH-9:0] req_waddrO;
   input pwire req_wodd;
   input pwire req_split;
-  inout req_hitE,req_hitO;
+  inout pwire req_hitE,req_hitO;
   output pwire req_shitE,req_shitO;
   output pwire req_exclE,req_exclO;
   output pwire req_dir_ins_E,req_dir_ins_O;

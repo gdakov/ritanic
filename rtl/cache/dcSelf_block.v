@@ -310,8 +310,8 @@ module dcache1_way(
 
   input pwire [3:0][1:0] read_low0;
 
-  inout [7:0] read_hitEi;
-  inout [7:0] read_hitOi;
+  inout pwire [7:0] read_hitEi;
+  inout pwire [7:0] read_hitOi;
 
   input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0;
   input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;

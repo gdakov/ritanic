@@ -506,7 +506,7 @@ module rss_array_helper(
   parameter SIZE=1;
   input pwire sel;
   input pwire inp;
-  inout [SIZE-1:0] outp;
+  inout pwire [SIZE-1:0] outp;
   output pwire [SIZE-1:0] out2;
 
   assign outp=sel ? 'z : '0;

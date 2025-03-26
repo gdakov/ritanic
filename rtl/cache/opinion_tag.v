@@ -140,7 +140,7 @@ module ccTag(
   output pwire write_hit;
   output pwire [36:0] write_expun_addr;
   output pwire write_exp_en;
-  inout [7:0] EI;
+  inout pwire [7:0] EI;
   input pwire init;
 
   pwire [`wport-1:0][PHYS_BITS-8:0] tag_paddr;

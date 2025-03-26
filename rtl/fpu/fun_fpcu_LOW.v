@@ -117,15 +117,15 @@ module fun_fpuL(
   (* register equiload *) input pwire [16+67:0] FUF1;
   (* register equiload *) input pwire [16+67:0] FUF2;
   (* register equiload *) input pwire [16+67:0] FUF3;
-  (* register equiload *) inout [16+67:0] FUF4;
-  (* register equiload *) inout [16+67:0] FUF5;
-  (* register equiload *) inout [16+67:0] FUF6;
-  (* register equiload *) inout [16+67:0] FUF7;
-  (* register equiload *) inout [16+67:0] FUF8;
-  (* register equiload *) inout [16+67:0] FUF9;
-  (* register equiload *) inout [16+67:0] FUF4XY;
-  (* register equiload *) inout [16+67:0] FUF5XY;
-  (* register equiload *) inout [16+67:0] FUF6XY;
+  (* register equiload *) inout pwire [16+67:0] FUF4;
+  (* register equiload *) inout pwire [16+67:0] FUF5;
+  (* register equiload *) inout pwire [16+67:0] FUF6;
+  (* register equiload *) inout pwire [16+67:0] FUF7;
+  (* register equiload *) inout pwire [16+67:0] FUF8;
+  (* register equiload *) inout pwire [16+67:0] FUF9;
+  (* register equiload *) inout pwire [16+67:0] FUF4XY;
+  (* register equiload *) inout pwire [16+67:0] FUF5XY;
+  (* register equiload *) inout pwire [16+67:0] FUF6XY;
 
   output pwire [67:0] xtra0;
   output pwire [67:0] xtra1;

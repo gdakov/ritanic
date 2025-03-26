@@ -179,7 +179,7 @@ module fu_alu(
   input pwire [64:0] msrss_data;
   input pwire msrss_en;
   input pwire [64:0] jxcross;
-  inout [64:0] allah;
+  inout pwire [64:0] allah;
 
   reg [1:0] nDataAlt;
 
