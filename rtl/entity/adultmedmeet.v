@@ -1144,7 +1144,7 @@ module smallInstr_decoder(
 
       trien[12]=magic[0] & isBaseLoadStore;
       poperation[12][5:0]=(opcode_main[5:2]==4'b1010) ? 6'h22 : opcode_main[5:0];
-     // poperation[12][6]=opcode_main[5:0]==6'b101010;
+     // poperation[12][6]=pwh#(6)::cmpEQ(opcode_main[5:0],6'b101010);
       prA_use[12]=1'b0;
       prB_use[12]=1'b1;
       prT_use[12]=~opcode_main[0] & opcode_main[5] && opcode_main[5:2]!=4'b1010;

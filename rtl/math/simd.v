@@ -95,18 +95,18 @@ add64_mod(A_reg[d*4+:4],B_reg[d*4+:4],resD[4][d*4+:4],is_sign,is_sat,is_min,is_m
   `endif
       A_reg<={A[64:33],A[31:0]};
       B_reg<={B[64:33],B[31:0]};
-      is_sign<=operation[5:0]==`simd_paddsats ||operation[5:0]==`simd_psubsats||operation[5:0]==`simd_pmins||
-        operation[5:0]==`simd_pmaxs;
-      is_sat<=operation[5:0]==`simd_paddsats || operation[5:0]==`simd_psubsats ||operation[5:0]==`simd_paddsat||
-        operation[5:0]==`simd_psubsat;
-      is_min<=operation[5:0]==`simd_pmins || operation[5:0]==`simd_pmin;
-      is_max<=operation[5:0]==`simd_pmaxs || operation[5:0]==`simd_pmax;
-      is_sub<=operation[5:0]==`simd_psubsats ||operation[5:0]==`simd_psubsat|| operation[5:0]==`simd_psub;
-      is_simpl<=operation[5:0]==`simd_psub || operation[5:0]==`simd_padd;
-      is_subcmp=operation[5:0]==`simd_psub || operation[5:0]==`simd_cmp || operation[5:0]==`simd_psubsats ||
-        operation[5:0]==`simd_psubsat || operation[5:0]==`simd_pmins ||operation[5:0]==`simd_pmaxs||operation[5:0]
-	==`simd_pmin||operation[5:0]==`simd_pmax;
-      is_cmp<=operation[5:0]==`simd_cmp;
+      is_sign<=pwh#(6)::cmpEQ(operation[5:0],`simd_paddsats) ||pwh#(6)::cmpEQ(operation[5:0],`simd_psubsats)||pwh#(6)::cmpEQ(operation[5:0],`simd_pmins)||
+        pwh#(6)::cmpEQ(operation[5:0],`simd_pmaxs);
+      is_sat<=pwh#(6)::cmpEQ(operation[5:0],`simd_paddsats) || pwh#(6)::cmpEQ(operation[5:0],`simd_psubsats) ||pwh#(6)::cmpEQ(operation[5:0],`simd_paddsat)||
+        pwh#(6)::cmpEQ(operation[5:0],`simd_psubsat);
+      is_min<=pwh#(6)::cmpEQ(operation[5:0],`simd_pmins) || pwh#(6)::cmpEQ(operation[5:0],`simd_pmin);
+      is_max<=pwh#(6)::cmpEQ(operation[5:0],`simd_pmaxs) || pwh#(6)::cmpEQ(operation[5:0],`simd_pmax);
+      is_sub<=pwh#(6)::cmpEQ(operation[5:0],`simd_psubsats) ||pwh#(6)::cmpEQ(operation[5:0],`simd_psubsat)|| pwh#(6)::cmpEQ(operation[5:0],`simd_psub);
+      is_simpl<=pwh#(6)::cmpEQ(operation[5:0],`simd_psub) || pwh#(6)::cmpEQ(operation[5:0],`simd_padd);
+      is_subcmp=pwh#(6)::cmpEQ(operation[5:0],`simd_psub) || pwh#(6)::cmpEQ(operation[5:0],`simd_cmp) || pwh#(6)::cmpEQ(operation[5:0],`simd_psubsats) ||
+        pwh#(6)::cmpEQ(operation[5:0],`simd_psubsat) || pwh#(6)::cmpEQ(operation[5:0],`simd_pmins) ||pwh#(6)::cmpEQ(operation[5:0],`simd_pmaxs)||operation[5:0]
+	==`simd_pmin||pwh#(6)::cmpEQ(operation[5:0],`simd_pmax);
+      is_cmp<=pwh#(6)::cmpEQ(operation[5:0],`simd_cmp);
       jump_type<={operation[12],operation[9:8],1'b0};
       resD_reg[1]<=resD[1];
       resD_reg[2]<=resD[2];
