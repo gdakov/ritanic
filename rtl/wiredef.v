@@ -23,4 +23,22 @@ class pwh #(WIDTH w);
       for(a=0;a<w;a=a+1) RPL[a]={10{A[a]}};
     end
   endfunction
+  static pwire[w-1:0] function pick (input pwire[w-1:0] A,input [3:0] sel);
+    integer a;
+    begin
+      assert(sel<=9);
+      for(a=0;a<w;a=a+1) pick[a]={10{A[a][sel]}};
+    end
+  endfunction
+
+  static pwire[w-1:0] function pmul ( input [7:0] mulbgn; input [1:0] val; );
+    integer a,b;
+    logic [w-1:0] tmp;
+    begin
+      for(a=0;a<10;a=a+1) begin
+          tmp=val*(mulbgn+a);
+          for(b=0;b<w;b=b+1) pmul[b][a]=tmp[b];
+      end
+    end
+  endfunction
 endclass
