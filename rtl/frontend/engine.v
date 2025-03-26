@@ -2577,7 +2577,7 @@ module backend(
 
   function [0:0] is_rndE;
       input pwire [17:0] op;
-      is_rndE=(op[7:0]==`fop_rndES || op[7:0]==`fop_rndED) & ~op[11];
+      is_rndE=(pwh#(8)::cmpEQ(op[7:0],`fop_rndES) || pwh#(8)::cmpEQ(op[7:0],`fop_rndED)) & ~op[11];
   endfunction
   msrss_watch #(`csr_FPU,64'h20000) fpcsr_mod(clk,rst,msrss_no,msrss_data[63:0],msrss_en,fpcsr);
 

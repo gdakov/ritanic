@@ -203,7 +203,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign val_and={is_ptr ? ptr[63:44] : val1[1][63:44]&(val2[1][63:44]^{20{rmode[1]}}),val1[1][43:0]&(val2[1][43:0]^{44{rmode[1]}})};
   
   assign nDataAlt2=nDataAlt && doJmp2 | ~cond[4];
-  assign valRes=(add_en||shift_en&~NOSHIFT||(operation[7:0]==`op_cax && NOSHIFT)||~nDataAlt)&~(~doJmp2|~cond[4]) ? 
+  assign valRes=(add_en||shift_en&~NOSHIFT||(pwh#(8)::cmpEQ(operation[7:0],`op_cax) && NOSHIFT)||~nDataAlt)&~(~doJmp2|~cond[4]) ? 
     66'bz : {^{nDataAlt & ~nDataAlt2 ? val1[1][64]&~|operation[10:9] : is_ptr,valRes2},
     {nDataAlt & ~nDataAlt2 ? val1[1][64]&~|operation[10:9] : is_ptr,valRes2}};
 //4 phase offset for the ecc bit
@@ -224,38 +224,38 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
     64'b0: 64'bz;
   assign add_en=(~(|operation[7:3])|(operation[7:1]==7'd30)|(operation[7:1]==7'd23) && ~operation[11]) && nDataAlt;
   assign add8_en=1'b0;
-  assign sahf_en=~operation[11] && operation[7:0]==`op_sahf && nDataAlt;
+  assign sahf_en=~operation[11] && pwh#(8)::cmpEQ(operation[7:0],`op_sahf) && nDataAlt;
   assign shift_en=(operation[7:2]==6'd5 || operation[7:2]==6'd6 || operation[7:2]==6'd7) && nDataAlt && ~operation[11];
   assign valRes1=(add_en|shift_en) ? 64'b0 : 64'bz;
     
   assign flag8_SF=retOp[8] ? valRes_reg[15] : valRes_reg[7];
 
-  assign valRes1[63:32]=((operation[11:0]==`op_and64) && nDataAlt) ? val_and[63:32] : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_and32) && nDataAlt) ? 32'b0 : 32'bz;   
-  assign valRes1[31:0]=((operation[11:0]==`op_and32 || operation[11:0]==`op_and64) && nDataAlt) ? val_and[31:0] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_and64)) && nDataAlt) ? val_and[63:32] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_and32)) && nDataAlt) ? 32'b0 : 32'bz;   
+  assign valRes1[31:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_and32) || pwh#(12)::cmpEQ(operation[11:0],`op_and64)) && nDataAlt) ? val_and[31:0] : 32'bz;   
   
 
-  assign valRes1[63:32]=((operation[11:0]==`op_or64 || operation[11:1]==11'd29) && nDataAlt) ? val_or[63:32] : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_or32) && nDataAlt) ? 32'b0  : 32'bz;   
-  assign valRes1[31:0]=((operation[11:0]==`op_or32 || operation[11:0]==`op_or64) && nDataAlt) ? val_or[31:0] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_or64) || operation[11:1]==11'd29) && nDataAlt) ? val_or[63:32] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_or32)) && nDataAlt) ? 32'b0  : 32'bz;   
+  assign valRes1[31:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_or32) || pwh#(12)::cmpEQ(operation[11:0],`op_or64)) && nDataAlt) ? val_or[31:0] : 32'bz;   
   
   
-  assign valRes1[63:32]=((operation[11:0]==`op_xor64) && nDataAlt) ? val_xor[63:32] : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_xor32) && nDataAlt) ? 32'b0  : 32'bz;   
-  assign valRes1[31:0]=((operation[11:0]==`op_xor32 || operation[11:0]==`op_xor64) && nDataAlt) ? val_xor[31:0] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_xor64)) && nDataAlt) ? val_xor[63:32] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_xor32)) && nDataAlt) ? 32'b0  : 32'bz;   
+  assign valRes1[31:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_xor32) || pwh#(12)::cmpEQ(operation[11:0],`op_xor64)) && nDataAlt) ? val_xor[31:0] : 32'bz;   
   
-  assign valRes1[63:32]=((operation[11:0]==`op_nxor64) && nDataAlt) ? (~val_xor[63:32]) : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_nxor32) && nDataAlt) ? 32'b0  : 32'bz;   
-  assign valRes1[31:0]=((operation[11:0]==`op_nxor32 || operation[11:0]==`op_nxor64) && nDataAlt) ? 
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_nxor64)) && nDataAlt) ? (~val_xor[63:32]) : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_nxor32)) && nDataAlt) ? 32'b0  : 32'bz;   
+  assign valRes1[31:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_nxor32) || pwh#(12)::cmpEQ(operation[11:0],`op_nxor64)) && nDataAlt) ? 
 	  (~val_xor[31:0]) : 32'bz;   
   
 
-  assign valRes1[63:32]=((operation[11:0]==`op_mov64) && nDataAlt) ? val2[1][63:32] : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_mov32) && nDataAlt) ? 32'b0 : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_mov16 || (operation[7:0]==`op_mov8 || operation[11:1]==11'd3)&~operation[11]) && nDataAlt) ? val1[1][63:32] : 32'bz;   
-  assign valRes1[31:16]=((operation[11:0]==`op_mov32 || operation[11:0]==`op_mov64) && nDataAlt) ? val2[1][31:16] : 16'bz;   
-  assign valRes1[31:16]=((operation[11:0]==`op_mov16 || (operation[7:0]==`op_mov8 || operation[11:1]==11'd3)&~operation[11]) && nDataAlt) ? val1[1][31:16] : 16'bz;   
-  assign valRes1[15:0]=((((operation[9:0]==`op_mov16) && ~operation[10]) || operation[11:0]==`op_mov32 || operation[11:0]==`op_mov64) && nDataAlt) ?
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && nDataAlt) ? val2[1][63:32] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov32)) && nDataAlt) ? 32'b0 : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov16) || (pwh#(8)::cmpEQ(operation[7:0],`op_mov8) || operation[11:1]==11'd3)&~operation[11]) && nDataAlt) ? val1[1][63:32] : 32'bz;   
+  assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov32) || pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && nDataAlt) ? val2[1][31:16] : 16'bz;   
+  assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov16) || (pwh#(8)::cmpEQ(operation[7:0],`op_mov8) || operation[11:1]==11'd3)&~operation[11]) && nDataAlt) ? val1[1][31:16] : 16'bz;   
+  assign valRes1[15:0]=((((operation[9:0]==`op_mov16) && ~operation[10]) || pwh#(12)::cmpEQ(operation[11:0],`op_mov32) || pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && nDataAlt) ?
     val2[1][15:0] : 16'bz;   
   assign valRes1[15:0]=((((operation[9:0]==`op_mov16) && operation[10])) && nDataAlt) ?
     val2[1][31:16] : 16'bz;   
@@ -263,34 +263,34 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign valRes1[15:0]=((operation[9:0]=={2'b01,8'd`op_mov8}) && nDataAlt) ? {val1[1][15:8],val2[1][15:8]} : 16'bz;   
   assign valRes1[15:0]=((operation[9:0]=={2'b10,8'd`op_mov8}) && nDataAlt) ? {val2[1][7:0],val1[1][7:0]} : 16'bz;   
   assign valRes1[15:0]=((operation[9:0]=={2'b11,8'd`op_mov8}) && nDataAlt) ? {val2[1][15:8],val1[1][7:0]} : 16'bz;   
-  assign valRes1[15:0]=((operation[11:0]==`op_or8) && nDataAlt) ? {val1[1][15:8],val_or[7:0]} : 16'bz;   
-  assign valRes1[15:0]=((operation[11:0]==`op_or16) && nDataAlt) ? {val_or[15:0]} : 16'bz;   
-  assign valRes1[15:0]=((operation[11:0]==`op_and8) && nDataAlt) ? {val1[15:8],val_and[7:0]} : 16'bz;   
-  assign valRes1[15:0]=((operation[11:0]==`op_and16) && nDataAlt) ? {val_and[15:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_or8)) && nDataAlt) ? {val1[1][15:8],val_or[7:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_or16)) && nDataAlt) ? {val_or[15:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_and8)) && nDataAlt) ? {val1[15:8],val_and[7:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_and16)) && nDataAlt) ? {val_and[15:0]} : 16'bz;   
   
 
-  assign valRes1[63:32]=(((operation[11:0]==`op_zxt16_64) || (operation[7:0]==`op_zxt8_64 && ~operation[11]))
+  assign valRes1[63:32]=(((pwh#(12)::cmpEQ(operation[11:0],`op_zxt16_64)) || (pwh#(8)::cmpEQ(operation[7:0],`op_zxt8_64) && ~operation[11]))
     && nDataAlt) ? 32'b0 : 32'bz;   
-  assign valRes1[31:16]=((operation[11:0]==`op_zxt16_64 || (operation[7:0]==`op_zxt8_64 && ~operation[11])) && nDataAlt) ? 16'b0 : 16'bz;   
-  assign valRes1[15:0]=((operation[11:0]==`op_zxt16_64) && nDataAlt) ?
+  assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_zxt16_64) || (pwh#(8)::cmpEQ(operation[7:0],`op_zxt8_64) && ~operation[11])) && nDataAlt) ? 16'b0 : 16'bz;   
+  assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_zxt16_64)) && nDataAlt) ?
     val2[1][15:0] : 16'bz;
-  assign valRes1[15:8]=((operation[7:0]==`op_zxt8_64) && ~operation[11] && nDataAlt) ? 8'b0 : 8'bz;   
-  assign valRes1[7:0]=((operation[7:0]==`op_zxt8_64) && nDataAlt) ? val2[1][7:0]: 8'bz;   
+  assign valRes1[15:8]=((pwh#(8)::cmpEQ(operation[7:0],`op_zxt8_64)) && ~operation[11] && nDataAlt) ? 8'b0 : 8'bz;   
+  assign valRes1[7:0]=((pwh#(8)::cmpEQ(operation[7:0],`op_zxt8_64)) && nDataAlt) ? val2[1][7:0]: 8'bz;   
 
-  assign cmov_en=~operation[11] && (operation[7:0]==`op_cmov64 || operation[7:0]==`op_cmovn64);
+  assign cmov_en=~operation[11] && (pwh#(8)::cmpEQ(operation[7:0],`op_cmov64) || pwh#(8)::cmpEQ(operation[7:0],`op_cmovn64));
 
-  assign valRes1[63:32]=operation[11:0]==`op_sxt16_32 || (operation[7:0]==`op_sxt8_32 && ~operation[11])
+  assign valRes1[63:32]=pwh#(12)::cmpEQ(operation[11:0],`op_sxt16_32) || (pwh#(8)::cmpEQ(operation[7:0],`op_sxt8_32) && ~operation[11])
     && nDataAlt ? 32'b0 : 32'bz;   
-  assign valRes1[63:32]=((operation[11:0]==`op_sxt16_64) && nDataAlt) ? {32{val2[1][15]}} : 32'bz;
-  assign valRes1[63:32]=((operation[11:0]==`op_sxt32_64) && nDataAlt) ? {32{val2[1][31]}} : 32'bz;
-  assign valRes1[63:32]=((operation[7:0]==`op_sxt8_64) && nDataAlt) ? {32{val2[1][7]}} : 32'bz;
-  assign valRes1[31:16]=(operation[11:0]==`op_sxt32_64 && nDataAlt) ? val2[1][31:16] : 16'bz;
-  assign valRes1[31:16]=((operation[11:0]==`op_sxt16_32 || operation[11:0]==`op_sxt16_64) && nDataAlt) ? {16{val2[1][15]}} : 16'bz;
-  assign valRes1[31:8]=((operation[7:0]==`op_sxt8_32 || operation[7:0]==`op_sxt8_64) 
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_sxt16_64)) && nDataAlt) ? {32{val2[1][15]}} : 32'bz;
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_sxt32_64)) && nDataAlt) ? {32{val2[1][31]}} : 32'bz;
+  assign valRes1[63:32]=((pwh#(8)::cmpEQ(operation[7:0],`op_sxt8_64)) && nDataAlt) ? {32{val2[1][7]}} : 32'bz;
+  assign valRes1[31:16]=(pwh#(12)::cmpEQ(operation[11:0],`op_sxt32_64) && nDataAlt) ? val2[1][31:16] : 16'bz;
+  assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_sxt16_32) || pwh#(12)::cmpEQ(operation[11:0],`op_sxt16_64)) && nDataAlt) ? {16{val2[1][15]}} : 16'bz;
+  assign valRes1[31:8]=((pwh#(8)::cmpEQ(operation[7:0],`op_sxt8_32) || pwh#(8)::cmpEQ(operation[7:0],`op_sxt8_64)) 
     && nDataAlt) ? {24{val2[1][7]}} : 24'bz;
-  assign valRes1[15:0]=((operation[11:0]==`op_sxt16_32 || operation[11:0]==`op_sxt16_64 || operation[11:0]==`op_sxt32_64)
+  assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_sxt16_32) || pwh#(12)::cmpEQ(operation[11:0],`op_sxt16_64) || pwh#(12)::cmpEQ(operation[11:0],`op_sxt32_64))
     && nDataAlt) ? val2[1][15:0] : 16'bz;
-  assign valRes1[7:0]=((operation[7:0]==`op_sxt8_64 || operation[7:0]==`op_sxt8_32)
+  assign valRes1[7:0]=((pwh#(8)::cmpEQ(operation[7:0],`op_sxt8_64) || pwh#(8)::cmpEQ(operation[7:0],`op_sxt8_32))
     && nDataAlt) ? val2[1][7:0]: 8'bz;   
   
   assign valRes1[63:0]=((smallOP==`op_cmov64 || smallOP==`op_cmov32 ||
@@ -313,10 +313,10 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign valRes1[63:8]=((smallOP==`op_cset || smallOP==`op_csetn) && ~operation[11]) ? 56'b0 : 56'bz;
  
   assign is_ptr=val1[0][64]|val2[0][64]|(operation[11:0]==12'd58) && ~(val1[0][64]&val2[0][64]&is_sub||val2[0][64]&is_sub) && (add_en&~operation[8])|logic_en|
-    (cmov_en&&(doJmp&val2[1][64]||~doJmp&val1[1][64]))|(operation[11:0]==12'd58)|(operation[11:0]==`op_mov64) && 
+    (cmov_en&&(doJmp&val2[1][64]||~doJmp&val1[1][64]))|(operation[11:0]==12'd58)|(pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && 
     ((operation[1:0]==2'b0 && operation[7:5]==3'b0|(operation[7:2]==6'b001000))||cmov_en||operation[11:1]==11'd29);
 
-  assign is_sub=operation[7:0]==`op_sub64;
+  assign is_sub=pwh#(8)::cmpEQ(operation[7:0],`op_sub64);
 
   assign ptr=val1[0][64] ? val1[0][63:0] : val2[0][63:0];
   
@@ -329,9 +329,9 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
     .en(add_en),
     .sxtEn(operation[8]|rmode[1]),
 	  .pooh(1'b0),
-    .ben({(operation[7:0]==`op_add64 || operation[7:0]==`op_sub64 || operation[7:1]==7'd30 || operation[7:1]==7'd1 || operation[7:1]==7'd23) && 
+    .ben({(pwh#(8)::cmpEQ(operation[7:0],`op_add64) || pwh#(8)::cmpEQ(operation[7:0],`op_sub64) || operation[7:1]==7'd30 || operation[7:1]==7'd1 || operation[7:1]==7'd23) && 
     ~is_ptr && ~(val1[0][64]&val2[0][64]&is_sub||val2[0][64]&is_sub),
-    (operation[7:0]==`op_add64 || operation[7:0]==`op_sub64 || operation[7:1]==7'd30 || operation[7:1]==7'd1 || operation[7:1]==7'd23),operation[7:3]==5'd0 && ~operation[1] || 
+    (pwh#(8)::cmpEQ(operation[7:0],`op_add64) || pwh#(8)::cmpEQ(operation[7:0],`op_sub64) || operation[7:1]==7'd30 || operation[7:1]==7'd1 || operation[7:1]==7'd23),operation[7:3]==5'd0 && ~operation[1] || 
       operation[7:1]==7'd30 || operation[7:1]==7'd23, 
       operation[7:3]==5'd0 && operation[1:0]!=2'b11 ||operation[7:1]==7'd30 || operation[7:1]==7'd23}),
     .cout(carryAdd64),
@@ -367,40 +367,40 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign flagSub8_OF=val1[0][7] & ~val2[0][7] & ~valRes[7] | ~val1[0][7] & val2[0][7] & valRes[7];  
    
 // flag assignment mux
-  assign flags_COASZP=((retOp[7:0]==`op_add64) && ~(retOp[2]&operation_reg[8]) && isFlags_reg) ? 
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_add64)) && ~(retOp[2]&operation_reg[8]) && isFlags_reg) ? 
       {carryAdd64_reg&~is_ptr_reg,flagAdd64_OF_reg&~is_ptr_reg,carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((retOp[7:0]==`op_add32 || retOp[7:0]==`op_sub32) && isFlags_reg) ? {carryAdd32_reg,flagAdd32_OF_reg,carryAdd4LL_reg,valRes_reg[31],flag32_ZF_reg,valRes_reg[0]} : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_add32) || pwh#(8)::cmpEQ(retOp[7:0],`op_sub32)) && isFlags_reg) ? {carryAdd32_reg,flagAdd32_OF_reg,carryAdd4LL_reg,valRes_reg[31],flag32_ZF_reg,valRes_reg[0]} : 6'bz;
   assign flags_COASZP=((retOp[7:1]==7'd23) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:47]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],valRes_reg[63:47]==17'b0,
      valRes_reg[0]} : 6'bz;
   
-  assign flags_COASZP=((retOp[7:0]==`op_sub64) && isFlags_reg && is_ptr_sub) ? {carryAdd44_reg,flagSub44_OF_reg,~carryAdd4LL_reg,valRes_reg[43],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((retOp[7:0]==`op_sub64) && isFlags_reg && ~is_ptr_sub) ? {carryAdd64_reg & ~is_ptr_reg,flagSub64_OF_reg&~is_ptr_reg,~carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((retOp[7:0]==`op_cmp16 || retOp[7:0]==`op_add16) && isFlags_reg) ? {carryAdd16_reg,flagSub16_OF_reg,~carryAdd4LL_reg,valRes_reg[15],flag16_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((retOp[7:0]==`op_cmp8 || retOp[7:0]==`op_add8) && isFlags_reg) ? {carryAdd8LL_reg,flagSub8_OF_reg,~carryAdd4LL_reg,valRes_reg[7],flag8_ZF_reg,1'b0} : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_sub64)) && isFlags_reg && is_ptr_sub) ? {carryAdd44_reg,flagSub44_OF_reg,~carryAdd4LL_reg,valRes_reg[43],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_sub64)) && isFlags_reg && ~is_ptr_sub) ? {carryAdd64_reg & ~is_ptr_reg,flagSub64_OF_reg&~is_ptr_reg,~carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_cmp16) || pwh#(8)::cmpEQ(retOp[7:0],`op_add16)) && isFlags_reg) ? {carryAdd16_reg,flagSub16_OF_reg,~carryAdd4LL_reg,valRes_reg[15],flag16_ZF_reg,valRes_reg[0]} : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_cmp8) || pwh#(8)::cmpEQ(retOp[7:0],`op_add8)) && isFlags_reg) ? {carryAdd8LL_reg,flagSub8_OF_reg,~carryAdd4LL_reg,valRes_reg[7],flag8_ZF_reg,1'b0} : 6'bz;
 
-  assign flags_COASZP=((retOp[7:0]==`op_and64) | (retOp==`op_or64) | (retOp==`op_xor64) | (retOp==`op_nxor64) && isFlags_reg) ? 
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_and64)) | (retOp==`op_or64) | (retOp==`op_xor64) | (retOp==`op_nxor64) && isFlags_reg) ? 
     {retOp==`op_nxor64 && is_ptr_reg,2'b000,valRes_reg[63],flag64_ZF_reg,1'b0} : 6'bz;
-  assign flags_COASZP=((retOp[7:0]==`op_and32) | (retOp==`op_or32) | (retOp==`op_xor32) | (retOp[7:1]==7'd5) | (retOp[7:1]==7'd7)
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_and32)) | (retOp==`op_or32) | (retOp==`op_xor32) | (retOp[7:1]==7'd5) | (retOp[7:1]==7'd7)
      | (retOp==`op_nxor32) | (retOp=`op_add64 && operation_reg[8]) && isFlags_reg) ? {flagAdd16_CF_reg,flagAdd16_OF_reg,1'b0,valRes_reg[31],flag32_ZF_reg,1'b0} : 6'bz;
 
   assign flags_COASZP=((|retOp[7:5]) && retOp[7:0]!=`op_lahf && retOp[7:0]!=`op_clahf && retOp[7:0]!=`op_clahfn &&
 	  ~retOp[11]) ? 6'b0 : 6'bz;
-  assign flags_COASZP=(retOp[7:0]==`op_lahf && ~retOp[11]) ? val1_reg[5:0] : 6'bz;
+  assign flags_COASZP=(pwh#(8)::cmpEQ(retOp[7:0],`op_lahf) && ~retOp[11]) ? val1_reg[5:0] : 6'bz;
   assign flags_COASZP=(isFlags_reg&~retOp[11]&(retOp[7:5]==3'b0)) ? 6'bz : 6'b0;  
-  assign flags_COASZP=((retOp[7:0]==`op_clahf || retOp[7:0]==`op_clahfn) && doJmp_reg) ? val1_reg[5:0] : 6'bz;
-  assign flags_COASZP=((retOp[7:0]==`op_clahf || retOp[7:0]==`op_clahfn) && ~doJmp_reg) ? valS_reg : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_clahf) || pwh#(8)::cmpEQ(retOp[7:0],`op_clahfn)) && doJmp_reg) ? val1_reg[5:0] : 6'bz;
+  assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_clahf) || pwh#(8)::cmpEQ(retOp[7:0],`op_clahfn)) && ~doJmp_reg) ? valS_reg : 6'bz;
   //other stuff
   
   assign retData[`except_flags]=nDataAlt_reg && ~shift_en_reg|NOSHIFT 
-    && cin_seq_reg|~is_ptr_reg && (sec&&retOp[7:0]==`op_cax)|~NOSHIFT && (~val2_sign65||val1_sign65||retOp[7:0]!=`op_sub64) &&
+    && cin_seq_reg|~is_ptr_reg && (sec&&pwh#(8)::cmpEQ(retOp[7:0],`op_cax))|~NOSHIFT && (~val2_sign65||val1_sign65||retOp[7:0]!=`op_sub64) &&
     (!val1_sign65 || !val2_sign65 || !logic_en_reg) && ~error  ? flags_COASZP : 6'bz;
   assign retData[`except_flags]=nDataAlt_reg && (~shift_en_reg|NOSHIFT 
-    && (~cin_seq_reg & is_ptr_reg || val2_sign65 & ~val1_sign65 & (retOp[7:0]==`op_sub64)
-    || val2_sign65 & val1_sign65 & logic_en_reg || NOSHIFT&(~sec&&retOp[7:0]==`op_cax)) | error) ? (error ? 6'd63 : 6'd11) : 6'bz;
+    && (~cin_seq_reg & is_ptr_reg || val2_sign65 & ~val1_sign65 & (pwh#(8)::cmpEQ(retOp[7:0],`op_sub64))
+    || val2_sign65 & val1_sign65 & logic_en_reg || NOSHIFT&(~sec&&pwh#(8)::cmpEQ(retOp[7:0],`op_cax))) | error) ? (error ? 6'd63 : 6'd11) : 6'bz;
   assign retData[`except_status]=nDataAlt_reg && cin_seq_reg|~is_ptr_reg && (~val2_sign65||val1_sign65||retOp[7:0]!=`op_sub64) &&
-    (!val1_sign65 || !val2_sign65 || !logic_en_reg) && !(NOSHIFT&(~sec&&retOp[7:0]==`op_cax)) && ~ error ? 2'd2 : 2'bz; //done
-  assign retData[`except_status]=nDataAlt_reg && ((~cin_seq_reg & is_ptr_reg || val2_sign65 & ~val1_sign65 & (retOp[7:0]==`op_sub64)
-    || val2_sign65 & val1_sign65 & logic_en_reg || NOSHIFT&(~sec&&retOp[7:0]==`op_cax)) | error) ? 2'd1 : 2'bz; //done
+    (!val1_sign65 || !val2_sign65 || !logic_en_reg) && !(NOSHIFT&(~sec&&pwh#(8)::cmpEQ(retOp[7:0],`op_cax))) && ~ error ? 2'd2 : 2'bz; //done
+  assign retData[`except_status]=nDataAlt_reg && ((~cin_seq_reg & is_ptr_reg || val2_sign65 & ~val1_sign65 & (pwh#(8)::cmpEQ(retOp[7:0],`op_sub64))
+    || val2_sign65 & val1_sign65 & logic_en_reg || NOSHIFT&(~sec&&pwh#(8)::cmpEQ(retOp[7:0],`op_cax))) | error) ? 2'd1 : 2'bz; //done
   assign retData[`except_setsFlags]=nDataAlt_reg ? isFlags_reg&dataEn_reg : 1'bz;
   
   assign retEn=nDataAlt_reg ? dataEn_reg & ~retOp[11] &~thrinh_reg : 1'bz; 
@@ -524,14 +524,14 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
           except_thread_reg<=except_thread;
 
           if (add_en) cin_seq_reg<=cin_seq[0]&~boogy_baboogy;
-          else if (operation[7:0]==`op_and64)
+          else if (pwh#(8)::cmpEQ(operation[7:0],`op_and64))
               cin_seq_reg<=cin_seq[2]&~boogy_baboogy;
           else cin_seq_reg<=cin_seq[1]|cmov_en&&~boogy_baboogy;
 
           is_ptr_reg<=is_ptr;       
           is_ptr_sub<=val1[0][64]&val2[0][64]&is_sub;
 
-	  logic_en_reg<=(operation[7:0]==`op_and64) || (operation[7:0]==`op_or64) || (operation[7:0]==`op_xor64);
+	  logic_en_reg<=(pwh#(8)::cmpEQ(operation[7:0],`op_and64)) || (pwh#(8)::cmpEQ(operation[7:0],`op_or64)) || (pwh#(8)::cmpEQ(operation[7:0],`op_xor64));
 	  //$display("LL ",logic_en_reg," ",val1_sign65," ",val2_sign65," ",is_ptr_reg," ",cin_seq_reg);
 	  flag64_ZF_reg<=flag64_ZF;
           flag32_ZF_reg<=flag32_ZF;

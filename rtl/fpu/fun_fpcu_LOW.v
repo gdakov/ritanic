@@ -250,19 +250,19 @@ module fun_fpuL(
   .clk(clk),
   .rst(rst),
   .en(u5_en_reg[3] && u5_en_reg[0] && u5_op_reg[11] 
-  && (u5_op_reg[7:0]==`fop_cvtD ||
-    u5_op_reg[7:0]==`fop_cvtE || u5_op_reg[7:0]==`fop_cvtS ||
-    u5_op_reg[7:0]==`fop_cvt32S || u5_op_reg[7:0]==`fop_cvt32D ||
-    u5_op_reg[7:0]==`fop_tblD)),
+  && (pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvtD) ||
+    pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvtE) || pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvtS) ||
+    pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvt32S) || pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvt32D) ||
+    pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_tblD))),
   .clkEn(~fxFRT_alten_reg3),
   .A((u5_op_reg2[7:0]!=`fop_cvtD && u5_op_reg2[7:0]!=`fop_cvt32D &&
     u5_op_reg2[7:0]!=`fop_cvtE) ? {16'b0,XI_dataS[65:0]} : {XI_dataT[15+70:70],XI_dataT[65:0]}),
-  .isDBL(u5_op_reg[7:0]==`fop_cvtD || u5_op_reg[7:0]==`fop_cvt32D),
-  .isEXT(u5_op_reg[7:0]==`fop_cvtE),
+  .isDBL(pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvtD) || pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvt32D)),
+  .isEXT(pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvtE)),
   .isSNG(u5_op_reg[7:0]!=`fop_cvtD && u5_op_reg[7:0]!=`fop_cvt32D &&
     u5_op_reg[7:0]!=`fop_cvtE),
-  .verbatim(u5_op_reg[7:0]==`fop_tblD),
-  .is32b(u5_op_reg[7:0]==`fop_cvt32S || u5_op_reg[7:0]==`fop_cvt32D),
+  .verbatim(pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_tblD)),
+  .is32b(pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvt32S) || pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_cvt32D)),
   .res(FUCVT1),
   .alt(daltX)
   );

@@ -329,8 +329,8 @@ module fu_alu(
   clk,rst,
   !(u1_op[7:3]==5'b0 || u1_op[7:1]==7'd30) || ~clkREF,
   (u1_op[7:3]==5'b0 || u1_op[7:1]==7'd30 || u1_op[7:3]==3 || u1_op[7:2]==5) || ~clkREF,
-  !(u1_op[7:3]==3 || u1_op[7:2]==5 || u1_op[7:0]==`op_cax) || ~clkREF,  
-  (u1_op[7:0]==`op_add64 || u1_op[7:0]==`op_sub64) && u1_op[8],
+  !(u1_op[7:3]==3 || u1_op[7:2]==5 || pwh#(8)::cmpEQ(u1_op[7:0],`op_cax)) || ~clkREF,  
+  (pwh#(8)::cmpEQ(u1_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u1_op[7:0],`op_sub64)) && u1_op[8],
   u1_A,uu_A1,
   u1_A_fufwd,u1_A_fuufwd,
   FU0,FU0_reg,
@@ -349,8 +349,8 @@ module fu_alu(
   clk,rst,
   !(u1_op[7:3]==5'b0 || u1_op[7:1]==7'd30) || ~clkREF2,
   (u1_op[7:3]==5'b0 || u1_op[7:1]==7'd30 || u1_op[7:3]==3 || u1_op[7:2]==5 || u1_op[11]) || ~clkREF2,
-  !(u1_op[7:3]==3 || u1_op[7:2]==5 || u1_op[11] || u1_op[7:0]==`op_cax) || ~clkREF2,  
-  (u1_op[7:0]==`op_add64 || u1_op[7:0]==`op_sub64) && u1_op[8],
+  !(u1_op[7:3]==3 || u1_op[7:2]==5 || u1_op[11] || pwh#(8)::cmpEQ(u1_op[7:0],`op_cax)) || ~clkREF2,  
+  (pwh#(8)::cmpEQ(u1_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u1_op[7:0],`op_sub64)) && u1_op[8],
   u1_B,uu_B1,
   u1_B_fufwd,u1_B_fuufwd,
   FU0,FU0_reg,
@@ -371,7 +371,7 @@ module fu_alu(
   !(u2_op[7:3]==5'b0 || u2_op[7:1]==7'd30) || ~clkREF,
   (u2_op[7:3]==5'b0 || u2_op[7:1]==7'd30 || u2_op[7:3]==3 || u2_op[7:2]==5 || u2_op[11]) || ~clkREF,
   !(u2_op[7:3]==3 || u2_op[7:2]==5 || u2_op[11]) || ~clkREF,  
-  (u2_op[7:0]==`op_add64 || u2_op[7:0]==`op_sub64) && u2_op[8],
+  (pwh#(8)::cmpEQ(u2_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u2_op[7:0],`op_sub64)) && u2_op[8],
   u2_A,uu_A2,
   u2_A_fufwd,u2_A_fuufwd,
   FU0,FU0_reg,
@@ -391,7 +391,7 @@ module fu_alu(
   !(u2_op[7:3]==5'b0 || u2_op[7:1]==7'd30) || ~clkREF2,
   (u2_op[7:3]==5'b0 || u2_op[7:1]==7'd30 || u2_op[7:3]==3 || u2_op[7:2]==5 || u2_op[11]) || ~clkREF2,
   !(u2_op[7:3]==3 || u2_op[7:2]==5 || u2_op[11]) || ~clkREF2,  
-  (u2_op[7:0]==`op_add64 || u2_op[7:0]==`op_sub64) && u2_op[8],
+  (pwh#(8)::cmpEQ(u2_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u2_op[7:0],`op_sub64)) && u2_op[8],
   u2_B,uu_B2,
   u2_B_fufwd,u2_B_fuufwd,
   FU0,FU0_reg,
@@ -411,8 +411,8 @@ module fu_alu(
   clk,rst,
   !(u3_op[7:3]==5'b0 || u3_op[7:1]==7'd30) || ~clkREF,
   (u3_op[7:3]==5'b0 || u3_op[7:1]==7'd30 || u3_op[7:3]==3 || u3_op[7:2]==5 || u3_op[11]) || ~clkREF,
-  !(u3_op[7:3]==3 || u3_op[7:2]==5 || u3_op[11] || u3_op[7:0]==`op_cax) || ~clkREF,  
-  (u3_op[7:0]==`op_add64 || u3_op[7:0]==`op_sub64) && u3_op[8],
+  !(u3_op[7:3]==3 || u3_op[7:2]==5 || u3_op[11] || pwh#(8)::cmpEQ(u3_op[7:0],`op_cax)) || ~clkREF,  
+  (pwh#(8)::cmpEQ(u3_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u3_op[7:0],`op_sub64)) && u3_op[8],
   u3_A,uu_A3,
   u3_A_fufwd,u3_A_fuufwd,
   FU0,FU0_reg,
@@ -431,8 +431,8 @@ module fu_alu(
   clk,rst,
   !(u3_op[7:3]==5'b0 || u3_op[7:1]==7'd30) || ~clkREF2,
   (u3_op[7:3]==5'b0 || u3_op[7:1]==7'd30 || u3_op[7:3]==3 || u3_op[7:2]==5 || u3_op[11]) || ~clkREF2,
-  !(u3_op[7:3]==3 || u3_op[7:2]==5 || u3_op[11] || u3_op[7:0]==`op_cax) || ~clkREF2,  
-  (u3_op[7:0]==`op_add64 || u3_op[7:0]==`op_sub64) && u3_op[8],
+  !(u3_op[7:3]==3 || u3_op[7:2]==5 || u3_op[11] || pwh#(8)::cmpEQ(u3_op[7:0],`op_cax)) || ~clkREF2,  
+  (pwh#(8)::cmpEQ(u3_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u3_op[7:0],`op_sub64)) && u3_op[8],
   u3_B,uu_B3,
   u3_B_fufwd,u3_B_fuufwd,
   FU0,FU0_reg,
@@ -453,7 +453,7 @@ module fu_alu(
   !(u4_op[7:3]==5'b0 || u4_op[7:1]==7'd30) || ~clkREF,
   (u4_op[7:3]==5'b0 || u4_op[7:1]==7'd30 || u4_op[7:3]==3 || u4_op[7:2]==5 || u4_op[11]) || ~clkREF,
   !(u4_op[7:3]==3 || u4_op[7:2]==5 || u4_op[11]) || ~clkREF,  
-  (u4_op[7:0]==`op_add64 || u4_op[7:0]==`op_sub64) && u4_op[8],
+  (pwh#(8)::cmpEQ(u4_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u4_op[7:0],`op_sub64)) && u4_op[8],
   u4_A,uu_A4,
   u4_A_fufwd,u4_A_fuufwd,
   FU0,FU0_reg,
@@ -473,7 +473,7 @@ module fu_alu(
   !(u4_op[7:3]==5'b0 || u4_op[7:1]==7'd30) || ~clkREF2,
   (u4_op[7:3]==5'b0 || u4_op[7:1]==7'd30 || u4_op[7:3]==3 || u4_op[7:2]==5 || u4_op[11]) || ~clkREF2,
   !(u4_op[7:3]==3 || u4_op[7:2]==5 || u4_op[11]) || ~clkREF2,  
-  (u4_op[7:0]==`op_add64 || u4_op[7:0]==`op_sub64) && u4_op[8],
+  (pwh#(8)::cmpEQ(u4_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u4_op[7:0],`op_sub64)) && u4_op[8],
   u4_B,uu_B4,
   u4_B_fufwd,u4_B_fuufwd,
   FU0,FU0_reg,
@@ -493,8 +493,8 @@ module fu_alu(
   clk,rst,
   !(u5_op[7:3]==5'b0 || u5_op[7:1]==7'd30) || ~clkREF,
   (u5_op[7:3]==5'b0 || u5_op[7:1]==7'd30 || u5_op[7:3]==3 || u5_op[7:2]==5 || u5_op[11]) || ~clkREF,
-  !(u5_op[7:3]==3 || u5_op[7:2]==5 || u5_op[11] || u5_op[7:0]==`op_cax) || ~clkREF,  
-  (u5_op[7:0]==`op_add64 || u5_op[7:0]==`op_sub64) && u5_op[8],
+  !(u5_op[7:3]==3 || u5_op[7:2]==5 || u5_op[11] || pwh#(8)::cmpEQ(u5_op[7:0],`op_cax)) || ~clkREF,  
+  (pwh#(8)::cmpEQ(u5_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u5_op[7:0],`op_sub64)) && u5_op[8],
   u5_A,uu_A5,
   u5_A_fufwd,u5_A_fuufwd,
   FU0,FU0_reg,
@@ -513,8 +513,8 @@ module fu_alu(
   clk,rst,
   !(u5_op[7:3]==5'b0 || u5_op[7:1]==7'd30) || ~clkREF2,
   (u5_op[7:3]==5'b0 || u5_op[7:1]==7'd30 || u5_op[7:3]==3 || u5_op[7:2]==5 || u5_op[11]) || ~clkREF2,
-  !(u5_op[7:3]==3 || u5_op[7:2]==5 || u5_op[11] || u5_op[7:0]==`op_cax) || ~clkREF2,  
-  (u5_op[7:0]==`op_add64 || u5_op[7:0]==`op_sub64) && u5_op[8],
+  !(u5_op[7:3]==3 || u5_op[7:2]==5 || u5_op[11] || pwh#(8)::cmpEQ(u5_op[7:0],`op_cax)) || ~clkREF2,  
+  (pwh#(8)::cmpEQ(u5_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u5_op[7:0],`op_sub64)) && u5_op[8],
   u5_B,uu_B5,
   u5_B_fufwd,u5_B_fuufwd,
   FU0,FU0_reg,
@@ -535,7 +535,7 @@ module fu_alu(
   !(u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30) || ~clkREF,
   (u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30 || u6_op[7:3]==3 || u6_op[7:2]==5 || u6_op[11]) || ~clkREF,
   !(u6_op[7:3]==3 || u6_op[7:2]==5 || u6_op[11]) || ~clkREF,  
-  (u6_op[7:0]==`op_add64 || u6_op[7:0]==`op_sub64) && u6_op[8],
+  (pwh#(8)::cmpEQ(u6_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u6_op[7:0],`op_sub64)) && u6_op[8],
   u6_A,uu_A6,
   u6_A_fufwd,u6_A_fuufwd,
   FU0,FU0_reg,
@@ -555,7 +555,7 @@ module fu_alu(
   !(u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30) || ~clkREF2,
   (u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30 || u6_op[7:3]==3 || u6_op[7:2]==5 || u6_op[11]) || ~clkREF2,
   !(u6_op[7:3]==3 || u6_op[7:2]==5 || u6_op[11]) || ~clkREF2,  
-  (u6_op[7:0]==`op_add64 || u6_op[7:0]==`op_sub64) && u6_op[8],
+  (pwh#(8)::cmpEQ(u6_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u6_op[7:0],`op_sub64)) && u6_op[8],
   u6_B,uu_B6,
   u6_B_fufwd,u6_B_fuufwd,
   FU0,FU0_reg,
@@ -575,7 +575,7 @@ module fu_alu(
   !(u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30) || ~clkREF,
   (u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30 || u6_op[7:3]==3 || u6_op[7:2]==5 || u6_op[11]) || ~clkREF,
   !(u6_op[11]) || ~clkREF,  
-  (u6_op[7:0]==`op_add64 || u6_op[7:0]==`op_sub64) && u6_op[8],
+  (pwh#(8)::cmpEQ(u6_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u6_op[7:0],`op_sub64)) && u6_op[8],
   u6_A,uu_A6m,
   u6_A_fufwd,u6_A_fuufwd,
   FU0,FU0_reg,
@@ -595,7 +595,7 @@ module fu_alu(
   !(u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30) || ~clkREF1,
   (u6_op[7:3]==5'b0 || u6_op[7:1]==7'd30 || u6_op[7:3]==3 || u6_op[7:2]==5 || u6_op[11]) || ~clkREF2,
   !(u6_op[11]) || ~clkREF2,  
-  (u6_op[7:0]==`op_add64 || u6_op[7:0]==`op_sub64) && u6_op[8],
+  (pwh#(8)::cmpEQ(u6_op[7:0],`op_add64) || pwh#(8)::cmpEQ(u6_op[7:0],`op_sub64)) && u6_op[8],
   u6_B,uu_B6m,
   u6_B_fufwd,u6_B_fuufwd,
   FU0,FU0_reg,
@@ -846,11 +846,11 @@ alu_shift sh5_alu(
   .rst(rst),
   .clkEn(~(|fxFRT_alten_reg3)),
   .A(uu_B6[63:0]),
-  .en(u6_op_reg[11] && u6_clkEn_reg && ((u6_op_reg[7:0]==`op_cvtD) ||
-    (u6_op_reg[7:0]==`op_cvtE) || (u6_op_reg[7:0]==`op_cvtS))),
+  .en(u6_op_reg[11] && u6_clkEn_reg && ((pwh#(8)::cmpEQ(u6_op_reg[7:0],`op_cvtD)) ||
+    (pwh#(8)::cmpEQ(u6_op_reg[7:0],`op_cvtE)) || (pwh#(8)::cmpEQ(u6_op_reg[7:0],`op_cvtS)))),
   .toDBL(u6_op_reg[7:0]!=`op_cvtE && u6_op_reg[7:0]!=`op_cvtS),
-  .toEXT(u6_op_reg[7:0]==`op_cvtE),
-  .toSNG(u6_op_reg[7:0]==`op_cvtS),
+  .toEXT(pwh#(8)::cmpEQ(u6_op_reg[7:0],`op_cvtE)),
+  .toSNG(pwh#(8)::cmpEQ(u6_op_reg[7:0],`op_cvtS)),
   .isS(u6_op_reg[10]),
   .res(FUCVT2_0),
   .rtyp(FUTYPE_0),
@@ -1012,9 +1012,9 @@ imul_gatheronly imul3_mod(
       u5_sh_reg<=1'b1<<u5_op[9:8];
       u5_sh2_reg<=u5_op[9:8];
 
-      u1_eaen_reg<=u1_op[7:0]==`op_cax;
-      u3_eaen_reg<=u3_op[7:0]==`op_cax;
-      u5_eaen_reg<=u5_op[7:0]==`op_cax;
+      u1_eaen_reg<=pwh#(8)::cmpEQ(u1_op[7:0],`op_cax);
+      u3_eaen_reg<=pwh#(8)::cmpEQ(u3_op[7:0],`op_cax);
+      u5_eaen_reg<=pwh#(8)::cmpEQ(u5_op[7:0],`op_cax);
 
       if(u2_op==`op_shl64 || u2_op==`op_shr64 || u2_op==`op_sar64)
           u2_sz<=4'b1000; else u2_sz<=4'b0100;
@@ -1045,7 +1045,7 @@ imul_gatheronly imul3_mod(
 	  u1_isSub_reg[5]=u1_op[10];
       end else begin
 	  u1_isSub_reg[0]=u1_op[7:0]!=`op_sub64 && u1_op[7:0]!=`op_sub32  && u1_op[7:0]!=`op_cmp16 && u1_op[7:0]!=`op_cmp8;
-	  u1_isSub_reg[1]=u1_op[7:0]==`op_sub64 || u1_op[7:0]==`op_sub32  || u1_op[7:0]==`op_cmp16 || u1_op[7:0]==`op_cmp8;
+	  u1_isSub_reg[1]=pwh#(8)::cmpEQ(u1_op[7:0],`op_sub64) || pwh#(8)::cmpEQ(u1_op[7:0],`op_sub32)  || pwh#(8)::cmpEQ(u1_op[7:0],`op_cmp16) || pwh#(8)::cmpEQ(u1_op[7:0],`op_cmp8);
 	  u1_isSub_reg[2]=1'b0;
 	  u1_isSub_reg[5:3]=3'd1;
       end
@@ -1058,7 +1058,7 @@ imul_gatheronly imul3_mod(
 	  u2_isSub_reg[5]=u2_op[10];
       end else begin
 	  u2_isSub_reg[0]=u2_op[7:0]!=`op_sub64 && u2_op[7:0]!=`op_sub32 && u2_op[7:0]!=`op_cmp16 && u2_op[7:0]!=`op_cmp8;
-	  u2_isSub_reg[1]=u2_op[7:0]==`op_sub64 || u2_op[7:0]==`op_sub32  || u2_op[7:0]==`op_cmp16 || u2_op[7:0]==`op_cmp8;
+	  u2_isSub_reg[1]=pwh#(8)::cmpEQ(u2_op[7:0],`op_sub64) || pwh#(8)::cmpEQ(u2_op[7:0],`op_sub32)  || pwh#(8)::cmpEQ(u2_op[7:0],`op_cmp16) || pwh#(8)::cmpEQ(u2_op[7:0],`op_cmp8);
 	  u2_isSub_reg[2]=1'b0;
 	  u2_isSub_reg[5:3]=3'd1;
       end
@@ -1071,7 +1071,7 @@ imul_gatheronly imul3_mod(
 	  u3_isSub_reg[5]=u3_op[10];
       end else begin
 	  u3_isSub_reg[0]=u3_op[7:0]!=`op_sub64 && u3_op[7:0]!=`op_sub32 && u3_op[7:0]!=`op_cmp16 && u3_op[7:0]!=`op_cmp8;
-	  u3_isSub_reg[1]=u3_op[7:0]==`op_sub64 || u3_op[7:0]==`op_sub32 || u3_op[7:0]==`op_cmp16 || u3_op[7:0]==`op_cmp8;
+	  u3_isSub_reg[1]=pwh#(8)::cmpEQ(u3_op[7:0],`op_sub64) || pwh#(8)::cmpEQ(u3_op[7:0],`op_sub32) || pwh#(8)::cmpEQ(u3_op[7:0],`op_cmp16) || pwh#(8)::cmpEQ(u3_op[7:0],`op_cmp8);
 	  u3_isSub_reg[2]=1'b0;
 	  u3_isSub_reg[5:3]=3'd1;
       end
@@ -1084,7 +1084,7 @@ imul_gatheronly imul3_mod(
 	  u4_isSub_reg[5]=u4_op[10];
       end else begin
 	  u4_isSub_reg[0]=u4_op[7:0]!=`op_sub64 && u4_op[7:0]!=`op_sub32 && u4_op[7:0]!=`op_cmp16 && u4_op[7:0]!=`op_cmp8;
-	  u4_isSub_reg[1]=u4_op[7:0]==`op_sub64 || u4_op[7:0]==`op_sub32  || u4_op[7:0]==`op_cmp16 || u4_op[7:0]==`op_cmp8;
+	  u4_isSub_reg[1]=pwh#(8)::cmpEQ(u4_op[7:0],`op_sub64) || pwh#(8)::cmpEQ(u4_op[7:0],`op_sub32)  || pwh#(8)::cmpEQ(u4_op[7:0],`op_cmp16) || pwh#(8)::cmpEQ(u4_op[7:0],`op_cmp8);
 	  u4_isSub_reg[2]=1'b0;
 	  u4_isSub_reg[5:3]=3'd1;
       end
@@ -1097,7 +1097,7 @@ imul_gatheronly imul3_mod(
 	  u5_isSub_reg[5]=u5_op[10];
       end else begin
 	  u5_isSub_reg[0]=u5_op[7:0]!=`op_sub64 && u5_op[7:0]!=`op_sub32 && u5_op[7:0]!=`op_cmp16 && u5_op[7:0]!=`op_cmp8;
-	  u5_isSub_reg[1]=u5_op[7:0]==`op_sub64 || u5_op[7:0]==`op_sub32 || u5_op[7:0]==`op_cmp16 || u5_op[7:0]==`op_cmp8;
+	  u5_isSub_reg[1]=pwh#(8)::cmpEQ(u5_op[7:0],`op_sub64) || pwh#(8)::cmpEQ(u5_op[7:0],`op_sub32) || pwh#(8)::cmpEQ(u5_op[7:0],`op_cmp16) || pwh#(8)::cmpEQ(u5_op[7:0],`op_cmp8);
 	  u5_isSub_reg[2]=1'b0;
 	  u5_isSub_reg[5:3]=3'd1;
       end
@@ -1110,7 +1110,7 @@ imul_gatheronly imul3_mod(
 	  u6_isSub_reg[5]=u6_op[10];
       end else begin
 	  u6_isSub_reg[0]=u6_op[7:0]!=`op_sub64 && u6_op[7:0]!=`op_sub32 && u6_op[7:0]!=`op_cmp16 && u6_op[7:0]!=`op_cmp8;
-	  u6_isSub_reg[1]=u6_op[7:0]==`op_sub64 || u6_op[7:0]==`op_sub32  || u6_op[7:0]==`op_cmp16 || u6_op[7:0]==`op_cmp8;
+	  u6_isSub_reg[1]=pwh#(8)::cmpEQ(u6_op[7:0],`op_sub64) || pwh#(8)::cmpEQ(u6_op[7:0],`op_sub32)  || pwh#(8)::cmpEQ(u6_op[7:0],`op_cmp16) || pwh#(8)::cmpEQ(u6_op[7:0],`op_cmp8);
 	  u6_isSub_reg[2]=1'b0;
 	  u6_isSub_reg[5:3]=3'd1;
       end

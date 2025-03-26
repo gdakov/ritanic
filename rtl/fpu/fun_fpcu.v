@@ -460,8 +460,8 @@ module fun_fpu(
         .dupSngl(fxFCADD_dupl_reg2),
         .is_sqrt(1'b0),
         .is_div(1'b0),
-        .tbl_read(u1_op_reg3[7:0]==`fop_divE),
-        .tbl_write(u1_op_reg3[7:0]==`fop_divDL),
+        .tbl_read(pwh#(8)::cmpEQ(u1_op_reg3[7:0],`fop_divE)),
+        .tbl_write(pwh#(8)::cmpEQ(u1_op_reg3[7:0],`fop_divDL)),
         .xtra(u1_op_reg2[19:17]),
         .A(fxDataAXL_reg2[1][67:0]),.B(u1_op_reg3[13+H] ? XX_data : gfDataBXL_reg2[0][67:0]),
         .res(FOOF[1][67:0]));
@@ -575,31 +575,31 @@ module fun_fpu(
 	  end
 	  gfFADD_srch<=1'b0;
     end else begin
-	      fxFADD_dbl=u1_op_reg[7:0]==`fop_addDL ||
-	        u1_op_reg[7:0]==`fop_addDH ||
-	        u1_op_reg[7:0]==`fop_addDP ||
-                u1_op_reg[7:0]==`fop_subDL ||
-	        u1_op_reg[7:0]==`fop_subDH ||
-                u1_op_reg[7:0]==`fop_subDP ||
-                u1_op_reg[7:0]==`fop_addsubDP ||
+	      fxFADD_dbl=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addDL) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addDH) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addDP) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDL) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDH) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDP) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addsubDP) ||
                 {u1_op_reg[7:2],2'b0}==`fop_logic;
-             fxFADD_ext=u1_op_reg[7:0]==`fop_addEE ||
-                u1_op_reg[7:0]==`fop_subEE;
+             fxFADD_ext=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addEE) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subEE);
               fxFADD_dblext=fxFADD_dbl||fxFADD_ext;
-	      fxFADD_sub[0]=u1_op_reg[7:0]==`fop_subDL ||
-	        u1_op_reg[7:0]==`fop_subDH ||
-                u1_op_reg[7:0]==`fop_subDP ||
-	        u1_op_reg[7:0]==`fop_subEE ||
-		u1_op_reg[7:0]==`fop_subS ||
-		u1_op_reg[7:0]==`fop_subSP ||
-		u1_op_reg[7:0]==`fop_addsubDP;
+	      fxFADD_sub[0]=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDL) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDH) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDP) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subEE) ||
+		pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subS) ||
+		pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subSP) ||
+		pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addsubDP);
 	      fxFADD_sub[1]=fxFADD_sub[0] || 
 		u1_op_reg[7:0]!=`fop_addsubDP;
 	      fxFADD_rsub=fxFADD_sub[0] && u1_op_reg[12];
-	      fxFADD_copyA[1]=u1_op_reg[7:0]==`fop_addDL ||
-                u1_op_reg[7:0]==`fop_subDL;
-	      fxFADD_copyA[0]=u1_op_reg[7:0]==`fop_addDH ||
-                u1_op_reg[7:0]==`fop_subDH;
+	      fxFADD_copyA[1]=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addDL) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDL);
+	      fxFADD_copyA[0]=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addDH) ||
+                pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDH);
 	      fxFADD_lo={u1_op_reg[7:2],2'b0}==`fop_logic;
 	      fxFADD_loSel=u1_op_reg[1:0];
               fxFADD_pcmp<=gfFADD_pkdS | gfFADD_pkdD;
@@ -608,29 +608,29 @@ module fun_fpu(
               fxFADD_dupl<=u1_op_reg[12];
               fxFCADD_dupl<=u1_op_reg[12];
               fxFCADD_dupl_reg<=fxFCADD_dupl;
-              fxFADD_sqrt<=u1_op_reg[7:0]==`fop_sqrtDH || u1_op_reg[7:0]==`fop_sqrtE;
-              fxFADD_div<=u1_op_reg[7:0]==`fop_sqrtDL || u1_op_reg[7:0]==`fop_sqrtE;
+              fxFADD_sqrt<=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_sqrtDH) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_sqrtE);
+              fxFADD_div<=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_sqrtDL) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_sqrtE);
 	      
-	      fxFCADD_dbl=u1_op_reg[7:0]==`fop_mulDL ||
-	        u1_op_reg[7:0]==`fop_mulDH ||
-	        u1_op_reg[7:0]==`fop_mulDP || u1_op_reg[7:0]==`fop_rndDSP;
-              fxXTRA=u1_op_reg[7:0]==`fop_mulDL && u1_op_reg[10];
-              fxFCADD_ext=u1_op_reg[7:0]==`fop_mulEE || u1_op_reg[7:0]==`fop_rndES ||
-	        u1_op_reg[7:0]==`fop_rndED;
+	      fxFCADD_dbl=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulDL) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulDH) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulDP) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_rndDSP);
+              fxXTRA=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulDL) && u1_op_reg[10];
+              fxFCADD_ext=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulEE) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_rndES) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_rndED);
               fxFCADD_dblext=fxFCADD_dbl||fxFCADD_ext;
-	      fxFCADD_copyA[1]=u1_op_reg[7:0]==`fop_mulDL;
-	      fxFCADD_copyA[0]=u1_op_reg[7:0]==`fop_mulDH;
+	      fxFCADD_copyA[1]=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulDL);
+	      fxFCADD_copyA[0]=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulDH);
 	     
-	      fxFCADD_rndD=u1_op_reg[7:0]==`fop_rndED;
-	      fxFCADD_rndS=u1_op_reg[7:0]==`fop_rndES ||
-	        u1_op_reg[7:0]==`fop_rndDSP;
+	      fxFCADD_rndD=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_rndED);
+	      fxFCADD_rndS=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_rndES) ||
+	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_rndDSP);
 
-	      fxFADD_sin=u1_op_reg[7:0]==`fop_addS || u1_op_reg[7:0]==`fop_addSP ||
-                  u1_op_reg[7:0]==`fop_subS || u1_op_reg[7:0]==`fop_subSP;
-              fxFADD_copySA=(u1_op_reg==`fop_addSP || u1_op_reg[7:0]==`fop_subSP ||
+	      fxFADD_sin=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addS) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addSP) ||
+                  pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subS) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subSP);
+              fxFADD_copySA=(u1_op_reg==`fop_addSP || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subSP) ||
 	          {u1_op_reg[7:2],2'b0}==`fop_logic) ?
 		  {u1_op_reg[10],3'b0} : {2'b11,u1_op_reg[10],1'b0}; 
-	      fxFCADD_sn=u1_op_reg[7:0]==`fop_mulS || u1_op_reg[7:0]==`fop_mulSP;
+	      fxFCADD_sn=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulS) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_mulSP);
               fxFCADD_copyASN=(u1_op_reg==`fop_mulSP) ?
 		  {u1_op_reg[10],3'b0}:{2'b11,u1_op_reg[10],1'b0}; 
 	      //verilator lint_off WIDTH
@@ -669,13 +669,13 @@ module fun_fpu(
       fxFADD_raise_reg<=fxFADD_raise;
       fxFCADD_raise_s_reg<=fxFCADD_raise_s;
       fxFADD_raise_s_reg<=fxFADD_raise_s;
-      gfFADD_en=u1_en_reg[0] && u1_en_reg[3] && u1_op_reg[7:0]==`fop_cmpDH || u1_op_reg[7:0]==`fop_cmpDL || u1_op_reg[7:0]==`fop_cmpE || 
-	      u1_op_reg[7:0]==`fop_cmpS || {u1_op_reg[7:2],2'b0}==`fop_linsrch;
+      gfFADD_en=u1_en_reg[0] && u1_en_reg[3] && pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpDH) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpDL) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpE) || 
+	      pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpS) || {u1_op_reg[7:2],2'b0}==`fop_linsrch;
       gfFADD_srch<={u1_op_reg[7:2],2'b0}==`fop_linsrch;
       gfFADD_ord=u1_op_reg[10];
-      gfFADD_hi=u1_op_reg[7:0]==`fop_cmpDH;
-      gfFADD_ext=u1_op_reg[7:0]==`fop_cmpE;
-      gfFADD_dbl=u1_op_reg[7:0]==`fop_cmpDH || u1_op_reg[7:0]==`fop_cmpDL;
+      gfFADD_hi=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpDH);
+      gfFADD_ext=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpE);
+      gfFADD_dbl=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpDH) || pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_cmpDL);
       gfFADD_sn=~gfFADD_ext & ~gfFADD_dbl;
       gfFADD_sin=~gfFADD_dbl; 
       gfFADD_pkdS<={u1_op_reg[7:2],2'b0}==`fop_pcmplt && u1_op_reg[10];
@@ -725,11 +725,11 @@ module fun_fpu(
       FUFX6_reg<=FUF6X;
       u1_FK_reg<=u1_FK;
       FOOSH_reg2<=gfFADD_pkdD_reg ? FOOSH_reg : FOOSH_in;
-      /*gfFADD_en=u1_op[0] && u1_clkEn && u1_op[7:0]==`fop_cmpDH || u1_op[7:0]==`fop_cmpDL || u1_op[7:0]==`fop_cmpE || u1_op[7:0]==`fop_cmpS;
+      /*gfFADD_en=u1_op[0] && u1_clkEn && pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpDH) || pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpDL) || pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpE) || pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpS);
       gfFADD_ord=u1_op[10];
-      gfFADD_hi=u1_op[7:0]==`fop_cmpDH;
-      gfFADD_ext=u1_op[7:0]==`fop_cmpE;
-      gfFADD_dbl=u1_op[7:0]==`fop_cmpDH || u1_op[7:0]==`fop_cmpDL;
+      gfFADD_hi=pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpDH);
+      gfFADD_ext=pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpE);
+      gfFADD_dbl=pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpDH) || pwh#(8)::cmpEQ(u1_op[7:0],`fop_cmpDL);
       gfFADD_sn=~gfFADD_ext & ~gfFADD_dbl;
       gfFADD_sin=~gfFADD_dbl; 
       gfFADD_pkdS<={u1_op[7:2],2'b0}==`fop_pcmplt && u1_op[10];

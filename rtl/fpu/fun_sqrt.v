@@ -308,12 +308,12 @@ module fun_fpusqr0(
 	  frtII_reg<=10'b0;
 	  frtOp_reg<=13'b0;
       end else begin
-	  fxFRT_dbl=!H ? frtOp[7:0]==`fop_sqrtDL || frtOp[7:0]==`fop_divDL :
-              frtOp[7:0]==`fop_sqrtDH || frtOp[7:0]==`fop_divDH;
-          fxFRT_ext=frtOp[7:0]==`fop_sqrtE || frtOp[7:0]==`fop_divE;
-          fxFRT_sngl=frtOp[7:0]==`fop_sqrtS || frtOp[7:0]==`fop_divS;
-	  fxFRT_isRoot=frtOp[7:0]==`fop_sqrtDL || frtOp[7:0]==`fop_sqrtDH ||
-                frtOp[7:0]==`fop_sqrtE || frtOp[7:0]==`fop_sqrtS; 
+	  fxFRT_dbl=!H ? pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtDL) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divDL) :
+              pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtDH) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divDH);
+          fxFRT_ext=pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtE) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divE);
+          fxFRT_sngl=pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtS) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divS);
+	  fxFRT_isRoot=pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtDL) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtDH) ||
+                pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtE) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtS); 
 	  fxFRT_dbl_ns<=fxFRT_dbl && ~rtDataA[53]|~fxFRT_isRoot;
 	  fxFRT_ext_ns<=fxFRT_ext && ~rtDataA[SIMD_WIDTH-16+S]|~fxFRT_isRoot;
 	  fxFRT_sngl_ns<=fxFRT_sngl && ~rtDataA[23]|~fxFRT_isRoot;
@@ -326,14 +326,14 @@ module fun_fpusqr0(
           fxFRT_sngl_reg<=fxFRT_sngl;*/
      //     fxFRT_isRoot_reg<=fxFRT_isRoot;
 	  fxFRT_en<=op_early[11] && en_early[3:2]!=0; 
-	  if (frtOp[7:0]==`fop_sqrtDL || frtOp[7:0]==`fop_divDL ||
-	    frtOp[7:0]==`fop_sqrtDH || frtOp[7:0]==`fop_divDH) begin
+	  if (pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtDL) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divDL) ||
+	    pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtDH) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divDH)) begin
 	      fxFRT_steps<=5'd13;
 	      fxFRT_type<=3'b0;
-	  end else if (frtOp[7:0]==`fop_sqrtE || frtOp[7:0]==`fop_divE) begin
+	  end else if (pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtE) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divE)) begin
 	      fxFRT_steps<=5'd16;
 	      fxFRT_type<=3'd1;
-	  end else if (frtOp[7:0]==`fop_sqrtS || frtOp[7:0]==`fop_divS) begin
+	  end else if (pwh#(8)::cmpEQ(frtOp[7:0],`fop_sqrtS) || pwh#(8)::cmpEQ(frtOp[7:0],`fop_divS)) begin
 	      fxFRT_steps<=5'd6;
 	      fxFRT_type<=3'd2;
 	  end

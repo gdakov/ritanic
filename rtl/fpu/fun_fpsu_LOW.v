@@ -201,14 +201,14 @@ module fun_fpuSL(
   .clk(clk),
   .rst(rst),
   .en(u5_en_reg[3] && |u5_en_reg[3:2] 
-  && (u5_op_reg[7:0]==`fop_pcvtD || u5_op_reg[7:0]==`fop_pcvtS)),
+  && (pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_pcvtD) || pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_pcvtS))),
   .clkEn(1'b1),
   .A((u5_op_reg2[7:0]!=`fop_pcvtD) ? {16'b0,XI_dataS[65:0]} : {XI_dataT[15+70:70],XI_dataT[65:0]}),
-  .isDBL(u5_op_reg[7:0]==`fop_pcvtD),
+  .isDBL(pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_pcvtD)),
   .isEXT(1'b0),
   .isSNG(u5_op_reg[7:0]!=`fop_pcvtD),
   .verbatim(1'b0),
-  .is32b(u5_op_reg[7:0]==`fop_pcvtS),
+  .is32b(pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_pcvtS)),
   .res(FUCVT1A),
   .alt(daltXA)
   );
@@ -217,7 +217,7 @@ module fun_fpuSL(
   .clk(clk),
   .rst(rst),
   .en(u5_en_reg[3] && |u5_en_reg[3:2]  
-  && (u5_op_reg[7:0]==`fop_pcvtS)),
+  && (pwh#(8)::cmpEQ(u5_op_reg[7:0],`fop_pcvtS))),
   .clkEn(1'b1),
   .A({16'b0,33'b0,XI_dataS[65:33]}),
   .isDBL(1'b0),

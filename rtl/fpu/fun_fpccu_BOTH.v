@@ -340,9 +340,9 @@ module fun_fpu_BOTH(
   fork_out[69:0]
   );
 
-  assign FUS0=u1_op_reg4[7:0]==`fop_cmpDH  ? HFOOSH0 : LFOOSH0; 
-  assign FUS1=u3_op_reg4[7:0]==`fop_cmpDH  ? HFOOSH1 : LFOOSH1; 
-  assign FUS2=u5_op_reg4[7:0]==`fop_cmpDH  ? HFOOSH2 : LFOOSH2; 
+  assign FUS0=pwh#(8)::cmpEQ(u1_op_reg4[7:0],`fop_cmpDH)  ? HFOOSH0 : LFOOSH0; 
+  assign FUS1=pwh#(8)::cmpEQ(u3_op_reg4[7:0],`fop_cmpDH)  ? HFOOSH1 : LFOOSH1; 
+  assign FUS2=pwh#(8)::cmpEQ(u5_op_reg4[7:0],`fop_cmpDH)  ? HFOOSH2 : LFOOSH2; 
 
   `ifndef swapedge
   always @(posedge clk) begin
