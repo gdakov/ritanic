@@ -48,9 +48,9 @@ endmodule
 module hamingGet32(data,dataH);
   parameter WIDTH=32;
   input pwire [WIDTH-1:0] data;
-  output pwire reg [WIDTH+5:0] dataH;
+  output pwire [WIDTH+5:0] dataH;
   
-  reg [WIDTH-1:0] errbits[5:0];
+  pwire [WIDTH-1:0] errbits[5:0];
  
   always @*
     begin

@@ -17,14 +17,14 @@ module anticipator_ram(
   input pwire [11:0] read3_addr;
   output pwire [1:0] read3_data;
 
-  reg [1:0] ram[4095:0];
+  pwire [1:0] ram[4095:0];
 
-  reg [11:0] read0_addr_reg;
-  reg [11:0] read1_addr_reg;
-  reg [11:0] read2_addr_reg;
-  reg [11:0] read3_addr_reg;
+  pwire [11:0] read0_addr_reg;
+  pwire [11:0] read1_addr_reg;
+  pwire [11:0] read2_addr_reg;
+  pwire [11:0] read3_addr_reg;
 
-  reg can_loop;
+  pwire can_loop;
 
   integer k;
   assign read0_data=ram[read0_addr];

@@ -37,8 +37,8 @@ module ccTag_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   always @* begin
       for(p2=0;p2<60;p2=p2+1) read_data[p]=ram[read_addr_reg[p]];
@@ -79,8 +79,8 @@ module ccTag_lram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -154,14 +154,14 @@ module ccTag(
   pwire [DATA_WIDTH-1:0] write_data_way;
   pwire [DATA_WIDTH-1:0] write_data_new;
   
-  reg [`wport-1:0] read_clkEn_reg;
-  reg [`wport-1:0] read_clkEn_reg2;
+  pwire [`wport-1:0] read_clkEn_reg;
+  pwire [`wport-1:0] read_clkEn_reg2;
 
-  reg [`wport-1:0] read_hit_reg;
+  pwire [`wport-1:0] read_hit_reg;
 
-  reg [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg;
-  reg [PHYS_BITS-8:0] write_phys_addr_reg;
-  reg [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg2;
+  pwire [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg;
+  pwire [PHYS_BITS-8:0] write_phys_addr_reg;
+  pwire [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg2;
  
 
   pwire [2:0] read_NRUr;
@@ -171,12 +171,12 @@ module ccTag(
   pwire [5:0] POOG;
 
   
-  reg write_wen_reg;
+  pwire write_wen_reg;
 
-  reg [2:0] read_NRUr_reg;
+  pwire [2:0] read_NRUr_reg;
   
-  reg invalidate_reg;
-  reg init_reg,init_reg2;
+  pwire invalidate_reg;
+  pwire init_reg,init_reg2;
   
   always @ * begin
       for(p=0;p<60;p=p+1) begin

@@ -36,8 +36,8 @@ module ret_stack_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -81,9 +81,9 @@ module ret_stack(
   input pwire write_trace;
   input pwire write_wen;
 
-  reg [ADDR_WIDTH-1:0] read_addr[1:0];
-  reg [ADDR_WIDTH-1:0] write_addr[1:0];
-  reg [ADDR_WIDTH-1:0] write_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr[1:0];
+  pwire [ADDR_WIDTH-1:0] write_addr[1:0];
+  pwire [ADDR_WIDTH-1:0] write_addr_reg;
   pwire [1:0][ADDR_WIDTH-1:0] read_addr_inc;
   pwire [1:0][ADDR_WIDTH-1:0] write_addr_inc;
   pwire [1:0][ADDR_WIDTH-1:0] read_addr_dec;
@@ -91,11 +91,11 @@ module ret_stack(
   pwire [DATA_WIDTH-1:0] write_data_new;
   pwire [DATA_WIDTH-1:0] read_data_ram;
 
-  reg write_wen_reg;
-  reg thread_reg;
-  reg write_trace_reg;
-  reg [DATA_WIDTH-1:0] write_data_reg;
-  reg [4:0] write_link_reg;
+  pwire write_wen_reg;
+  pwire thread_reg;
+  pwire write_trace_reg;
+  pwire [DATA_WIDTH-1:0] write_data_reg;
+  pwire [4:0] write_link_reg;
   
   ret_stack_ram ram_mod(
   clk,

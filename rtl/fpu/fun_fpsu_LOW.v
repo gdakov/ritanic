@@ -125,19 +125,19 @@ module fun_fpuSL(
   output pwire [67:0] XI_dataT;
 
   pwire [67:0] ALTDATA1;
-  reg [67:0] ALTDATA1_reg;
-  reg [67:0] ALTDATA1_reg2;
+  pwire [67:0] ALTDATA1_reg;
+  pwire [67:0] ALTDATA1_reg2;
   pwire daltXA;
   pwire daltXB;
-  reg daltXA_reg;
-  reg daltXB_reg;
-  reg daltXA_reg2;
-  reg daltXB_reg2;
+  pwire daltXA_reg;
+  pwire daltXB_reg;
+  pwire daltXA_reg2;
+  pwire daltXB_reg2;
 
-  reg [20:0] u5_op_reg;
-  reg [3:0] u5_en_reg;
-  reg [20:0] u5_op_reg2;
-  reg [3:0] u5_en_reg2;
+  pwire [20:0] u5_op_reg;
+  pwire [3:0] u5_en_reg;
+  pwire [20:0] u5_op_reg2;
+  pwire [3:0] u5_en_reg2;
 
   fun_fpsu #(0,0) fpu0_mod(
   clk,

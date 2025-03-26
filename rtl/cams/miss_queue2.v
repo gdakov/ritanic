@@ -39,8 +39,8 @@ module missQ_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -78,8 +78,8 @@ module missQ_data_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -116,8 +116,8 @@ module missQ_datax_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -435,9 +435,9 @@ module missQ(
   output pwire [36:0] insBus_addr;
   pwire read_clkEn;
   pwire last_inserted;
-  output pwire reg doSkip;
+  output pwire doSkip;
   output pwire do_bus_hold;
-  reg do_unlock;
+  pwire do_unlock;
   output pwire nowfl;
   
   input pwire miss0;
@@ -717,29 +717,29 @@ module missQ(
   pwire conflFound;
   pwire doStep;
   
-  reg [ADDR_WIDTH-1:0] read_addr;
+  pwire [ADDR_WIDTH-1:0] read_addr;
   pwire [ADDR_WIDTH-1:0] read_addr_d;
- // reg [ADDR_WIDTH-1:0] read_addr_old;
-  reg [ADDR_WIDTH-1:0] read_addr_begin;
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
-  reg [ADDR_WIDTH-1:0] write_addr_end;
-  reg [ADDR_WIDTH-1:0] write_addr_end2;
+ // pwire [ADDR_WIDTH-1:0] read_addr_old;
+  pwire [ADDR_WIDTH-1:0] read_addr_begin;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [ADDR_WIDTH-1:0] write_addr_end;
+  pwire [ADDR_WIDTH-1:0] write_addr_end2;
  // pwire [ADDR_WIDTH-1:0] write_addr_end_d;
-  reg [ADDR_WIDTH-1:0] write_addr;
+  pwire [ADDR_WIDTH-1:0] write_addr;
   pwire [ADDR_WIDTH-1:0] write_addr_d;
-  reg [ADDR_WIDTH:0] count;
+  pwire [ADDR_WIDTH:0] count;
   pwire [ADDR_WIDTH:0] count_d;
-  reg [ADDR_WIDTH:0] countF;
+  pwire [ADDR_WIDTH:0] countF;
   pwire [ADDR_WIDTH:0] countF_d;
   pwire wen;
   pwire [4:0] write_addr_dec;
 
-  reg insert_isData_reg;
-  reg [4:0] insBus_req_reg;
-  reg [36:0] insBus_addr_reg;
-  reg insert_isData_reg2;
-  reg [4:0] insBus_req_reg2;
-  reg [36:0] insBus_addr_reg2;
+  pwire insert_isData_reg;
+  pwire [4:0] insBus_req_reg;
+  pwire [36:0] insBus_addr_reg;
+  pwire insert_isData_reg2;
+  pwire [4:0] insBus_req_reg2;
+  pwire [36:0] insBus_addr_reg2;
 
   pwire [MOP_WIDTH-1:0] write_mop[5:0];
   pwire [DATA_WIDTH-1:0] write_dataA;
@@ -755,168 +755,168 @@ module missQ(
   pwire [DXDATA_WIDTH-1:0] write_dxdata;
   
   
-  reg [5:0] confl_mask;
+  pwire [5:0] confl_mask;
 
-  reg mOp0_thread_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp0_addrEven_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp0_addrOdd_reg[3:1];
-  reg [4:0] mOp0_sz_reg[3:1];
-  reg mOp0_st_reg[3:1];
-  reg [BANK_COUNT-1:0] mOp0_banks_reg[3:1];
-  reg [4:0] mOp0_bank0_reg[3:1];
-  reg [4:0] mOp0_bank1_reg[3:1];
-  reg mOp0_odd_reg[3:1];
-  reg [1:0] mOp0_addr_low_reg[3:1];
-  reg mOp0_split_reg[3:1];
-  reg [REG_WIDTH-1:0] mOp0_register_reg[3:1];
-  reg [8:0] mOp0_LSQ_reg[3:1];
-  reg [9:0] mOp0_II_reg[3:1];
-  reg [5:0] mOp0_WQ_reg[3:1];
-  reg [1:0] mOp0_ctype_reg[3:1];
-  reg mOp0_lsflag_reg[3:1];
-  reg mOp0_lsfwd_reg[3:1];
+  pwire mOp0_thread_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp0_addrEven_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp0_addrOdd_reg[3:1];
+  pwire [4:0] mOp0_sz_reg[3:1];
+  pwire mOp0_st_reg[3:1];
+  pwire [BANK_COUNT-1:0] mOp0_banks_reg[3:1];
+  pwire [4:0] mOp0_bank0_reg[3:1];
+  pwire [4:0] mOp0_bank1_reg[3:1];
+  pwire mOp0_odd_reg[3:1];
+  pwire [1:0] mOp0_addr_low_reg[3:1];
+  pwire mOp0_split_reg[3:1];
+  pwire [REG_WIDTH-1:0] mOp0_register_reg[3:1];
+  pwire [8:0] mOp0_LSQ_reg[3:1];
+  pwire [9:0] mOp0_II_reg[3:1];
+  pwire [5:0] mOp0_WQ_reg[3:1];
+  pwire [1:0] mOp0_ctype_reg[3:1];
+  pwire mOp0_lsflag_reg[3:1];
+  pwire mOp0_lsfwd_reg[3:1];
 
-  reg mOp1_thread_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp1_addrEven_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp1_addrOdd_reg[3:1];
-  reg [4:0] mOp1_sz_reg[3:1];
-  reg mOp1_st_reg[3:1];
-  reg [BANK_COUNT-1:0] mOp1_banks_reg[3:1];
-  reg [4:0] mOp1_bank0_reg[3:1];
-  reg [4:0] mOp1_bank1_reg[3:1];
-  reg mOp1_odd_reg[3:1];
-  reg [1:0] mOp1_addr_low_reg[3:1];
-  reg mOp1_split_reg[3:1];
-  reg [REG_WIDTH-1:0] mOp1_register_reg[3:1];
-  reg [8:0] mOp1_LSQ_reg[3:1];
-  reg [9:0] mOp1_II_reg[3:1];
-  reg [5:0] mOp1_WQ_reg[3:1];
-  reg [1:0] mOp1_ctype_reg[3:1];
-  reg mOp1_lsflag_reg[3:1];
-  reg mOp1_lsfwd_reg[3:1];
+  pwire mOp1_thread_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp1_addrEven_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp1_addrOdd_reg[3:1];
+  pwire [4:0] mOp1_sz_reg[3:1];
+  pwire mOp1_st_reg[3:1];
+  pwire [BANK_COUNT-1:0] mOp1_banks_reg[3:1];
+  pwire [4:0] mOp1_bank0_reg[3:1];
+  pwire [4:0] mOp1_bank1_reg[3:1];
+  pwire mOp1_odd_reg[3:1];
+  pwire [1:0] mOp1_addr_low_reg[3:1];
+  pwire mOp1_split_reg[3:1];
+  pwire [REG_WIDTH-1:0] mOp1_register_reg[3:1];
+  pwire [8:0] mOp1_LSQ_reg[3:1];
+  pwire [9:0] mOp1_II_reg[3:1];
+  pwire [5:0] mOp1_WQ_reg[3:1];
+  pwire [1:0] mOp1_ctype_reg[3:1];
+  pwire mOp1_lsflag_reg[3:1];
+  pwire mOp1_lsfwd_reg[3:1];
 
-  reg mOp2_thread_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp2_addrEven_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp2_addrOdd_reg[3:1];
-  reg [4:0] mOp2_sz_reg[3:1];
-  reg mOp2_st_reg[3:1];
-  reg [BANK_COUNT-1:0] mOp2_banks_reg[3:1];
-  reg [4:0] mOp2_bank0_reg[3:1];
-  reg [4:0] mOp2_bank1_reg[3:1];
-  reg mOp2_odd_reg[3:1];
-  reg [1:0] mOp2_addr_low_reg[3:1];
-  reg mOp2_split_reg[3:1];
-  reg [REG_WIDTH-1:0] mOp2_register_reg[3:1];
-  reg [8:0] mOp2_LSQ_reg[3:1];
-  reg [9:0] mOp2_II_reg[3:1];
-  reg [5:0] mOp2_WQ_reg[3:1];
-  reg [1:0] mOp2_ctype_reg[3:1];
-  reg mOp2_lsflag_reg[3:1];
-  reg [127+8:0] mOp2_data_reg[3:1];
-  reg [4:0] mOp2_brdread_reg[3:1];
-  reg [1:0] mOp2_pbit_reg[3:1];
-  reg mOp2_lsfwd_reg[3:1];
+  pwire mOp2_thread_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp2_addrEven_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp2_addrOdd_reg[3:1];
+  pwire [4:0] mOp2_sz_reg[3:1];
+  pwire mOp2_st_reg[3:1];
+  pwire [BANK_COUNT-1:0] mOp2_banks_reg[3:1];
+  pwire [4:0] mOp2_bank0_reg[3:1];
+  pwire [4:0] mOp2_bank1_reg[3:1];
+  pwire mOp2_odd_reg[3:1];
+  pwire [1:0] mOp2_addr_low_reg[3:1];
+  pwire mOp2_split_reg[3:1];
+  pwire [REG_WIDTH-1:0] mOp2_register_reg[3:1];
+  pwire [8:0] mOp2_LSQ_reg[3:1];
+  pwire [9:0] mOp2_II_reg[3:1];
+  pwire [5:0] mOp2_WQ_reg[3:1];
+  pwire [1:0] mOp2_ctype_reg[3:1];
+  pwire mOp2_lsflag_reg[3:1];
+  pwire [127+8:0] mOp2_data_reg[3:1];
+  pwire [4:0] mOp2_brdread_reg[3:1];
+  pwire [1:0] mOp2_pbit_reg[3:1];
+  pwire mOp2_lsfwd_reg[3:1];
 
-  reg mOp3_thread_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp3_addrEven_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp3_addrOdd_reg[3:1];
-  reg [4:0] mOp3_sz_reg[3:1];
-  reg mOp3_st_reg[3:1];
-  reg [BANK_COUNT-1:0] mOp3_banks_reg[3:1];
-  reg [4:0] mOp3_bank0_reg[3:1];
-  reg [4:0] mOp3_bank1_reg[3:1];
-  reg mOp3_odd_reg[3:1];
-  reg [1:0] mOp3_addr_low_reg[3:1];
-  reg mOp3_split_reg[3:1];
-  reg [REG_WIDTH-1:0] mOp3_register_reg[3:1];
-  reg [8:0] mOp3_LSQ_reg[3:1];
-  reg [9:0] mOp3_II_reg[3:1];
-  reg [5:0] mOp3_WQ_reg[3:1];
-  reg mOp3_lsflag_reg[3:1];
-  reg mOp3_lsfwd_reg[3:1];
-  reg [127:0] mOp3_data_reg[3:1];
-  reg [3:0] mOp3_brdbanks_reg[3:1];
-  reg [1:0] mOp3_pbit_reg[3:1];
-  reg [1:0] mOp3_ctype_reg[3:1];
+  pwire mOp3_thread_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp3_addrEven_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp3_addrOdd_reg[3:1];
+  pwire [4:0] mOp3_sz_reg[3:1];
+  pwire mOp3_st_reg[3:1];
+  pwire [BANK_COUNT-1:0] mOp3_banks_reg[3:1];
+  pwire [4:0] mOp3_bank0_reg[3:1];
+  pwire [4:0] mOp3_bank1_reg[3:1];
+  pwire mOp3_odd_reg[3:1];
+  pwire [1:0] mOp3_addr_low_reg[3:1];
+  pwire mOp3_split_reg[3:1];
+  pwire [REG_WIDTH-1:0] mOp3_register_reg[3:1];
+  pwire [8:0] mOp3_LSQ_reg[3:1];
+  pwire [9:0] mOp3_II_reg[3:1];
+  pwire [5:0] mOp3_WQ_reg[3:1];
+  pwire mOp3_lsflag_reg[3:1];
+  pwire mOp3_lsfwd_reg[3:1];
+  pwire [127:0] mOp3_data_reg[3:1];
+  pwire [3:0] mOp3_brdbanks_reg[3:1];
+  pwire [1:0] mOp3_pbit_reg[3:1];
+  pwire [1:0] mOp3_ctype_reg[3:1];
 
-//  reg mOp4_thread_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp4_addrEven_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp4_addrOdd_reg[3:1];
-  reg [4:0] mOp4_sz_reg[3:1];
-  reg mOp4_first_reg[3:1];
-  reg [4:0] mOp4_bank0_reg[3:1];
-  reg [4:0] mOp4_bank1_reg[3:1];
-  reg mOp4_odd_reg[3:1];
-  reg [1:0] mOp4_addr_low_reg[3:1];
-  reg mOp4_split_reg[3:1];
-  reg [159:0] mOp4_data_reg[3:1];
-  reg [9:0] mOp4_II_reg[3:1];
-  reg [3:0] mOp4_bgn_b_reg[3:1];
-  reg [3:0] mOp4_end_b_reg[3:1];
-  reg [1:0] mOp4_pbit_reg[3:1];
-  reg [1:0] mOp4_ctype_reg[3:1];
+//  pwire mOp4_thread_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp4_addrEven_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp4_addrOdd_reg[3:1];
+  pwire [4:0] mOp4_sz_reg[3:1];
+  pwire mOp4_first_reg[3:1];
+  pwire [4:0] mOp4_bank0_reg[3:1];
+  pwire [4:0] mOp4_bank1_reg[3:1];
+  pwire mOp4_odd_reg[3:1];
+  pwire [1:0] mOp4_addr_low_reg[3:1];
+  pwire mOp4_split_reg[3:1];
+  pwire [159:0] mOp4_data_reg[3:1];
+  pwire [9:0] mOp4_II_reg[3:1];
+  pwire [3:0] mOp4_bgn_b_reg[3:1];
+  pwire [3:0] mOp4_end_b_reg[3:1];
+  pwire [1:0] mOp4_pbit_reg[3:1];
+  pwire [1:0] mOp4_ctype_reg[3:1];
 
-//  reg mOp5_thread_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp5_addrEven_reg[3:1];
-  reg [PADDR_WIDTH-1:8] mOp5_addrOdd_reg[3:1];
-  reg [4:0] mOp5_sz_reg[3:1];
-  reg mOp5_first_reg[3:1];
-  reg [4:0] mOp5_bank0_reg[3:1];
-  reg [4:0] mOp5_bank1_reg[3:1];
-  reg mOp5_odd_reg[3:1];
-  reg [1:0] mOp5_addr_low_reg[3:1];
-  reg mOp5_split_reg[3:1];
-  reg [159:0] mOp5_data_reg[3:1];
-  reg [9:0] mOp5_II_reg[3:1];
-  reg [3:0] mOp5_bgn_b_reg[3:1];
-  reg [3:0] mOp5_end_b_reg[3:1];
-  reg [1:0] mOp5_pbit_reg[3:1];
-  reg [1:0] mOp5_ctype_reg[3:1];
+//  pwire mOp5_thread_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp5_addrEven_reg[3:1];
+  pwire [PADDR_WIDTH-1:8] mOp5_addrOdd_reg[3:1];
+  pwire [4:0] mOp5_sz_reg[3:1];
+  pwire mOp5_first_reg[3:1];
+  pwire [4:0] mOp5_bank0_reg[3:1];
+  pwire [4:0] mOp5_bank1_reg[3:1];
+  pwire mOp5_odd_reg[3:1];
+  pwire [1:0] mOp5_addr_low_reg[3:1];
+  pwire mOp5_split_reg[3:1];
+  pwire [159:0] mOp5_data_reg[3:1];
+  pwire [9:0] mOp5_II_reg[3:1];
+  pwire [3:0] mOp5_bgn_b_reg[3:1];
+  pwire [3:0] mOp5_end_b_reg[3:1];
+  pwire [1:0] mOp5_pbit_reg[3:1];
+  pwire [1:0] mOp5_ctype_reg[3:1];
 
-  reg [31:0] bank4;
-  reg [31:0] bank5;
-  reg [2:0] sz4;
-  reg [2:0] sz5;
+  pwire [31:0] bank4;
+  pwire [31:0] bank5;
+  pwire [2:0] sz4;
+  pwire [2:0] sz5;
   
-  reg begin_flush;
-  reg begin_flush_reg;
-  reg begin_flush_reg2;
-  reg begin_flush_reg3;
-  reg begin_flush_reg4;
-  reg now_flushing;
+  pwire begin_flush;
+  pwire begin_flush_reg;
+  pwire begin_flush_reg2;
+  pwire begin_flush_reg3;
+  pwire begin_flush_reg4;
+  pwire now_flushing;
   pwire flush_end;
-  reg sticky_begin;
+  pwire sticky_begin;
 
-  reg last_inserted_reg;
-  reg last_inserted_reg2;
-  reg last_inserted_reg3;
-  reg last_inserted_reg4;
+  pwire last_inserted_reg;
+  pwire last_inserted_reg2;
+  pwire last_inserted_reg3;
+  pwire last_inserted_reg4;
   
   pwire [31:0] rdbanks[3:0];
   
-  reg locked;
+  pwire locked;
   
- // reg now_flooshing;
+ // pwire now_flooshing;
   
   pwire rdwr_match,rdwr_match2;
 
   pwire doSkip_d;
  
-  reg stepOver4,stepOver42;
-  reg stepOver5,stepOver52;
+  pwire stepOver4,stepOver42;
+  pwire stepOver5,stepOver52;
  
   genvar k;
   integer r,q;
   
-  reg init;
-  reg [4:0] initCount;
+  pwire init;
+  pwire [4:0] initCount;
   pwire [4:0] initCount_next;
   
   pwire [5:0] read_thread; 
   pwire [5:0] thrinhibitconfl;
-  reg [5:0] thrreginh[3:1];
+  pwire [5:0] thrreginh[3:1];
 
-  reg [31:0] validR;//note validR is different from miss_queue.sv; it means 1 for not cleared by except (block read replays if 0)
+  pwire [31:0] validR;//note validR is different from miss_queue.sv; it means 1 for not cleared by except (block read replays if 0)
   
   pwire [4:0] dummy5;
   pwire [1:0] mOp4_dupl_dummy;
@@ -1394,8 +1394,8 @@ module missQ(
   wen|init
   );
 
-  reg low_traffic;
-  reg [4:0] traffic_chain;
+  pwire low_traffic;
+  pwire [4:0] traffic_chain;
   dmisscam ms_mod(
   clk,
   rst,

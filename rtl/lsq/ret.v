@@ -64,25 +64,25 @@ module lsq_decide_ret(
   input pwire [5:0] cntrl_II;
   output pwire [5:0] out_II;
   output pwire [9:0] retire_enOut;  
-  output pwire reg [9:0] retire_fine; 
-  output pwire reg [9:0] retire_ldconfl; 
-  output pwire reg [9:0] retire_except;
-  output pwire reg [39:0] retire_exbitsx6;
-  output pwire reg [9:0] retire_waitconfl; 
-  output pwire reg [`lsqshare_width-1:0] dataB_shr_out;
+  output pwire [9:0] retire_fine; 
+  output pwire [9:0] retire_ldconfl; 
+  output pwire [9:0] retire_except;
+  output pwire [39:0] retire_exbitsx6;
+  output pwire [9:0] retire_waitconfl; 
+  output pwire [`lsqshare_width-1:0] dataB_shr_out;
   input pwire doRetire;
   input pwire except;
   input pwire except_thread;
 
-//  reg non_ret;
+//  pwire non_ret;
   pwire [9:0] dataB_ret_mask2;
   pwire [9:0] dataB_err_mask2;
   pwire [9:0] dataB_err_mask3;
   pwire [9:0] dataB_err_mask4;
   pwire [3:0] dataB_ebits_item[9:0];
-  reg ret_ret;
-  reg [5:0] dataB_II_reg;
-  reg [9:0] retire_enOutP;  
+  pwire ret_ret;
+  pwire [5:0] dataB_II_reg;
+  pwire [9:0] retire_enOutP;  
   integer t;
 
   generate

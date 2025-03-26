@@ -174,10 +174,10 @@ module decoder_aux_const(
   input pwire stall;
   input pwire [9:0] cls_sys;
   input pwire [9:0][31:0] instr0; 
-  output pwire reg [64:0] aux_const;
-  output pwire reg aux_can_jump;
-  output pwire reg aux_can_read;
-  output pwire reg aux_can_write;
+  output pwire [64:0] aux_const;
+  output pwire aux_can_jump;
+  output pwire aux_can_read;
+  output pwire aux_can_write;
   input pwire [15:0] msrss_no;
   input pwire msrss_en;
   input pwire [64:0] msrss_data;
@@ -192,39 +192,39 @@ module decoder_aux_const(
   input pwire thread;
   output pwire riscmode;
   output pwire disstruss;
-  output pwire reg [1:0] thrmode;
+  output pwire [1:0] thrmode;
   output pwire doStall;
 
   pwire [15:0] iconst[9:0];
   pwire [9:0] cls_sys_first;
   pwire cls_sys_has;
   pwire [15:0] aux0;
-  reg thread_reg;
-  reg [15:0] aux0_reg;
-  reg [1:0][63:0] csr_retIP;
-  reg [1:0][64:0] csr_excStackSave;
-  reg [1:0][64:0] csr_excStack;
-  reg [1:0][64:0] csr_PCR;
-  reg [1:0][64:0] csr_PCR_reg_save;
-  reg [1:0][63:0] csr_mflags;
-  reg [1:0][63:0] csr_fpu;
-  reg [1:0][63:0] csr_page;
-  reg [1:0][63:0] csr_vmpage;
-  reg [1:0][63:0] csr_page0;
-  reg [1:0][63:0] csr_vmpage0;
-  reg [1:0][63:0] csr_excTbl;
-  reg [1:0][63:0] csr_syscall;
-  reg [1:0][63:0] csr_subsyscall;
-  reg [1:0][63:0] csr_USER1;
-  reg [1:0][63:0] csr_USER2;
-  reg [1:0][63:0] csr_vmcall;
-  reg [1:0][63:0] csr_cpage_mask;
-  reg [1:0][63:0] csr_USER3;
-  reg [1:0][63:0] csr_GORQ_send;
-  reg [1:0][63:0] csr_GORQ_recv_vector;
-  reg [1:0][63:0] csr_last_jmp;
-  reg [1:0][63:0] csr_last_jmp2;
-  reg [1:0][1:0] thrmode0;
+  pwire thread_reg;
+  pwire [15:0] aux0_reg;
+  pwire [1:0][63:0] csr_retIP;
+  pwire [1:0][64:0] csr_excStackSave;
+  pwire [1:0][64:0] csr_excStack;
+  pwire [1:0][64:0] csr_PCR;
+  pwire [1:0][64:0] csr_PCR_reg_save;
+  pwire [1:0][63:0] csr_mflags;
+  pwire [1:0][63:0] csr_fpu;
+  pwire [1:0][63:0] csr_page;
+  pwire [1:0][63:0] csr_vmpage;
+  pwire [1:0][63:0] csr_page0;
+  pwire [1:0][63:0] csr_vmpage0;
+  pwire [1:0][63:0] csr_excTbl;
+  pwire [1:0][63:0] csr_syscall;
+  pwire [1:0][63:0] csr_subsyscall;
+  pwire [1:0][63:0] csr_USER1;
+  pwire [1:0][63:0] csr_USER2;
+  pwire [1:0][63:0] csr_vmcall;
+  pwire [1:0][63:0] csr_cpage_mask;
+  pwire [1:0][63:0] csr_USER3;
+  pwire [1:0][63:0] csr_GORQ_send;
+  pwire [1:0][63:0] csr_GORQ_recv_vector;
+  pwire [1:0][63:0] csr_last_jmp;
+  pwire [1:0][63:0] csr_last_jmp2;
+  pwire [1:0][1:0] thrmode0;
 
   assign aux0=cls_sys_has ? 16'bz : 16'b0;
 
@@ -1146,7 +1146,7 @@ module decoder(
   input pwire [10:0] fp_excpt_set;
   input pwire fp_excpt_thr;
 
-  output pwire reg bundleFeed;
+  output pwire bundleFeed;
   
 
   output pwire [IN_REG_WIDTH-1:0] rs0i0_rA;
@@ -1440,8 +1440,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr0_port;
   output pwire [3:0] instr0_magic;
   output pwire instr0_last;
-  output pwire reg instr0_aft_spc;
-  output pwire reg [1:0] instr0_error;
+  output pwire instr0_aft_spc;
+  output pwire [1:0] instr0_error;
   
   output pwire [IN_REG_WIDTH-1:0] instr1_rT;
   output pwire instr1_en;
@@ -1453,8 +1453,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr1_port;
   output pwire [3:0] instr1_magic;
   output pwire instr1_last;
-  output pwire reg instr1_aft_spc;
-  output pwire reg [1:0] instr1_error;
+  output pwire instr1_aft_spc;
+  output pwire [1:0] instr1_error;
   
   output pwire [IN_REG_WIDTH-1:0] instr2_rT;
   output pwire instr2_en;
@@ -1466,8 +1466,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr2_port;
   output pwire [3:0] instr2_magic;
   output pwire instr2_last;
-  output pwire reg instr2_aft_spc;
-  output pwire reg [1:0] instr2_error;
+  output pwire instr2_aft_spc;
+  output pwire [1:0] instr2_error;
   
   output pwire [IN_REG_WIDTH-1:0] instr3_rT;
   output pwire instr3_en;
@@ -1479,8 +1479,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr3_port;
   output pwire [3:0] instr3_magic;
   output pwire instr3_last;
-  output pwire reg instr3_aft_spc;
-  output pwire reg [1:0] instr3_error;
+  output pwire instr3_aft_spc;
+  output pwire [1:0] instr3_error;
   
   output pwire [IN_REG_WIDTH-1:0] instr4_rT;
   output pwire instr4_en;
@@ -1492,8 +1492,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr4_port;
   output pwire [3:0] instr4_magic;
   output pwire instr4_last;
-  output pwire reg instr4_aft_spc;
-  output pwire reg [1:0] instr4_error;
+  output pwire instr4_aft_spc;
+  output pwire [1:0] instr4_error;
   
   output pwire [IN_REG_WIDTH-1:0] instr5_rT;
   output pwire instr5_en;
@@ -1505,8 +1505,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr5_port;
   output pwire [3:0] instr5_magic;
   output pwire instr5_last;
-  output pwire reg instr5_aft_spc;
-  output pwire reg [1:0] instr5_error;
+  output pwire instr5_aft_spc;
+  output pwire [1:0] instr5_error;
 
   output pwire [IN_REG_WIDTH-1:0] instr6_rT;
   output pwire instr6_en;
@@ -1518,8 +1518,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr6_port;
   output pwire [3:0] instr6_magic;
   output pwire instr6_last;
-  output pwire reg instr6_aft_spc;
-  output pwire reg [1:0] instr6_error;
+  output pwire instr6_aft_spc;
+  output pwire [1:0] instr6_error;
 
   output pwire [IN_REG_WIDTH-1:0] instr7_rT;
   output pwire instr7_en;
@@ -1531,8 +1531,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr7_port;
   output pwire [3:0] instr7_magic;
   output pwire instr7_last;
-  output pwire reg instr7_aft_spc;
-  output pwire reg [1:0] instr7_error;
+  output pwire instr7_aft_spc;
+  output pwire [1:0] instr7_error;
 
   output pwire [IN_REG_WIDTH-1:0] instr8_rT;
   output pwire instr8_en;
@@ -1544,8 +1544,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr8_port;
   output pwire [3:0] instr8_magic;
   output pwire instr8_last;
-  output pwire reg instr8_aft_spc;
-  output pwire reg [1:0] instr8_error;
+  output pwire instr8_aft_spc;
+  output pwire [1:0] instr8_error;
 
   output pwire [IN_REG_WIDTH-1:0] instr9_rT;
   output pwire instr9_en;
@@ -1557,8 +1557,8 @@ module decoder(
   output pwire [PORT_WIDTH-1:0] instr9_port;
   output pwire [3:0] instr9_magic;
   output pwire instr9_last;
-  output pwire reg instr9_aft_spc;
-  output pwire reg [1:0] instr9_error;
+  output pwire instr9_aft_spc;
+  output pwire [1:0] instr9_error;
 
   output pwire [4:0] jump0Type;
   output pwire [3:0] jump0Pos;
@@ -1606,9 +1606,9 @@ module decoder(
   endfunction
   pwire [9:0] msrss_retIP_en;
   pwire [64:0] msrss_retIP_data;
-  reg  [9:0] msrss_retIP_en_reg;
+  pwire  [9:0] msrss_retIP_en_reg;
 
-  reg last_trce;
+  pwire last_trce;
 
   pwire thrmode;
 
@@ -1647,8 +1647,8 @@ module decoder(
   pwire [9:0] dec_miss;
   pwire [9:0] dec_tbufOnly;
 
-  reg was_FMA_last;
-  reg [15:0] instr_save;
+  pwire was_FMA_last;
+  pwire [15:0] instr_save;
 
 
   pwire [9:0][4:0] 		dec_jumpType;
@@ -1662,19 +1662,19 @@ module decoder(
   pwire [9:0] dec_fsimd;
 
   pwire [9:0][7:0] dec_srcIPOff;
-  reg  [8:0] dec_srcIPOff_reg[9:0];
+  pwire  [8:0] dec_srcIPOff_reg[9:0];
   pwire [9:0][8:0] dec_srcIPOffA;
   pwire [9:0][43:0] dec_srcIPOffx;
   
-  reg [8:0] dec_srcIPOffA_reg[9:0];
+  pwire [8:0] dec_srcIPOffA_reg[9:0];
 
   
   pwire [9:0] dec_allocR;
-  reg [9:0] dec_allocR_reg;
+  pwire [9:0] dec_allocR_reg;
 
   
   pwire [9:0] dec_IPRel;
-  reg [9:0] dec_IPRel_reg;
+  pwire [9:0] dec_IPRel_reg;
   
   pwire has_taken;
   pwire has_tick;
@@ -1683,57 +1683,57 @@ module decoder(
   pwire [9:0] dec_last;
   pwire [9:-1] dec_lspec;
 //  pwire [9:-1] dec_aspec;
-  reg dec_lspecR;
-//  reg dec_aspecR;
+  pwire dec_lspecR;
+//  pwire dec_aspecR;
   pwire dec_lspecR_d;
 //  pwire dec_aspecR_d;
   pwire [3:0] baseAttr;
 
-  reg [OPERATION_WIDTH-6:0] 	dec_operation_reg[9:0];
-  reg [4:0]			dec_alucond_reg[9:0];
-  reg [2:0]			dec_rndmode_reg[9:0];
-  reg [REG_WIDTH-1:0] 		dec_rA_reg[9:0];
-  reg 				dec_rA_use_reg[9:0];
-  reg 				dec_rA_useF_reg[9:0];
-  reg [REG_WIDTH-1:0] 		dec_rB_reg[9:0];
-  reg 				dec_rB_use_reg[9:0];
-  reg 				dec_rB_useF_reg[9:0];
-  reg 				dec_useAConst_reg[9:0];
-  reg 				dec_useBConst_reg[9:0];
-  reg [REG_WIDTH-1:0] 		dec_rC_reg[9:0];
-  reg 				dec_rC_use_reg[9:0];
-  reg 				dec_rC_useF_reg[9:0];
-  reg [9:0]			dec_useCRet_reg;
-  reg [64:0] 			dec_constant_reg[9:0];
-  reg [64:0] 			dec_constantN_reg[9:0];
-  reg [REG_WIDTH-1:0] 		dec_rT_reg[9:0];
-  reg 				dec_rT_use_reg[9:0];
-  reg 				dec_rT_useF_reg[9:0];
-  reg [3:0] 			dec_port_reg[9:0];
-  reg 				dec_useRs_reg[9:0];
-  reg [4:0] 			dec_jumpType_reg[9:0];
+  pwire [OPERATION_WIDTH-6:0] 	dec_operation_reg[9:0];
+  pwire [4:0]			dec_alucond_reg[9:0];
+  pwire [2:0]			dec_rndmode_reg[9:0];
+  pwire [REG_WIDTH-1:0] 		dec_rA_reg[9:0];
+  pwire 				dec_rA_use_reg[9:0];
+  pwire 				dec_rA_useF_reg[9:0];
+  pwire [REG_WIDTH-1:0] 		dec_rB_reg[9:0];
+  pwire 				dec_rB_use_reg[9:0];
+  pwire 				dec_rB_useF_reg[9:0];
+  pwire 				dec_useAConst_reg[9:0];
+  pwire 				dec_useBConst_reg[9:0];
+  pwire [REG_WIDTH-1:0] 		dec_rC_reg[9:0];
+  pwire 				dec_rC_use_reg[9:0];
+  pwire 				dec_rC_useF_reg[9:0];
+  pwire [9:0]			dec_useCRet_reg;
+  pwire [64:0] 			dec_constant_reg[9:0];
+  pwire [64:0] 			dec_constantN_reg[9:0];
+  pwire [REG_WIDTH-1:0] 		dec_rT_reg[9:0];
+  pwire 				dec_rT_use_reg[9:0];
+  pwire 				dec_rT_useF_reg[9:0];
+  pwire [3:0] 			dec_port_reg[9:0];
+  pwire 				dec_useRs_reg[9:0];
+  pwire [4:0] 			dec_jumpType_reg[9:0];
   
-  reg dec_btbWay_reg[9:0];
-  reg [1:0] dec_jmpInd_reg[9:0];
-  reg [7:0] dec_ght_reg[9:0];
-  reg [15:0] dec_ght2_reg[9:0];
-  reg dec_val_reg[9:0];
-  reg [1:0] dec_sc_reg[9:0];
-  reg [9:0] dec_miss_reg;
-  reg [9:0] dec_tbufOnly_reg;
+  pwire dec_btbWay_reg[9:0];
+  pwire [1:0] dec_jmpInd_reg[9:0];
+  pwire [7:0] dec_ght_reg[9:0];
+  pwire [15:0] dec_ght2_reg[9:0];
+  pwire dec_val_reg[9:0];
+  pwire [1:0] dec_sc_reg[9:0];
+  pwire [9:0] dec_miss_reg;
+  pwire [9:0] dec_tbufOnly_reg;
   
-  reg [3:0] dec_magic_reg[9:0];
-  reg [9:0] dec_last_reg;
+  pwire [3:0] dec_magic_reg[9:0];
+  pwire [9:0] dec_last_reg;
 
-  reg [9:0] dec_taken_reg;
+  pwire [9:0] dec_taken_reg;
 
-  reg [9:0] dec_rA_isV_reg;
-  reg [9:0] dec_rB_isV_reg;
-  reg [9:0] dec_rT_isV_reg;
+  pwire [9:0] dec_rA_isV_reg;
+  pwire [9:0] dec_rB_isV_reg;
+  pwire [9:0] dec_rT_isV_reg;
 
-  reg [9:0] dec_fsimd_reg;
+  pwire [9:0] dec_fsimd_reg;
   
-  reg halt_reg;
+  pwire halt_reg;
 
 
 
@@ -1744,7 +1744,7 @@ module decoder(
   pwire [9:0][REG_WIDTH-1:0] dep_rC;
 
   pwire [9:0] dec_afterTaken;
-  reg [9:0] dec_afterTaken_reg;
+  pwire [9:0] dec_afterTaken_reg;
   
   
   pwire [9:0][`iclass_width-1:0] instCls;
@@ -1763,22 +1763,22 @@ module decoder(
   pwire [9:0] cls_pos0;
   pwire [9:0] cls_flag;
 
-  reg [9:0] cls_indir_reg;
-  reg [9:0] cls_jump_reg;
-  reg [9:0] cls_ALU_reg;
-  reg [9:0] cls_shift_reg;
-  reg [9:0] cls_mul_reg;
-  reg [9:0] cls_load_reg;
-  reg [9:0] cls_store_reg;
-  reg [9:0] cls_storeI_reg;
-  reg [9:0] cls_store2_reg;
-  reg [9:0] cls_FPU_reg;
-  reg [9:-1] cls_loadFPU_reg;
-  reg [9:0] cls_sys_reg;
-  reg [9:0] cls_pos0_reg;
-  reg [9:0] cls_flag_reg;
+  pwire [9:0] cls_indir_reg;
+  pwire [9:0] cls_jump_reg;
+  pwire [9:0] cls_ALU_reg;
+  pwire [9:0] cls_shift_reg;
+  pwire [9:0] cls_mul_reg;
+  pwire [9:0] cls_load_reg;
+  pwire [9:0] cls_store_reg;
+  pwire [9:0] cls_storeI_reg;
+  pwire [9:0] cls_store2_reg;
+  pwire [9:0] cls_FPU_reg;
+  pwire [9:-1] cls_loadFPU_reg;
+  pwire [9:0] cls_sys_reg;
+  pwire [9:0] cls_pos0_reg;
+  pwire [9:0] cls_flag_reg;
   
-  reg [9:0] iUsed_reg;
+  pwire [9:0] iUsed_reg;
 
   pwire [8:0][OPERATION_WIDTH-1:0] rs_operation;
   pwire [8:0][REG_WIDTH-1:0] rs_rA;
@@ -1821,7 +1821,7 @@ module decoder(
   pwire hasJump0;
   pwire hasJump1;
 
-  reg [9:0] iAvail_reg;
+  pwire [9:0] iAvail_reg;
   pwire [9:0] rs_storeDA;
   pwire [9:0] rs_storeDB;
   pwire [8:0] rs_store;
@@ -1830,7 +1830,7 @@ module decoder(
   pwire [9:0][1:0] dec_error;
 
   pwire [9:0] afterTick;
-  reg  [9:0] afterTick_reg;
+  pwire  [9:0] afterTick_reg;
   pwire [9:0] dec_tick;
   
   pwire [9:0] alloc;
@@ -1842,10 +1842,10 @@ module decoder(
   pwire [9:0] iAvail0;
   
   pwire [9:0] dec_wrFlags;
-  reg [9:0] dec_wrFlags_reg;
+  pwire [9:0] dec_wrFlags_reg;
 
   pwire [9:0] dec_useFlags;
-  reg [9:0] dec_useFlags_reg;
+  pwire [9:0] dec_useFlags_reg;
   
   pwire [9:0][3:0] flag_dep;
   pwire [9:0] flag_lastWr;
@@ -3446,8 +3446,8 @@ module decoder_get_baseIP(
   );
   input pwire clk;
   input pwire rst;
-  output pwire reg [62:0] baseIP;
-  output pwire reg [3:0] baseAttr;
+  output pwire [62:0] baseIP;
+  output pwire [3:0] baseAttr;
   input pwire [9:0] afterTK;
   input pwire [9:0] iUsed;
   input pwire [9:0] afterTick;

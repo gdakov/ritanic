@@ -119,7 +119,7 @@ module smallInstr_decoder(
   output pwire [REG_WIDTH-1:0] rC;
   output pwire rC_use;
   output pwire useCRet;
-  output pwire reg rstindex;
+  output pwire rstindex;
   output pwire [4:0] alucond;
   output pwire [2:0] rndmode;
   output pwire useBConst;
@@ -151,14 +151,14 @@ module smallInstr_decoder(
   output pwire thisSpecLoad;
   output pwire isIPRel;
   output pwire rAlloc;
-  output pwire reg msrss_retIP_en;
+  output pwire msrss_retIP_en;
   output pwire error;
   output pwire reor_en_out;
   output pwire [23:0] reor_val_out;
   input pwire reor_en;
   input pwire [23:0] reor_val;
   input pwire [4:0] stsz_in;
-  output pwire reg [4:0] stsz_out;
+  output pwire [4:0] stsz_out;
   //7:0 free 15:8 unfree 39:16 fxch/pop/push 
   pwire [3:0] magic;
   pwire [7:0] srcIPOff;
@@ -167,14 +167,14 @@ module smallInstr_decoder(
   
   pwire isGA;
 
-  reg [31:0] fpu_reor;
+  pwire [31:0] fpu_reor;
 
-  reg [3:0] rA_reor;
-  reg [3:0] rB_reor;
-  reg [4:0] rA_reor32;
-  reg [4:0] rB_reor32;
-  reg [4:0] rT_reor32;
-  reg reor_error;
+  pwire [3:0] rA_reor;
+  pwire [3:0] rB_reor;
+  pwire [4:0] rA_reor32;
+  pwire [4:0] rB_reor32;
+  pwire [4:0] rT_reor32;
+  pwire reor_error;
 
   pwire isBasicALU;
   pwire isBasicALUExcept;
@@ -246,7 +246,7 @@ module smallInstr_decoder(
   
   pwire isPtrBump_other_domain;//reverse of horizontal accumulate or productize
   
-  reg keep2instr;
+  pwire keep2instr;
   
   pwire [64:0] constantDef;
 
@@ -254,65 +254,65 @@ module smallInstr_decoder(
 
   pwire [5:0] opcode_sub;
 
-  reg isBigConst;
+  pwire isBigConst;
   
   pwire flags_wrFPU;
 
   pwire [3:0] oddmode=instrQ[`instrQ_attr];
 
-  reg signed [46:0] boogie_baboogie;
+  pwire signed [46:0] boogie_baboogie;
 
-  reg [OPERATION_WIDTH-1:0] poperation[TRICNT_TOP-1:0];
-  reg [REG_WIDTH-2:0] prA[TRICNT_TOP-1:0];
-  reg prA_use[TRICNT_TOP-1:0];
-  reg [REG_WIDTH-2:0] prB[TRICNT_TOP-1:0];
-  reg prBE[TRICNT_TOP-1:0];
-  reg prAX[TRICNT_TOP-1:0];
-  reg prTE[TRICNT_TOP-1:0];
-  reg prB_use[TRICNT_TOP-1:0];
-  reg [1:0] poof;
-  reg [REG_WIDTH-2:0] prC[TRICNT_TOP-1:0];
-  reg prC_use[TRICNT_TOP-1:0];
-  reg puseCRet[TRICNT_TOP-1:0];
-  reg [4:0] palucond[TRICNT_TOP-1:0];
-  reg [2:0] rndmode[TRICNT_TOP-1:0];
-  reg puseBConst[TRICNT_TOP-1:0];
-//  output pwire reg useBSmall;//small constant use; used for call/pop/push
-  reg [64:0] pconstant[TRICNT_TOP-1:0];
-//  output pwire reg [3:0] smallConst; //signed
-  reg [REG_WIDTH-2:0] prT[TRICNT_TOP-1:0];
-  reg prT_use[TRICNT_TOP-1:0];
-  reg [3:0] pport[TRICNT_TOP-1:0];
-  reg puseRs[TRICNT_TOP-1:0];
-  reg prA_useF[TRICNT_TOP-1:0];
-  reg prB_useF[TRICNT_TOP-1:0];
-  reg prT_useF[TRICNT_TOP-1:0];
-  reg prC_useF[TRICNT_TOP-1:0];
-  reg pmaskOp[TRICNT_TOP-1:0];
-  reg prA_isV[TRICNT_TOP-1:0];
-  reg prB_isV[TRICNT_TOP-1:0];
-  reg prT_isV[TRICNT_TOP-1:0];
-  reg prBT_copyV[TRICNT_TOP-1:0];
-  reg pclr64[TRICNT_TOP-1:0];
-  reg pclr128[TRICNT_TOP-1:0];
-  reg pchain[TRICNT_TOP-1:0];
-  reg pflags_use[TRICNT_TOP-1:0];
-  reg pflags_write[TRICNT_TOP-1:0];
-  reg pflags_wrFPU[TRICNT_TOP-1:0];
-  reg pinstr_fsimd[TRICNT_TOP-1:0];
-  reg phalt[TRICNT_TOP-1:0];
-  reg [2:0] prndmode[TRICNT_TOP-1:0];
+  pwire [OPERATION_WIDTH-1:0] poperation[TRICNT_TOP-1:0];
+  pwire [REG_WIDTH-2:0] prA[TRICNT_TOP-1:0];
+  pwire prA_use[TRICNT_TOP-1:0];
+  pwire [REG_WIDTH-2:0] prB[TRICNT_TOP-1:0];
+  pwire prBE[TRICNT_TOP-1:0];
+  pwire prAX[TRICNT_TOP-1:0];
+  pwire prTE[TRICNT_TOP-1:0];
+  pwire prB_use[TRICNT_TOP-1:0];
+  pwire [1:0] poof;
+  pwire [REG_WIDTH-2:0] prC[TRICNT_TOP-1:0];
+  pwire prC_use[TRICNT_TOP-1:0];
+  pwire puseCRet[TRICNT_TOP-1:0];
+  pwire [4:0] palucond[TRICNT_TOP-1:0];
+  pwire [2:0] rndmode[TRICNT_TOP-1:0];
+  pwire puseBConst[TRICNT_TOP-1:0];
+//  output pwire useBSmall;//small constant use; used for call/pop/push
+  pwire [64:0] pconstant[TRICNT_TOP-1:0];
+//  output pwire [3:0] smallConst; //signed
+  pwire [REG_WIDTH-2:0] prT[TRICNT_TOP-1:0];
+  pwire prT_use[TRICNT_TOP-1:0];
+  pwire [3:0] pport[TRICNT_TOP-1:0];
+  pwire puseRs[TRICNT_TOP-1:0];
+  pwire prA_useF[TRICNT_TOP-1:0];
+  pwire prB_useF[TRICNT_TOP-1:0];
+  pwire prT_useF[TRICNT_TOP-1:0];
+  pwire prC_useF[TRICNT_TOP-1:0];
+  pwire pmaskOp[TRICNT_TOP-1:0];
+  pwire prA_isV[TRICNT_TOP-1:0];
+  pwire prB_isV[TRICNT_TOP-1:0];
+  pwire prT_isV[TRICNT_TOP-1:0];
+  pwire prBT_copyV[TRICNT_TOP-1:0];
+  pwire pclr64[TRICNT_TOP-1:0];
+  pwire pclr128[TRICNT_TOP-1:0];
+  pwire pchain[TRICNT_TOP-1:0];
+  pwire pflags_use[TRICNT_TOP-1:0];
+  pwire pflags_write[TRICNT_TOP-1:0];
+  pwire pflags_wrFPU[TRICNT_TOP-1:0];
+  pwire pinstr_fsimd[TRICNT_TOP-1:0];
+  pwire phalt[TRICNT_TOP-1:0];
+  pwire [2:0] prndmode[TRICNT_TOP-1:0];
   
   pwire [64:0] qconstant[17:0];
   pwire [17:0] qtrien;
   
-  reg [4:0] pjumpType[TRICNT_TOP-1:0];
+  pwire [4:0] pjumpType[TRICNT_TOP-1:0];
   
-  reg pthisSpecLoad[TRICNT_TOP-1:0];
-  reg pisIPRel[TRICNT_TOP-1:0];
-  reg prAlloc[TRICNT_TOP-1:0];
-  reg [TRICNT_TOP-1:0] trien;
-  reg [1:0] perror[TRICNT_TOP-1:0];
+  pwire pthisSpecLoad[TRICNT_TOP-1:0];
+  pwire pisIPRel[TRICNT_TOP-1:0];
+  pwire prAlloc[TRICNT_TOP-1:0];
+  pwire [TRICNT_TOP-1:0] trien;
+  pwire [1:0] perror[TRICNT_TOP-1:0];
 
   pwire [5:0] dat;
 
@@ -503,9 +503,9 @@ module smallInstr_decoder(
 	  pwire [4:0] kalucond;
           pwire kuseBConst;
           pwire [2:0] krndmode;
-    //  output pwire reg useBSmall;//small constant use; used for call/pop/push
+    //  output pwire useBSmall;//small constant use; used for call/pop/push
           pwire [64:0] kconstant;
-    //  output pwire reg [3:0] smallConst; //signed
+    //  output pwire [3:0] smallConst; //signed
           pwire [REG_WIDTH-1:0] krT;
           pwire krT_use;
           pwire [3:0] kport;

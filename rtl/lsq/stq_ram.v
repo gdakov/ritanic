@@ -33,8 +33,8 @@ module stq_adata_ram(
   input pwire [2:0] [5:0] writeA_addr;
   input pwire [2:0] [WIDTH-1:0] writeA_data;
 
-  reg [WIDTH-1:0] ram[63:0];
-  reg [5:0] readA_addr_reg;
+  pwire [WIDTH-1:0] ram[63:0];
+  pwire [5:0] readA_addr_reg;
 
   assign readA_data=ram[readA_addr_reg];
 

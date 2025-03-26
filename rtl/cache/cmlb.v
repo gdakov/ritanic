@@ -35,7 +35,7 @@ module cmlb_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   
   assign read_data=ram[read_addr];
 
@@ -103,19 +103,19 @@ module cmlb_way(
 
   pwire validN;
   
-  reg [IP_WIDTH-1:0] addr_reg;
+  pwire [IP_WIDTH-1:0] addr_reg;
 
-  reg write_wen_reg;
+  pwire write_wen_reg;
 
-  reg write_tr_reg;
+  pwire write_tr_reg;
 
-  reg [OUTDATA_WIDTH-1:0] write_data_reg;
+  pwire [OUTDATA_WIDTH-1:0] write_data_reg;
   
-  reg invalidate_reg;
+  pwire invalidate_reg;
   
-  reg read_clkEn_reg;
+  pwire read_clkEn_reg;
   
-  reg [1:0] read_lru_reg;
+  pwire [1:0] read_lru_reg;
 
   assign ip=read_data_ram[`cmlb_ip];
   assign valid=read_data_ram[`cmlb_valid];
@@ -236,9 +236,9 @@ module cmlb(
   pwire [3:0][2:0] oldLRU;
   pwire [2:0] LRU_hit;
   pwire [3:0] read_hit_way;
-  reg init_pending;
-  reg [5:0] init_count;
-  reg init_pending_reg;
+  pwire init_pending;
+  pwire [5:0] init_count;
+  pwire init_pending_reg;
   pwire [5:0] init_count_d;
   pwire [23:0] sproc;
   pwire [1:0][23:0] pproc;
@@ -247,9 +247,9 @@ module cmlb(
   pwire [1:0][39:0] dummy_vmproc;
   pwire [1:0][63:0] mflags;
   pwire  [OUTDATA_WIDTH-1:0] read_data_pmm;
-  reg [IP_WIDTH-1:0] addr_reg;
+  pwire [IP_WIDTH-1:0] addr_reg;
   
-  reg read_clkEn_reg;
+  pwire read_clkEn_reg;
 
   assign read_hit=(|read_hit_way || addr[43:40]==4'b1110) & ~init_pending;
   assign LRU_hit=read_hit ? 3'bz : 3'b00;

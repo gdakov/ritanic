@@ -38,8 +38,8 @@ module dcache2_tag_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -93,8 +93,8 @@ module dc2_thag_ram(
   input pwire                  write2_wen;
   input pwire [15:0]           write2_bitEn;
   
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   integer b;
   
   assign read_data=ram[read_addr_reg];
@@ -155,10 +155,10 @@ module dcache2_tag(
   output pwire req_shitE,req_shitO;
   output pwire req_exclE,req_exclO;
   output pwire req_dir_ins_E,req_dir_ins_O;
-  output pwire reg req_hitEL;
-  output pwire reg req_hitOL;
-  output pwire reg req_hitEH;
-  output pwire reg req_hitOH;
+  output pwire req_hitEL;
+  output pwire req_hitOL;
+  output pwire req_hitEH;
+  output pwire req_hitOH;
   input pwire [4:0] req_LRUe;
   input pwire [4:0] req_LRUo;
   input pwire write_wen;
@@ -174,20 +174,20 @@ module dcache2_tag(
 
   pwire hitE,hitO;
   pwire write_hitE,write_hitO;
-  reg [PADDR_WIDTH-9:0] req_addrE_reg;
-  reg [PADDR_WIDTH-9:0] req_addrO_reg;
-  reg req_odd_reg,req_split_reg;
-  reg [PADDR_WIDTH-9:0] req_waddrE_reg;
-  reg [PADDR_WIDTH-9:0] req_waddrO_reg;
-  reg req_wodd_reg,req_wsplit_reg;
-  reg write_wen_reg,req_wrtEn_reg;
-  reg write_excl_reg,write_dir_ins_reg;
+  pwire [PADDR_WIDTH-9:0] req_addrE_reg;
+  pwire [PADDR_WIDTH-9:0] req_addrO_reg;
+  pwire req_odd_reg,req_split_reg;
+  pwire [PADDR_WIDTH-9:0] req_waddrE_reg;
+  pwire [PADDR_WIDTH-9:0] req_waddrO_reg;
+  pwire req_wodd_reg,req_wsplit_reg;
+  pwire write_wen_reg,req_wrtEn_reg;
+  pwire write_excl_reg,write_dir_ins_reg;
   pwire [`dc2Tag_width-1:0] tag_dataE;
   pwire [`dc2Tag_width-1:0] tag_dataO;
   pwire [`dc2Tag_width-1:0] tag_wDataE;
   pwire [`dc2Tag_width-1:0] tag_wDataO;
-  reg req_en_reg;
-  reg write_dupl_reg,write_exp_req;
+  pwire req_en_reg;
+  pwire write_dupl_reg,write_exp_req;
   
   dcache2_tag_ram ramE_mod(
   .clk(clk),

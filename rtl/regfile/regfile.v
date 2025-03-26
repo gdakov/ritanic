@@ -77,15 +77,15 @@ module regfile_ram(
   input pwire write3_wen;
   
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
-  reg [9:0] [ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [9:0] [ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [9:0] [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [9:0] [ADDR_WIDTH-1:0] read1_addr_reg;
 
-  reg [9:0]read0_clkEn_reg;
-  reg [9:0] read1_clkEn_reg;
+  pwire [9:0]read0_clkEn_reg;
+  pwire [9:0] read1_clkEn_reg;
 
-  reg [ADDR_WIDTH-1:0] retireRead_addr_reg;
+  pwire [ADDR_WIDTH-1:0] retireRead_addr_reg;
 
   generate
     genvar rp;
@@ -187,10 +187,10 @@ module regfile_ram_placeholder(
   input pwire [DATA_WIDTH-1:0] write3_data;
   input pwire write3_wen;
 
-  reg [9:0][ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [10:0][ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [9:0][ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [10:0][ADDR_WIDTH-1:0] read1_addr_reg;
 
-  reg [ADDR_WIDTH-1:0] retireRead_addr_reg;
+  pwire [ADDR_WIDTH-1:0] retireRead_addr_reg;
 
 
   pwire [9:0][DATA_WIDTH-1:0] ram_read0A_data;
@@ -213,13 +213,13 @@ module regfile_ram_placeholder(
   pwire [10:0] read1_clkEn;
 
 
-  reg [9:0] read0A_en;
-  reg [10:0] read1A_en;
+  pwire [9:0] read0A_en;
+  pwire [10:0] read1A_en;
 
-  reg [9:0] read0B_en;
-  reg [10:0] read1B_en;
+  pwire [9:0] read0B_en;
+  pwire [10:0] read1B_en;
 
-  reg retA_en;
+  pwire retA_en;
   pwire [DATA_WIDTH-1:0] retireReadA_data;
   pwire [DATA_WIDTH-1:0] retireReadB_data;
 
@@ -389,20 +389,20 @@ module regfile_ram_block(
 
   pwire [ADDR_WIDTH-5:0] initRegCount_next;
   
-  reg [ADDR_WIDTH-1:0] initRegCount;
-  reg doInit;
+  pwire [ADDR_WIDTH-1:0] initRegCount;
+  pwire doInit;
 
   pwire [4:0] newAddr [8:0];
   pwire [8:0] newEn;
 
-  reg [9:0][DATA_WIDTH-1:0] read0_const_reg;
-  reg [10:0][DATA_WIDTH-1:0] read1_const_reg;
+  pwire [9:0][DATA_WIDTH-1:0] read0_const_reg;
+  pwire [10:0][DATA_WIDTH-1:0] read1_const_reg;
   
-  reg [9:0][ADDR_WIDTH-1:0]  read0_addr_reg;
-  reg [10:0][ADDR_WIDTH-1:0]  read1_addr_reg;
+  pwire [9:0][ADDR_WIDTH-1:0]  read0_addr_reg;
+  pwire [10:0][ADDR_WIDTH-1:0]  read1_addr_reg;
 
-  reg [9:0] read0_constEn_reg;
-  reg [10:0] read1_constEn_reg;
+  pwire [9:0] read0_constEn_reg;
+  pwire [10:0] read1_constEn_reg;
   
   genvar x;
 
@@ -571,10 +571,10 @@ module regfile_zero_cycle_write(
 
   pwire match;
 
-  reg read_constEn_reg;
+  pwire read_constEn_reg;
 
-  reg read_oe_reg;
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire read_oe_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
 
 
   assign match=|match_r0;
@@ -686,8 +686,8 @@ module regfile(
   pwire read_constEn[9:0];
   pwire read_oe[9:0];
 
-  reg [9:0][ADDR_WIDTH-1:0] write0_addr_reg2;
-  reg [9:0]write0_wen_reg2;
+  pwire [9:0][ADDR_WIDTH-1:0] write0_addr_reg2;
+  pwire [9:0]write0_wen_reg2;
 
   
   genvar b;

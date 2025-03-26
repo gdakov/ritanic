@@ -38,53 +38,53 @@ module imul(
   input pwire [64:0] C;
   input pwire [3:0] attr;
   output pwire [64:0] Res;
-  output pwire reg alt;
-  output pwire reg alt_jxcross;
+  output pwire alt;
+  output pwire alt_jxcross;
   output pwire [5:0] flg;
   input pwire [64:0] jxcross_in;
 
-  reg and1,is_sig,sig,sm_sig,upper,short;
-  reg sig_reg,sig_reg2;
-  reg sm_sig_reg,sm_sig_reg2;
-  reg upper_reg,upper_reg2,short_reg,short_reg2;
-  reg upper_reg3,short_reg3;
-  reg upper_reg4,short_reg4;
-  reg en_reg,en_reg2,en_reg3,clkEn_reg;
-  reg and1_reg,and1_reg2,and1_reg3,and1_reg4;
-  reg is_sec,is_sec_reg,is_sec_reg2;
-  reg is_sec_reg3;
-  reg is_swp_reg,is_swp_reg2;
-  reg is_swp_reg3;
-  reg [1:0] is_swp;
-  reg [64:0] sec_res_reg;
-  reg [64:0] sec_res_reg2;
-  reg [64:0] swp_res_reg;
-  reg [64:0] swp_res_reg2;
+  pwire and1,is_sig,sig,sm_sig,upper,short;
+  pwire sig_reg,sig_reg2;
+  pwire sm_sig_reg,sm_sig_reg2;
+  pwire upper_reg,upper_reg2,short_reg,short_reg2;
+  pwire upper_reg3,short_reg3;
+  pwire upper_reg4,short_reg4;
+  pwire en_reg,en_reg2,en_reg3,clkEn_reg;
+  pwire and1_reg,and1_reg2,and1_reg3,and1_reg4;
+  pwire is_sec,is_sec_reg,is_sec_reg2;
+  pwire is_sec_reg3;
+  pwire is_swp_reg,is_swp_reg2;
+  pwire is_swp_reg3;
+  pwire [1:0] is_swp;
+  pwire [64:0] sec_res_reg;
+  pwire [64:0] sec_res_reg2;
+  pwire [64:0] swp_res_reg;
+  pwire [64:0] swp_res_reg2;
 
-  reg ptr_reg,ptr_reg2;
+  pwire ptr_reg,ptr_reg2;
   pwire [64:0] swp_res;
   pwire [64:0] sec_res;
   pwire [127:0] A_out;
   pwire [127:0] B_out;
-  reg [127:0] A_out_reg;
-  reg [127:0] B_out_reg;
+  pwire [127:0] A_out_reg;
+  pwire [127:0] B_out_reg;
   pwire [64:0] dummy;
   pwire [64:0] dummy2;
-  reg [64:0] Res_reg;
-  reg [64:0] dummy2_reg;
-  reg [64:0] dummy_reg;
+  pwire [64:0] Res_reg;
+  pwire [64:0] dummy2_reg;
+  pwire [64:0] dummy_reg;
   //reg [7:0] dummy8_reg;
   pwire resz;
   pwire resp;
   pwire [31:0] resx;
-  reg [31:0] resx_reg;
+  pwire [31:0] resx_reg;
   pwire [64:0] sec_res;
   //wire [64:0] resB;
   //reg bnd,bnd_reg,bnd_reg2,bnd_reg3;
 
-  reg do16_reg;
-  reg do16;
-  reg do16_reg2;
+  pwire do16_reg;
+  pwire do16;
+  pwire do16_reg2;
 
   //assign alt=~(clkEn && en_reg2);
   assign resz=~|Res_reg;
@@ -125,8 +125,8 @@ module imul(
   addrcalcsec_mul msec(R[63:0],C[11:0],attr,sec_res);
 
   pwire [64:0] dec_res;
-  reg is_dec,is_dec_reg;
-  reg is_mlb;
+  pwire is_dec,is_dec_reg;
+  pwire is_mlb;
 
   foreign_imul dec_mod(
   clk,

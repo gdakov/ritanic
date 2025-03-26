@@ -164,9 +164,9 @@ module rat_buf(
   input pwire write_thread;
   input pwire ret_thread;
   
-  reg [ROB_ADDR_WIDTH-1:0] robAddr[1:0];
-  reg retired[1:0];
-  reg [FN_WIDTH-1:0] funit[1:0];
+  pwire [ROB_ADDR_WIDTH-1:0] robAddr[1:0];
+  pwire retired[1:0];
+  pwire [FN_WIDTH-1:0] funit[1:0];
 
   pwire [ROB_ADDR_WIDTH-1:0] robAddr_rd;
   pwire [ROB_ADDR_WIDTH-1:0] robAddr_ret;
@@ -596,7 +596,7 @@ module rat(
   input pwire read_thread;
   input pwire ret_thread;
 
-  reg [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
+  pwire [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
 
 
 
@@ -608,7 +608,7 @@ module rat(
   pwire [8:0]read_isDep;
   pwire [8:0][FN_WIDTH-1:0] read_fun;
 
-  reg read_thread_reg;
+  pwire read_thread_reg;
   
   assign read0_data=read_data[0];
   assign read1_data=read_data[1];

@@ -105,17 +105,17 @@ module reginfl_ram(
   input pwire write4_wen;
 
 
-  reg [3:0] ram[7:0];
+  pwire [3:0] ram[7:0];
 
-  reg [ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [ADDR_WIDTH-1:0] read1_addr_reg;
-  reg [ADDR_WIDTH-1:0] read2_addr_reg;
-  reg [ADDR_WIDTH-1:0] read3_addr_reg;
-  reg [ADDR_WIDTH-1:0] read4_addr_reg;
-  reg [ADDR_WIDTH-1:0] read5_addr_reg;
-  reg [ADDR_WIDTH-1:0] read6_addr_reg;
-  reg [ADDR_WIDTH-1:0] read7_addr_reg;
-  reg [ADDR_WIDTH-1:0] read8_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read2_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read3_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read4_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read5_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read6_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read7_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read8_addr_reg;
 
 
   assign read0_data=ram[read0_addr_reg[4:2]][read0_addr_reg[1:0]];
@@ -274,15 +274,15 @@ module reginfl_ram_placeholder(
   input pwire [4:0] write4_addr;
   input pwire write4_wen;
 
-  reg [ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [ADDR_WIDTH-1:0] read1_addr_reg;
-  reg [ADDR_WIDTH-1:0] read2_addr_reg;
-  reg [ADDR_WIDTH-1:0] read3_addr_reg;
-  reg [ADDR_WIDTH-1:0] read4_addr_reg;
-  reg [ADDR_WIDTH-1:0] read5_addr_reg;
-  reg [ADDR_WIDTH-1:0] read6_addr_reg;
-  reg [ADDR_WIDTH-1:0] read7_addr_reg;
-  reg [ADDR_WIDTH-1:0] read8_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read2_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read3_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read4_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read5_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read6_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read7_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read8_addr_reg;
 
 
 
@@ -315,15 +315,15 @@ module reginfl_ram_placeholder(
   pwire read8_clkEn;
 
 
-  reg read0_en;
-  reg read1_en;
-  reg read2_en;
-  reg read3_en;
-  reg read4_en;
-  reg read5_en;
-  reg read6_en;
-  reg read7_en;
-  reg read8_en;
+  pwire read0_en;
+  pwire read1_en;
+  pwire read2_en;
+  pwire read3_en;
+  pwire read4_en;
+  pwire read5_en;
+  pwire read6_en;
+  pwire read7_en;
+  pwire read8_en;
 
 
 
@@ -572,22 +572,22 @@ module reginfl_ram_block(
 
   pwire [ADDR_WIDTH-5:0] initRegCount_next;
   
-  reg [ADDR_WIDTH-1:0] initRegCount;
-  reg doInit;
+  pwire [ADDR_WIDTH-1:0] initRegCount;
+  pwire doInit;
 
   pwire [4:0] newAddr [8:0];
   pwire [8:0] newEn;
 
 
-  reg read0_constEn_reg;
-  reg read1_constEn_reg;
-  reg read2_constEn_reg;
-  reg read3_constEn_reg;
-  reg read4_constEn_reg;
-  reg read5_constEn_reg;
-  reg read6_constEn_reg;
-  reg read7_constEn_reg;
-  reg read8_constEn_reg;
+  pwire read0_constEn_reg;
+  pwire read1_constEn_reg;
+  pwire read2_constEn_reg;
+  pwire read3_constEn_reg;
+  pwire read4_constEn_reg;
+  pwire read5_constEn_reg;
+  pwire read6_constEn_reg;
+  pwire read7_constEn_reg;
+  pwire read8_constEn_reg;
   
   genvar x;
 
@@ -871,10 +871,10 @@ module reginfl_zero_cycle_write(
 
   pwire match;
 
-  reg read_constEn_reg;
+  pwire read_constEn_reg;
 
-  reg read_oe_reg;
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire read_oe_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
 
   pwire [10:0] match_w;
 
@@ -1115,35 +1115,35 @@ module reginfl(
   pwire read_constEn[8:0];
   pwire read_oe[8:0];
 
-  reg [ADDR_WIDTH-1:0] write0_addr_reg2;
-  reg write0_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write0_addr_reg2;
+  pwire write0_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write1_addr_reg2;
-  reg write1_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write1_addr_reg2;
+  pwire write1_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write2_addr_reg2;
-  reg write2_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write2_addr_reg2;
+  pwire write2_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write3_addr_reg2;
-  reg write3_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write3_addr_reg2;
+  pwire write3_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write4_addr_reg2;
-  reg write4_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write4_addr_reg2;
+  pwire write4_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write5_addr_reg2;
-  reg write5_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write5_addr_reg2;
+  pwire write5_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write6_addr_reg2;
-  reg write6_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write6_addr_reg2;
+  pwire write6_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write7_addr_reg2;
-  reg write7_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write7_addr_reg2;
+  pwire write7_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write8_addr_reg2;
-  reg write8_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write8_addr_reg2;
+  pwire write8_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write9_addr_reg2;
-  reg write9_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write9_addr_reg2;
+  pwire write9_wen_reg2;
   
   pwire init;
   

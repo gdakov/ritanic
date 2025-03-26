@@ -12,15 +12,15 @@ module pdc_ram(
   input pwire rst;
   input pwire [2:0][10:0] read_addr;
   input pwire [2:0] read_clkEn;
-  output pwire reg [2:0][`pdc_width-1:0] read_data;
+  output pwire [2:0][`pdc_width-1:0] read_data;
   input pwire [10:0] write_addr;
   input pwire write_wen;
   input pwire [`pdc_width-1:0] write_data;
 
-  reg [2:0][`pdc_width-1:0] read_data0;
-  reg [2:0][10:0] read_addr0;
+  pwire [2:0][`pdc_width-1:0] read_data0;
+  pwire [2:0][10:0] read_addr0;
   integer k;
-  reg [`pdc_width-1:0] ram[2047:0];
+  pwire [`pdc_width-1:0] ram[2047:0];
 
   always @(posedge clk) begin
     if (rst) begin

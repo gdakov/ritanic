@@ -19,16 +19,16 @@ module tblD(
   input pwire is_write;
   output pwire [67:0] res;
 
-  reg [255+64:0][67:0] ram;
+  pwire [255+64:0][67:0] ram;
 
-  reg [5:0] bits;
-  reg [5:0] bits0;
-  reg [5:0] bits1;
-  reg [5:0] bits2;
+  pwire [5:0] bits;
+  pwire [5:0] bits0;
+  pwire [5:0] bits1;
+  pwire [5:0] bits2;
 
-  reg [5:0] mask;
-  reg [5:0] mask0;
-  reg [5:0] mask1;
+  pwire [5:0] mask;
+  pwire [5:0] mask0;
+  pwire [5:0] mask1;
 
 
   assign res=is_read && ~xtra[2] | ~|xtra[1:0] ? ram[(xtra[1:0]&{2{~xtra[2]}})+bits*4+xtra[2]*256]^{3'b0,A[64]&&(xtra==3'b10||xtra==3'b0),64'b0} : 68'bz;

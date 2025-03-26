@@ -39,8 +39,8 @@ module tbuf_ram0(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -80,11 +80,11 @@ module tbuf_ram1(
   input pwire write_wen;
   input pwire write_cond;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
-  reg [ADDR_WIDTH-1:0] write_addr_save;
-  reg [DATA_WIDTH-1:0] write_data_save;
-  reg save;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [ADDR_WIDTH-1:0] write_addr_save;
+  pwire [DATA_WIDTH-1:0] write_data_save;
+  pwire save;
   pwire [5:0] data_rand;
   pwire match;
   
@@ -134,8 +134,8 @@ module tbuf_ram2(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -265,8 +265,8 @@ module tbufExtra_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
 
   integer i;
   
@@ -462,7 +462,7 @@ module tbuf_way(
   pwire [1:0] sc3P;
   
   pwire [9:0] IP_wbits;
-  reg  [9:0] IP_wbits_reg;
+  pwire  [9:0] IP_wbits_reg;
   pwire upd_eq0;
   pwire upd_eq1;
   
@@ -481,13 +481,13 @@ module tbuf_way(
   pwire [1:0] upd_j2;
   pwire [1:0] upd_j3;
 
-  reg [1:0] upd_j0_reg;
-  reg [1:0] upd_j1_reg;
-  reg [1:0] upd_j2_reg;
-  reg [1:0] upd_j3_reg;
+  pwire [1:0] upd_j0_reg;
+  pwire [1:0] upd_j1_reg;
+  pwire [1:0] upd_j2_reg;
+  pwire [1:0] upd_j3_reg;
 
   pwire [3:0] upd_taken;
-  reg [3:0] upd_taken_reg;
+  pwire [3:0] upd_taken_reg;
   pwire [3:0] sve_taken;
   
   pwire [6:0] upd_freq0;
@@ -561,14 +561,14 @@ module tbuf_way(
   pwire j2_after;
   pwire j3_after;
 
-  reg [IP_WIDTH-1:1] nextIP_reg;
+  pwire [IP_WIDTH-1:1] nextIP_reg;
   
   pwire [DATA_WIDTH-1:0] btb_data;
-  reg  [DATA_WIDTH-1:0] btb_data_reg;
+  pwire  [DATA_WIDTH-1:0] btb_data_reg;
   pwire [DATA_WIDTH-1:0] write_data;
   pwire [DATA_WIDTH-1:0] write_dataW;
-  reg [DATA_WIDTH-1:0] write_dataW_reg;
-  reg [DATA_WIDTH-2:0] write_dataJ;
+  pwire [DATA_WIDTH-1:0] write_dataW_reg;
+  pwire [DATA_WIDTH-2:0] write_dataJ;
   
   pwire ram_wen;
   
@@ -586,11 +586,11 @@ module tbuf_way(
   //0=save 0
   //1=save 1
   //2=save 1 as second
-  reg has_saved,has_saved_reg;
-  reg [1:0] saved_tk;
-  reg [12:0] saved_addr0; 
-  reg [1:0] saved_addr1;
-  reg [1:0] saved_use;  
+  pwire has_saved,has_saved_reg;
+  pwire [1:0] saved_tk;
+  pwire [12:0] saved_addr0; 
+  pwire [1:0] saved_addr1;
+  pwire [1:0] saved_use;  
   pwire [1:0] sve_j0; 
   pwire [1:0] sve_j1; 
   pwire [1:0] sve_j2; 
@@ -598,15 +598,15 @@ module tbuf_way(
 
   pwire [9:0] write_addr;
 
-  reg init;
-  reg [8:0] init_count;
+  pwire init;
+  pwire [8:0] init_count;
   pwire [8:0] init_next;
 
-  reg [12:0] update_addr0_reg;
-  reg [12:0] update_addr1_reg;
-  reg update_en_reg,update_en_reg2;
-  reg [1:0] update_taken_reg;
-  reg [1:0] update_use_reg;
+  pwire [12:0] update_addr0_reg;
+  pwire [12:0] update_addr1_reg;
+  pwire update_en_reg,update_en_reg2;
+  pwire [1:0] update_taken_reg;
+  pwire [1:0] update_use_reg;
  
   pwire [4:1] readx_jln0; 
   pwire [4:1] readx_jln1; 
@@ -634,42 +634,42 @@ module tbuf_way(
   pwire [4:0] writex_fjlnx3; 
   
   pwire write_LRU;
-  reg [9:0] update_addr_reg;
+  pwire [9:0] update_addr_reg;
 
-  reg write_wen_reg;
-  reg write_insert_reg;
-//  reg write_wen_reg2;
-//  reg write_insert_reg2;
-  reg [3:0] taken_reg;
-  reg read_clkEn_reg;
-  reg write_LRU_reg;
+  pwire write_wen_reg;
+  pwire write_insert_reg;
+//  pwire write_wen_reg2;
+//  pwire write_insert_reg2;
+  pwire [3:0] taken_reg;
+  pwire read_clkEn_reg;
+  pwire write_LRU_reg;
 
   pwire lnoff0;
   pwire oen;
   pwire oenn;
   pwire j0_afterW,j1_afterW,j2_afterW,j3_afterW;
   
-  reg [3:0] write_off0_rex;
-  reg [3:0] write_off1_rex;
-  reg [3:0] write_off2_rex;
-  reg [3:0] write_off3_rex;
-  reg [3:0] write_cond_rex;
-  reg [3:0] write_indir_rex;
-  reg [4:0] write_link0_rex;
-  reg [4:0] write_lnpos0_rex;
-  reg [4:0] write_ljpos0_rex;
-  reg [4:0] write_link1_rex;
-  reg [4:0] write_lnpos1_rex;
-  reg [4:0] write_ljpos1_rex;
-  reg [4:0] write_link2_rex;
-  reg [4:0] write_lnpos2_rex;
-  reg [4:0] write_ljpos2_rex;
-  reg [4:0] write_link3_rex;
-  reg [4:0] write_lnpos3_rex;
-  reg [4:0] write_ljpos3_rex;
-  reg write_way_rex;
+  pwire [3:0] write_off0_rex;
+  pwire [3:0] write_off1_rex;
+  pwire [3:0] write_off2_rex;
+  pwire [3:0] write_off3_rex;
+  pwire [3:0] write_cond_rex;
+  pwire [3:0] write_indir_rex;
+  pwire [4:0] write_link0_rex;
+  pwire [4:0] write_lnpos0_rex;
+  pwire [4:0] write_ljpos0_rex;
+  pwire [4:0] write_link1_rex;
+  pwire [4:0] write_lnpos1_rex;
+  pwire [4:0] write_ljpos1_rex;
+  pwire [4:0] write_link2_rex;
+  pwire [4:0] write_lnpos2_rex;
+  pwire [4:0] write_ljpos2_rex;
+  pwire [4:0] write_link3_rex;
+  pwire [4:0] write_lnpos3_rex;
+  pwire [4:0] write_ljpos3_rex;
+  pwire write_way_rex;
   
-  reg read_clkEn_reg2;
+  pwire read_clkEn_reg2;
   
   
   assign oen=nextIP_reg[14]==HALF && ~read_write_fwd;
@@ -1441,7 +1441,7 @@ module tbuf_way_2(
   pwire read_hit0;
   pwire read_hit1;
   
-  reg write_way_reg,write_insert_reg,write_wen_reg;
+  pwire write_way_reg,write_insert_reg,write_wen_reg;
   
   assign read_hit=read_hit0 | read_hit1 | (read_write_fwd && write_way_reg==WAY) ;
   assign way_hit=read_write_fwd ? write_way_reg==WAY : 1'bz;
@@ -1731,10 +1731,10 @@ module tbuf(
   pwire [3:0] jump_mask1;
   pwire [3:0] jump_mask2;
   pwire [3:0] jump_mask3;
-  reg [3:0] jump_mask0_reg;
-  reg [3:0] jump_mask1_reg;
-  reg [3:0] jump_mask2_reg;
-  reg [3:0] jump_mask3_reg;
+  pwire [3:0] jump_mask0_reg;
+  pwire [3:0] jump_mask1_reg;
+  pwire [3:0] jump_mask2_reg;
+  pwire [3:0] jump_mask3_reg;
 
   pwire [3:0] tbuf_predA;
   pwire [3:0] tbuf_predB;
@@ -1807,60 +1807,60 @@ module tbuf(
   
  // pwire [2:0] read_LRU_hit;
 
-  reg [3:0] write_off0_reg;
-  reg [3:0] write_off1_reg;
-  reg [3:0] write_off2_reg;
-  reg [3:0] write_off3_reg;
-  reg [3:0] write_cond_reg;
-  reg [3:0] write_indir_reg;
-  reg [4:0] write_link0_reg;
-  reg [4:0] write_lnpos0_reg;
-  reg [4:0] write_link1_reg;
-  reg [4:0] write_lnpos1_reg;
-  reg [4:0] write_link2_reg;
-  reg [4:0] write_lnpos2_reg;
-  reg [4:0] write_link3_reg;
-  reg [4:0] write_lnpos3_reg;
-  reg write_way_reg;
-  reg write_thread_reg;
-  reg write_wen_reg;
-  reg write_insert_reg;  
+  pwire [3:0] write_off0_reg;
+  pwire [3:0] write_off1_reg;
+  pwire [3:0] write_off2_reg;
+  pwire [3:0] write_off3_reg;
+  pwire [3:0] write_cond_reg;
+  pwire [3:0] write_indir_reg;
+  pwire [4:0] write_link0_reg;
+  pwire [4:0] write_lnpos0_reg;
+  pwire [4:0] write_link1_reg;
+  pwire [4:0] write_lnpos1_reg;
+  pwire [4:0] write_link2_reg;
+  pwire [4:0] write_lnpos2_reg;
+  pwire [4:0] write_link3_reg;
+  pwire [4:0] write_lnpos3_reg;
+  pwire write_way_reg;
+  pwire write_thread_reg;
+  pwire write_wen_reg;
+  pwire write_insert_reg;  
 
-  reg [3:0] taken_reg;
-  reg uxcept_reg;
+  pwire [3:0] taken_reg;
+  pwire uxcept_reg;
   
-  reg [TGTIP_WIDTH-1:1] tgt0I_reg;
-  reg [TGTIP_WIDTH-1:1] tgt1I_reg;
-  reg [TGTIP_WIDTH-1:1] tgt2I_reg;
-  reg [TGTIP_WIDTH-1:1] tgt3I_reg;
+  pwire [TGTIP_WIDTH-1:1] tgt0I_reg;
+  pwire [TGTIP_WIDTH-1:1] tgt1I_reg;
+  pwire [TGTIP_WIDTH-1:1] tgt2I_reg;
+  pwire [TGTIP_WIDTH-1:1] tgt3I_reg;
 
-  reg [3:0] attr0I_reg;
-  reg [3:0] attr1I_reg;
-  reg [3:0] attr2I_reg;
-  reg [3:0] attr3I_reg;
+  pwire [3:0] attr0I_reg;
+  pwire [3:0] attr1I_reg;
+  pwire [3:0] attr2I_reg;
+  pwire [3:0] attr3I_reg;
 
-  reg [12:0] update_addr0_reg;
-  reg [12:0] update_addr1_reg;
-  reg update_en_reg;
-  reg [1:0] update_taken_reg;
-  reg [1:0] update_use_reg;
+  pwire [12:0] update_addr0_reg;
+  pwire [12:0] update_addr1_reg;
+  pwire update_en_reg;
+  pwire [1:0] update_taken_reg;
+  pwire [1:0] update_use_reg;
   pwire [1:0] update_dis;
-  reg [12:0] update_addr0_REG;
-  reg [12:0] update_addr1_REG;
-  reg [1:0] update_taken_REG;
-  reg [1:0] update_use_REG;
+  pwire [12:0] update_addr0_REG;
+  pwire [12:0] update_addr1_REG;
+  pwire [1:0] update_taken_REG;
+  pwire [1:0] update_use_REG;
   pwire [3:0] chk_mask;  
   pwire j0_after,j1_after,j2_after,j3_after;
   pwire readA_LRU,readB_LRU,read_hit_A,read_hit_B;
-  reg [IP_WIDTH-1:1] nextIP_reg;
+  pwire [IP_WIDTH-1:1] nextIP_reg;
   
   pwire scupd_taken;
-  reg  scupd_en,scupd_en_reg;
+  pwire  scupd_en,scupd_en_reg;
   pwire [12:0] scupd_addr;
-  reg except_reg;
-  reg except_indir_reg;
-  reg except_jmask_en_reg;
-  reg [3:0] except_jmask_reg;
+  pwire except_reg;
+  pwire except_indir_reg;
+  pwire except_jmask_en_reg;
+  pwire [3:0] except_jmask_reg;
 
   tbufcam bufcam_mod(
   .clk(clk),

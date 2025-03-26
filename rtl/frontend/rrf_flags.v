@@ -39,7 +39,7 @@ module rrf_flag_buf(
   input pwire read_thread;
   input pwire write_thread;
 
-  reg [DATA_WIDTH-1:0] data0;
+  pwire [DATA_WIDTH-1:0] data0;
   pwire [DATA_WIDTH-1:0] data;
   pwire [DATA_WIDTH-1:0] wData;
 
@@ -89,12 +89,12 @@ module rrf_flag(
   input pwire read_thread;
   input pwire write_thread;
 
-  reg read_thread_reg;
+  pwire read_thread_reg;
 
   pwire [DATA_WIDTH-1:0] read_data_ram;
 
 
-  reg read0_oe_reg;
+  pwire read0_oe_reg;
 
   
   assign read0_data=read0_oe_reg ? {1'b0,read_data_ram} : {DATA_WIDTH+1{1'BZ}};

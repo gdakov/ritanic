@@ -208,15 +208,15 @@ module fun_fpsu_BOTH(
   pwire [13:0] u6_retL;
   pwire u6_ret_enL;
 
-  reg [20:0] u1_op_reg;
-  reg [20:0] u3_op_reg;
-  reg [20:0] u5_op_reg;
-  reg [20:0] u1_op_reg2;
-  reg [20:0] u3_op_reg2;
-  reg [20:0] u5_op_reg2;
-  reg [20:0] u1_op_reg3;
-  reg [20:0] u3_op_reg3;
-  reg [20:0] u5_op_reg3;
+  pwire [20:0] u1_op_reg;
+  pwire [20:0] u3_op_reg;
+  pwire [20:0] u5_op_reg;
+  pwire [20:0] u1_op_reg2;
+  pwire [20:0] u3_op_reg2;
+  pwire [20:0] u5_op_reg2;
+  pwire [20:0] u1_op_reg3;
+  pwire [20:0] u3_op_reg3;
+  pwire [20:0] u5_op_reg3;
 
 
   assign u1_ret=u1_retL|u1_retH;
@@ -226,9 +226,9 @@ module fun_fpsu_BOTH(
   assign u5_ret=u5_retL|u5_retH;
   assign u5_ret_en=u5_ret_enL| u5_ret_enH;
   
-  reg u1_XADD_reg,u3_XADD_reg,u5_XADD_reg;
-  reg u1_XADD_reg2,u3_XADD_reg2,u5_XADD_reg2;
-  reg u1_XADD_reg3,u3_XADD_reg3,u5_XADD_reg3;
+  pwire u1_XADD_reg,u3_XADD_reg,u5_XADD_reg;
+  pwire u1_XADD_reg2,u3_XADD_reg2,u5_XADD_reg2;
+  pwire u1_XADD_reg3,u3_XADD_reg3,u5_XADD_reg3;
 
   fun_fpuSL hf_mod(
   clk,

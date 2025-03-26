@@ -161,33 +161,33 @@ module addrcalc(
   input pwire [TLB_DATA_WIDTH-1:0] mlb_data1;
   input pwire mlb_hit;
 
-  reg [2:0] opsize;
+  pwire [2:0] opsize;
   pwire hasIndex;
-  reg aligned;//aligned for int subsys purpose not arch
-  reg aligned2;//same for complex addressing
-  reg tiny; //1 or 2 byte
+  pwire aligned;//aligned for int subsys purpose not arch
+  pwire aligned2;//same for complex addressing
+  pwire tiny; //1 or 2 byte
   
-  reg [2:0] addrMain_reg;
+  pwire [2:0] addrMain_reg;
 
-  reg mode64;
-  reg modeCmplx;
-  reg modeCmplx_reg;
+  pwire mode64;
+  pwire modeCmplx;
+  pwire modeCmplx_reg;
   
   pwire isLongOffset;
-  reg stepOver;//step over to next bank because of offset
-  reg stepOver2;
-  reg addrCarry;//offset by one bank
+  pwire stepOver;//step over to next bank because of offset
+  pwire stepOver2;
+  pwire addrCarry;//offset by one bank
   pwire stepOverCmplx;
   pwire stepOverCmplx2;
 
   pwire modeCmplx_d;
   //complex mode when index register used, or offset not fit in unsigned 12-bit range
 
-  reg [31:0] banks0;
+  pwire [31:0] banks0;
   
   pwire [4:0] bank0;
   pwire [4:0] bankL1;
-  reg  [2:0] mOp_type_reg;
+  pwire  [2:0] mOp_type_reg;
   pwire split;
   pwire [13:0] addrMain;
   pwire [14:0] addrNext;
@@ -205,72 +205,72 @@ module addrcalc(
   pwire [TLB_DATA_WIDTH-1:0] mlb_data1;
   pwire [TLB_DATA_WIDTH-1:0] mlb_data;
   pwire [TLB_DATA_WIDTH-1:0] mlb_data_next;
-  reg [TLB_DATA_WIDTH-1:0] mlb_data_reg;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data_reg;
   
   pwire mlb_clkEn;
   pwire mlb_hit;
   pwire cout_secq;
   
 
-  reg read_clkEn_reg;
-  reg read_clkEn_reg2;
-  reg [OPERATION_WIDTH-1:0] op_reg;
+  pwire read_clkEn_reg;
+  pwire read_clkEn_reg2;
+  pwire [OPERATION_WIDTH-1:0] op_reg;
 
 
   pwire [BANK_COUNT-1:0] all_banks;
   pwire otherness;
 
   pwire [BANK_COUNT-1:0] bit_confl;
-  reg  [BANK_COUNT-1:0] bit_confl_reg;
+  pwire  [BANK_COUNT-1:0] bit_confl_reg;
   
-  reg cin_secq_reg;
+  pwire cin_secq_reg;
   
   pwire carryNext;
  // pwire non_overlap;
 
-  reg [23:0] proc;
-  reg [1:0][23:0] pproc;
-  reg [23:0] sproc;
-  reg [1:0][23:0] vproc;
+  pwire [23:0] proc;
+  pwire [1:0][23:0] pproc;
+  pwire [23:0] sproc;
+  pwire [1:0][23:0] vproc;
   //reg [23:0] proc_reg;
   //reg [23:0] proc_reg2;
-  reg [1:0][63:0] mflags;
+  pwire [1:0][63:0] mflags;
   pwire [64:0] mflags0; 
   integer i;
   
-//  reg [ADDR_WIDTH-1:48] cmplxAddr_reg;
+//  pwire [ADDR_WIDTH-1:48] cmplxAddr_reg;
   
 //  pwire [4:0] bankNextOff;
 //  pwire hasBankNext;
   
-  reg bus_hold_reg;
-  reg bus_hold_reg2;
+  pwire bus_hold_reg;
+  pwire bus_hold_reg2;
   
-  reg [REG_WIDTH-1:0] regno_reg;
-  reg [8:0] LSQ_no_reg;
-  reg [9:0] II_no_reg;
-  reg [5:0] WQ_no_reg;
-  reg thread_reg;
-  reg lsflag_reg;
-  reg thread_reg2;
+  pwire [REG_WIDTH-1:0] regno_reg;
+  pwire [8:0] LSQ_no_reg;
+  pwire [9:0] II_no_reg;
+  pwire [5:0] WQ_no_reg;
+  pwire thread_reg;
+  pwire lsflag_reg;
+  pwire thread_reg2;
 
   pwire [1:0] rcn_mask;
 
-  reg except_reg;
-  reg except_reg2;
-  reg except_thread_reg;
-  reg except_thread_reg2;
+  pwire except_reg;
+  pwire except_reg2;
+  pwire except_thread_reg;
+  pwire except_thread_reg2;
   
   pwire [1:0] fault_mlb;
   pwire [1:0] fault_mlb_next;
   pwire [4:0] lastSz;
   pwire [1:0] pageFault_t;
-  reg [1:0] pageFault_t_reg; 
+  pwire [1:0] pageFault_t_reg; 
   pwire fault_cann;
-  reg fault_cann_reg;
-  reg error_reg;
+  pwire fault_cann_reg;
+  pwire error_reg;
 
-  reg [3:0] attr_reg;
+  pwire [3:0] attr_reg;
   
   generate
       genvar p,q;
@@ -610,8 +610,8 @@ endmodule
 module addrcalc_get_shiftSize(op,shiftSize,sh2);
   localparam OPERATION_WIDTH=`operation_width;
   input pwire [OPERATION_WIDTH-1:0] op;
-  output pwire reg [3:0] shiftSize;
-  output pwire reg [1:0] sh2;
+  output pwire [3:0] shiftSize;
+  output pwire [1:0] sh2;
   always @* begin
       if (op[7:6]==2'b01) begin
           case(op[9:8])

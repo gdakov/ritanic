@@ -275,13 +275,13 @@ module fun_lsq(
   pwire                       stqd_rdyB0;
   pwire                       stqd_rdyB1;
   pwire [1:0][127+8:0]               dc_wdataP;
-  reg  [127+8:0]               dc_wdataP_reg[1:0];
+  pwire  [127+8:0]               dc_wdataP_reg[1:0];
   pwire [1:0][1:0]                   dc_pdataP;
-  reg  [1:0]                   dc_pdataP_reg[1:0];
+  pwire  [1:0]                   dc_pdataP_reg[1:0];
   pwire [1:0] sdata_rdy;
   pwire [5:0] retM_II_in;
   pwire [5:0] retM_II;
-  reg st_stall_reg;
+  pwire st_stall_reg;
 
   pwire [3*32-1:0] new_conflictx;
   pwire [3*32-1:0] new_conflicty;
@@ -341,10 +341,10 @@ module fun_lsq(
 
   pwire p1_inhibit;
 
-  reg [`lsaddr_width-1:0] p0_adata_x;
-  reg [`lsaddr_width-1:0] p1_adata_x;
-  reg [`lsaddr_width-1:0] p2_adata_x;
-  reg [`lsaddr_width-1:0] p3_adata_x;
+  pwire [`lsaddr_width-1:0] p0_adata_x;
+  pwire [`lsaddr_width-1:0] p1_adata_x;
+  pwire [`lsaddr_width-1:0] p2_adata_x;
+  pwire [`lsaddr_width-1:0] p3_adata_x;
 
   always @(*) begin
       p0_adata_x=p0_adata;
@@ -408,9 +408,9 @@ module fun_lsq(
   pwire retB_clkEn;
   pwire mem_II_stall;
   pwire [1:0][`lsaddr_width-1:0] wreq_data;
-  reg [`lsaddr_width-1:0] wreq_data_reg[1:0];
+  pwire [`lsaddr_width-1:0] wreq_data_reg[1:0];
   pwire [1:0] wreq_en;
-  reg [1:0] wreq_en_reg;
+  pwire [1:0] wreq_en_reg;
   pwire [3:0] wreq_bben[1:0];
   pwire [3:0] wreq_endben[1:0];
   pwire [4:0] wreq_dcEnd[1:0];
@@ -651,9 +651,9 @@ module fun_lsq(
   assign st1_bgn_ben=wreq_bben[1];
   assign st1_end_ben=wreq_endben[1];
 
-  reg [`lsaddr_width-1:0] wrq_dta[3:0];
-  reg [3:0] wrq_bgnb[3:0];
-  reg [3:0] wrq_endb[3:0];
+  pwire [`lsaddr_width-1:0] wrq_dta[3:0];
+  pwire [3:0] wrq_bgnb[3:0];
+  pwire [3:0] wrq_endb[3:0];
 
   function [1:0] get_xconf;
     input pwire [`lsaddr_width-1:0] A;
@@ -663,10 +663,10 @@ module fun_lsq(
     input pwire [3:0] B_bgn_ben;
     input pwire [3:0] B_end_ben;
     integer b;
-    reg [31:0] A_b;
-    reg [31:0] B_b;
-    reg [3:0] a;
-    reg [3:0] b;
+    pwire [31:0] A_b;
+    pwire [31:0] B_b;
+    pwire [3:0] a;
+    pwire [3:0] b;
     begin
         A_b=A[`lsaddr_banks];
         B_b=B[`lsaddr_banks];

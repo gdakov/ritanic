@@ -64,7 +64,7 @@ module stq(
   input pwire st_stall;
 
   input pwire rsStall;
-  output pwire reg [3:0] rsDoStall;
+  output pwire [3:0] rsDoStall;
 
   input pwire do_retire;
   input pwire [15:0] ret_xbreak;
@@ -102,7 +102,7 @@ module stq(
   input pwire [5:0] confl;
   input pwire [5:0] confl_SMP;
   input pwire [5:0] confl_X;
-  output pwire reg [5:0] confl_out;
+  output pwire [5:0] confl_out;
 
   input pwire [59:0][5:0] upd0_WQ;
   input pwire [59:0]upd0_en;
@@ -110,7 +110,7 @@ module stq(
 
 
 
-  output pwire reg [`lsaddr_width-1:0] wb1_adata;
+  output pwire [`lsaddr_width-1:0] wb1_adata;
   output pwire [8:0] wb1_LSQ;
   output pwire [16:0] wb1_bnkEn;
   output pwire [16:0] wb1_bnkEnS;
@@ -118,7 +118,7 @@ module stq(
   output pwire [5:0] wb1_chk;
   output pwire [0:0] wb1_way;
 
-  output pwire reg [`lsaddr_width-1:0] wb0_adata;
+  output pwire [`lsaddr_width-1:0] wb0_adata;
   output pwire [8:0] wb0_LSQ;
   output pwire [16:0] wb0_bnkEn;
   output pwire [16:0] wb0_bnkEnS;
@@ -132,12 +132,12 @@ module stq(
   output pwire [135:0] WLN0_dataN;
   output pwire [1:0] WLN0_pbit;
   
-  reg [5:0] pse0_WQ;
+  pwire [5:0] pse0_WQ;
   pwire [5:0] pse0_WQ_inc;
   
   pwire [5:0] confl0;
 
-  reg [5:0] WLN0_WQ;
+  pwire [5:0] WLN0_WQ;
   pwire [5:0] W_NL0_WQ;
   pwire [`lsaddr_width-1:0] WLN0_adata0;
   pwire WLN0_en0;
@@ -145,16 +145,16 @@ module stq(
   pwire W_NL0_en;
   pwire W_NL1_en;
 	  
-  reg [5:0] chk_wb0_reg;
-  reg [5:0] chk_wb0_reg2;
-  reg  chk_wb0_has_reg;
-  reg  chk_wb0_has_reg2;
-  reg [5:0][16:0] chk_bytes_reg;
-  reg [5:0][16:0] chk_bytes_reg2;
-  reg [5:0] chk_wb1_reg;
-  reg [5:0] chk_wb1_reg2;
-  reg  chk_wb1_has_reg;
-  reg  chk_wb1_has_reg2;
+  pwire [5:0] chk_wb0_reg;
+  pwire [5:0] chk_wb0_reg2;
+  pwire  chk_wb0_has_reg;
+  pwire  chk_wb0_has_reg2;
+  pwire [5:0][16:0] chk_bytes_reg;
+  pwire [5:0][16:0] chk_bytes_reg2;
+  pwire [5:0] chk_wb1_reg;
+  pwire [5:0] chk_wb1_reg2;
+  pwire  chk_wb1_has_reg;
+  pwire  chk_wb1_has_reg2;
 
   pwire puffy_baff;
   
@@ -245,12 +245,12 @@ module stq(
   pwire [5:0][`lsaddr_width-1:0] chk_adata;
   pwire [`lsaddr_width-1:0] wb0_adataW;
   pwire [`lsaddr_width-1:0] wb1_adataW;
-  reg  [`lsaddr_width-1:0] wb0_adataW_reg;
-  reg  [`lsaddr_width-1:0] wb1_adataW_reg;
+  pwire  [`lsaddr_width-1:0] wb0_adataW_reg;
+  pwire  [`lsaddr_width-1:0] wb1_adataW_reg;
   pwire [135:0] wb0_dataW;
   pwire [135:0] wb1_dataW;
-  reg [135:0] wb0_dataW_reg;
-  reg [135:0] wb1_dataW_reg;
+  pwire [135:0] wb0_dataW_reg;
+  pwire [135:0] wb1_dataW_reg;
 
 
   pwire [4:0] upd0_begin0;
@@ -389,10 +389,10 @@ module stq(
   pwire [5:0] chk_wb0;
   pwire [5:0] chk_wb1;
   pwire chk_wb0_has,chk_wb1_has,chk_wb2_has;
-  reg [5:0] chk_mask;
-  reg [64:0] mask;
-  reg [64:0] nmask;
-  reg [64:0] mask2;
+  pwire [5:0] chk_mask;
+  pwire [64:0] mask;
+  pwire [64:0] nmask;
+  pwire [64:0] mask2;
   
   function [31:0] lowt;
       input pwire [31:0] data;
@@ -405,8 +405,8 @@ module stq(
       input pwire [7:0] banks;
       input pwire [2:0] index;
       input pwire [1:0] low;
-      reg [7:0] first;
-      reg [7:0] last;
+      pwire [7:0] first;
+      pwire [7:0] last;
       begin
           first=banks&~{banks[6:0],banks[7]};
           last=banks&~{banks[0],banks[7:1]};
@@ -438,8 +438,8 @@ module stq(
       input pwire [7:0] banks;
       input pwire [2:0] index;
       input pwire [1:0] low;
-      reg [7:0] first;
-      reg [7:0] last;
+      pwire [7:0] first;
+      pwire [7:0] last;
       begin
           first=banks&~{banks[6:0],banks[7]};
           last=banks&~{banks[0],banks[7:1]};

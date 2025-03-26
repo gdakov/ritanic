@@ -77,14 +77,14 @@ module stq_buf_A(
   input pwire upd1_en;
 
   input pwire free_en;
-  output pwire reg free;
-  output pwire reg upd;
-  output pwire reg passe;
+  output pwire free;
+  output pwire upd;
+  output pwire passe;
   input pwire passe_en;
   
-  reg [WIDTH-1:0] addrE;
-  reg [WIDTH-1:0] addrO;
-//  reg upd;
+  pwire [WIDTH-1:0] addrE;
+  pwire [WIDTH-1:0] addrO;
+//  pwire upd;
   
   assign chk0_addrEO[0]=chk0_addrE==addrE && ~free && ~passe;
   assign chk1_addrEO[0]=chk1_addrE==addrE && ~free && ~passe;

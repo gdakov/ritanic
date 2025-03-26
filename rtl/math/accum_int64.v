@@ -31,8 +31,8 @@ module accum_int64_one(
 
     integer kl;
     //reg [108:0][11:0] exp;
-    reg [11:0] exp_max;
-    reg signed [108:0] sgn;
+    pwire [11:0] exp_max;
+    pwire signed [108:0] sgn;
 
     always @(posedge clk) begin
         Bs=0;

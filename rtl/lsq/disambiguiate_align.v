@@ -38,7 +38,7 @@ module lsq_req_ram(
 
 
   input pwire [ADDR_WIDTH-1:0] read_addr;
-  output pwire reg [DATA_WIDTH-1:0] read_data;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input pwire read_clkEn;
   
 
@@ -71,9 +71,9 @@ module lsq_req_ram(
   input pwire write6_wen;
 
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
 
  // assign read_data=ram[read_addr_reg];
 
@@ -270,9 +270,9 @@ module lsq_ex_ram(
   input pwire write6_wen;
 
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
 
   assign read_data=ram[read_addr_reg];
 
@@ -431,7 +431,7 @@ module lsq_shared_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   //reg [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr];
@@ -469,8 +469,8 @@ module lsq_sharedB_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -513,8 +513,8 @@ module lsq_pend_ram(
   input pwire [ADDR_WIDTH-1:0] write_addr1;
   input pwire write_wen1;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -653,7 +653,7 @@ module lsq_req(
   input pwire write_thread_shr;
   input pwire  [SDATA_WIDTH-1:0] write_data_shr;
   input pwire write_wen_shr;
-  output pwire reg [ADDR_WIDTH:0] write_addr_shr;
+  output pwire [ADDR_WIDTH:0] write_addr_shr;
 
   output pwire [XDATA_WIDTH-1:0]  read0B_xdata;
   output pwire read0B_enOut;
@@ -717,38 +717,38 @@ module lsq_req(
   input pwire smpc0,smpc1,smpc2,smpc3;
   input pwire rsEn0,rsEn1,rsEn2,rsEn3;
   
-  reg [2*ADDR_COUNT-1:0]  validA;
-  reg [2*ADDR_COUNT-1:0] validB;
-  reg [2*ADDR_COUNT-1:0]  validA_next;
-  reg [2*ADDR_COUNT-1:0] validB_next;
-  reg [2*ADDR_COUNT-1:0]  validA_reg;
-  reg [2*ADDR_COUNT-1:0]  validA_next_reg;
+  pwire [2*ADDR_COUNT-1:0]  validA;
+  pwire [2*ADDR_COUNT-1:0] validB;
+  pwire [2*ADDR_COUNT-1:0]  validA_next;
+  pwire [2*ADDR_COUNT-1:0] validB_next;
+  pwire [2*ADDR_COUNT-1:0]  validA_reg;
+  pwire [2*ADDR_COUNT-1:0]  validA_next_reg;
 
-  reg [2*ADDR_COUNT-1:0]  threadA;
-  reg [2*ADDR_COUNT-1:0] threadB;
-  reg [2*ADDR_COUNT-1:0]  threadA_next;
-  reg [2*ADDR_COUNT-1:0] threadB_next;
+  pwire [2*ADDR_COUNT-1:0]  threadA;
+  pwire [2*ADDR_COUNT-1:0] threadB;
+  pwire [2*ADDR_COUNT-1:0]  threadA_next;
+  pwire [2*ADDR_COUNT-1:0] threadB_next;
  
-  reg smpc0_reg,smpc1_reg,smpc2_reg,smpc3_reg;
-  reg smpc0_reg2,smpc1_reg2,smpc2_reg2,smpc3_reg2;
+  pwire smpc0_reg,smpc1_reg,smpc2_reg,smpc3_reg;
+  pwire smpc0_reg2,smpc1_reg2,smpc2_reg2,smpc3_reg2;
 
-  reg [ADDR_WIDTH:0] readA_addr;
-  reg [ADDR_WIDTH:0] readB_addr;
-  reg [ADDR_WIDTH:0] readA_addr_reg;
+  pwire [ADDR_WIDTH:0] readA_addr;
+  pwire [ADDR_WIDTH:0] readB_addr;
+  pwire [ADDR_WIDTH:0] readA_addr_reg;
   pwire [2*ADDR_COUNT-1:0] firstB;
-  reg [2*ADDR_COUNT-1:0] curB;
+  pwire [2*ADDR_COUNT-1:0] curB;
   pwire foundB;
   pwire [2*ADDR_COUNT-1:0] firstBN;
   pwire foundBN;
   pwire [ADDR_WIDTH:0] readB_addr_d;
-  reg onSameValidB;
+  pwire onSameValidB;
   pwire [2*ADDR_COUNT-1:0] firstA;
-  reg [2*ADDR_COUNT-1:0] curA;
+  pwire [2*ADDR_COUNT-1:0] curA;
   pwire foundA;
   pwire [2*ADDR_COUNT-1:0] firstAN;
   pwire foundAN;
   pwire [ADDR_WIDTH:0] readA_addr_d;
-  reg onSameValidA;
+  pwire onSameValidA;
   
   pwire [SDATA_WIDTH-1:0] read_data_shrB_ram;
   pwire [SDATA_WIDTH-1:0] read_data_shr_ram;
@@ -756,130 +756,130 @@ module lsq_req(
   pwire [2:0] write4_aux;
   pwire [2:0] write5_aux;
   
-  reg [ADDR2_WIDTH-1:0] write0_addr_reg;
-  reg [ADDR2_WIDTH-1:0] write1_addr_reg;
-  reg [ADDR2_WIDTH-1:0] write2_addr_reg;
-  reg [ADDR2_WIDTH-1:0] write3_addr_reg;
-  reg [ADDR2_WIDTH-1:0] write0_addr_reg2;
-  reg [ADDR2_WIDTH-1:0] write1_addr_reg2;
-  reg [ADDR2_WIDTH-1:0] write2_addr_reg2;
-  reg [ADDR2_WIDTH-1:0] write3_addr_reg2;
-  reg [XDATA_WIDTH-3:0] write0_xdata_reg;
-  reg [XDATA_WIDTH-3:0] write1_xdata_reg;
-  reg [XDATA_WIDTH-3:0] write2_xdata_reg;
-  reg [XDATA_WIDTH-3:0] write3_xdata_reg;
-  reg [XDATA_WIDTH-3:0] write0_xdata_reg2;
-  reg [XDATA_WIDTH-3:0] write1_xdata_reg2;
-  reg [XDATA_WIDTH-3:0] write2_xdata_reg2;
-  reg [XDATA_WIDTH-3:0] write3_xdata_reg2;
+  pwire [ADDR2_WIDTH-1:0] write0_addr_reg;
+  pwire [ADDR2_WIDTH-1:0] write1_addr_reg;
+  pwire [ADDR2_WIDTH-1:0] write2_addr_reg;
+  pwire [ADDR2_WIDTH-1:0] write3_addr_reg;
+  pwire [ADDR2_WIDTH-1:0] write0_addr_reg2;
+  pwire [ADDR2_WIDTH-1:0] write1_addr_reg2;
+  pwire [ADDR2_WIDTH-1:0] write2_addr_reg2;
+  pwire [ADDR2_WIDTH-1:0] write3_addr_reg2;
+  pwire [XDATA_WIDTH-3:0] write0_xdata_reg;
+  pwire [XDATA_WIDTH-3:0] write1_xdata_reg;
+  pwire [XDATA_WIDTH-3:0] write2_xdata_reg;
+  pwire [XDATA_WIDTH-3:0] write3_xdata_reg;
+  pwire [XDATA_WIDTH-3:0] write0_xdata_reg2;
+  pwire [XDATA_WIDTH-3:0] write1_xdata_reg2;
+  pwire [XDATA_WIDTH-3:0] write2_xdata_reg2;
+  pwire [XDATA_WIDTH-3:0] write3_xdata_reg2;
 
-  reg write0_thr_reg;
-  reg write1_thr_reg;
-  reg write2_thr_reg;
-  reg write3_thr_reg;
-  reg write0_thr_reg2;
-  reg write1_thr_reg2;
-  reg write2_thr_reg2;
-  reg write3_thr_reg2;
+  pwire write0_thr_reg;
+  pwire write1_thr_reg;
+  pwire write2_thr_reg;
+  pwire write3_thr_reg;
+  pwire write0_thr_reg2;
+  pwire write1_thr_reg2;
+  pwire write2_thr_reg2;
+  pwire write3_thr_reg2;
 
-  reg write0_wen_reg;
-  reg write1_wen_reg;
-  reg write2_wen_reg;
-  reg write3_wen_reg;
-  reg write0_wen_reg2;
-  reg write1_wen_reg2;
-  reg write2_wen_reg2;
-  reg write3_wen_reg2;
+  pwire write0_wen_reg;
+  pwire write1_wen_reg;
+  pwire write2_wen_reg;
+  pwire write3_wen_reg;
+  pwire write0_wen_reg2;
+  pwire write1_wen_reg2;
+  pwire write2_wen_reg2;
+  pwire write3_wen_reg2;
   
-  reg [ADDR2_WIDTH-1:0] write4_addr_REGA;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REGA;
-  reg write4_wen_REGA;
-  reg [2:0] write4_dly_REGA;
-  reg [ADDR2_WIDTH-1:0] write4_addr_REGB;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REGB;
-  reg write4_wen_REGB;
-  reg [2:0] write4_dly_REGB;
-  reg [ADDR2_WIDTH-1:0] write4_addr_REGC;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REGC;
-  reg write4_wen_REGC;
-  reg [2:0] write4_dly_REGC;
-  reg [ADDR2_WIDTH-1:0] write4_addr_REGD;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REGD;
-  reg write4_wen_REGD;
-  reg [2:0] write4_dly_REGD;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REGA;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REGA;
-  reg write5_wen_REGA;
-  reg [2:0] write5_dly_REGA;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REGB;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REGB;
-  reg write5_wen_REGB;
-  reg [2:0] write5_dly_REGB;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REGC;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REGC;
-  reg write5_wen_REGC;
-  reg [2:0] write5_dly_REGC;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REGD;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REGD;
-  reg write5_wen_REGD;
-  reg [2:0] write5_dly_REGD;
-  reg [ADDR2_WIDTH-1:0] write4_addr_REG2;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REG2;
-  reg write4_wen_REG2;
-  reg [2:0] write4_dly_REG2;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REG2;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REG2;
-  reg write5_wen_REG2;
-  reg [2:0] write5_dly_REG2;
-  reg [ADDR2_WIDTH-1:0] write4_addr_REG3;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REG3;
-  reg write4_wen_REG3;
-  reg [2:0] write4_dly_REG3;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REG3;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REG3;
-  reg write5_wen_REG3;
-  reg [2:0] write5_dly_REG3;
-  reg [ADDR2_WIDTH-1:0] write4_addr_REG4;
-  reg [XDATA_WIDTH-3:0] write4_xdata_REG4;
-  reg write4_wen_REG4;
-  reg [2:0] write4_dly_REG4;
-  reg [ADDR2_WIDTH-1:0] write5_addr_REG4;
-  reg [XDATA_WIDTH-3:0] write5_xdata_REG4;
-  reg write5_wen_REG4;
-  reg [2:0] write5_dly_REG4;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REGA;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REGA;
+  pwire write4_wen_REGA;
+  pwire [2:0] write4_dly_REGA;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REGB;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REGB;
+  pwire write4_wen_REGB;
+  pwire [2:0] write4_dly_REGB;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REGC;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REGC;
+  pwire write4_wen_REGC;
+  pwire [2:0] write4_dly_REGC;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REGD;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REGD;
+  pwire write4_wen_REGD;
+  pwire [2:0] write4_dly_REGD;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REGA;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REGA;
+  pwire write5_wen_REGA;
+  pwire [2:0] write5_dly_REGA;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REGB;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REGB;
+  pwire write5_wen_REGB;
+  pwire [2:0] write5_dly_REGB;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REGC;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REGC;
+  pwire write5_wen_REGC;
+  pwire [2:0] write5_dly_REGC;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REGD;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REGD;
+  pwire write5_wen_REGD;
+  pwire [2:0] write5_dly_REGD;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REG2;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REG2;
+  pwire write4_wen_REG2;
+  pwire [2:0] write4_dly_REG2;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REG2;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REG2;
+  pwire write5_wen_REG2;
+  pwire [2:0] write5_dly_REG2;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REG3;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REG3;
+  pwire write4_wen_REG3;
+  pwire [2:0] write4_dly_REG3;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REG3;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REG3;
+  pwire write5_wen_REG3;
+  pwire [2:0] write5_dly_REG3;
+  pwire [ADDR2_WIDTH-1:0] write4_addr_REG4;
+  pwire [XDATA_WIDTH-3:0] write4_xdata_REG4;
+  pwire write4_wen_REG4;
+  pwire [2:0] write4_dly_REG4;
+  pwire [ADDR2_WIDTH-1:0] write5_addr_REG4;
+  pwire [XDATA_WIDTH-3:0] write5_xdata_REG4;
+  pwire write5_wen_REG4;
+  pwire [2:0] write5_dly_REG4;
 
   pwire enableA;
   pwire enableB;
   pwire enableA0;
   pwire enableB0;
 
-  reg flipA;
-  reg flipB;
-  reg flipA_reg;
-  reg flipA_REH;
-  reg [5:0] readA_addr_REH;
+  pwire flipA;
+  pwire flipB;
+  pwire flipA_reg;
+  pwire flipA_REH;
+  pwire [5:0] readA_addr_REH;
 
   pwire [5:0] readA_flip;
   pwire [5:0] readA_enItem;
-  reg [5:0] readA_enItem_reg;
+  pwire [5:0] readA_enItem_reg;
   pwire [5:0] readA_enItemP;
-  reg [5:0] readA_enItemP_reg;
+  pwire [5:0] readA_enItemP_reg;
   pwire [5:0] readA_st;
-  reg [5:0] readA_st_reg;
+  pwire [5:0] readA_st_reg;
   pwire [5:0] readA_flag;
-  reg [5:0] readA_flag_reg;
+  pwire [5:0] readA_flag_reg;
   pwire [5:0] readA_pconfl;
-  reg [5:0] readA_pconfl_reg;
+  pwire [5:0] readA_pconfl_reg;
   pwire readA_clkEn0;
-  reg readA_clkEn_reg,readA_clkEn0_reg;
+  pwire readA_clkEn_reg,readA_clkEn0_reg;
   pwire [5:0] readA_unal;
-  reg  [5:0] readA_unal_reg;
+  pwire  [5:0] readA_unal_reg;
   
   pwire [5:0] readB_flip;
   pwire [5:0] readB_enItem;
   pwire [5:0] readB_ldconfl2;
   pwire readB_rdy;
-  reg readA_rdy_reg;
+  pwire readA_rdy_reg;
 
   pwire [31:0] firstBx;
   pwire [31:0] firstAx;
@@ -903,12 +903,12 @@ module lsq_req(
   pwire foundBNq;
 
   pwire reenabA,reenabB;
-/*  reg toflipA,toflipB;*/
-  reg exceptA_fix;
-  reg exceptB_fix;
+/*  pwire toflipA,toflipB;*/
+  pwire exceptA_fix;
+  pwire exceptB_fix;
 
-  reg init;
-  reg [5:0] initCount;
+  pwire init;
+  pwire [5:0] initCount;
   pwire [5:0] initCount_next;
 
   pwire [YDATA_WIDTH-1:0] read_dataY;

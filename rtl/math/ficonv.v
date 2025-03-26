@@ -43,15 +43,15 @@ module cvt_FP_I_mod(
   pwire [64:0] bits;
   pwire [64:0] bits2;
   pwire [71:0] val_imm;
-  reg [71:0] val_imm_reg;
+  pwire [71:0] val_imm_reg;
   pwire [64:0] val;
-  reg [15:0] shift_reg;
+  pwire [15:0] shift_reg;
   pwire sign;
-  reg sign_reg;
-  reg is32b_reg;
-  reg clkEn_reg;
+  pwire sign_reg;
+  pwire is32b_reg;
+  pwire clkEn_reg;
   pwire coUP,coNUP;
-  reg coUP_reg,coNUP_reg;
+  pwire coUP_reg,coNUP_reg;
 
   assign shift=isEXT ? {A[79],A[81],A[78:65]} : 16'bz;
   assign shift=isDBL ? {A[79],A[81],{4{~A[79]}},A[62:53]} : 16'bz;

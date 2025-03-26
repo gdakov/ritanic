@@ -42,8 +42,8 @@ module dcache1_ram(
   input pwire [`wport-1:0] write_wen;
   input pwire [`wport-1:0][8:0] write_ben;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [3:0][ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [3:0][ADDR_WIDTH-1:0] read_addr_reg;
   
   integer wpl;
 
@@ -128,9 +128,9 @@ module dcache1_bank(
   pwire [3:0]onE,onO;
   pwire [3:0][1:0][DATA_WIDTH-1:0] read_dataP;
 
-  reg [3:0] read_bankEn0_reg;
+  pwire [3:0] read_bankEn0_reg;
 
-  reg [3:0] read_odd0_reg;
+  pwire [3:0] read_odd0_reg;
 
   
   
@@ -361,10 +361,10 @@ module dcache1_way(
   pwire [5:0] errL;
   pwire dirtyE,dirtyO;
   
-  reg [`wport-1:0][4:0] write_begin0_reg;
-  reg [`wport-1:0][4:0] write_end0_reg;
-  reg [`wport-1:0][3:0] write_bBen0_reg;
-  reg [`wport-1:0][3:0] write_enBen0_reg;
+  pwire [`wport-1:0][4:0] write_begin0_reg;
+  pwire [`wport-1:0][4:0] write_end0_reg;
+  pwire [`wport-1:0][3:0] write_bBen0_reg;
+  pwire [`wport-1:0][3:0] write_enBen0_reg;
 
   pwire [3:0] read_hitEL;
   pwire [3:0] read_hitOL;
@@ -386,30 +386,30 @@ module dcache1_way(
 //  pwire [ADDR_WIDTH-2:0] read_addrO[3:0];
  
 
-  reg [3:0][4:0] read_begin0_reg;
-  reg [3:0][1:0] read_low0_reg;
+  pwire [3:0][4:0] read_begin0_reg;
+  pwire [3:0][1:0] read_low0_reg;
   
-  reg [3:0] read_odd0_reg;
-  reg [3:0] read_split0_reg;
-  reg [`wport-1:0] write_odd0_reg;
-  reg [`wport-1:0] write_split0_reg;
-  reg write_insert_reg;
+  pwire [3:0] read_odd0_reg;
+  pwire [3:0] read_split0_reg;
+  pwire [`wport-1:0] write_odd0_reg;
+  pwire [`wport-1:0] write_split0_reg;
+  pwire write_insert_reg;
   
-  reg read_invalidate_reg;
+  pwire read_invalidate_reg;
   
   pwire [`wport-1:0] write_reqE0,write_reqO0;
   
-  reg [`wport-1:0] write_clkEn0_reg;
-  reg [`wport-1:0] write_clkEn0_reg2;
+  pwire [`wport-1:0] write_clkEn0_reg;
+  pwire [`wport-1:0] write_clkEn0_reg2;
 
-  reg [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0_reg;
-  reg [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0_reg;
-  reg [3:0][ADDR_WIDTH-2:0] read_addrE0_reg;
-  reg [3:0][ADDR_WIDTH-2:0] read_addrO0_reg;
-  reg [3:0]read_clkEn0_reg;
+  pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0_reg;
+  pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0_reg;
+  pwire [3:0][ADDR_WIDTH-2:0] read_addrE0_reg;
+  pwire [3:0][ADDR_WIDTH-2:0] read_addrO0_reg;
+  pwire [3:0]read_clkEn0_reg;
   pwire [`wport-1:0][1:0] write_hitO;
   pwire [`wport-1:0][1:0] write_hitE;
-  reg ins_hit_reg;
+  pwire ins_hit_reg;
  
   pwire [1:0] write_dupl[1:0][`wport-1:0];
   
@@ -417,9 +417,9 @@ module dcache1_way(
   
   pwire [3:0][1:0] read0_pbitP;
  
-  reg init;
-  reg init_dirty;
-  reg [5:0] initCount;
+  pwire init;
+  pwire init_dirty;
+  pwire [5:0] initCount;
   pwire [5:0] initCount_d;
   generate
     genvar b,r,w;
@@ -715,8 +715,8 @@ module dcache1(
   input pwire [3:0][ADDR_WIDTH-2:0] read_addrO0;
   input pwire [3:0][BANK_COUNT-1:0] read_bank0;
   input pwire [3:0]read_clkEn0;
-  output pwire reg [3:0] read_hit0;
-  output pwire reg [3:0] [1:0] read_hitCl0;
+  output pwire [3:0] read_hit0;
+  output pwire [3:0] [1:0] read_hitCl0;
   input pwire [3:0]read_odd0;
   input pwire [3:0]read_split0;
   output pwire [3:0][127+8:0] read_dataA0;
@@ -736,9 +736,9 @@ module dcache1(
   input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
   input pwire [`wport-1:0][BANK_COUNT-1:0] write_bank0;
   input pwire [`wport-1:0]write_clkEn0;
-  output pwire reg [`wport-1:0]write_hit0;
-  output pwire reg [`wport-1:0][1:0] write_hitCl0;
-  output pwire reg [`wport-1:0][1:0] write_dupl0;
+  output pwire [`wport-1:0]write_hit0;
+  output pwire [`wport-1:0][1:0] write_hitCl0;
+  output pwire [`wport-1:0][1:0] write_dupl0;
   input pwire [`wport-1:0]write_split0;
   input pwire [`wport-1:0]write_odd0;
   input pwire [`wport-1:0][4:0] write_begin0;
@@ -764,32 +764,32 @@ module dcache1(
   input pwire [15:0] msrss_addr;
   input pwire [64:0] msrss_data;
   //embedded segment register
-  reg [64:0] emsr;
+  pwire [64:0] emsr;
 
   pwire [1023:0] write_data;
   pwire [1023:0] write_dataM;
 //  pwire [LINE_WIDTH-1:0] read_data;
-  reg read3_pf;
-  reg read3_pf_reg;
-  reg [135:0] pwndata[3:0];
+  pwire read3_pf;
+  pwire read3_pf_reg;
+  pwire [135:0] pwndata[3:0];
 
   pwire [LINE_WIDTH-1:0] read_dataP;
-  reg [LINE_WIDTH-1:0] read_dataP_reg;
-  reg [LINE_WIDTH-1:0] read_dataP_reg2;
+  pwire [LINE_WIDTH-1:0] read_dataP_reg;
+  pwire [LINE_WIDTH-1:0] read_dataP_reg2;
   pwire [BANK_COUNT*32-1:0] read_data_strip;
   pwire [1:0] read_pbit0P[8:0];
   pwire [1:0] read_pbit1P[8:0];
   pwire [1:0] read_pbit2P[8:0];
   pwire [1:0] read_pbit3P[8:0];
   
-  reg [1:0] read_pbit0P_reg;
-  reg [1:0] read_pbit0P_reg2;
-  reg [1:0] read_pbit1P_reg;
-  reg [1:0] read_pbit1P_reg2;
-  reg [1:0] read_pbit2P_reg;
-  reg [1:0] read_pbit2P_reg2;
-  reg [1:0] read_pbit3P_reg;
-  reg [1:0] read_pbit3P_reg2;
+  pwire [1:0] read_pbit0P_reg;
+  pwire [1:0] read_pbit0P_reg2;
+  pwire [1:0] read_pbit1P_reg;
+  pwire [1:0] read_pbit1P_reg2;
+  pwire [1:0] read_pbit2P_reg;
+  pwire [1:0] read_pbit2P_reg2;
+  pwire [1:0] read_pbit3P_reg;
+  pwire [1:0] read_pbit3P_reg2;
 
   pwire [5:0][6:0] puke_addr;
   pwire [5:0] puke_en;
@@ -831,20 +831,20 @@ module dcache1(
   pwire [1:0] read_hitCl2P;
   pwire [1:0] read_hitCl3P;
 
-  reg [1:0] read_hitCl0P_reg;
-  reg [1:0] read_hitCl1P_reg;
-  reg [1:0] read_hitCl2P_reg;
-  reg [1:0] read_hitCl3P_reg;
+  pwire [1:0] read_hitCl0P_reg;
+  pwire [1:0] read_hitCl1P_reg;
+  pwire [1:0] read_hitCl2P_reg;
+  pwire [1:0] read_hitCl3P_reg;
 
   pwire read_hit0P;
   pwire read_hit1P;
   pwire read_hit2P;
   pwire read_hit3P;
 
-  reg read_hit0P_reg;
-  reg read_hit1P_reg;
-  reg read_hit2P_reg;
-  reg read_hit3P_reg;
+  pwire read_hit0P_reg;
+  pwire read_hit1P_reg;
+  pwire read_hit2P_reg;
+  pwire read_hit3P_reg;
 
   pwire [1:0] write_hit0_way[7:0];
   pwire [1:0] write_hit1_way[7:0];
@@ -852,113 +852,113 @@ module dcache1(
   pwire write_hit0P;
   pwire write_hit1P;
 
-  reg write_hit0P_reg;
-  reg write_hit1P_reg;
+  pwire write_hit0P_reg;
+  pwire write_hit1P_reg;
 
   pwire [1:0] write_hitCl0P;
   pwire [1:0] write_hitCl1P;
 
-  reg [1:0] write_hitCl0P_reg;
-  reg [1:0] write_hitCl1P_reg;
+  pwire [1:0] write_hitCl0P_reg;
+  pwire [1:0] write_hitCl1P_reg;
   
   pwire [1:0] write_dupl0_way[7:0];
   pwire [1:0] write_dupl1_way[7:0];
 
   pwire [1:0] write_dupl0P;
   pwire [1:0] write_dupl1P;
-  reg [1:0] write_dupl0P_reg;
-  reg [1:0] write_dupl1P_reg;
+  pwire [1:0] write_dupl0P_reg;
+  pwire [1:0] write_dupl1P_reg;
   
-  reg rdreqE0,rdreqO0;
-  reg rdreqE1,rdreqO1;
-  reg rdreqE2,rdreqO2;
-  reg rdreqE3,rdreqO3;
+  pwire rdreqE0,rdreqO0;
+  pwire rdreqE1,rdreqO1;
+  pwire rdreqE2,rdreqO2;
+  pwire rdreqE3,rdreqO3;
 
-  reg wrreqE0,wrreqO0;
-  reg wrreqE1,wrreqO1;
+  pwire wrreqE0,wrreqO0;
+  pwire wrreqE1,wrreqO1;
 
-  reg [ADDR_WIDTH-2:0] read_addrE0_reg;
-  reg [ADDR_WIDTH-2:0] read_addrO0_reg;
-  reg [BANK_COUNT-1:0] read_bank0_reg;
-  reg read_clkEn0_reg;
-  reg read_odd0_reg;
-  reg read_split0_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrE0_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrO0_reg;
+  pwire [BANK_COUNT-1:0] read_bank0_reg;
+  pwire read_clkEn0_reg;
+  pwire read_odd0_reg;
+  pwire read_split0_reg;
 
-  reg [ADDR_WIDTH-2:0] read_addrE1_reg;
-  reg [ADDR_WIDTH-2:0] read_addrO1_reg;
-  reg [BANK_COUNT-1:0] read_bank1_reg;
-  reg read_clkEn1_reg;
-  reg read_odd1_reg;
-  reg read_split1_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrE1_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrO1_reg;
+  pwire [BANK_COUNT-1:0] read_bank1_reg;
+  pwire read_clkEn1_reg;
+  pwire read_odd1_reg;
+  pwire read_split1_reg;
   
-  reg [ADDR_WIDTH-2:0] read_addrE2_reg;
-  reg [ADDR_WIDTH-2:0] read_addrO2_reg;
-  reg [BANK_COUNT-1:0] read_bank2_reg;
-  reg [3:0][BANK_COUNT-1:0] read_bank;
-  reg read_clkEn2_reg;
-  reg read_odd2_reg;
-  reg read_split2_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrE2_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrO2_reg;
+  pwire [BANK_COUNT-1:0] read_bank2_reg;
+  pwire [3:0][BANK_COUNT-1:0] read_bank;
+  pwire read_clkEn2_reg;
+  pwire read_odd2_reg;
+  pwire read_split2_reg;
 
-  reg [ADDR_WIDTH-2:0] read_addrE3_reg;
-  reg [ADDR_WIDTH-2:0] read_addrO3_reg;
-  reg [BANK_COUNT-1:0] read_bank3_reg;
-  reg read_clkEn3_reg;
-  reg read_odd3_reg;
-  reg read_split3_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrE3_reg;
+  pwire [ADDR_WIDTH-2:0] read_addrO3_reg;
+  pwire [BANK_COUNT-1:0] read_bank3_reg;
+  pwire read_clkEn3_reg;
+  pwire read_odd3_reg;
+  pwire read_split3_reg;
  
-  reg [3:0] read_odd;
-  reg [3:0] read_odd_reg;
-  reg [3:0] read_split;
-  reg [3:0] read_split_reg;
+  pwire [3:0] read_odd;
+  pwire [3:0] read_odd_reg;
+  pwire [3:0] read_split;
+  pwire [3:0] read_split_reg;
  
-  reg [BANK_COUNT-1:0] read_bankNoRead_reg;//bits are 1 if other bank reads are 0
+  pwire [BANK_COUNT-1:0] read_bankNoRead_reg;//bits are 1 if other bank reads are 0
   
-  reg read_invalidate_reg; 
-  reg read_invalidate_reg2;
+  pwire read_invalidate_reg; 
+  pwire read_invalidate_reg2;
   
-  reg [ADDR_WIDTH-2:0] write_addrE0_reg;
-  reg [ADDR_WIDTH-2:0] write_addrO0_reg;
-  reg [BANK_COUNT-1:0] write_bank0_reg;
-  reg [4:0] write_begin0_reg;
-  reg [4:0] write_end0_reg;
-  reg [3:0] write_bgnBen0_reg;
-  reg [3:0] write_endBen0_reg;
-  reg write_clkEn0_reg;
-  reg write_split0_reg;
-  reg [1:0] write_pbit0_reg;
-  reg write_d128_0_reg;
-  reg write_odd0_reg;
-  reg [ADDR_WIDTH-2:0] write_addrE1_reg;
-  reg [ADDR_WIDTH-2:0] write_addrO1_reg;
-  reg [BANK_COUNT-1:0] write_bank1_reg;
-  reg write_clkEn1_reg;
-  reg write_split1_reg;
-  reg [1:0] write_pbit1_reg;
-  reg write_d128_1_reg;
-  reg write_odd1_reg;
-  reg [4:0] write_begin1_reg;
-  reg [4:0] write_end1_reg;
-  reg [3:0] write_bgnBen1_reg;
-  reg [3:0] write_endBen1_reg;
+  pwire [ADDR_WIDTH-2:0] write_addrE0_reg;
+  pwire [ADDR_WIDTH-2:0] write_addrO0_reg;
+  pwire [BANK_COUNT-1:0] write_bank0_reg;
+  pwire [4:0] write_begin0_reg;
+  pwire [4:0] write_end0_reg;
+  pwire [3:0] write_bgnBen0_reg;
+  pwire [3:0] write_endBen0_reg;
+  pwire write_clkEn0_reg;
+  pwire write_split0_reg;
+  pwire [1:0] write_pbit0_reg;
+  pwire write_d128_0_reg;
+  pwire write_odd0_reg;
+  pwire [ADDR_WIDTH-2:0] write_addrE1_reg;
+  pwire [ADDR_WIDTH-2:0] write_addrO1_reg;
+  pwire [BANK_COUNT-1:0] write_bank1_reg;
+  pwire write_clkEn1_reg;
+  pwire write_split1_reg;
+  pwire [1:0] write_pbit1_reg;
+  pwire write_d128_1_reg;
+  pwire write_odd1_reg;
+  pwire [4:0] write_begin1_reg;
+  pwire [4:0] write_end1_reg;
+  pwire [3:0] write_bgnBen1_reg;
+  pwire [3:0] write_endBen1_reg;
   
-  reg insert_en_reg;    
-  reg insert_exclusive_reg;
-  reg insert_dirty_reg;
-  reg [1023:0] write_data_reg;
-  reg [1023:0] write_dataM_reg;
-  reg insert_exclusive_reg2;
-  reg insert_dirty_reg2;
-  reg [1023:0] write_data_reg2;
-  reg [1023:0] write_dataM_reg2;
+  pwire insert_en_reg;    
+  pwire insert_exclusive_reg;
+  pwire insert_dirty_reg;
+  pwire [1023:0] write_data_reg;
+  pwire [1023:0] write_dataM_reg;
+  pwire insert_exclusive_reg2;
+  pwire insert_dirty_reg2;
+  pwire [1023:0] write_data_reg2;
+  pwire [1023:0] write_dataM_reg2;
   pwire [LINE_WIDTH-1:0] write_data_ecc;
   pwire [LINE_WIDTH-1:0] write_dataM0_ecc;
   pwire [LINE_WIDTH-1:0] write_dataM_ecc;
-  reg [15:0] write_dataPTR_reg;
-  reg [15:0] write_dataPTR_reg2;
-  reg [BANK_COUNT-1:0] write_bank0_reg2;
-  reg [BANK_COUNT-1:0] write_bank1_reg2;
+  pwire [15:0] write_dataPTR_reg;
+  pwire [15:0] write_dataPTR_reg2;
+  pwire [BANK_COUNT-1:0] write_bank0_reg2;
+  pwire [BANK_COUNT-1:0] write_bank1_reg2;
   
-  reg insert_en_reg2;
+  pwire insert_en_reg2;
 
   pwire [255:0] rxdata0[3:0];
   pwire [255:0] rxdata1[3:0];
@@ -973,10 +973,10 @@ module dcache1(
   pwire [3:0][127:0] rddata2;
 //  pwire [4:0] rdcan[3:0];
   pwire [3:0][127+8:0] read_dataA;
-  reg [5:0] mskdata1[3:0];
-  reg swpdata[3:0];
-  reg [4:0] read_sz[3:0];
-  reg [4:0] read_sz_reg[3:0];
+  pwire [5:0] mskdata1[3:0];
+  pwire swpdata[3:0];
+  pwire [4:0] read_sz[3:0];
+  pwire [4:0] read_sz_reg[3:0];
 
   pwire [7:0] write_back_way;
   pwire [7:0] write_back2_way;
@@ -984,42 +984,42 @@ module dcache1(
   pwire write_back;
   pwire write_back2;
 
-  reg write_back_P;
-  reg write_back2_P;
+  pwire write_back_P;
+  pwire write_back2_P;
 
-  reg [4:0] read_beginA[3:0];
-  reg [4:0] read_beginA_reg[3:0];
-  reg [4:0] read_beginA_reg2[3:0];
+  pwire [4:0] read_beginA[3:0];
+  pwire [4:0] read_beginA_reg[3:0];
+  pwire [4:0] read_beginA_reg2[3:0];
   
-  reg [7:0] read_low;
-  reg [7:0] read_low_reg;
-  reg [7:0] read_low_reg2;
+  pwire [7:0] read_low;
+  pwire [7:0] read_low_reg;
+  pwire [7:0] read_low_reg2;
   
-//  reg [LINE_WIDTH-1:0] wb_data;
+//  pwire [LINE_WIDTH-1:0] wb_data;
  
   integer v;
 
 
-  reg sticky_wen;
-  reg write_clear_reg;
-  reg write_clear_reg2;
-  reg write_clkEn0_reg2;
-  reg write_clkEn1_reg2;
+  pwire sticky_wen;
+  pwire write_clear_reg;
+  pwire write_clear_reg2;
+  pwire write_clkEn0_reg2;
+  pwire write_clkEn1_reg2;
  
   pwire [7:0] read_errT0; 
   pwire [7:0] read_errT1; 
   pwire [7:0] read_errT2; 
   pwire [7:0] read_errT3; 
-  reg [7:0] read_errP_reg;
-  reg [7:0] read_errP_reg2;
-  reg read_clkEnAny;
-//  reg wb_en_reg,wb_en_reg2,wb_en_reg3;
+  pwire [7:0] read_errP_reg;
+  pwire [7:0] read_errP_reg2;
+  pwire read_clkEnAny;
+//  pwire wb_en_reg,wb_en_reg2,wb_en_reg3;
   pwire [ADDR_WIDTH-1:0] wb_addr;
-  reg [ADDR_WIDTH-1:0] wb_addr_reg;
-  reg [ADDR_WIDTH-1:0] wb_addr_reg2;
+  pwire [ADDR_WIDTH-1:0] wb_addr_reg;
+  pwire [ADDR_WIDTH-1:0] wb_addr_reg2;
   pwire wb_enOut;
-  reg wb_enOut_reg;
-  reg wb_enOut_reg2;
+  pwire wb_enOut_reg;
+  pwire wb_enOut_reg2;
   generate
       genvar w,b,p,q;
       for (w=0;w<9;w=w+1) begin : ways_gen

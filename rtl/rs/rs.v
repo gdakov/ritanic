@@ -153,7 +153,7 @@ module rs_wakeUp_logic(
   input pwire newIsFP2,newIsV2;
   input pwire [1:0] newEQ2;
   
-  output pwire reg [3:0] fuFwd;
+  output pwire [3:0] fuFwd;
   
   input pwire outRsSelect0;
   input pwire outDataEn0;
@@ -174,24 +174,24 @@ module rs_wakeUp_logic(
 
   pwire [1:0] eq_new;
 
-  reg [1:0] eq_reg;
-//  reg [1:0] eq_reg2;
-//  reg [1:0] eq_reg3;
-//  reg [1:0] eq_reg4;
-//  reg [1:0] eq_reg5;
+  pwire [1:0] eq_reg;
+//  pwire [1:0] eq_reg2;
+//  pwire [1:0] eq_reg3;
+//  pwire [1:0] eq_reg4;
+//  pwire [1:0] eq_reg5;
   
-  reg [1:0] eq_mask;
+  pwire [1:0] eq_mask;
 
-  reg [9:0] outEq0;
+  pwire [9:0] outEq0;
 
   pwire [REG_WIDTH-1:0] register_d;
-  reg [REG_WIDTH-1:0] register;
+  pwire [REG_WIDTH-1:0] register;
 
   pwire [FN_WIDTH-1:0] funit_d;
-  reg [FN_WIDTH-1:0] funit;
+  pwire [FN_WIDTH-1:0] funit;
   pwire [18:0] funit0;
 
-  reg [3:0] fuuFwd;
+  pwire [3:0] fuuFwd;
   
   pwire [10:0] gazump;
   pwire [3:0] gzFwd;
@@ -204,9 +204,9 @@ module rs_wakeUp_logic(
   pwire [8:0] FUreg[21:0];
   pwire [21:0] FUwen;
 
-  reg isFP;
+  pwire isFP;
   pwire isFP_d;
-  reg isV;
+  pwire isV;
   pwire isV_d;
   
 //  pwire isDataF,isDataI,isDataV;
@@ -518,41 +518,41 @@ module rs_wakeUp_logic_array(
   pwire [8:0] FUreg[21:0];
   pwire [21:0] FUwen;
   
-  reg [REG_WIDTH-1:0] FUreg4_reg;
-  reg FU4wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg4_reg;
+  pwire FU4wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg5_reg;
-  reg FU5wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg5_reg;
+  pwire FU5wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg6_reg;
-  reg FU6wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg6_reg;
+  pwire FU6wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg7_reg;
-  reg FU7wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg7_reg;
+  pwire FU7wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg8_reg;
-  reg FU8wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg8_reg;
+  pwire FU8wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg9_reg;
-  reg FU9wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg9_reg;
+  pwire FU9wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg4_reg2;
-  reg FU4wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg4_reg2;
+  pwire FU4wen_reg2;
 
-  reg [REG_WIDTH-1:0] FUreg5_reg2;
-  reg FU5wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg5_reg2;
+  pwire FU5wen_reg2;
 
-  reg [REG_WIDTH-1:0] FUreg6_reg2;
-  reg FU6wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg6_reg2;
+  pwire FU6wen_reg2;
 
-  reg [REG_WIDTH-1:0] FUreg7_reg2;
-  reg FU7wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg7_reg2;
+  pwire FU7wen_reg2;
 
-  reg [REG_WIDTH-1:0] FUreg8_reg2;
-  reg FU8wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg8_reg2;
+  pwire FU8wen_reg2;
 
-  reg [REG_WIDTH-1:0] FUreg9_reg2;
-  reg FU9wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg9_reg2;
+  pwire FU9wen_reg2;
 
   pwire [21:0] funit0[2:0];
   pwire [2:0] isFP;
@@ -833,7 +833,7 @@ module rs_wakeUp_data(
   pwire [WIDTH-1:0] data_d;
   pwire [WIDTH-1:0] data_d0;
   pwire [WIDTH-1:0] data_d1;
-  reg [WIDTH-1:0] data_q;
+  pwire [WIDTH-1:0] data_q;
 
 
   assign data_en=|{outEq,newRsSelect0,newRsSelect1,newRsSelect2};
@@ -1005,7 +1005,7 @@ module rs_wakeUp_data3(
   pwire [1:0] [WIDTH-1:0] data_d;
   pwire [1:0] [WIDTH-1:0] data_d0;
   pwire [1:0] [WIDTH-1:0] data_d1;
-  reg [1:0] [WIDTH-1:0] data_q;
+  pwire [1:0] [WIDTH-1:0] data_q;
 
 
   assign data_en[0]=|{outEqA,newRsSelect0,newRsSelect1};
@@ -1211,7 +1211,7 @@ module rs_wakeUpS_logic(
   input pwire newIsFP2;
   input pwire [1:0] newEQ2;
   
-  output pwire reg [3:0] fuFwd;
+  output pwire [3:0] fuFwd;
   
   input pwire outRsSelect1;
   input pwire outDataEn1;
@@ -1228,17 +1228,17 @@ module rs_wakeUpS_logic(
   pwire [1:0] eq_new;
 
 
-  reg [1:0] eq_reg;
+  pwire [1:0] eq_reg;
 
-  reg [1:0] eq_mask;
+  pwire [1:0] eq_mask;
    
   pwire [REG_WIDTH-1:0] register_d;
-  reg [REG_WIDTH-1:0] register;
+  pwire [REG_WIDTH-1:0] register;
 
   pwire [FN_WIDTH-1:0] funit_d;
-  reg [FN_WIDTH-1:0] funit;
+  pwire [FN_WIDTH-1:0] funit;
 
-  reg [3:0] fuuFwd;
+  pwire [3:0] fuuFwd;
   
   pwire [10:0] gazump;
   pwire [3:0] gzFwd;
@@ -1251,7 +1251,7 @@ module rs_wakeUpS_logic(
   pwire [8:0] FUreg[9:0];
   pwire [9:0] FUwen;
 
-  reg isFP;
+  pwire isFP;
   pwire isFP_d;
   
   pwire isDataF,isDataI;
@@ -1260,7 +1260,7 @@ module rs_wakeUpS_logic(
 
   pwire funM,funAdd,funMul;
   
-  reg [9:1] outEq0;
+  pwire [9:1] outEq0;
   
   assign sel=outRsSelect1&outDataEn1||outRsSelect2&outDataEn2||buffree&~newRsSelect1&~newRsSelect2;
 
@@ -1493,44 +1493,44 @@ module rs_wakeUpS_logic_array(
   pwire [9:0] FUwen;
   
   
-  reg [REG_WIDTH-1:0] FUreg0_reg;
-  reg FU0wen_reg;
-  reg [REG_WIDTH-1:0] FUreg1_reg;
-  reg FU1wen_reg;
-  reg [REG_WIDTH-1:0] FUreg2_reg;
-  reg FU2wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg0_reg;
+  pwire FU0wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg1_reg;
+  pwire FU1wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg2_reg;
+  pwire FU2wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg3_reg;
-  reg FU3wen_reg;
-  reg [REG_WIDTH-1:0] FUreg4_reg;
-  reg FU4wen_reg;
-  reg [REG_WIDTH-1:0] FUreg5_reg;
-  reg FU5wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg3_reg;
+  pwire FU3wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg4_reg;
+  pwire FU4wen_reg;
+  pwire [REG_WIDTH-1:0] FUreg5_reg;
+  pwire FU5wen_reg;
 
-  reg [REG_WIDTH-1:0] FUreg0_reg2;
-  reg FU0wen_reg2;
-  reg [REG_WIDTH-1:0] FUreg1_reg2;
-  reg FU1wen_reg2;
-  reg [REG_WIDTH-1:0] FUreg2_reg2;
-  reg FU2wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg0_reg2;
+  pwire FU0wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg1_reg2;
+  pwire FU1wen_reg2;
+  pwire [REG_WIDTH-1:0] FUreg2_reg2;
+  pwire FU2wen_reg2;
 
-  reg [REG_WIDTH-1:0] FUreg0_reg3;
-  reg FU0wen_reg3;
-  reg [REG_WIDTH-1:0] FUreg1_reg3;
-  reg FU1wen_reg3;
-  reg [REG_WIDTH-1:0] FUreg2_reg3;
-  reg FU2wen_reg3;
+  pwire [REG_WIDTH-1:0] FUreg0_reg3;
+  pwire FU0wen_reg3;
+  pwire [REG_WIDTH-1:0] FUreg1_reg3;
+  pwire FU1wen_reg3;
+  pwire [REG_WIDTH-1:0] FUreg2_reg3;
+  pwire FU2wen_reg3;
 
-  reg [REG_WIDTH-1:0] FUreg0_reg4;
-  reg FU0wen_reg4;
-  reg [REG_WIDTH-1:0] FUreg1_reg4;
-  reg FU1wen_reg4;
-  reg [REG_WIDTH-1:0] FUreg2_reg4;
-  reg FU2wen_reg4;
+  pwire [REG_WIDTH-1:0] FUreg0_reg4;
+  pwire FU0wen_reg4;
+  pwire [REG_WIDTH-1:0] FUreg1_reg4;
+  pwire FU1wen_reg4;
+  pwire [REG_WIDTH-1:0] FUreg2_reg4;
+  pwire FU2wen_reg4;
 
-  reg FU6wen_reg;
-  reg FU7wen_reg;
-  reg FU8wen_reg;
+  pwire FU6wen_reg;
+  pwire FU7wen_reg;
+  pwire FU8wen_reg;
 
   assign register[1]=newReg1;
   assign register[2]=newReg2;
@@ -1697,7 +1697,7 @@ module rs_nonWakeUp_DFF(
 
   pwire data_en;
   pwire [WIDTH-1:0] data_d;
-  reg [WIDTH-1:0] data_q;
+  pwire [WIDTH-1:0] data_q;
 
 
   assign data_en=|{newRsSelect0,newRsSelect1,newRsSelect2,rst};
@@ -1807,7 +1807,7 @@ module rs_nonWakeUp_datad_DFF(
   input pwire clk;
   input pwire rst;
   input pwire stall;
-  output pwire reg [WIDTH-1:0] data_q;
+  output pwire [WIDTH-1:0] data_q;
   output pwire [WIDTH-1:0] data_d;
   (* horizontal *) input pwire newRsSelect0;
   input pwire [WIDTH-1:0] newData0;

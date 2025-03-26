@@ -232,21 +232,21 @@ module fun_fpu_BOTH(
   pwire [5:0] HFOOSH1;
   pwire [5:0] HFOOSH2;
 
-  reg [20:0] u1_op_reg;
-  reg [20:0] u1_op_reg2;
-  reg [20:0] u1_op_reg3;
-  reg [20:0] u1_op_reg4;
-  reg [20:0] u3_op_reg;
-  reg [20:0] u3_op_reg2;
-  reg [20:0] u3_op_reg3;
-  reg [20:0] u3_op_reg4;
-  reg [20:0] u5_op_reg;
-  reg [20:0] u5_op_reg2;
-  reg [20:0] u5_op_reg3;
-  reg [20:0] u5_op_reg4;
-  reg u1_XADD_reg,u3_XADD_reg,u5_XADD_reg;
-  reg u1_XADD_reg2,u3_XADD_reg2,u5_XADD_reg2;
-  reg u1_XADD_reg3,u3_XADD_reg3,u5_XADD_reg3;
+  pwire [20:0] u1_op_reg;
+  pwire [20:0] u1_op_reg2;
+  pwire [20:0] u1_op_reg3;
+  pwire [20:0] u1_op_reg4;
+  pwire [20:0] u3_op_reg;
+  pwire [20:0] u3_op_reg2;
+  pwire [20:0] u3_op_reg3;
+  pwire [20:0] u3_op_reg4;
+  pwire [20:0] u5_op_reg;
+  pwire [20:0] u5_op_reg2;
+  pwire [20:0] u5_op_reg3;
+  pwire [20:0] u5_op_reg4;
+  pwire u1_XADD_reg,u3_XADD_reg,u5_XADD_reg;
+  pwire u1_XADD_reg2,u3_XADD_reg2,u5_XADD_reg2;
+  pwire u1_XADD_reg3,u3_XADD_reg3,u5_XADD_reg3;
 
   assign u1_ret=u1_retL|u1_retH;
   assign u1_ret_en=u1_ret_enL| u1_ret_enH;

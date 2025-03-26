@@ -42,10 +42,10 @@ module tbufcam_buf(
   output pwire chk_match0;
   input pwire [WIDTH-1:0] chk_addr1;
   output pwire chk_match1;
-  output pwire reg free;
+  output pwire free;
   
-  reg [WIDTH-1:0] addr;
-  reg thread;
+  pwire [WIDTH-1:0] addr;
+  pwire thread;
   
   assign chk_match0=chk_addr0==addr && ~free;
   assign chk_match1=chk_addr1==addr && ~free;

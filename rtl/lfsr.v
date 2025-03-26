@@ -20,10 +20,10 @@ module LFSR16_6(
   parameter [15:0] INIT=16'hbeef;
   input pwire clk;
   input pwire rst;
-  output pwire reg [5:0] OUT;
+  output pwire [5:0] OUT;
 
   pwire [5:0] OUT_a;
-  reg [15:0] IN;
+  pwire [15:0] IN;
   
   generate
       genvar k;
@@ -49,11 +49,11 @@ module LFSR16_1(
   parameter [15:0] INITVAL=16'he45b;
   input pwire clk;
   input pwire rst;
-  output pwire reg OUT;
+  output pwire OUT;
   
 
   pwire OUT_a;
-  reg [15:0] IN;
+  pwire [15:0] IN;
   
   assign OUT_a=^{IN[15],IN[13],IN[12],IN[10]}; 
   
@@ -74,12 +74,12 @@ module LFSR16_1_16(
   parameter [15:0] INITVAL=16'he45b;
   input pwire clk;
   input pwire rst;
-  output pwire reg OUT;
+  output pwire OUT;
   output pwire [15:0] OUT2;
   
 
   pwire OUT_a;
-  reg [15:0] IN;
+  pwire [15:0] IN;
   
   assign OUT_a=^{IN[15],IN[13],IN[12],IN[10]}; 
   assign OUT2=IN;

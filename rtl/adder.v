@@ -1250,8 +1250,8 @@ module adder_CSA(a1,a2,a3,out1,out2);
   input pwire [WIDTH-1:0] a1;
   input pwire [WIDTH-1:0] a2;
   input pwire [WIDTH-1:0] a3;
-  output pwire reg [WIDTH:0] out1;
-  output pwire reg [WIDTH:0] out2;
+  output pwire [WIDTH:0] out1;
+  output pwire [WIDTH:0] out2;
   
   integer i;
   
@@ -1533,8 +1533,8 @@ endmodule
   (* align_width *) pwire [WIDTH-1:0] nP4;
   (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  reg [WIDTH-1:0] nP4_reg;
-  reg [WIDTH-1:0] nG4_reg;
+  pwire [WIDTH-1:0] nP4_reg;
+  pwire [WIDTH-1:0] nG4_reg;
 
   (* align_width *) pwire [WIDTH-1:0] P5;
   (* align_width *) pwire [WIDTH-1:0] G5;
@@ -2657,8 +2657,8 @@ endmodule
   (* align_width *) pwire [WIDTH-1:0] nP4;
   (* align_width *) pwire [WIDTH-1:0] nG4;
 
-  reg [WIDTH-1:0] nP4_reg;
-  reg [WIDTH-1:0] nG4_reg;
+  pwire [WIDTH-1:0] nP4_reg;
+  pwire [WIDTH-1:0] nG4_reg;
   
   (* align_width *) pwire [WIDTH-1:0] P5;
   (* align_width *) pwire [WIDTH-1:0] G5;

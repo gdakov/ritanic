@@ -21,12 +21,12 @@ module pfoff_buf(clk,rst,write_en,write_addr,read_en,read_addr,free_en,free,purg
   input pwire read_en;
   output pwire [36:0] read_addr;
   input pwire free_en;
-  output pwire reg free;
-  output pwire reg purged;
+  output pwire free;
+  output pwire purged;
   input pwire [36:0] chk_addr;
   output pwire chk_en;
 
-  reg [36:0] addr;
+  pwire [36:0] addr;
 
   assign read_data=read_en ? addr : 37'bz;
 
@@ -62,7 +62,7 @@ module pfoff(clk,rst,purge_can,purge_en,purge_addr,read_addr,read_chk,write_en,w
   input pwire write_en;
   input pwire [36:0] write_addr;
 
-  reg [WIDTH-1:0] write_pos;
+  pwire [WIDTH-1:0] write_pos;
   pwire [WIDTH-1:0] read_pos;
 
   generate
@@ -108,8 +108,8 @@ module dc0_cntrl_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -146,8 +146,8 @@ module dc0_cntrlD_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -184,8 +184,8 @@ module dc0_cntrlC_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -225,8 +225,8 @@ module dc0_cntrlC2w_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -265,8 +265,8 @@ module dc0_cntrlC1_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -304,8 +304,8 @@ module dc0_cntrlM_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -341,8 +341,8 @@ module dc0_cntrlM1_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -379,8 +379,8 @@ module dc0_cntrlMiC2_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -553,58 +553,58 @@ module dc0_cntrl(
   pwire [`mOpC_width-1:0] write_mop[1:0];
   pwire [`mOpC_width-1:0] read_mop[1:0];
   pwire read_clkEn;
-  reg [4:0] cnt;
-  reg [4:0] read_addr0;
-  reg [4:0] write_addr;
+  pwire [4:0] cnt;
+  pwire [4:0] read_addr0;
+  pwire [4:0] write_addr;
   pwire [4:0] cnt_plus;
   pwire [4:0] cnt_minus;
   pwire [4:0] read_addr0_d;
   pwire [4:0] write_addr_d;
   pwire read_clkEnC;
-  reg [3:0] cntC;
-  reg [2:0] read_addrC;
-  reg [2:0] write_addrC;
+  pwire [3:0] cntC;
+  pwire [2:0] read_addrC;
+  pwire [2:0] write_addrC;
   pwire [3:0] cntC_plus;
   pwire [3:0] cntC_minus;
   pwire [2:0] read_addrC_d;
   pwire [2:0] write_addrC_d;
   pwire read_clkEnM;
-  reg [4:0] cntM;
-  reg [4:0] read_addrM;
-  reg [4:0] write_addrM;
+  pwire [4:0] cntM;
+  pwire [4:0] read_addrM;
+  pwire [4:0] write_addrM;
   pwire [4:0] cntM_plus;
   pwire [4:0] cntM_minus;
   pwire [4:0] read_addrM_d;
   pwire [4:0] write_addrM_d;
-  reg [64:0] rbusAN_data64_reg;
+  pwire [64:0] rbusAN_data64_reg;
 
   pwire [159:0] read_data0;
   pwire [159:0] read_data1;
   pwire [1:0] read_hit[1:0];
 
   pwire read_clkEnC1;
-  reg [4:0] cntC1;
-  reg [4:0] read_addrC1;
-  reg [4:0] write_addrC1;
+  pwire [4:0] cntC1;
+  pwire [4:0] read_addrC1;
+  pwire [4:0] write_addrC1;
   pwire [4:0] cntC1_plus;
   pwire [4:0] cntC1_minus;
   pwire [4:0] read_addrC1_d;
   pwire [4:0] write_addrC1_d;
 
   pwire read_clkEnC2;
-  reg readI_en2_reg;
-  reg [4:0] cntC2;
-  reg [4:0] read_addrC2;
-  reg [4:0] write_addrC2;
+  pwire readI_en2_reg;
+  pwire [4:0] cntC2;
+  pwire [4:0] read_addrC2;
+  pwire [4:0] write_addrC2;
   pwire [4:0] cntC2_plus;
   pwire [4:0] cntC2_minus;
   pwire [4:0] read_addrC2_d;
   pwire [4:0] write_addrC2_d;
-  reg read_clkEn_reg;
+  pwire read_clkEn_reg;
 
-  reg [`rbusAN_width-1:0] rbusAN_signals_reg;
-  reg [9:0] rbusAN_src_req_reg;
-  reg [9:0] rbusAN_dst_req_reg;
+  pwire [`rbusAN_width-1:0] rbusAN_signals_reg;
+  pwire [9:0] rbusAN_src_req_reg;
+  pwire [9:0] rbusAN_dst_req_reg;
 
   pwire [36:0] read_addr1;
   pwire [4:0] read_req1;
@@ -614,28 +614,28 @@ module dc0_cntrl(
   pwire [4:0] read_sz1;
   pwire [4:0] read_bank01;
   pwire [1:0] read_low1;
-  reg read_io1_reg;
-  reg [4:0] read_sz1_reg;
-  reg [4:0] read_bank01_reg;
-  reg [1:0] read_low1_reg;
-  reg read_io1_reg2;
-  reg [4:0] read_sz1_reg2;
-  reg [4:0] read_bank01_reg2;
-  reg [1:0] read_low1_reg2;
-  reg read_io1_reg3;
-  reg [4:0] read_sz1_reg3;
-  reg [4:0] read_bank01_reg3;
-  reg [1:0] read_low1_reg3;
-  reg read_io1_reg4;
-  reg [4:0] read_sz1_reg4;
-  reg [4:0] read_bank01_reg4;
-  reg [1:0] read_low1_reg4;
+  pwire read_io1_reg;
+  pwire [4:0] read_sz1_reg;
+  pwire [4:0] read_bank01_reg;
+  pwire [1:0] read_low1_reg;
+  pwire read_io1_reg2;
+  pwire [4:0] read_sz1_reg2;
+  pwire [4:0] read_bank01_reg2;
+  pwire [1:0] read_low1_reg2;
+  pwire read_io1_reg3;
+  pwire [4:0] read_sz1_reg3;
+  pwire [4:0] read_bank01_reg3;
+  pwire [1:0] read_low1_reg3;
+  pwire read_io1_reg4;
+  pwire [4:0] read_sz1_reg4;
+  pwire [4:0] read_bank01_reg4;
+  pwire [1:0] read_low1_reg4;
   pwire [36:0] read_addr_C;
   pwire [4:0] read_reqC;
   pwire [36:0] read_addr_C2;
   pwire [4:0] read_req_C2;
-  reg read_io_C2;
-  reg [64:0] read_data_C2;
+  pwire read_io_C2;
+  pwire [64:0] read_data_C2;
   pwire [36:0] missR_addr;
   pwire [4:0] missR_req;
   pwire missR_io;
@@ -648,7 +648,7 @@ module dc0_cntrl(
   pwire dupl_M1;
   pwire write_wen;
   pwire wen_C2;
-//  reg rst_reg;
+//  pwire rst_reg;
   pwire miss_io;
   pwire [4:0] miss_sz;
   pwire [4:0] miss_bank0;
@@ -656,8 +656,8 @@ module dc0_cntrl(
 
   pwire read_M1_exp;
   
-  reg init;
-  reg [4:0] initCount;
+  pwire init;
+  pwire [4:0] initCount;
   pwire [4:0] initCount_next;
   
   assign write_mop[0][`mOpC_addrEven]=write_addrE0;

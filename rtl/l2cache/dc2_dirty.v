@@ -40,9 +40,9 @@ module dcache2_dirty_ram(
   input pwire [DATA_WIDTH-1:0] write_bitEn1;
   input pwire [DATA_WIDTH-1:0] write_data1;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
-  reg [ADDR_WIDTH-1:0] read_addr0_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr0_reg;
 
   integer k;
   
@@ -91,7 +91,7 @@ module dcache2_dirty(
   pwire [DATA_WIDTH-1:0] write_data0;
   pwire [DATA_WIDTH-1:0] write_data1;
   
-  reg [7:5] read_addr0_reg;
+  pwire [7:5] read_addr0_reg;
   
   
   dcache_dirty_ram ram_mod(

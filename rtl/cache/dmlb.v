@@ -59,7 +59,7 @@ module dmlb_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   
   assign read0_data=ram[read0_addr];
   assign read1_data=ram[read1_addr];
@@ -99,7 +99,7 @@ module dmlb_lru_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   
   assign read_data=ram[read_addr];
 
@@ -372,8 +372,8 @@ module dmlb(
   pwire [5:0]read_hitL,read_hitH;
 
   pwire [3:0] wrAddrNxt;
-  reg [3:0] initCount;
-  reg init;
+  pwire [3:0] initCount;
+  pwire init;
   
   genvar k;
   pwire [5:0][VADDR_WIDTH-16:0] addr0;

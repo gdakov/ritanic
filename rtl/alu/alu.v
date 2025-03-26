@@ -48,7 +48,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   input pwire [2:0] rmode;
   
 
-  reg [64:0] valRes_reg;
+  pwire [64:0] valRes_reg;
 
   pwire [64:0] valRes1;  
   pwire [7:0] valRes8;
@@ -57,18 +57,18 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
 
   pwire flag64_ZF;
   pwire flag32_ZF;
-  reg flag64_ZF_reg;
-  reg flag32_ZF_reg;
+  pwire flag64_ZF_reg;
+  pwire flag32_ZF_reg;
   pwire flag16_ZF;
   pwire flag8_ZF;
-  reg flag16_ZF_reg;
-  reg flag8_ZF_reg;
+  pwire flag16_ZF_reg;
+  pwire flag8_ZF_reg;
         
   pwire flag8_PF;
-  reg flag8_PF_reg;
+  pwire flag8_PF_reg;
   pwire flag8_SF;
-  reg flagAdd8_CF;
-  reg flagAdd8_AF;
+  pwire flagAdd8_CF;
+  pwire flagAdd8_AF;
 
   
   pwire carryAdd44;
@@ -81,20 +81,20 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   
   
   
-  reg carryAdd44_reg;
-  reg carryAdd64_reg;
-  reg carryAdd32_reg;
-  reg carryAdd16_reg;
-  reg carryAdd8LL_reg;
-  reg carryAdd4LL_reg;
+  pwire carryAdd44_reg;
+  pwire carryAdd64_reg;
+  pwire carryAdd32_reg;
+  pwire carryAdd16_reg;
+  pwire carryAdd8LL_reg;
+  pwire carryAdd4LL_reg;
         
   
-  reg val1_sign44;
-  reg val1_sign65;
-  reg val1_sign64;
-  reg val1_sign32;
-  reg val1_sign16;
-  reg val1_sign8;
+  pwire val1_sign44;
+  pwire val1_sign65;
+  pwire val1_sign64;
+  pwire val1_sign32;
+  pwire val1_sign16;
+  pwire val1_sign8;
 
   function [55:0] fff;
   input pwire [15:0] val;
@@ -106,12 +106,12 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
       fff[63:56]={1'b0,fff[55:49]};
   endfunction
           
-  reg val2_sign64;
-  reg val2_sign65;
-  reg val2_sign44;
-  reg val2_sign32;
-  reg val2_sign16;
-  reg val2_sign8;
+  pwire val2_sign64;
+  pwire val2_sign65;
+  pwire val2_sign44;
+  pwire val2_sign32;
+  pwire val2_sign16;
+  pwire val2_sign8;
   
   pwire flagAdd64_OF;
   pwire flagAdd32_OF;
@@ -124,23 +124,23 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   pwire flagSub16_OF;
   pwire flagSub8_OF;
   
-  reg flagAdd64_OF_reg;
-  reg flagAdd32_OF_reg;
-  reg flagSub64_OF_reg;
-  reg flagSub44_OF_reg;
-  reg flagSub32_OF_reg;
-  reg flagSub16_OF_reg;
-  reg flagSub8_OF_reg;
+  pwire flagAdd64_OF_reg;
+  pwire flagAdd32_OF_reg;
+  pwire flagSub64_OF_reg;
+  pwire flagSub44_OF_reg;
+  pwire flagSub32_OF_reg;
+  pwire flagSub16_OF_reg;
+  pwire flagSub8_OF_reg;
 
   pwire [5:0] flags_COASZP;
 
 
 
   pwire isFlags;
-  reg isFlags_reg;
+  pwire isFlags_reg;
   pwire [2:0] reg8flg;
   pwire [7:0] smallOP;
-  reg nDataAlt_reg;
+  pwire nDataAlt_reg;
 
   pwire [64:0] val_and;
   pwire [64:0] val_or;
@@ -148,40 +148,40 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
  
   pwire nDataAlt2; 
   pwire [3:0] val1One;
-  reg [3:0] val1One_reg;
+  pwire [3:0] val1One_reg;
  
   pwire [4:0] jumpType; 
   pwire doJmp;
-  reg doJmp_reg;
+  pwire doJmp_reg;
   pwire doJmp2;
 
   pwire add_en;
   pwire shift_en;
   pwire add8_en;
   pwire sahf_en;
-  reg shift_en_reg;
+  pwire shift_en_reg;
   
-  reg [OPERATION_WIDTH-1:0] retOp;
-  reg [5:0] valS_reg;
-  reg [5:0] val1_reg;
+  pwire [OPERATION_WIDTH-1:0] retOp;
+  pwire [5:0] valS_reg;
+  pwire [5:0] val1_reg;
 
-  reg dataEn_reg;
+  pwire dataEn_reg;
   pwire thrinh;
-  reg thrinh_reg;
-  reg except_reg;
-  reg except_thread_reg;
+  pwire thrinh_reg;
+  pwire except_reg;
+  pwire except_thread_reg;
   pwire logic_en,spec1_en,spec2_en;
   pwire cmov_en;
-  reg logic_en_reg;
+  pwire logic_en_reg;
 
   pwire [2:0] cin_seq;
-  reg cin_seq_reg;
+  pwire cin_seq_reg;
   pwire is_ptr,is_sub;
   pwire cout_seq;
   pwire [64:0] ptr;
-  reg [64:0] ptr_reg;
-  reg is_ptr_reg;
-  reg is_ptr_sub;
+  pwire [64:0] ptr_reg;
+  pwire is_ptr_reg;
+  pwire is_ptr_sub;
 
   assign reg8flg=operation[10:8];
   assign smallOP=operation[7:0];
@@ -575,7 +575,7 @@ module except_jump_cmp(
 
   input pwire [FLAGS_WIDTH-1:0] flags;
   input pwire [JUMP_TYPE_WIDTH-1:0] jumpType;
-  output pwire reg doJump;
+  output pwire doJump;
 
   pwire C;
   pwire O;

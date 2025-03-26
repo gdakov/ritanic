@@ -89,8 +89,8 @@ module cc_comb (
   pwire [DATA_WIDTH-1:0] readB_data0;
   pwire [DATA_WIDTH-1:0] cc_readB_data0;
   
-  reg [IP_WIDTH-1:0] write_IP_reg;
-  reg [DATA_WIDTH-1:0] write_data_reg;
+  pwire [IP_WIDTH-1:0] write_IP_reg;
+  pwire [DATA_WIDTH-1:0] write_data_reg;
 
   pwire [7:0] cc_readA_tagErr;
   pwire [7:0] cc_readA_hit_way;
@@ -98,37 +98,37 @@ module cc_comb (
   pwire [7:0] cc_readB_hit_way;
 
 
-  reg cc_write_wen_reg;
-  reg cc_invalidate_reg;
-  reg cc_write_wen_reg2;
-  reg cc_invalidate_reg2;
+  pwire cc_write_wen_reg;
+  pwire cc_invalidate_reg;
+  pwire cc_write_wen_reg2;
+  pwire cc_invalidate_reg2;
 
-  reg [IP_WIDTH-1:0] write_IP_reg2;
-  reg [DATA_WIDTH-1:0] write_data_reg2;
+  pwire [IP_WIDTH-1:0] write_IP_reg2;
+  pwire [DATA_WIDTH-1:0] write_data_reg2;
 
-  reg cc_readA_hitP;
-  reg cc_readB_hitP;
+  pwire cc_readA_hitP;
+  pwire cc_readB_hitP;
 
-  reg [DATA_WIDTH-1:0] readA_data0_reg;
-  reg [DATA_WIDTH-1:0] readB_data0_reg;
+  pwire [DATA_WIDTH-1:0] readA_data0_reg;
+  pwire [DATA_WIDTH-1:0] readB_data0_reg;
   
-  reg [IP_WIDTH-6:0] cc_readA_IP_reg;
-  reg [IP_WIDTH-6:0] cc_readB_IP_reg;
+  pwire [IP_WIDTH-6:0] cc_readA_IP_reg;
+  pwire [IP_WIDTH-6:0] cc_readB_IP_reg;
   
   
   pwire [`wport-1:0] readA_dataX0;
   pwire [`wport-1:0] cc_readA_dataX0;
   pwire [14:0] readA_dataXP[3:0];
-  reg [`wport-1:0] readA_dataX0_reg;
+  pwire [`wport-1:0] readA_dataX0_reg;
   pwire [`wport-1:0] readB_dataX0;
   pwire [`wport-1:0] cc_readB_dataX0;
   pwire [14:0] readB_dataXP[3:0];
-  reg [`wport-1:0] readB_dataX0_reg;
+  pwire [`wport-1:0] readB_dataX0_reg;
   pwire [36:0] cc_exp_addr0;  
-  reg [36:0] cc_exp_addr0_reg;  
+  pwire [36:0] cc_exp_addr0_reg;  
 //  pwire [71:0] read_dataY0;
 //  pwire [17:0] read_dataYP;
-//  reg [71:0] read_dataY0_reg;
+//  pwire [71:0] read_dataY0_reg;
 
   pwire [7:0] writeIP_next;
   
@@ -137,31 +137,31 @@ module cc_comb (
   pwire [7:0] cc_tagErrA;
   pwire [7:0] cc_tagErrB;
   pwire cc_expun_hit0;
-  reg cc_expun_hitP; 
+  pwire cc_expun_hitP; 
 
-  reg readA_hit0A;
-  reg readA_hit1A;
-  reg readA_hit0B;
-  reg readA_hit1B;
-  reg readA_hitP;
-  reg readB_hit0A;
-  reg readB_hit1A;
-  reg readB_hit0B;
-  reg readB_hit1B;
-  reg readB_hitP;
+  pwire readA_hit0A;
+  pwire readA_hit1A;
+  pwire readA_hit0B;
+  pwire readA_hit1B;
+  pwire readA_hitP;
+  pwire readB_hit0A;
+  pwire readB_hit1A;
+  pwire readB_hit0B;
+  pwire readB_hit1B;
+  pwire readB_hitP;
 
   pwire [DATA_WIDTH/4-1:0] readA_dataP[3:0];
   
-  reg [7:0] cc_readA_tagErrP;
+  pwire [7:0] cc_readA_tagErrP;
   pwire [DATA_WIDTH/4-1:0] readB_dataP[3:0];
   
-  reg [7:0] cc_readB_tagErrP;
+  pwire [7:0] cc_readB_tagErrP;
   
-  reg readA_clkEn_reg;
-  reg readB_clkEn_reg;
-  reg chkCL_clkEn_reg;
+  pwire readA_clkEn_reg;
+  pwire readB_clkEn_reg;
+  pwire chkCL_clkEn_reg;
   
-  reg [1:0] cc_wen_step;
+  pwire [1:0] cc_wen_step;
   
   
   integer a,b;

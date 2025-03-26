@@ -68,12 +68,12 @@ module reg_alloc(
   input pwire rs0i2_en,rs1i2_en,rs2i2_en;
   
   
-  reg [1:0] pos;
-  reg [4:0] lpos;
-  reg [4:0] hpos;
-  reg [REG_WIDTH-1:0] new_reg[8:0];
-  reg [8:0] new_en;
-  reg [8:0] new_enn;
+  pwire [1:0] pos;
+  pwire [4:0] lpos;
+  pwire [4:0] hpos;
+  pwire [REG_WIDTH-1:0] new_reg[8:0];
+  pwire [8:0] new_en;
+  pwire [8:0] new_enn;
 
   pwire [3:0] pop3[2:0];
   pwire [3:1] pop3_or_more[2:0];
@@ -81,18 +81,18 @@ module reg_alloc(
   pwire [4:0] hhpos;
   pwire step;
   pwire [1:0] pos_d;
-  reg [1:0] pos_1;
-  reg [1:0] pos_2;
+  pwire [1:0] pos_1;
+  pwire [1:0] pos_2;
   pwire [4:0] ret_rno[8:0];
 
 
-  reg [31:0] rAllOc[8:0];
+  pwire [31:0] rAllOc[8:0];
   pwire [8:0][31:0] rAllOc_first;
   pwire [8:0][31:0] rAllOc_free;
   pwire [8:0] rAllOc_has;
   pwire [8:0][3:0] rAllOc_first_b;
   pwire [8:0][4:0] rAllOc_first_r;
-  reg [31:0] rThread[8:0];
+  pwire [31:0] rThread[8:0];
 
   integer k;
   
@@ -350,18 +350,18 @@ module get_clear_reg(
   output pwire [REG_WIDTH-1:0] clrRS7;
   output pwire [REG_WIDTH-1:0] clrRS8;
   
-  reg [REG_WIDTH-1:0] rs0_newR[2:0];
-  reg [REG_WIDTH-1:0] rs1_newR[2:0];
-  reg [REG_WIDTH-1:0] rs2_newR[2:0];
-  reg [REG_WIDTH-1:0] rs0_newRF[2:0];
-  reg [REG_WIDTH-1:0] rs1_newRF[2:0];
-  reg [REG_WIDTH-1:0] rs2_newRF[2:0];
-  reg [2:0] rs0_hasR;
-  reg [2:0] rs1_hasR;
-  reg [2:0] rs2_hasR;
-  reg [2:0] rs0_hasS;
-  reg [2:0] rs1_hasS;
-  reg [2:0] rs2_hasS;
+  pwire [REG_WIDTH-1:0] rs0_newR[2:0];
+  pwire [REG_WIDTH-1:0] rs1_newR[2:0];
+  pwire [REG_WIDTH-1:0] rs2_newR[2:0];
+  pwire [REG_WIDTH-1:0] rs0_newRF[2:0];
+  pwire [REG_WIDTH-1:0] rs1_newRF[2:0];
+  pwire [REG_WIDTH-1:0] rs2_newRF[2:0];
+  pwire [2:0] rs0_hasR;
+  pwire [2:0] rs1_hasR;
+  pwire [2:0] rs2_hasR;
+  pwire [2:0] rs0_hasS;
+  pwire [2:0] rs1_hasS;
+  pwire [2:0] rs2_hasS;
 
   integer k;
 
@@ -682,7 +682,7 @@ module get_funit(
   output pwire [9:0] funit7;
   output pwire [9:0] funit8;
 
-  reg [9:0] funit[9:0];
+  pwire [9:0] funit[9:0];
   integer k;
 
   assign funit0=funit[0];  
@@ -780,7 +780,7 @@ module get_wSwp(
   input pwire st1;
   input pwire [2:0] lsi2;
   input pwire st2;
-  output pwire reg [2:0] Wswp;
+  output pwire [2:0] Wswp;
   output pwire [2:0] lsiA;
   output pwire [2:0] lsiB;
   output pwire [6:0] port0;
@@ -829,9 +829,9 @@ module get_wSwp(
   pwire [2:0] first;
   pwire [2:0] second;
   pwire [2:0] third;  
-  reg isOdd;
+  pwire isOdd;
  
-  reg [2:0] Wswp0;
+  pwire [2:0] Wswp0;
   pwire stol_swp;
 
   assign stol[0]=lsi0==3'd7;
@@ -955,20 +955,20 @@ module backend_get_ret(
   input pwire [3:0] rs_index7;
   input pwire [3:0] rs_index8;
 
-  output pwire reg [3:0] ret0;
-  output pwire reg [3:0] ret1;
-  output pwire reg [3:0] ret2;
-  output pwire reg [3:0] ret3;
-  output pwire reg [3:0] ret4;
-  output pwire reg [3:0] ret5;
-  output pwire reg [3:0] ret6;
-  output pwire reg [3:0] ret7;
-  output pwire reg [3:0] ret8;
+  output pwire [3:0] ret0;
+  output pwire [3:0] ret1;
+  output pwire [3:0] ret2;
+  output pwire [3:0] ret3;
+  output pwire [3:0] ret4;
+  output pwire [3:0] ret5;
+  output pwire [3:0] ret6;
+  output pwire [3:0] ret7;
+  output pwire [3:0] ret8;
 
-  reg [3:0] ret[8:0];
-  reg [3:0] rs_newR[8:0];
-  reg [3:0] rs_index[9:0];
-  reg [8:0] rs_ret_en;
+  pwire [3:0] ret[8:0];
+  pwire [3:0] rs_newR[8:0];
+  pwire [3:0] rs_index[9:0];
+  pwire [8:0] rs_ret_en;
   
   integer k,j;
   
@@ -1263,21 +1263,21 @@ module alloc_WQ(
 
   pwire [5:0] wrt[2:0];
   pwire [5:0] WQ[2:0];
-  reg [6:0] addr_low;
-  reg [6:0] addr_hi;
+  pwire [6:0] addr_low;
+  pwire [6:0] addr_hi;
   pwire [6:0] addr_low1;
   pwire [6:0] addr_hi1;
   pwire [6:0] addr_low2;
   pwire [6:0] addr_hi2;
-  reg [6:0] xaddr_low;
-  reg [6:0] xaddr_hi;
+  pwire [6:0] xaddr_low;
+  pwire [6:0] xaddr_hi;
   pwire [6:0] xaddr_low1;
   pwire [6:0] xaddr_hi1;
   pwire [6:0] xaddr_low2;
   pwire [6:0] xaddr_hi2;
-//  reg  [6:0] cnt;
+//  pwire  [6:0] cnt;
 //  pwire [6:0] cnt_d;
-  reg pos;
+  pwire pos;
   pwire [3:0] wrcnt;
 //  pwire [3:-2] cncnt;
 
@@ -1416,17 +1416,17 @@ module get_ben_een(
   input pwire [1:0] low;
   input pwire [4:0] sz;
   input pwire [4:0] bgn0;
-  output pwire reg [4:0] end0;
-  output pwire reg [3:0] bgnBen;
-  output pwire reg [3:0] endBen;
+  output pwire [4:0] end0;
+  output pwire [3:0] bgnBen;
+  output pwire [3:0] endBen;
 
   pwire [4:0] bgn1;
   pwire [4:0] bgn2;
   pwire [4:0] bgn3;
   pwire [4:0] bgn4;
-  reg [1:0] low2;
-  reg stepOver;
-  reg stepOver2;
+  pwire [1:0] low2;
+  pwire stepOver;
+  pwire stepOver2;
  
   adder_inc #(5) add1_mod(bgn0,bgn1,1'b1,);
   adder #(5) add2_mod(bgn0,5'd2,bgn2,1'b0,1'b1,,,,);
@@ -1547,7 +1547,7 @@ module msrss_watch(
   input pwire [15:0] msrss_addr;
   input pwire [64:0] msrss_data;
   input pwire msrss_en;
-  output pwire reg [1:0][63:0] data_out;
+  output pwire [1:0][63:0] data_out;
 
   always @(posedge clk) begin
     if (rst) begin

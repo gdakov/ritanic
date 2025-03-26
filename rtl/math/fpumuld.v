@@ -46,7 +46,7 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   input pwire is_rndS; 
   
   //reg [80:0] A_reg;
- // reg [80:0] B_reg;
+ // pwire [80:0] B_reg;
   pwire [127:0] part0;
   pwire [127:0] part1;
 
@@ -56,27 +56,27 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   pwire [16:0] exp_exp1;
   pwire [16:0] expart0;
   pwire [16:0] expart1;
-  reg isDBL_reg;
-  reg isDBL_reg3;
-  reg en_reg,en_reg2;
+  pwire isDBL_reg;
+  pwire isDBL_reg3;
+  pwire en_reg,en_reg2;
   pwire sgn;
-  reg sgn_reg,sgn_reg2;
-  reg [16:0] exp_max;
-  reg [16:0] exp_max_IEEE;
-  reg [16:0] exp_denor;
-  reg [16:0] exp_denor_IEEE;
-  reg [16:0] exp_exp_reg;
-  reg [16:0] exp_exp1_reg;
+  pwire sgn_reg,sgn_reg2;
+  pwire [16:0] exp_max;
+  pwire [16:0] exp_max_IEEE;
+  pwire [16:0] exp_denor;
+  pwire [16:0] exp_denor_IEEE;
+  pwire [16:0] exp_exp_reg;
+  pwire [16:0] exp_exp1_reg;
   pwire [16:0] exp_exp_d;
   pwire [16:0] exp_exp1_d;
-  reg [16:0] exp_exp_reg2;
-  reg [16:0] exp_exp1_reg2;
+  pwire [16:0] exp_exp_reg2;
+  pwire [16:0] exp_exp1_reg2;
   pwire exp_oor,exp1_oor,exp_oor_IEEE,exp1_oor_IEEE;
   pwire exp_non_denor_IEEE,exp1_non_denor_IEEE;
-  reg exp_oor_reg,exp1_oor_reg,exp_oor_IEEE_reg,exp1_oor_IEEE_reg;
-  reg exp_non_denor_IEEE_reg,exp1_non_denor_IEEE_reg;
+  pwire exp_oor_reg,exp1_oor_reg,exp_oor_IEEE_reg,exp1_oor_IEEE_reg;
+  pwire exp_non_denor_IEEE_reg,exp1_non_denor_IEEE_reg;
 
-  reg [127:0] prod_reg;
+  pwire [127:0] prod_reg;
   pwire DBL_rnbit0,DBL_tail0,DBL_rnflip0;
   pwire DBL_rnbitX,DBL_tailX,DBL_rnflipX;
   pwire DBL_rnbit1,DBL_tail1;
@@ -86,17 +86,17 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   pwire EXT_rnbit1,EXT_tail1;
   pwire DBL_rnd0,DBL_rnd1,DBL_rndX;
   pwire EXT_rnd0,EXT_rnd1,EXT_rndX,EXT_rndY;
-  reg [62:-1] rndbit_ext;
-  reg [51:-1] rndbit_dbl;
+  pwire [62:-1] rndbit_ext;
+  pwire [51:-1] rndbit_dbl;
   //wire [62:-1] rndbit_ext={62'b0,prod_reg[127],~prod_reg[127]};
   //wire [51:-1] rndbit_dbl={51'b0,prod_reg[105],~prod_reg[105]};
-  reg [62:-1] enbit_ext;
-  reg [51:-1] enbit_dbl;
-  reg [31:0] fpcsr_reg;
-  reg [80:0] A_reg;
-  reg [80:0] A_reg2;
+  pwire [62:-1] enbit_ext;
+  pwire [51:-1] enbit_dbl;
+  pwire [31:0] fpcsr_reg;
+  pwire [80:0] A_reg;
+  pwire [80:0] A_reg2;
   pwire [4:0] expon;
- // reg [1:0] expon_reg;
+ // pwire [1:0] expon_reg;
 
   pwire A_h; 
   pwire B_h; 
@@ -108,21 +108,21 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   pwire [52:0] mskS;
 
   pwire spec_zero,spec_infty,spec_nan,spec_snan,spec_qnan,spec_A;
-  reg spec_zero_reg,spec_infty_reg,spec_snan_reg,spec_qnan_reg,spec_A_reg;
-  reg spec_zero_reg2,spec_infty_reg2,spec_snan_reg2,spec_qnan_reg2,spec_A_reg2;
-  reg spec_any;
+  pwire spec_zero_reg,spec_infty_reg,spec_snan_reg,spec_qnan_reg,spec_A_reg;
+  pwire spec_zero_reg2,spec_infty_reg2,spec_snan_reg2,spec_qnan_reg2,spec_A_reg2;
+  pwire spec_any;
   pwire [80:0] res_spec;
-  reg isrnd_zero,isrnd_plus,isrnd_even;
+  pwire isrnd_zero,isrnd_plus,isrnd_even;
   pwire [127:0] prod;
-  reg is_rndD_reg;
-  reg is_rndS_reg; 
-  reg is_rounder,is_rounderD,is_rounderS; 
+  pwire is_rndD_reg;
+  pwire is_rndS_reg; 
+  pwire is_rounder,is_rounderD,is_rounderS; 
   pwire dummy1_1;
   pwire dummy1_2;
   pwire dummy1_3;
   pwire dummy1_4;
   pwire [15:0] emsk=isDBL ? 16'h87ff : 16'hffff;
-//  reg or1,and1;
+//  pwire or1,and1;
 
   fpucadd_compress compr_mod(clk,A[63:0],B[63:0],part0,part1,or1,and1);
   adder #(128) prodAdd_mod(part0,part1,prod,1'b0,1'b1,,,,);

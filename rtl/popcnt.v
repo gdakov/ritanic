@@ -17,7 +17,7 @@ module popcnt5(
   cnt);
 
   input pwire [4:0] bits;
-  output pwire reg [5:0] cnt;
+  output pwire [5:0] cnt;
 
   always @*
     begin
@@ -64,7 +64,7 @@ module popcnt6(
   cnt);
 
   input pwire [5:0] bits;
-  output pwire reg [6:0] cnt;
+  output pwire [6:0] cnt;
 
   always @*
     begin
@@ -144,7 +144,7 @@ module popcnt3(
   cnt);
 
   input pwire [2:0] bits;
-  output pwire reg [3:0] cnt;
+  output pwire [3:0] cnt;
   
   always @* begin
       case(bits)
@@ -161,7 +161,7 @@ module popcnt3_or_more(
   cnt);
 
   input pwire [2:0] bits;
-  output pwire reg [3:1] cnt;
+  output pwire [3:1] cnt;
   
   always @* begin
       case(bits)
@@ -290,7 +290,7 @@ module popcnt5_or_less(
   cnt);
 
   input pwire [4:0] bits;
-  output pwire reg [4:0] cnt;
+  output pwire [4:0] cnt;
 
   always @*
     begin
@@ -448,7 +448,7 @@ module popcnt5_or_more(
   cnt);
 
   input pwire [4:0] bits;
-  output pwire reg [5:1] cnt;
+  output pwire [5:1] cnt;
 
   always @*
     begin

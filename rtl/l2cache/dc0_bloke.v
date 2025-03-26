@@ -37,8 +37,8 @@ module dcache2_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -75,8 +75,8 @@ module dcache2_LRU_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -113,10 +113,10 @@ module dcache2_ram_box(
   input pwire write_wen;
   input pwire [3:0] write_ben;
 
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
-  reg [31:0] write_data_reg;
-  reg write_wen_ram;
-  reg [3:0] write_ben_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [31:0] write_data_reg;
+  pwire write_wen_ram;
+  pwire [3:0] write_ben_reg;
   pwire [DATA_WIDTH-1:0] read_data_ram;
   pwire [DATA_WIDTH-1:0] write_data_ram;
 
@@ -233,9 +233,9 @@ module dcache2_bank(
   pwire write_bankEn;
   pwire [3:0] write_ben;
   
-  reg read_en_reg;
-  reg read_odd_reg;
-  reg ins_hit_reg;
+  pwire read_en_reg;
+  pwire read_odd_reg;
+  pwire ins_hit_reg;
 
   assign read_dataP=(read_en_reg|ins_hit_reg && ~read_odd_reg) ? read_data_ram[0] : 'z;
   assign read_dataP=(read_en_reg|ins_hit_reg && read_odd_reg) ? read_data_ram[1] : 'z;
@@ -344,9 +344,9 @@ module dcache2_xbit_ram(
   input pwire [DATA_WIDTH-1:0] write0_data;
   input pwire                  write0_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read1_addr_reg;
   
   assign read0_data=ram[read0_addr_reg];
   assign read1_data=ram[read1_addr_reg];
@@ -395,16 +395,16 @@ module dcache2_xbit_ram_box(
   input pwire write1_wen;
   input pwire [31:0] write1_ben;
 
-  reg [ADDR_WIDTH-1:0]  read0_addr_reg;
-  reg [31:0]            write0_data_reg;
-  reg                   write0_wen_ram;
-  reg [31:0]             write0_ben_reg;
+  pwire [ADDR_WIDTH-1:0]  read0_addr_reg;
+  pwire [31:0]            write0_data_reg;
+  pwire                   write0_wen_ram;
+  pwire [31:0]             write0_ben_reg;
   pwire [DATA_WIDTH-1:0] read0_data_ram;
   pwire [DATA_WIDTH-1:0] write0_data_ram;
-  reg [ADDR_WIDTH-1:0]  read1_addr_reg;
-  reg [31:0]            write1_data_reg;
-  reg                   write1_wen_ram;
-  reg [31:0]             write1_ben_reg;
+  pwire [ADDR_WIDTH-1:0]  read1_addr_reg;
+  pwire [31:0]            write1_data_reg;
+  pwire                   write1_wen_ram;
+  pwire [31:0]             write1_ben_reg;
   pwire [DATA_WIDTH-1:0] read1_data_ram;
   pwire [DATA_WIDTH-1:0] write1_data_ram;
 
@@ -523,15 +523,15 @@ module dcache2_bitx_bank(
   pwire [15:0] read_dataP;
   pwire [15:0] read_dataxP;
 
-  reg  [31:0] write_ben0x[1:0];
-  reg  [31:0] write_ben1x[1:0];
-  reg  [31:0] write_ben_ins;
+  pwire  [31:0] write_ben0x[1:0];
+  pwire  [31:0] write_ben1x[1:0];
+  pwire  [31:0] write_ben_ins;
   
-  reg [ADDR_WIDTH-1:0] write_addrE0_reg;
+  pwire [ADDR_WIDTH-1:0] write_addrE0_reg;
   
-  reg read_en_reg;
-  reg read_odd_reg;
-  reg ins_hit_reg;
+  pwire read_en_reg;
+  pwire read_odd_reg;
+  pwire ins_hit_reg;
 
   assign read_dataP=(read_en_reg|ins_hit_reg && ~write_addrE0_reg[7]  && ~read_odd_reg) ? read_data_ram[0][15:0] : 'z;
   assign read_dataP=(read_en_reg|ins_hit_reg && ~write_addrE0_reg[7] && read_odd_reg) ? read_data_ram[1][15:0] : 'z;
@@ -683,7 +683,7 @@ module dcache2_way(
   output pwire [15:0] read_dataPTRx;
   input pwire [15:0] read_dataPTRx_in;
   output pwire read_hit; //1 cycle before data
-  output pwire reg read_inL1;
+  output pwire read_inL1;
 
   input pwire write0_clkEn;
   input pwire [ADDR_WIDTH-1:0] write_addrE0;
@@ -739,10 +739,10 @@ module dcache2_way(
   pwire write0_hitO;
   pwire write1_hitE;
   pwire write1_hitO;
-  reg write0_hitE_reg;
-  reg write0_hitO_reg;
-  reg write1_hitE_reg;
-  reg write1_hitO_reg;
+  pwire write0_hitE_reg;
+  pwire write0_hitO_reg;
+  pwire write1_hitE_reg;
+  pwire write1_hitO_reg;
   pwire write0_hitEL;
   pwire write0_hitOL;
   pwire write0_hitEH;
@@ -751,80 +751,80 @@ module dcache2_way(
   pwire write1_hitOL;
   pwire write1_hitEH;
   pwire write1_hitOH;
-  reg read_en_reg,read_en_reg2,read_en_reg3,read_en_reg4,read_en_reg5;
-  reg insert_reg,insert_reg2,insert_reg3,insert_reg4,insert_reg5;
-  reg read_odd_reg,read_odd_reg2,read_odd_reg3,read_odd_reg4,read_odd_reg5;
-  reg init,init_reg,init_reg2;
-  reg [7:0] initCount;
+  pwire read_en_reg,read_en_reg2,read_en_reg3,read_en_reg4,read_en_reg5;
+  pwire insert_reg,insert_reg2,insert_reg3,insert_reg4,insert_reg5;
+  pwire read_odd_reg,read_odd_reg2,read_odd_reg3,read_odd_reg4,read_odd_reg5;
+  pwire init,init_reg,init_reg2;
+  pwire [7:0] initCount;
   pwire [7:0] initCount_next;
   
   pwire [4:0] read_LRUE;
   pwire [4:0] read_LRUO;
   pwire [4:0] read_LRUx;
   pwire [4:0] new_LRU;
-  reg [4:0] read_LRUx_reg;
-  reg [4:0] read_LRUx_reg2;
+  pwire [4:0] read_LRUx_reg;
+  pwire [4:0] read_LRUx_reg2;
   
-  reg write0_clkEn_reg;
-  reg write1_clkEn_reg;
-  reg [ADDR_WIDTH-1:0] write_addrE0_reg;
-  reg write_hitE0_reg; 
-  reg [ADDR_WIDTH-1:0] write_addrO0_reg;
-  reg write_hitO0_reg;
-  reg [31:0] write_bankEn0_reg;
-  reg [4:0] write_begin0_reg;
-  reg [4:0] write_end0_reg;
-  reg [3:0] write_bBen0_reg;
-  reg [3:0] write_enBen0_reg;
-  reg [ADDR_WIDTH-1:0] write_addrE1_reg;
-  reg write_hitE1_reg;
-  reg [ADDR_WIDTH-1:0] write_addrO1_reg;
-  reg write_hitO1_reg;
-  reg [31:0] write_bankEn1_reg;
-  reg [4:0] write_begin1_reg;
-  reg [4:0] write_end1_reg;
-  reg [3:0] write_bBen1_reg;
-  reg [3:0] write_enBen1_reg;
-  reg write_odd0_reg;
-  reg write_odd1_reg;
-  reg [1:0] write_pbit0_reg;
-  reg [1:0] write_pbit1_reg;
-  reg write_d128_0_reg;
-  reg write_d128_1_reg;
+  pwire write0_clkEn_reg;
+  pwire write1_clkEn_reg;
+  pwire [ADDR_WIDTH-1:0] write_addrE0_reg;
+  pwire write_hitE0_reg; 
+  pwire [ADDR_WIDTH-1:0] write_addrO0_reg;
+  pwire write_hitO0_reg;
+  pwire [31:0] write_bankEn0_reg;
+  pwire [4:0] write_begin0_reg;
+  pwire [4:0] write_end0_reg;
+  pwire [3:0] write_bBen0_reg;
+  pwire [3:0] write_enBen0_reg;
+  pwire [ADDR_WIDTH-1:0] write_addrE1_reg;
+  pwire write_hitE1_reg;
+  pwire [ADDR_WIDTH-1:0] write_addrO1_reg;
+  pwire write_hitO1_reg;
+  pwire [31:0] write_bankEn1_reg;
+  pwire [4:0] write_begin1_reg;
+  pwire [4:0] write_end1_reg;
+  pwire [3:0] write_bBen1_reg;
+  pwire [3:0] write_enBen1_reg;
+  pwire write_odd0_reg;
+  pwire write_odd1_reg;
+  pwire [1:0] write_pbit0_reg;
+  pwire [1:0] write_pbit1_reg;
+  pwire write_d128_0_reg;
+  pwire write_d128_1_reg;
 
-  reg write0_clkEn_reg2;
-  reg write1_clkEn_reg2;
-  reg [ADDR_WIDTH-1:0] write_addrE0_reg2;
-  reg write_hitE0_reg2; 
-  reg [ADDR_WIDTH-1:0] write_addrO0_reg2;
-  reg write_hitO0_reg2;
-  reg [31:0] write_bankEn0_reg2;
-  reg [4:0] write_begin0_reg2;
-  reg [4:0] write_end0_reg2;
-  reg [3:0] write_bBen0_reg2;
-  reg [3:0] write_enBen0_reg2;
-  reg [ADDR_WIDTH-1:0] write_addrE1_reg2;
-  reg write_hitE1_reg2;
-  reg [ADDR_WIDTH-1:0] write_addrO1_reg2;
-  reg write_hitO1_reg2;
-  reg [31:0] write_bankEn1_reg2;
-  reg [4:0] write_begin1_reg2;
-  reg [4:0] write_end1_reg2;
-  reg [3:0] write_bBen1_reg2;
-  reg [3:0] write_enBen1_reg2;
-  reg write_odd0_reg2;
-  reg write_odd1_reg2;
-  reg [1:0] write_pbit0_reg2;
-  reg [1:0] write_pbit1_reg2;
-  reg write_d128_0_reg2;
-  reg write_d128_1_reg2;
+  pwire write0_clkEn_reg2;
+  pwire write1_clkEn_reg2;
+  pwire [ADDR_WIDTH-1:0] write_addrE0_reg2;
+  pwire write_hitE0_reg2; 
+  pwire [ADDR_WIDTH-1:0] write_addrO0_reg2;
+  pwire write_hitO0_reg2;
+  pwire [31:0] write_bankEn0_reg2;
+  pwire [4:0] write_begin0_reg2;
+  pwire [4:0] write_end0_reg2;
+  pwire [3:0] write_bBen0_reg2;
+  pwire [3:0] write_enBen0_reg2;
+  pwire [ADDR_WIDTH-1:0] write_addrE1_reg2;
+  pwire write_hitE1_reg2;
+  pwire [ADDR_WIDTH-1:0] write_addrO1_reg2;
+  pwire write_hitO1_reg2;
+  pwire [31:0] write_bankEn1_reg2;
+  pwire [4:0] write_begin1_reg2;
+  pwire [4:0] write_end1_reg2;
+  pwire [3:0] write_bBen1_reg2;
+  pwire [3:0] write_enBen1_reg2;
+  pwire write_odd0_reg2;
+  pwire write_odd1_reg2;
+  pwire [1:0] write_pbit0_reg2;
+  pwire [1:0] write_pbit1_reg2;
+  pwire write_d128_0_reg2;
+  pwire write_d128_1_reg2;
 
-  reg [7:0] write_addrE0_reg3;
-  reg [7:0] write_addrO0_reg3;
-  reg [7:0] write_addrE0_reg4;
-  reg [7:0] write_addrO0_reg4;
-  reg [7:0] write_addrE0_reg5;
-  reg [7:0] write_addrO0_reg5;
+  pwire [7:0] write_addrE0_reg3;
+  pwire [7:0] write_addrO0_reg3;
+  pwire [7:0] write_addrE0_reg4;
+  pwire [7:0] write_addrO0_reg4;
+  pwire [7:0] write_addrE0_reg5;
+  pwire [7:0] write_addrO0_reg5;
   
   pwire [1:0] dirtyE;
   pwire [1:0] dirtyO;
@@ -835,59 +835,59 @@ module dcache2_way(
   pwire [1:0] read_dirx;
   pwire [1:0] read_exclx;
   pwire [36:0] read_expAddrx;
-  reg [1:0] read_dirx_reg;
-  reg [1:0] read_exclx_reg;
-  reg [36:0] read_expAddrx_reg;
+  pwire [1:0] read_dirx_reg;
+  pwire [1:0] read_exclx_reg;
+  pwire [36:0] read_expAddrx_reg;
 
   pwire expun_imm;
-  reg [1:0] dirtyE_reg;
-  reg [1:0] dirtyO_reg;
-  reg [1:0] exclE_reg;
-  reg [1:0] exclO_reg;
-  reg [35:0] expAddrE_reg;
-  reg [35:0] expAddrO_reg;
-  reg [1:0] dirtyE_reg2;
-  reg [1:0] dirtyO_reg2;
-  reg [1:0] exclE_reg2;
-  reg [1:0] exclO_reg2;
-  reg [35:0] expAddrE_reg2;
-  reg [35:0] expAddrO_reg2;
+  pwire [1:0] dirtyE_reg;
+  pwire [1:0] dirtyO_reg;
+  pwire [1:0] exclE_reg;
+  pwire [1:0] exclO_reg;
+  pwire [35:0] expAddrE_reg;
+  pwire [35:0] expAddrO_reg;
+  pwire [1:0] dirtyE_reg2;
+  pwire [1:0] dirtyO_reg2;
+  pwire [1:0] exclE_reg2;
+  pwire [1:0] exclO_reg2;
+  pwire [35:0] expAddrE_reg2;
+  pwire [35:0] expAddrO_reg2;
  
-  reg [7:0] expun_dc_addr_reg;
-  reg [7:0] expun_cc_addr_reg;
+  pwire [7:0] expun_dc_addr_reg;
+  pwire [7:0] expun_cc_addr_reg;
 
-  reg insert_pook_reg;
-  reg insert_pook_reg2;
+  pwire insert_pook_reg;
+  pwire insert_pook_reg2;
 
   pwire read_enL,read_enH;
-  reg write0_hitEL_reg;
-  reg write0_hitOL_reg;
-  reg write0_hitEH_reg;
-  reg write0_hitOH_reg;
-  reg write1_hitEL_reg;
-  reg write1_hitOL_reg;
-  reg write1_hitEH_reg;
-  reg write1_hitOH_reg;
-  reg write0_hitEL_reg2;
-  reg write0_hitOL_reg2;
-  reg write0_hitEH_reg2;
-  reg write0_hitOH_reg2;
-  reg write1_hitEL_reg2;
-  reg write1_hitOL_reg2;
-  reg write1_hitEH_reg2;
-  reg write1_hitOH_reg2;
-  reg write0_hitEL_reg3;
-  reg write0_hitOL_reg3;
-  reg write0_hitEH_reg3;
-  reg write0_hitOH_reg3;
-  reg write1_hitEL_reg3;
-  reg write1_hitOL_reg3;
-  reg write1_hitEH_reg3;
-  reg write1_hitOH_reg3;
+  pwire write0_hitEL_reg;
+  pwire write0_hitOL_reg;
+  pwire write0_hitEH_reg;
+  pwire write0_hitOH_reg;
+  pwire write1_hitEL_reg;
+  pwire write1_hitOL_reg;
+  pwire write1_hitEH_reg;
+  pwire write1_hitOH_reg;
+  pwire write0_hitEL_reg2;
+  pwire write0_hitOL_reg2;
+  pwire write0_hitEH_reg2;
+  pwire write0_hitOH_reg2;
+  pwire write1_hitEL_reg2;
+  pwire write1_hitOL_reg2;
+  pwire write1_hitEH_reg2;
+  pwire write1_hitOH_reg2;
+  pwire write0_hitEL_reg3;
+  pwire write0_hitOL_reg3;
+  pwire write0_hitEH_reg3;
+  pwire write0_hitOH_reg3;
+  pwire write1_hitEL_reg3;
+  pwire write1_hitOL_reg3;
+  pwire write1_hitEH_reg3;
+  pwire write1_hitOH_reg3;
  
-  reg read_hit_reg;
-  reg ins_hit_reg;
-  reg ins_hit_reg2;
+  pwire read_hit_reg;
+  pwire ins_hit_reg;
+  pwire ins_hit_reg2;
  
   pwire [15:0] expun_dataE;
   pwire [15:0] expun_dataO;
@@ -1463,10 +1463,10 @@ module dcache2_block(
   input pwire rst;
   input pwire read_en; 
   input pwire read_odd;
-  output pwire reg [32*DATA_WIDTH-1:0] read_data;
-  output pwire reg [32*DATA_WIDTH-1:0] read_dataX;
-  output pwire reg [15:0] read_dataPTR;
-  output pwire reg [15:0] read_dataPTRx;
+  output pwire [32*DATA_WIDTH-1:0] read_data;
+  output pwire [32*DATA_WIDTH-1:0] read_dataX;
+  output pwire [15:0] read_dataPTR;
+  output pwire [15:0] read_dataPTRx;
 
   input pwire write0_passthrough;
   input pwire write1_passthrough;
@@ -1509,12 +1509,12 @@ module dcache2_block(
   input pwire insert_dupl;
   input pwire insert_pook;
   input pwire [4:0] LRU_hit;
-  output pwire reg [4:0] read_LRU;
-  output pwire reg hit_any;
-  output pwire reg immoral_some;
-  output pwire reg read_dir;
-  output pwire reg read_excl;
-  output pwire reg [36:0] read_expAddrOut;
+  output pwire [4:0] read_LRU;
+  output pwire hit_any;
+  output pwire immoral_some;
+  output pwire read_dir;
+  output pwire read_excl;
+  output pwire [36:0] read_expAddrOut;
   input pwire read_expAddr_en;
   input pwire [36:0] expun_cc_addr;
   input pwire expun_cc_en;
@@ -1522,29 +1522,29 @@ module dcache2_block(
   input pwire expun_dc_en;
 
   pwire [8:0] read_hit_way;
-  reg [8:0] read_hit_way_reg;
+  pwire [8:0] read_hit_way_reg;
   pwire [8:0] read_imm_way;
-  reg [8:0] read_imm_way_reg;
+  pwire [8:0] read_imm_way_reg;
   pwire read_hit_any;
-  reg read_en_reg,read_en_reg2,read_en_reg3;
-  reg [4:0] write_begin0_reg;
-  reg [4:0] write_begin1_reg;
-  reg [31:0] write_bankEn0_reg;
-  reg [31:0] write_bankEn1_reg;
-  reg write0_clkEn_reg,write1_clkEn_reg;
+  pwire read_en_reg,read_en_reg2,read_en_reg3;
+  pwire [4:0] write_begin0_reg;
+  pwire [4:0] write_begin1_reg;
+  pwire [31:0] write_bankEn0_reg;
+  pwire [31:0] write_bankEn1_reg;
+  pwire write0_clkEn_reg,write1_clkEn_reg;
   pwire [1023:0] write_data;
-  reg [1023:0] write_data_reg;
+  pwire [1023:0] write_data_reg;
   pwire [7+1:0] ins_hit;
-  reg [159:0] write_data0_reg;
-  reg [159:0] write_data1_reg;
-  reg [511:0] busIns_data_reg;
-  reg insBus_A_reg,insBus_B_reg;
-  reg [8:0] ins_hit_reg;
-  reg ins_hit_reg2;
+  pwire [159:0] write_data0_reg;
+  pwire [159:0] write_data1_reg;
+  pwire [511:0] busIns_data_reg;
+  pwire insBus_A_reg,insBus_B_reg;
+  pwire [8:0] ins_hit_reg;
+  pwire ins_hit_reg2;
   pwire read_immoral_some;
-//  reg ins_hit_reg3;
-  reg [7:0] write_dataPTR_reg;
-  reg [15:0] write_dataPTR_reg2;
+//  pwire ins_hit_reg3;
+  pwire [7:0] write_dataPTR_reg;
+  pwire [15:0] write_dataPTR_reg2;
   generate
       genvar k,b,q;
       for(k=0;k<(10+(ID!=0)+1);k=k+1) begin : ways_gen

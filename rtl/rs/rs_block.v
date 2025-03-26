@@ -43,7 +43,7 @@ module rs_write_forward_ALU(
   input pwire sxtEn;
   
   input pwire [DATA_WIDTH-1:0] oldData;
-  output pwire reg [2:0][DATA_WIDTH-1:0] newData;
+  output pwire [2:0][DATA_WIDTH-1:0] newData;
   input pwire [3:0] fuFwd;
   input pwire [3:0] fuuFwd;
   
@@ -141,7 +141,7 @@ module rs_write_forward(
   input pwire stall;
   
   input pwire [DATA_WIDTH-1:0] oldData;
-  output pwire reg [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input pwire [3:0] fuFwd;
   input pwire [3:0] fuuFwd;
   
@@ -226,7 +226,7 @@ module rs_write_forwardF(
   input pwire stall;
   
   input pwire [DATA_WIDTH-1:0] oldData;
-  output pwire reg [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input pwire [3:0] fuFwd;
   input pwire [3:0] fuuFwd;
   
@@ -312,7 +312,7 @@ module rs_write_forward_JALR(
   input pwire stall;
   
   input pwire [DATA_WIDTH-1:0] oldData;
-  output pwire reg [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input pwire [DATA_WIDTH-1:0] auxData;
   input pwire auxEn;
   input pwire [3:0] fuFwd;
@@ -429,7 +429,7 @@ module rs_writeiS_forward(
   pwire [DATA_WIDTH-1:0] newData_d;
   pwire [DATA_WIDTH-1:0] newDataFu_d;
   pwire [DATA_WIDTH-1:0] newDataFuu_d;
-  reg [DATA_WIDTH-1:0] oldData_reg;
+  pwire [DATA_WIDTH-1:0] oldData_reg;
   
   assign newDataFu_d=(fuFwd==4'd0) ? FU0 : 'z;  
   assign newDataFuu_d=(fuuFwd==4'd0) ? FU0_reg : 'z;  
@@ -518,11 +518,11 @@ module rs_write_forward_save(
   pwire [3:0] fuFwdX;
   pwire [3:0] fuuFwdX;
 
-  reg saved;
+  pwire saved;
 
-  reg [DATA_WIDTH-1:0] oldData_reg;
-  reg [3:0] fuFwd_reg;
-  reg [3:0] fuuFwd_reg;
+  pwire [DATA_WIDTH-1:0] oldData_reg;
+  pwire [3:0] fuFwd_reg;
+  pwire [3:0] fuuFwd_reg;
 
   rs_write_forward_nxt fwd_mod(
   clk,rst,
@@ -567,16 +567,16 @@ module rs_save(
   input pwire rst;
   
   input pwire [DATA_WIDTH-1:0] oldData;
-  output pwire reg [DATA_WIDTH-1:0] newData;
+  output pwire [DATA_WIDTH-1:0] newData;
   input pwire save;
   input pwire en;
   
 
   pwire [DATA_WIDTH-1:0] oldDataX;
 
-  reg saved;
+  pwire saved;
 
-  reg [DATA_WIDTH-1:0] oldData_reg;
+  pwire [DATA_WIDTH-1:0] oldData_reg;
 
  
   assign oldDataX=saved ? oldData_reg : oldData;
@@ -640,11 +640,11 @@ module rs_write_forward_nxt(
   input pwire [DATA_WIDTH-1:0] FU9;
   input pwire [DATA_WIDTH-1:0] FU9_reg;
 
-  reg  [DATA_WIDTH-1:0] oldData_reg;
+  pwire  [DATA_WIDTH-1:0] oldData_reg;
   pwire [DATA_WIDTH-1:0] newDataFu_d;
   pwire [DATA_WIDTH-1:0] newDataFuu_d;
-  reg [3:0] fuFwd_reg;
-  reg [3:0] fuuFwd_reg;
+  pwire [3:0] fuFwd_reg;
+  pwire [3:0] fuuFwd_reg;
   
   assign newDataFu_d=(fuFwd_reg==4'd0) ? FU0 : 'z;  
   assign newDataFuu_d=(fuuFwd_reg==4'd0) ? FU0_reg : 'z;  

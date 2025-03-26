@@ -171,10 +171,10 @@ module fun_fpuL(
   output pwire [64:0] FUCVT1;
 
   pwire [15+70:0] XI_dataD;
-  reg [3:0] u5_en_reg;
-  reg [20:0] u5_op_reg;
-  reg [3:0] u5_en_reg2;
-  reg [20:0] u5_op_reg2;
+  pwire [3:0] u5_en_reg;
+  pwire [20:0] u5_op_reg;
+  pwire [3:0] u5_en_reg2;
+  pwire [20:0] u5_op_reg2;
 
   fun_fpu #(0,0,HIGH) fpu0_mod(
   clk,

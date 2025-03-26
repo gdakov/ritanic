@@ -31,7 +31,7 @@ module stq_adata(
   input pwire [5:0] upd1_WQ;
   output pwire [4:0] upd1_adata;
   
-  reg [4:0] BGN[63:0];
+  pwire [4:0] BGN[63:0];
   
   assign upd0_adata=BGN[upd0_WQ];
   assign upd1_adata=BGN[upd1_WQ];

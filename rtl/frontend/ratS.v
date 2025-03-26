@@ -99,9 +99,9 @@ module rat_flags_buf(
   input pwire write_thread;
   input pwire ret_thread;
   
-  reg [ROB_ADDR_WIDTH-1:0] robAddr[1:0];
-  reg retired[1:0];
-  reg [FN_WIDTH-1:0] funit[1:0];
+  pwire [ROB_ADDR_WIDTH-1:0] robAddr[1:0];
+  pwire retired[1:0];
+  pwire [FN_WIDTH-1:0] funit[1:0];
   
   pwire match_new;
 
@@ -436,8 +436,8 @@ module rat_flags(
   pwire [8:0]read_retired;
   pwire [8:0][FN_WIDTH-1:0] read_fun;
   
-  reg [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
-  reg read_thread_reg;
+  pwire [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
+  pwire read_thread_reg;
 
 
   genvar k;

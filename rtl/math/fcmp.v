@@ -65,9 +65,9 @@ module fcmpd(clk,rst,
   pwire B_zero,B_infty,B_nan,B_x_zero,B_x_infty,B_x_nan;
   pwire [1:0] vres;
   pwire vres1;
-  reg [1:0] vres_reg;
-  reg ven_reg;
-  reg [1:0] vtype_reg;
+  pwire [1:0] vres_reg;
+  pwire ven_reg;
+  pwire [1:0] vtype_reg;
   pwire [3:0][15:0] srchbits;
   pwire [15:0] s_first;
   pwire s_has;

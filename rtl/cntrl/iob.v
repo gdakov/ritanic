@@ -33,8 +33,8 @@ module bob_ram0(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
   
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   
   assign read_data=ram[read_addr_reg];
@@ -117,20 +117,20 @@ module bob_addr(
   input pwire rst;
   input pwire except;
   input pwire new_en;
-  output pwire reg [5:0] new_addr;
+  output pwire [5:0] new_addr;
   input pwire stall;
   output pwire doStall;
-  output pwire reg hasRetire;
+  output pwire hasRetire;
   input pwire doRetire;
-  output pwire reg [5:0] retire_addr;
+  output pwire [5:0] retire_addr;
 
-  reg [5:0] retire_addr0;
+  pwire [5:0] retire_addr0;
   pwire [5:0] retire0_inc;
-  reg [5:0] cnt;
+  pwire [5:0] cnt;
   pwire [5:0] cnt_inc;
   pwire [5:0] cnt_dec;
   pwire [5:0] new_addr_d;
-  reg except_reg;
+  pwire except_reg;
   adder_inc #(6) add1_mod(retire_addr0,retire0_inc,1'b1,);
   adder_inc #(6) add2_mod(cnt,cnt_inc,1'b1,);
   adder_inc #(6) add3_mod(new_addr,new_addr_d,new_addr!=6'd62,);

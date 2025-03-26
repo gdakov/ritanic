@@ -44,9 +44,9 @@ module cc_ram0(
   input pwire write_wen;
   input pwire [3:0] write_ben;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] readA_addr_reg;
-  reg [ADDR_WIDTH-1:0] readB_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] readA_addr_reg;
+  pwire [ADDR_WIDTH-1:0] readB_addr_reg;
   
   assign readA_data=ram[readA_addr_reg];
   assign readB_data=ram[readB_addr_reg];
@@ -243,9 +243,9 @@ module ccX_ram0(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] readA_addr_reg;
-  reg [ADDR_WIDTH-1:0] readB_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] readA_addr_reg;
+  pwire [ADDR_WIDTH-1:0] readB_addr_reg;
   
   assign readA_data=ram[readA_addr_reg];
   assign readB_data=ram[readB_addr_reg];
@@ -414,35 +414,35 @@ module ccRam_way(
   input pwire [`wport-1:0]write_hitO0; //+1 cycle
   input pwire [`wport-1:0]write_odd0;
 
-  reg init;
+  pwire init;
 
   pwire [DATA_WIDTH-1:0] readA_data_ram;
   pwire [DATA_WIDTH-1:0] readB_data_ram;
-  reg [IP_WIDTH-6:0] write_IP_reg;
+  pwire [IP_WIDTH-6:0] write_IP_reg;
   
   pwire [`wport-1:0] readXA_data_ram;
   pwire [`wport-1:0] readXB_data_ram;
-  reg [`wport-1:0] writeX_data;
+  pwire [`wport-1:0] writeX_data;
   pwire [6:0] writeX_addr;
 
   integer k,j;
-  reg readA_clkEn_reg;
-  reg readA_set_flag_reg;
-  reg readB_clkEn_reg;
-  reg readB_set_flag_reg;
-  reg [3:0] readA_IP_low_reg;
-  reg [9:0] readA_IP_reg;
+  pwire readA_clkEn_reg;
+  pwire readA_set_flag_reg;
+  pwire readB_clkEn_reg;
+  pwire readB_set_flag_reg;
+  pwire [3:0] readA_IP_low_reg;
+  pwire [9:0] readA_IP_reg;
   pwire read_hitC0; 
-  reg [3:0] readB_IP_low_reg;
-  reg [9:0] readB_IP_reg;
+  pwire [3:0] readB_IP_low_reg;
+  pwire [9:0] readB_IP_reg;
   pwire write_hit; 
 
   pwire [36:0] expun_naddr;
 
   pwire [6:0] initCountNext;
-  reg [6:0] initCount;
+  pwire [6:0] initCount;
 
-  reg [DATA_WIDTH-1:0] write_data_reg;
+  pwire [DATA_WIDTH-1:0] write_data_reg;
 
   generate
     if (~INDEX[0]) begin
@@ -706,7 +706,7 @@ module ccRam_half(
   pwire [7:0] expun_hit_way;
   
 
-  reg [2:0] read_NRU_reg;
+  pwire [2:0] read_NRU_reg;
  
   
   generate

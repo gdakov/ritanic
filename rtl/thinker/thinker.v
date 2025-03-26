@@ -121,29 +121,29 @@ module pager(
   //reg [1:0] pg;
   //reg [1:0] vm;
   //reg [1:0] codeInVm;
-  reg [64:0] mflags;
-  reg [64:0] PTR[1:0];
-  reg [64:0] VPTR[1:0];
-  reg [64:0] CPTR;
-  reg [64:0] CMSK;
-  reg [64:0] IPTR;
-  reg [64:0] IMSK;
+  pwire [64:0] mflags;
+  pwire [64:0] PTR[1:0];
+  pwire [64:0] VPTR[1:0];
+  pwire [64:0] CPTR;
+  pwire [64:0] CMSK;
+  pwire [64:0] IPTR;
+  pwire [64:0] IMSK;
   reg[2:0] [64:0] ptr;
   reg[2:0] [64:0] ptr2;
   reg[2:0] [64:0] ptrB;
   reg[2:0] do_ptr2;
-  reg [64:0] SPTR;
-  reg [20:0] sptr;
+  pwire [64:0] SPTR;
+  pwire [20:0] sptr;
   reg[2:0] [11:0] stageA;
   reg[2:0] [7:0] stageB;
   reg[2:0] [7:0] stageB_pre;
   reg[2:0] stageA_running;
   reg[2:0] [47:0] addr;
   reg[2:0] [47:0] addrB;
-  reg thread;
-  reg rst_reg;
+  pwire thread;
+  pwire rst_reg;
   integer p,q;
-  reg [31:0] banks;
+  pwire [31:0] banks;
   
   reg[2:0] [30:0] finalAddr0; 
   reg[2:0] [30:0] finalAddr1; 
@@ -164,14 +164,14 @@ module pager(
   pwire[2:0] [4:0] addrO; 
   reg[2:0] [47:0] addr_orig; 
   reg[2:0] [47:0] addr_orig_inc; 
-  reg [REG_WIDTH-1:0] mOp_register_reg;
-  reg [REG_WIDTH-1:0] mOp_register_reg2;
-  reg [REG_WIDTH-1:0] mOp_register_reg3;
+  pwire [REG_WIDTH-1:0] mOp_register_reg;
+  pwire [REG_WIDTH-1:0] mOp_register_reg2;
+  pwire [REG_WIDTH-1:0] mOp_register_reg3;
   reg[2:0] new_en_reg;
   reg[2:0] ready;
   reg[2:0] [PERM_WIDTH-1:0] permReq;
   pwire[2:0] all_shr;
-  reg [64:0] data_in_reg;
+  pwire [64:0] data_in_reg;
   reg[2:0] new_inv_reg;
 
   integer k;
@@ -260,7 +260,7 @@ module pager(
     end
   endgenerate
 
-  reg [2:0][pdc_width-1:0] read_data_pdbr;
+  pwire [2:0][pdc_width-1:0] read_data_pdbr;
 
   pdc_ram ram_mod(
   clk,

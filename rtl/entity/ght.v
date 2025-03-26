@@ -35,7 +35,7 @@ module ght_ram(
     input pwire [DATA_WIDTH-1:0] write_bitEn;
     input pwire write_wen;
 
-    reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+    pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
     integer i;
     
     assign read_data=ram[read_addr];
@@ -132,10 +132,10 @@ module ght_bank(
     input pwire init;
    
 
-    reg read_clkEn_reg; 
+    pwire read_clkEn_reg; 
 
-    reg [15:0] IP_BITS_reg;
-    reg [7:0] GHT_reg;
+    pwire [15:0] IP_BITS_reg;
+    pwire [7:0] GHT_reg;
     
     pwire [15:0] read_addr;
     pwire [7:0] read1_addr[1:0];
@@ -486,9 +486,9 @@ module ght(
     pwire [2:0] write1_way;
     pwire [2:0] writeS_way;
     
-    reg [1:0] writeS_sc;
-    reg [15:0] writeS_addr;
-    reg has_saved;
+    pwire [1:0] writeS_sc;
+    pwire [15:0] writeS_addr;
+    pwire has_saved;
     pwire save0;
     pwire save1;
     
@@ -501,8 +501,8 @@ module ght(
     pwire [1:0] otherPred2a;
     pwire [1:0] otherPred3a;
     
-    reg init;
-    reg [4:0] initCount;
+    pwire init;
+    pwire [4:0] initCount;
     pwire [4:0] initCount_d;
 
     generate

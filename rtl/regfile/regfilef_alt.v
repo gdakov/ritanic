@@ -79,17 +79,17 @@ module regfile_ram_f(
   input pwire write3_wen;
   
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
-  reg [ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [ADDR_WIDTH-1:0] read1_addr_reg;
-  reg [ADDR_WIDTH-1:0] read2_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read2_addr_reg;
 
-  reg read0_clkEn_reg;
-  reg read1_clkEn_reg;
-  reg read2_clkEn_reg;
+  pwire read0_clkEn_reg;
+  pwire read1_clkEn_reg;
+  pwire read2_clkEn_reg;
 
-  reg [ADDR_WIDTH-1:0] retireRead_addr_reg;
+  pwire [ADDR_WIDTH-1:0] retireRead_addr_reg;
 
   assign read0_data=read0_clkEn_reg ? ram[read0_addr_reg] : 'z; 
   assign read1_data=read1_clkEn_reg ? ram[read1_addr_reg] : 'z;
@@ -196,11 +196,11 @@ module regfile_ram_placeholder_f(
   input pwire [DATA_WIDTH-1:0] write3_data;
   input pwire write3_wen;
 
-  reg [ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [ADDR_WIDTH-1:0] read1_addr_reg;
-  reg [ADDR_WIDTH-1:0] read2_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read2_addr_reg;
 
-  reg [ADDR_WIDTH-1:0] retireRead_addr_reg;
+  pwire [ADDR_WIDTH-1:0] retireRead_addr_reg;
 
 
   pwire [DATA_WIDTH-1:0] ram_read0A_data;
@@ -226,15 +226,15 @@ module regfile_ram_placeholder_f(
   pwire read2_clkEn;
 
 
-  reg read0A_en;
-  reg read1A_en;
-  reg read2A_en;
+  pwire read0A_en;
+  pwire read1A_en;
+  pwire read2A_en;
 
-  reg read0B_en;
-  reg read1B_en;
-  reg read2B_en;
+  pwire read0B_en;
+  pwire read1B_en;
+  pwire read2B_en;
 
-  reg retA_en;
+  pwire retA_en;
   pwire [DATA_WIDTH-1:0] retireReadA_data;
   pwire [DATA_WIDTH-1:0] retireReadB_data;
 
@@ -485,23 +485,23 @@ module regfile_ram_block_f(
 
   pwire [ADDR_WIDTH-5:0] initRegCount_next;
   
-  reg [ADDR_WIDTH-1:0] initRegCount;
-  reg doInit;
+  pwire [ADDR_WIDTH-1:0] initRegCount;
+  pwire doInit;
 
   pwire [4:0] newAddr [8:0];
   pwire [8:0] newEn;
 
-  reg [DATA_WIDTH-1:0] read0_const_reg;
-  reg [DATA_WIDTH-1:0] read1_const_reg;
-  reg [DATA_WIDTH-1:0] read2_const_reg;
+  pwire [DATA_WIDTH-1:0] read0_const_reg;
+  pwire [DATA_WIDTH-1:0] read1_const_reg;
+  pwire [DATA_WIDTH-1:0] read2_const_reg;
   
-  reg [ADDR_WIDTH-1:0]  read0_addr_reg;
-  reg [ADDR_WIDTH-1:0]  read1_addr_reg;
-  reg [ADDR_WIDTH-1:0]  read2_addr_reg;
+  pwire [ADDR_WIDTH-1:0]  read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0]  read1_addr_reg;
+  pwire [ADDR_WIDTH-1:0]  read2_addr_reg;
 
-  reg read0_constEn_reg;
-  reg read1_constEn_reg;
-  reg read2_constEn_reg;
+  pwire read0_constEn_reg;
+  pwire read1_constEn_reg;
+  pwire read2_constEn_reg;
   
   genvar x;
 

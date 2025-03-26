@@ -50,19 +50,19 @@ module rbus(
   output prev_out_can;
   input pwire next_in_can;
   
-  reg [`rbus_width-1:0] rbusPrev_signals_reg;
-  reg [9:0] rbusPrev_src_req_reg;
-  reg [9:0] rbusPrev_dst_req_reg;
-  reg [36:0] rbusPrev_address_reg;
-  reg [`rbus_width-1:0] rbusIn0_signals_reg;
-  reg [9:0] rbusIn0_src_req_reg;
-  reg [9:0] rbusIn0_dst_req_reg;
-  reg [36:0] rbusIn0_address_reg;
-  reg [`rbus_width-1:0] rbusIn1_signals_reg;
-  reg [9:0] rbusIn1_src_req_reg;
-  reg [9:0] rbusIn1_dst_req_reg;
-  reg [36:0] rbusIn1_address_reg;
-  reg [1:0] busy;
+  pwire [`rbus_width-1:0] rbusPrev_signals_reg;
+  pwire [9:0] rbusPrev_src_req_reg;
+  pwire [9:0] rbusPrev_dst_req_reg;
+  pwire [36:0] rbusPrev_address_reg;
+  pwire [`rbus_width-1:0] rbusIn0_signals_reg;
+  pwire [9:0] rbusIn0_src_req_reg;
+  pwire [9:0] rbusIn0_dst_req_reg;
+  pwire [36:0] rbusIn0_address_reg;
+  pwire [`rbus_width-1:0] rbusIn1_signals_reg;
+  pwire [9:0] rbusIn1_src_req_reg;
+  pwire [9:0] rbusIn1_dst_req_reg;
+  pwire [36:0] rbusIn1_address_reg;
+  pwire [1:0] busy;
 
   assign rbus_rdyIn=~rbusPrev_signals[`rbus_second] && next_in_can && !(&busy);
   assign prev_out_can=(~rbus_rdyOutA&&~rbus_rdyOutB&&!(&busy))||
@@ -136,8 +136,8 @@ module rbusD_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -193,33 +193,33 @@ module rbusD(
   output prev_out_can;
   input pwire next_in_can;
   
-  reg [`rbus_width-1:0] rbusPrev_signals_reg;
-  reg [9:0] rbusPrev_src_req_reg;
-  reg [9:0] rbusPrev_dst_req_reg;
-  reg [511:0] rbusPrev_data_reg;
-  reg [`rbus_width-1:0] rbusIn0_signals_reg;
-  reg [9:0] rbusIn0_src_req_reg;
-  reg [9:0] rbusIn0_dst_req_reg;
-  reg [511:0] rbusIn0_data_reg;
-  reg [`rbus_width-1:0] rbusIn1_signals_reg;
-  reg [9:0] rbusIn1_src_req_reg;
-  reg [9:0] rbusIn1_dst_req_reg;
-  reg [511:0] rbusIn1_data_reg;
-  reg [1:0] busy;
+  pwire [`rbus_width-1:0] rbusPrev_signals_reg;
+  pwire [9:0] rbusPrev_src_req_reg;
+  pwire [9:0] rbusPrev_dst_req_reg;
+  pwire [511:0] rbusPrev_data_reg;
+  pwire [`rbus_width-1:0] rbusIn0_signals_reg;
+  pwire [9:0] rbusIn0_src_req_reg;
+  pwire [9:0] rbusIn0_dst_req_reg;
+  pwire [511:0] rbusIn0_data_reg;
+  pwire [`rbus_width-1:0] rbusIn1_signals_reg;
+  pwire [9:0] rbusIn1_src_req_reg;
+  pwire [9:0] rbusIn1_dst_req_reg;
+  pwire [511:0] rbusIn1_data_reg;
+  pwire [1:0] busy;
   
   pwire read_clkEnA;
-  reg [4:0] cntA;
-  reg [4:0] read_addrA;
-  reg [4:0] write_addrA;
+  pwire [4:0] cntA;
+  pwire [4:0] read_addrA;
+  pwire [4:0] write_addrA;
   pwire [4:0] cntA_plus;
   pwire [4:0] cntA_minus;
   pwire [4:0] read_addrA_d;
   pwire [4:0] write_addrA_d;
 
   pwire read_clkEnB;
-  reg [4:0] cntB;
-  reg [4:0] read_addrB;
-  reg [4:0] write_addrB;
+  pwire [4:0] cntB;
+  pwire [4:0] read_addrB;
+  pwire [4:0] write_addrB;
   pwire [4:0] cntB_plus;
   pwire [4:0] cntB_minus;
   pwire [4:0] read_addrB_d;

@@ -18,7 +18,7 @@ module DFF(clk,en,d,q);
   input pwire clk;
   input pwire en;
   input pwire [WIDTH-1:0] d;
-  output pwire reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
+  output pwire [WIDTH-1:0] q;//={WIDTH{1'b0}};
   
   always @(posedge clk)
     begin
@@ -35,7 +35,7 @@ module DFF2(clk,rst,en,d,q);
   input pwire rst;
   input pwire en;
   input pwire [WIDTH-1:0] d;
-  output pwire reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
+  output pwire [WIDTH-1:0] q;//={WIDTH{1'b0}};
   
   always @(posedge clk)
     begin
@@ -74,8 +74,8 @@ module optional_register(
   input pwire  [WIDTH-1:0] dataIn;
   output pwire [WIDTH-1:0] dataOut;
   
-  reg [WIDTH-1:0] first;
-  reg [WIDTH-1:0] second;
+  pwire [WIDTH-1:0] first;
+  pwire [WIDTH-1:0] second;
 
   always @(posedge clk) begin
       first<=dataIn;

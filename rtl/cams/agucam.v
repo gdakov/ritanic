@@ -38,8 +38,8 @@ module addrcalccam_ram0(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [7:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [7:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -177,7 +177,7 @@ module addrcalccam(
   input pwire except;
   input pwire except_thread;
   input pwire read_clkEn;
-  output pwire reg doSkip;
+  output pwire doSkip;
   input pwire rsStall;
 
   input pwire conflict0;
@@ -256,12 +256,12 @@ module addrcalccam(
   pwire conflFound;
   pwire doStep;
   
-  reg [ADDR_WIDTH-1:0] read_addr;
+  pwire [ADDR_WIDTH-1:0] read_addr;
   pwire [ADDR_WIDTH-1:0] read_addr_d;
   pwire [ADDR_WIDTH-1:0] read_addrU_d;
   pwire [ADDR_WIDTH-1:0] read_addrA_d;
   pwire [ADDR_WIDTH-1:0] read_addrB_d;
-  reg [ADDR_WIDTH-1:0] write_addr;
+  pwire [ADDR_WIDTH-1:0] write_addr;
   pwire [ADDR_WIDTH-1:0] write_addr_d;
   pwire [10:0] count;
   pwire [10:1] cmore;
@@ -280,20 +280,20 @@ module addrcalccam(
 //  pwire pageIsNext;
   
  
-  reg [2:0] confl_mask;
+  pwire [2:0] confl_mask;
 
-  reg [MOP_WIDTH-1:0] write_mop_reg[2:0];
+  pwire [MOP_WIDTH-1:0] write_mop_reg[2:0];
 
-  reg init;
-  reg [2:0] initCount;
+  pwire init;
+  pwire [2:0] initCount;
   pwire [2:0] initCount_next;
   
   //genvar k;
   
-  reg [DEPTH-1:0] valid[1:0];
-  reg [DEPTH-1:0] vMask;
-  reg [DEPTH-1:0] vMaskN;
-  reg vOn_next;
+  pwire [DEPTH-1:0] valid[1:0];
+  pwire [DEPTH-1:0] vMask;
+  pwire [DEPTH-1:0] vMaskN;
+  pwire vOn_next;
   pwire [7:0] rdvalid1;
   pwire [7:0] rdvalid0;
   pwire drvalid1_found;

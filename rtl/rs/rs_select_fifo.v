@@ -31,19 +31,19 @@ module rsSelect_helper(
   input pwire clk;
   input pwire rst;
   input pwire except;
-  output pwire reg hasData;
-  output pwire reg [DATA_WIDTH-1:0] read_data;
+  output pwire hasData;
+  output pwire [DATA_WIDTH-1:0] read_data;
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
   input pwire [DATA_WIDTH-1:0] rsSelect_data;
   input pwire rsUpdate;
   input pwire rsFlush;
 
-  reg [DATA_WIDTH-1:0] read_data1;
-  reg [DATA_WIDTH-1:0] read_data2;
-  reg [DATA_WIDTH-1:0] read_data3;
+  pwire [DATA_WIDTH-1:0] read_data1;
+  pwire [DATA_WIDTH-1:0] read_data2;
+  pwire [DATA_WIDTH-1:0] read_data3;
   
-  reg [2:0] count;
+  pwire [2:0] count;
  
   always @(posedge clk)
     begin
@@ -167,7 +167,7 @@ module rsSelectFifo(
   pwire [BUF_COUNT-1:0] portReadyH1;
  // pwire [3:0] msk8;
   pwire [BUF_COUNT-1:0] portReadyM;
-  reg [BUF_COUNT-1:0] mask;
+  pwire [BUF_COUNT-1:0] mask;
 
   
   bit_find_first_bit #(BUF_COUNT) first_mod(portReadyM,first,firstFound);
@@ -287,7 +287,7 @@ module rsSelectFifo48(
   pwire [BUF_COUNT-1:0] portReadyH1;
  // pwire [3:0] msk8;
   pwire [BUF_COUNT-1:0] portReadyM;
-  reg [BUF_COUNT-1:0] mask;
+  pwire [BUF_COUNT-1:0] mask;
 
   
   bit_find_first_bit #(BUF_COUNT) first_mod(portReadyM,first,firstFound);

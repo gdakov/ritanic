@@ -36,21 +36,21 @@ module simd_non_socialiste(
   pwire [67:0] res_X;
   assign res=res_X;
 
-  reg out8,out16,out32,out64,outL;
+  pwire out8,out16,out32,out64,outL;
   pwire [4:1][63:0] resD;
-  reg  [4:1][63:0] resD_reg;
-  reg is_sign,is_sat,is_min,is_max,is_sub,is_simpl,is_subcmp,is_cmp;
-  reg [3:0] jump_type;
+  pwire  [4:1][63:0] resD_reg;
+  pwire is_sign,is_sat,is_min,is_max,is_sub,is_simpl,is_subcmp,is_cmp;
+  pwire [3:0] jump_type;
   reg[63:0] A_reg;
   reg[63:0] B_reg;
-  reg [64:0] resL;
-  reg [12:0] operation_reg;
-  reg shSH_reg;
+  pwire [64:0] resL;
+  pwire [12:0] operation_reg;
+  pwire shSH_reg;
   pwire shSH;
-  reg [64:0] resSH_reg;
+  pwire [64:0] resSH_reg;
   pwire [64:0] resSH;
-  reg en_reg;
-  reg en_reg2;
+  pwire en_reg;
+  pwire en_reg2;
   pwire [64:0] resh;
 
   assign resh=out32&~outL ? resD_reg[3] : 64'bz;

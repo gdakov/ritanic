@@ -220,11 +220,11 @@ module ratV_buf(
   input pwire write_thread;
   input pwire ret_thread;
   
-  reg [ROB_ADDR_WIDTH-1:0] robAddr;
-  reg retired;
-  reg [FN_WIDTH-1:0] funit;
-  reg [1:0] dom;
-  reg [1:0] domp;
+  pwire [ROB_ADDR_WIDTH-1:0] robAddr;
+  pwire retired;
+  pwire [FN_WIDTH-1:0] funit;
+  pwire [1:0] dom;
+  pwire [1:0] domp;
 
   pwire [ROB_ADDR_WIDTH-1:0] robAddr_rd;
   pwire retired_rd;
@@ -789,7 +789,7 @@ module ratV(
   input pwire read_thread;
   input pwire ret_thread;
 
-  reg [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
+  pwire [RAT_ADDR_WIDTH-1:0] read_addr_reg[8:0];
 
 
 
@@ -802,7 +802,7 @@ module ratV(
   pwire [8:0][FN_WIDTH-1:0] read_fun;
   pwire [8:0][1:0] read_dom;
 
-  reg read_thread_reg;
+  pwire read_thread_reg;
   
   assign read0_data=read_data[0];
   assign read1_data=read_data[1];

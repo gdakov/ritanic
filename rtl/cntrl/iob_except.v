@@ -84,9 +84,9 @@ module iob_except_ram(
   input pwire [DATA_WIDTH-1:0] write9_data;
   input pwire write9_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
   

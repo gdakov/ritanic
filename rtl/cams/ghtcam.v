@@ -47,9 +47,9 @@ module ght_buf(
   input pwire except;
   input pwire except_thread;
   
-  reg free;
-  reg thread;
-  reg [12:0] addr;
+  pwire free;
+  pwire thread;
+  pwire [12:0] addr;
 
   assign read_hit0=read_addr0==addr && ~free; 
   assign read_hit1=read_addr1==addr && ~free; 
@@ -104,7 +104,7 @@ module ght_cam(
   input pwire except;
   input pwire except_thread;
 
-  reg [31:0] wrtpos;
+  pwire [31:0] wrtpos;
   pwire [31:0] read_hit0_way;
   pwire [31:0] read_hit1_way;
   pwire [31:0] read_hit2_way;

@@ -104,17 +104,17 @@ module stq_buf_L(
   input pwire upd1_en;
 
   input pwire free_en;
-  output pwire reg free;
-  output pwire reg upd;
-  output pwire reg passe;
+  output pwire free;
+  output pwire upd;
+  output pwire passe;
   input pwire passe_en;
   
-//  reg [WIDTH-1:0] addrEO;
-  reg [3:0] bytes;
-  reg subBNK;
-  reg subBNK2;
-  reg [3:0] odd;
-//  reg upd;
+//  pwire [WIDTH-1:0] addrEO;
+  pwire [3:0] bytes;
+  pwire subBNK;
+  pwire subBNK2;
+  pwire [3:0] odd;
+//  pwire upd;
   pwire chk0_match0;
   pwire chk1_match0;
   pwire chk2_match0;

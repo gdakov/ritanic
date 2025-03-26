@@ -66,11 +66,11 @@ module regfileFl_ram(
   input pwire [ADDR_WIDTH-1:0] write3_addr;
   input pwire write3_wen;
 
-  reg [DATA_WIDTH:0] ram [ADDR_COUNT-1:0];
+  pwire [DATA_WIDTH:0] ram [ADDR_COUNT-1:0];
 
-  reg [ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [ADDR_WIDTH-1:0] read0_addr_reg;
 
-  reg [ADDR_WIDTH-1:0] retireRead_addr_reg;
+  pwire [ADDR_WIDTH-1:0] retireRead_addr_reg;
 
   assign read0_data=ram[read0_addr_reg];
 
@@ -169,7 +169,7 @@ module regfileFl_ram_placeholder(
   pwire read0_clkEn;
 
 
-  reg readA_en,readB_en,retA_en,retB_en;
+  pwire readA_en,readB_en,retA_en,retB_en;
   
   regfileFl_ram ramA_mod(
   clk,
@@ -356,8 +356,8 @@ module regfileFl_ram_block(
 
   pwire [ADDR_WIDTH-5:0] initRegCount_next;
   
-  reg [ADDR_WIDTH-1:0] initRegCount;
-  reg doInit;
+  pwire [ADDR_WIDTH-1:0] initRegCount;
+  pwire doInit;
 
   genvar x;
 
@@ -584,26 +584,26 @@ module regfileFl(
   input pwire [4:0] newAddr8;
   input pwire newEn8;
 
-  reg [ADDR_WIDTH-1:0] write0_addr_reg2;
-  reg write0_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write1_addr_reg2;
-  reg write1_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write2_addr_reg2;
-  reg write2_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write3_addr_reg2;
-  reg write3_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write4_addr_reg2;
-  reg write4_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write5_addr_reg2;
-  reg write5_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write6_addr_reg2;
-  reg write6_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write7_addr_reg2;
-  reg write7_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write8_addr_reg2;
-  reg write8_wen_reg2;
-  reg [ADDR_WIDTH-1:0] write9_addr_reg2;
-  reg write9_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write0_addr_reg2;
+  pwire write0_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write1_addr_reg2;
+  pwire write1_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write2_addr_reg2;
+  pwire write2_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write3_addr_reg2;
+  pwire write3_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write4_addr_reg2;
+  pwire write4_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write5_addr_reg2;
+  pwire write5_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write6_addr_reg2;
+  pwire write6_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write7_addr_reg2;
+  pwire write7_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write8_addr_reg2;
+  pwire write8_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write9_addr_reg2;
+  pwire write9_wen_reg2;
 
   pwire [DATA_WIDTH:0] ram_read_data;
 

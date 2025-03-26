@@ -39,9 +39,9 @@ module msiq_buf(
   output pwire chk3_smpc;
   input pwire [36:0] wrt_addr;
   input pwire wrt_en;
-  output pwire reg wrt_can;
+  output pwire wrt_can;
 
-  reg [36:0] addr;
+  pwire [36:0] addr;
 
   assign chk0_smpc=(chk0_data[`lsaddr_addrE]==addr[36:1] && chk0_en && 
     ~chk0_data[`lsaddr_odd] | chk0_data[`lsaddr_split] && ~addr[0]) |

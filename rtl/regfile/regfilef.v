@@ -186,76 +186,76 @@ module regfilef(
   pwire read_constEn[2:0];
   pwire read_oe[2:0];
 
-  reg [ADDR_WIDTH-1:0] write0_addr_reg2;
-  reg write0_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write0_addr_reg2;
+  pwire write0_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write1_addr_reg2;
-  reg write1_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write1_addr_reg2;
+  pwire write1_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write2_addr_reg2;
-  reg write2_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write2_addr_reg2;
+  pwire write2_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write3_addr_reg2;
-  reg write3_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write3_addr_reg2;
+  pwire write3_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write4_addr_reg2;
-  reg write4_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write4_addr_reg2;
+  pwire write4_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write5_addr_reg2;
-  reg write5_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write5_addr_reg2;
+  pwire write5_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write6_addr_reg2;
-  reg write6_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write6_addr_reg2;
+  pwire write6_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write7_addr_reg2;
-  reg write7_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write7_addr_reg2;
+  pwire write7_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write8_addr_reg2;
-  reg write8_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write8_addr_reg2;
+  pwire write8_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write9_addr_reg2;
-  reg write9_wen_reg2;
+  pwire [ADDR_WIDTH-1:0] write9_addr_reg2;
+  pwire write9_wen_reg2;
 
-  reg [ADDR_WIDTH-1:0] write0_addr_reg;
-  reg write0_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write0_addr_reg;
+  pwire write0_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write1_addr_reg;
-  reg write1_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write1_addr_reg;
+  pwire write1_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write2_addr_reg;
-  reg write2_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write2_addr_reg;
+  pwire write2_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write3_addr_reg;
-  reg write3_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write3_addr_reg;
+  pwire write3_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write4_addr_reg;
-  reg write4_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write4_addr_reg;
+  pwire write4_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write5_addr_reg;
-  reg write5_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write5_addr_reg;
+  pwire write5_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write6_addr_reg;
-  reg write6_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write6_addr_reg;
+  pwire write6_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write7_addr_reg;
-  reg write7_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write7_addr_reg;
+  pwire write7_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write8_addr_reg;
-  reg write8_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write8_addr_reg;
+  pwire write8_wen_reg;
 
-  reg [ADDR_WIDTH-1:0] write9_addr_reg;
-  reg write9_wen_reg;
+  pwire [ADDR_WIDTH-1:0] write9_addr_reg;
+  pwire write9_wen_reg;
 
-  reg [DATA_WIDTH-1:0] write0_data_reg;
-  reg [DATA_WIDTH-1:0] write1_data_reg;
-  reg [DATA_WIDTH-1:0] write2_data_reg;
-  reg [DATA_WIDTH-1:0] write3_data_reg;
-  reg [DATA_WIDTH-1:0] write4_data_reg;
-  reg [DATA_WIDTH-1:0] write5_data_reg;
-  reg [DATA_WIDTH-1:0] write6_data_reg;
-  reg [DATA_WIDTH-1:0] write7_data_reg;
-  reg [DATA_WIDTH-1:0] write8_data_reg;
-  reg [DATA_WIDTH-1:0] write9_data_reg;
+  pwire [DATA_WIDTH-1:0] write0_data_reg;
+  pwire [DATA_WIDTH-1:0] write1_data_reg;
+  pwire [DATA_WIDTH-1:0] write2_data_reg;
+  pwire [DATA_WIDTH-1:0] write3_data_reg;
+  pwire [DATA_WIDTH-1:0] write4_data_reg;
+  pwire [DATA_WIDTH-1:0] write5_data_reg;
+  pwire [DATA_WIDTH-1:0] write6_data_reg;
+  pwire [DATA_WIDTH-1:0] write7_data_reg;
+  pwire [DATA_WIDTH-1:0] write8_data_reg;
+  pwire [DATA_WIDTH-1:0] write9_data_reg;
   pwire [8:0][5:0] write_addr_rrf;
   pwire [8:0]      write_wen_rrf;  
   pwire [8:0][5:0] write_addr_rrfx;

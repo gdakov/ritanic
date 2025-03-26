@@ -149,37 +149,37 @@ module saddrcalc(
   input pwire [TLB_DATA_WIDTH-1:0] mlb_data1;
   input pwire mlb_hit;
 
-  reg [2:0] opsize;
+  pwire [2:0] opsize;
   pwire hasIndex;
-  reg aligned;//aligned for int subsys purpose not arch
-  reg aligned2;//same for complex addressing
-  reg tiny; //1 or 2 byte
-  reg mex_en_reg,mex_en_reg2;
+  pwire aligned;//aligned for int subsys purpose not arch
+  pwire aligned2;//same for complex addressing
+  pwire tiny; //1 or 2 byte
+  pwire mex_en_reg,mex_en_reg2;
 
-  reg [2:2] addrMain_reg;
+  pwire [2:2] addrMain_reg;
 
-  reg mode64;
-  reg modeCmplx;
-  reg modeCmplx_reg;
+  pwire mode64;
+  pwire modeCmplx;
+  pwire modeCmplx_reg;
   
-  reg error_reg;
+  pwire error_reg;
 
 //  pwire isLongOffset;
-  reg stepOver;//step over to next bank because of offset
-  reg stepOver2;
-  reg addrCarry;//offset by one bank
+  pwire stepOver;//step over to next bank because of offset
+  pwire stepOver2;
+  pwire addrCarry;//offset by one bank
   pwire stepOverCmplx;
   pwire stepOverCmplx2;
 
   pwire modeCmplx_d;
   //complex mode when index register used, or offset not fit in unsigned 12-bit range
 
-  reg [31:0] banks0;
+  pwire [31:0] banks0;
   
   pwire [4:0] bank0;
   pwire [4:0] bankL1;
   pwire [1:0] pageFault_t;
-  reg  [1:0] pageFault_t_reg;
+  pwire  [1:0] pageFault_t_reg;
   
   pwire mOp_split_X;
 
@@ -201,7 +201,7 @@ module saddrcalc(
   pwire [TLB_DATA_WIDTH-1:0] mlb_data1;
   pwire [TLB_DATA_WIDTH-1:0] mlb_data;
   pwire [TLB_DATA_WIDTH-1:0] mlb_data_next;
-  reg [TLB_DATA_WIDTH-1:0] mlb_data_reg;
+  pwire [TLB_DATA_WIDTH-1:0] mlb_data_reg;
 
   pwire wp;
   pwire wp_next;
@@ -211,63 +211,63 @@ module saddrcalc(
 
   pwire [3:0] attr2; 
 
-  reg read_clkEn_reg;
-  reg read_clkEn_reg2;
-  reg [OPERATION_WIDTH-1:0] op_reg;
+  pwire read_clkEn_reg;
+  pwire read_clkEn_reg2;
+  pwire [OPERATION_WIDTH-1:0] op_reg;
 
 
   pwire [BANK_COUNT-1:0] all_banks;
   pwire otherness;
 
   pwire [BANK_COUNT-1:0] bit_confl;
-  reg  [BANK_COUNT-1:0] bit_confl_reg;
+  pwire  [BANK_COUNT-1:0] bit_confl_reg;
   
   
   pwire carryNext;
 //  pwire non_overlap;
 
-//  reg [23:0] proc_reg;
-//  reg [23:0] proc_reg2;
+//  pwire [23:0] proc_reg;
+//  pwire [23:0] proc_reg2;
   
   integer i;
   
 //  pwire [4:0] bankNextOff;
 //  pwire hasBankNext;
   
-  reg bus_hold_reg;
-  reg bus_hold_reg2;
+  pwire bus_hold_reg;
+  pwire bus_hold_reg2;
 
-  reg doJmp;
+  pwire doJmp;
   
-  reg [REG_WIDTH-1:0] regno_reg;
-  reg [8:0] LSQ_no_reg;
-  reg [9:0] II_no_reg;
-  reg [5:0] WQ_no_reg;
-  reg thread_reg;
-  reg lsflag_reg;
+  pwire [REG_WIDTH-1:0] regno_reg;
+  pwire [8:0] LSQ_no_reg;
+  pwire [9:0] II_no_reg;
+  pwire [5:0] WQ_no_reg;
+  pwire thread_reg;
+  pwire lsflag_reg;
 
   pwire [1:0] rcn_mask;
 
   pwire doJmp;
 
-  reg except_reg;
-  reg except_reg2;
-  reg except_thread_reg;
-  reg except_thread_reg2;
+  pwire except_reg;
+  pwire except_reg2;
+  pwire except_thread_reg;
+  pwire except_thread_reg2;
   pwire cout_secq;
   pwire fault_cann;
-  reg fault_cann_reg;
+  pwire fault_cann_reg;
 
-  reg [3:0] attr2_reg;
+  pwire [3:0] attr2_reg;
 
   pwire [4:0] lastSz;
 
-  reg [1:0][63:0] mflags;
+  pwire [1:0][63:0] mflags;
   pwire [64:0] mflags0;
-  reg [1:0][23:0] pproc;  
-  reg [23:0] sproc;  
-  reg [23:0] proc;
-  reg [1:0][23:0] vproc;
+  pwire [1:0][23:0] pproc;  
+  pwire [23:0] sproc;  
+  pwire [23:0] proc;
+  pwire [1:0][23:0] vproc;
   pwire split;
   pwire [1:0] fault_mlb;
   pwire [1:0] fault_mlb_next;

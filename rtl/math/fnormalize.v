@@ -38,7 +38,7 @@ module normalizeD(
   pwire [15:0] expA;
   pwire [15:0] denor_from;
   pwire [15:0] offset;
-  reg [15:0] offset_reg;
+  pwire [15:0] offset_reg;
 
   assign expA=isDBL ? {A[65],{4{~A[65]}},A[63:53]} : {A[65],A[80:66]};
   assign denor_from=isDBL ? {DEN_DBL[11],{4{~DEN_DBL[11]}},DEN_DBL[10:0]} : DEN_EXT;

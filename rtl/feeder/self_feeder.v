@@ -880,7 +880,7 @@ module ww(
   output pwire       btbl_clp1;
 
 
-  reg thread;
+  pwire thread;
 
   pwire miss_now,mlbMiss_now;
 

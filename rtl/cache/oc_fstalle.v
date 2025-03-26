@@ -31,13 +31,13 @@ module cc_fstalle(
   input pwire [WIDTH-1:0] write_data;  
   output pwire [WIDTH-1:0] read_data;  
 
-  reg [2:0] where1;
-  reg [2:0] where2;
-  reg [WIDTH-1:0] dataS;  
-  reg [WIDTH-1:0] data1;  
-  reg [WIDTH-1:0] data2;
-  reg [WIDTH-1:0] write_data_reg;  
-  reg isDataS;
+  pwire [2:0] where1;
+  pwire [2:0] where2;
+  pwire [WIDTH-1:0] dataS;  
+  pwire [WIDTH-1:0] data1;  
+  pwire [WIDTH-1:0] data2;
+  pwire [WIDTH-1:0] write_data_reg;  
+  pwire isDataS;
 
   assign read_data=isDataS ? dataS : write_data_reg;
   

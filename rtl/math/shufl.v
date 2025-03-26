@@ -51,10 +51,10 @@ module fperm(
   pwire [67:0] resX;
   pwire [67:0] resY;
   pwire [67:0] res0;
-  reg [67:0] res0_reg;
-  reg [67:0] res0_reg2;
-  reg [67:0] res0_reg3;
-  reg en_reg,en_reg2,en_reg3;
+  pwire [67:0] res0_reg;
+  pwire [67:0] res0_reg2;
+  pwire [67:0] res0_reg3;
+  pwire en_reg,en_reg2,en_reg3;
 
   pwire [11:0] exp_D;
   pwire [8:0] exp_X1;

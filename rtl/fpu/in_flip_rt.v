@@ -27,23 +27,23 @@ module in_flip_rt(
   input pwire dout_en;
   output pwire do_;
 
-  reg [CNT-1:0] free;
-  reg [WIDTH-1:0] data[CNT-1:0];
-  reg [CNT-1:0] den;
-  reg [CNT-1:0] den_reg;
-  reg [CNT-1:0] den_reg2;
- // reg [CNT-1:0] den_reg3;
+  pwire [CNT-1:0] free;
+  pwire [WIDTH-1:0] data[CNT-1:0];
+  pwire [CNT-1:0] den;
+  pwire [CNT-1:0] den_reg;
+  pwire [CNT-1:0] den_reg2;
+ // pwire [CNT-1:0] den_reg3;
   pwire [CNT-1:0] first;
   pwire has;
   pwire [CNT-1:0] firstN;
   pwire hasN;
-  reg [CNT-1:0] firstN_reg;
-  reg hasN_reg;
-  reg [CNT-1:0] firstN_reg2;
-  reg hasN_reg2;
+  pwire [CNT-1:0] firstN_reg;
+  pwire hasN_reg;
+  pwire [CNT-1:0] firstN_reg2;
+  pwire hasN_reg2;
   pwire [4:0] cntFree_or_less;
-//  reg [CNT-1:0] firstN_reg3;
-//  reg hasN_reg3;
+//  pwire [CNT-1:0] firstN_reg3;
+//  pwire hasN_reg3;
   integer t;
 
   bit_find_first_bit #(CNT) first_mod(free,first,has);

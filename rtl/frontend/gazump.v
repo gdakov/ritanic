@@ -92,10 +92,10 @@ module regfile_get_gazump0(
 
   pwire match;
 
-  reg read_constEn_reg;
+  pwire read_constEn_reg;
 
-  reg read_oe_reg;
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire read_oe_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
 
 
   

@@ -181,60 +181,60 @@ module fu_alu(
   input pwire [64:0] jxcross;
   inout pwire [64:0] allah;
 
-  reg [1:0] nDataAlt;
+  pwire [1:0] nDataAlt;
 
-  reg [1:0] nDataAlt_reg;
-  reg u5_nDataAlt_reg;
-  reg [64:0] FU0_reg;
-  reg [64:0] FU1_reg;
-  reg [64:0] FU2_reg;
-  reg [64:0] FU3_reg;
-  reg [64:0] FU4_reg;
-  reg [64:0] FU5_reg;
-  reg [64:0] FU6_reg;
-  reg [64:0] FU7_reg;
-  reg [64:0] FU8_reg;
-  reg [64:0] FU9_reg;
+  pwire [1:0] nDataAlt_reg;
+  pwire u5_nDataAlt_reg;
+  pwire [64:0] FU0_reg;
+  pwire [64:0] FU1_reg;
+  pwire [64:0] FU2_reg;
+  pwire [64:0] FU3_reg;
+  pwire [64:0] FU4_reg;
+  pwire [64:0] FU5_reg;
+  pwire [64:0] FU6_reg;
+  pwire [64:0] FU7_reg;
+  pwire [64:0] FU8_reg;
+  pwire [64:0] FU9_reg;
   
-  reg [5:0] FUS1_reg;
-  reg [5:0] FUS2_reg;
-  reg [5:0] FUS3_reg;
-  reg [5:0] FUS4_reg;
-  reg [5:0] FUS5_reg;
-  reg [5:0] FUS6_reg;
-  reg [5:0] FUS7_reg;
-  reg [5:0] FUS8_reg;
-  reg [5:0] FUS9_reg;
+  pwire [5:0] FUS1_reg;
+  pwire [5:0] FUS2_reg;
+  pwire [5:0] FUS3_reg;
+  pwire [5:0] FUS4_reg;
+  pwire [5:0] FUS5_reg;
+  pwire [5:0] FUS6_reg;
+  pwire [5:0] FUS7_reg;
+  pwire [5:0] FUS8_reg;
+  pwire [5:0] FUS9_reg;
   
-  reg [3:0]           u1_S_fufwd_reg;
-  reg [3:0]           u1_S_fuufwd_reg;
-  reg [3:0]           u2_S_fufwd_reg;
-  reg [3:0]           u2_S_fuufwd_reg;
-  reg [3:0]           u3_S_fufwd_reg;
-  reg [3:0]           u3_S_fuufwd_reg;
-  reg [3:0]           u4_S_fufwd_reg;
-  reg [3:0]           u4_S_fuufwd_reg;
-  reg [3:0]           u5_S_fufwd_reg;
-  reg [3:0]           u5_S_fuufwd_reg;
-  reg [3:0]           u6_S_fufwd_reg;
-  reg [3:0]           u6_S_fuufwd_reg;
+  pwire [3:0]           u1_S_fufwd_reg;
+  pwire [3:0]           u1_S_fuufwd_reg;
+  pwire [3:0]           u2_S_fufwd_reg;
+  pwire [3:0]           u2_S_fuufwd_reg;
+  pwire [3:0]           u3_S_fufwd_reg;
+  pwire [3:0]           u3_S_fuufwd_reg;
+  pwire [3:0]           u4_S_fufwd_reg;
+  pwire [3:0]           u4_S_fuufwd_reg;
+  pwire [3:0]           u5_S_fufwd_reg;
+  pwire [3:0]           u5_S_fuufwd_reg;
+  pwire [3:0]           u6_S_fufwd_reg;
+  pwire [3:0]           u6_S_fuufwd_reg;
 
-  reg [32:0] u1_const_reg;
-  reg [32:0] u2_const_reg;
-  reg [32:0] u3_const_reg;
+  pwire [32:0] u1_const_reg;
+  pwire [32:0] u2_const_reg;
+  pwire [32:0] u3_const_reg;
 
-  reg [3:0] u6_attr;
+  pwire [3:0] u6_attr;
 
-  reg [3:0] u1_sh_reg;
-  reg [1:0] u1_sh2_reg;
-  reg [3:0] u3_sh_reg;
-  reg [1:0] u3_sh2_reg;
-  reg [3:0] u5_sh_reg;
-  reg [1:0] u5_sh2_reg;
+  pwire [3:0] u1_sh_reg;
+  pwire [1:0] u1_sh2_reg;
+  pwire [3:0] u3_sh_reg;
+  pwire [1:0] u3_sh2_reg;
+  pwire [3:0] u5_sh_reg;
+  pwire [1:0] u5_sh2_reg;
 
-  reg u1_eaen_reg;
-  reg u3_eaen_reg;
-  reg u5_eaen_reg;
+  pwire u1_eaen_reg;
+  pwire u3_eaen_reg;
+  pwire u5_eaen_reg;
 
 
   pwire [2:0][64:0] uu_A1;
@@ -263,52 +263,52 @@ module fu_alu(
   pwire [1:0] FUTYPE_0;
   pwire [64:0] FUMUL;
   pwire [5:0] MULFL;
-  reg [64:0] FUMUL_reg;
-  reg [5:0] MULFL_reg;
+  pwire [64:0] FUMUL_reg;
+  pwire [5:0] MULFL_reg;
 
-  reg [3:0] u2_sz;
-  reg       u2_arith;
-  reg       u2_dir;
-  reg [3:0] u4_sz;
-  reg       u4_arith;
-  reg       u4_dir;
-  reg [3:0] u6_sz;
-  reg       u6_arith;
-  reg       u6_dir;
+  pwire [3:0] u2_sz;
+  pwire       u2_arith;
+  pwire       u2_dir;
+  pwire [3:0] u4_sz;
+  pwire       u4_arith;
+  pwire       u4_dir;
+  pwire [3:0] u6_sz;
+  pwire       u6_arith;
+  pwire       u6_dir;
   
-  reg fxFRT_alten_reg2;
-  reg fxFRT_alten_reg3;
+  pwire fxFRT_alten_reg2;
+  pwire fxFRT_alten_reg3;
 
-  reg [17:0] u1_op_reg;
-  reg [17:0] u2_op_reg;
-  reg [17:0] u3_op_reg;
-  reg [17:0] u4_op_reg;
-  reg [17:0] u5_op_reg;
-  reg [17:0] u6_op_reg;
-  reg [12:0] u6_op_reg2;
-  reg [12:0] u6_op_reg3;
-  reg [12:0] u6_op_reg4;
+  pwire [17:0] u1_op_reg;
+  pwire [17:0] u2_op_reg;
+  pwire [17:0] u3_op_reg;
+  pwire [17:0] u4_op_reg;
+  pwire [17:0] u5_op_reg;
+  pwire [17:0] u6_op_reg;
+  pwire [12:0] u6_op_reg2;
+  pwire [12:0] u6_op_reg3;
+  pwire [12:0] u6_op_reg4;
 
-  reg [5:0] u1_isSub_reg;
-  reg [5:0] u2_isSub_reg;
-  reg [5:0] u3_isSub_reg;
-  reg [5:0] u4_isSub_reg;
-  reg [5:0] u5_isSub_reg;
-  reg [5:0] u6_isSub_reg;
+  pwire [5:0] u1_isSub_reg;
+  pwire [5:0] u2_isSub_reg;
+  pwire [5:0] u3_isSub_reg;
+  pwire [5:0] u4_isSub_reg;
+  pwire [5:0] u5_isSub_reg;
+  pwire [5:0] u6_isSub_reg;
 
-  reg u1_clkEn_reg;
-  reg u2_clkEn_reg;
-  reg u3_clkEn_reg;
-  reg u4_clkEn_reg;
-  reg u5_clkEn_reg;
-  reg u6_clkEn_reg;
+  pwire u1_clkEn_reg;
+  pwire u2_clkEn_reg;
+  pwire u3_clkEn_reg;
+  pwire u4_clkEn_reg;
+  pwire u5_clkEn_reg;
+  pwire u6_clkEn_reg;
 
-  reg u1_error_reg;
-  reg u2_error_reg;
-  reg u3_error_reg;
-  reg u4_error_reg;
-  reg u5_error_reg;
-  reg u6_error_reg;
+  pwire u1_error_reg;
+  pwire u2_error_reg;
+  pwire u3_error_reg;
+  pwire u4_error_reg;
+  pwire u5_error_reg;
+  pwire u6_error_reg;
 
   pwire u1_error=^u1_A || ^u1_B;
   pwire u2_error=^u2_A || ^u2_B;
@@ -317,9 +317,9 @@ module fu_alu(
   pwire u5_error=^u5_A || ^u5_B;
   pwire u6_error=^u6_A || ^u6_B;
 
-  reg [8:0] u6_ret_reg;
-  reg [8:0] u6_ret_reg2;
-  reg [8:0] u6_ret_reg3;
+  pwire [8:0] u6_ret_reg;
+  pwire [8:0] u6_ret_reg2;
+  pwire [8:0] u6_ret_reg3;
 
   pwire [1:0][63:0] mflags;
 
@@ -876,8 +876,8 @@ alu_shift sh5_alu(
   assign u5_rten=(~u5_nDataAlt_reg|(~&nDataAlt_reg)) ? 1'b1 : 
     1'bz; 
   
-  reg [2:2][64:0] u6_A6m_reg;
-  reg [2:2][64:0] u6_B6m_reg;
+  pwire [2:2][64:0] u6_A6m_reg;
+  pwire [2:2][64:0] u6_B6m_reg;
  
   imul imul_mod(
   .clk(clk),

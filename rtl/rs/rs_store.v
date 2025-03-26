@@ -45,8 +45,8 @@ module WQ_wakeUP_logic(
   input pwire     FUWQen1;
   output pwire isData;
 
-  reg port_en;
-  reg [5:0] WQ;
+  pwire port_en;
+  pwire [5:0] WQ;
 
   pwire [5:0] WQ_d;
   pwire newRsSelectAny;

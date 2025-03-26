@@ -206,8 +206,8 @@ module addrcalc_r(
 
   pwire [2:0]new_en;
   pwire [2:0] new_can;
-  reg [2:0] new_can_reg;
-  reg [2:0] new_can_reg2;
+  pwire [2:0] new_can_reg;
+  pwire [2:0] new_can_reg2;
   pwire [2:0] [47:0] new_addr;
   pwire [2:0] [3:0] new_attr;
   pwire [2:0] new_indir;
@@ -219,9 +219,9 @@ module addrcalc_r(
   pwire [2:0] writeTlb_wenC0;
   pwire [2:0] writeTlb_wenHC0;
   pwire [2:0] writeTlb_low0;
-  reg [2:0] writeTlb_low0_reg;
-  reg [2:0] writeTlb_wenC0_reg;
-  reg [2:0] writeTlb_wenHC0_reg;
+  pwire [2:0] writeTlb_low0_reg;
+  pwire [2:0] writeTlb_wenC0_reg;
+  pwire [2:0] writeTlb_wenHC0_reg;
 
   pwire writeTlb_low;
 
@@ -231,53 +231,53 @@ module addrcalc_r(
   pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data10;
   pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data20;
 
-  reg [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP0_reg;
-  reg [2:0] writeTlb_wen0_reg;
-  reg [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data00_reg;
-  reg [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data10_reg;
-  reg [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data20_reg;
+  pwire [2:0] [TLB_IP_WIDTH-2:0] writeTlb_IP0_reg;
+  pwire [2:0] writeTlb_wen0_reg;
+  pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data00_reg;
+  pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data10_reg;
+  pwire [2:0] [TLB_DATA_WIDTH-1:0] writeTlb_data20_reg;
 
-  reg mOp0_en_reg;
-  reg mOp0_thread_reg;
-  reg mOp0_lsflag_reg;
-  reg [43:0] mOp0_addrMain_reg;
-  reg [VADDR_WIDTH:0] addrMain_mlb;
-  reg [VADDR_WIDTH:0] addrSupp_mlb;
-  reg [VADDR_WIDTH:0] addrSupp2_mlb;
-  reg [3:0] addrMain_attr;
-  reg [3:0] addrSupp_attr;
-  reg [3:0] addrSupp2_attr;
-//  reg [VADDR_WIDTH-1:0] addrMain_mlb_reg;
-  reg mlb_save;
-  reg mlb_save2;
-  reg mlb_is_code;
-  reg [4:0] mOp0_sz_reg;
-  reg mOp0_invmlb_reg;
-  reg mOp0_st_reg;
-  reg mOp0_split_reg;
-  reg [4:0] mOp0_bank0_reg;
- // reg [4:0] mOp0_bank1_reg;
-  reg [8:0] mOp0_regNo_reg;
-  reg [8:0] mOp0_LSQ_reg;
-  reg [9:0] mOp0_II_reg;
-  reg [5:0] mOp0_WQ_reg;
-  reg [3:0] mOp0_attr_reg;
-  reg [PADDR_WIDTH-9:0] mOp0_addrEven_reg;
-  reg [PADDR_WIDTH-9:0] mOp0_addrOdd_reg;
-  reg mOp0_lsfwd_reg;
-  reg [2:0] mOp0_type_reg;
-  reg mOp0_odd_reg;
-  reg [1:0] mOp0_addr_low_reg;
-  reg [3+1:0] mOp0_bread_reg;
-  reg [127+1+7:0] mOp0_data_reg;
-  reg [1:0] mOp0_pbit_reg;
-  reg error_reg;
+  pwire mOp0_en_reg;
+  pwire mOp0_thread_reg;
+  pwire mOp0_lsflag_reg;
+  pwire [43:0] mOp0_addrMain_reg;
+  pwire [VADDR_WIDTH:0] addrMain_mlb;
+  pwire [VADDR_WIDTH:0] addrSupp_mlb;
+  pwire [VADDR_WIDTH:0] addrSupp2_mlb;
+  pwire [3:0] addrMain_attr;
+  pwire [3:0] addrSupp_attr;
+  pwire [3:0] addrSupp2_attr;
+//  pwire [VADDR_WIDTH-1:0] addrMain_mlb_reg;
+  pwire mlb_save;
+  pwire mlb_save2;
+  pwire mlb_is_code;
+  pwire [4:0] mOp0_sz_reg;
+  pwire mOp0_invmlb_reg;
+  pwire mOp0_st_reg;
+  pwire mOp0_split_reg;
+  pwire [4:0] mOp0_bank0_reg;
+ // pwire [4:0] mOp0_bank1_reg;
+  pwire [8:0] mOp0_regNo_reg;
+  pwire [8:0] mOp0_LSQ_reg;
+  pwire [9:0] mOp0_II_reg;
+  pwire [5:0] mOp0_WQ_reg;
+  pwire [3:0] mOp0_attr_reg;
+  pwire [PADDR_WIDTH-9:0] mOp0_addrEven_reg;
+  pwire [PADDR_WIDTH-9:0] mOp0_addrOdd_reg;
+  pwire mOp0_lsfwd_reg;
+  pwire [2:0] mOp0_type_reg;
+  pwire mOp0_odd_reg;
+  pwire [1:0] mOp0_addr_low_reg;
+  pwire [3+1:0] mOp0_bread_reg;
+  pwire [127+1+7:0] mOp0_data_reg;
+  pwire [1:0] mOp0_pbit_reg;
+  pwire error_reg;
 
   pwire [29:0] addrInPage;
   pwire [29:0] addrOffPage;
-  reg reqmlb_en_reg,mlb_hit_reg,reqmlb_en_reg2;
-//  reg [VADDR_WIDTH-14:0] reqmlb_addr_reg;
-  reg mlb_clkEn_reg;
+  pwire reqmlb_en_reg,mlb_hit_reg,reqmlb_en_reg2;
+//  pwire [VADDR_WIDTH-14:0] reqmlb_addr_reg;
+  pwire mlb_clkEn_reg;
 
   pwire [TLB_DATA_WIDTH-1:0] mlb_data;
   pwire [TLB_DATA_WIDTH-1:0] mlb_data_next;
@@ -286,46 +286,46 @@ module addrcalc_r(
   pwire [14:0] addrMain;
   pwire [13:0] addrNext;
 
-  reg [2:0] opsize;
+  pwire [2:0] opsize;
   pwire hasBankNext=1'b0;
  
   pwire [2:0] mlb_way;
-  reg  [2:0] mlb_way_reg;
-  reg mlb_is_inv,mlb_is_inv_reg,mlb_is_inv_reg2;
+  pwire  [2:0] mlb_way_reg;
+  pwire mlb_is_inv,mlb_is_inv_reg,mlb_is_inv_reg2;
 
-  reg [4:0] bank0;
-  reg [31:0] banks0;
-  reg stepOver;
-  reg stepOver2;
+  pwire [4:0] bank0;
+  pwire [31:0] banks0;
+  pwire stepOver;
+  pwire stepOver2;
   
-  reg pause_miss_reg;
-  reg pause_miss_reg2;
+  pwire pause_miss_reg;
+  pwire pause_miss_reg2;
   
   pwire page_carry;
   
   pwire req_bus,req_can;
-  reg mlb_proceed;
+  pwire mlb_proceed;
 
-  reg reqmlb_next;
-  reg mlb_save_reg;
-  reg req_can_reg; 
-  reg mlb_in_flight;//misnomer
+  pwire reqmlb_next;
+  pwire mlb_save_reg;
+  pwire req_can_reg; 
+  pwire mlb_in_flight;//misnomer
 
-  reg [23:0] proc;
-  reg [23:0] sproc;
-  reg [1:0][23:0] pproc;
-  reg [1:0][23:0] vproc;
-  reg [1:0][63:0] mflags;
+  pwire [23:0] proc;
+  pwire [23:0] sproc;
+  pwire [1:0][23:0] pproc;
+  pwire [1:0][23:0] vproc;
+  pwire [1:0][63:0] mflags;
 
   pwire [1:0] fault_mlb;
   pwire [1:0] fault_mlb_next;
   //wire [4:0] lastSz;
   pwire [1:0] pageFault_t;
-  reg [1:0] pageFault_t_reg; 
+  pwire [1:0] pageFault_t_reg; 
   pwire fault_cann;
-  reg fault_cann_reg;
-  reg mOp_en_reg;
-  reg bus_hold_reg;
+  pwire fault_cann_reg;
+  pwire mOp_en_reg;
+  pwire bus_hold_reg;
 
   integer i;
 

@@ -65,21 +65,21 @@ module jump_decoder(
   input pwire [11:0] class_;
   input pwire _splitinsn;
   
-  output pwire reg [64:0] constant;
+  output pwire [64:0] constant;
 
-  output pwire reg [1:0] cleave;
-  output pwire reg [2:0] cleaveoff; 
-  output pwire reg [2:0] cloopntk;
-  output pwire reg cloop_is;
+  output pwire [1:0] cleave;
+  output pwire [2:0] cleaveoff; 
+  output pwire [2:0] cloopntk;
+  output pwire cloop_is;
   
-  output pwire reg pushCallStack;
-  output pwire reg popCallStack;
+  output pwire pushCallStack;
+  output pwire popCallStack;
   output pwire isJump;
-  output pwire reg [4:0] jumpType;
+  output pwire [4:0] jumpType;
   output pwire jumpIndir;
   
-  output pwire reg isIPRel;
-  output pwire reg halt;
+  output pwire isIPRel;
+  output pwire halt;
   
   pwire [7:0] opcode_main;
 
@@ -103,14 +103,14 @@ module jump_decoder(
   pwire isShlAddMulLike; 
   pwire isBasicSysInstr;
   
-  reg error;
+  pwire error;
   
-  reg keep2instr;
+  pwire keep2instr;
   
   pwire [31:0] constantDef;
 
 
-  reg isBigConst;
+  pwire isBigConst;
 
   pwire subIsCJ;
   

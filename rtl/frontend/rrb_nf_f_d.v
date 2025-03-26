@@ -50,16 +50,16 @@ module rrf(
   input pwire read_thread;
   input pwire write_thread;
 
-  reg [9:0][ADDR_WIDTH-1:0] read0_addr_reg;
-  reg [10:0][ADDR_WIDTH-1:0] read1_addr_reg;
+  pwire [9:0][ADDR_WIDTH-1:0] read0_addr_reg;
+  pwire [10:0][ADDR_WIDTH-1:0] read1_addr_reg;
   
-  reg read_thread_reg;
+  pwire read_thread_reg;
 
   integer xnp;
 
-  reg [9:0]read0_oe_reg;
-  reg [10:0]read1_oe_reg;
-  reg [DATA_WIDTH-1:0] ram[ADDR_COUNT-1:0];
+  pwire [9:0]read0_oe_reg;
+  pwire [10:0]read1_oe_reg;
+  pwire [DATA_WIDTH-1:0] ram[ADDR_COUNT-1:0];
   
   always @(posedge clk)
     begin

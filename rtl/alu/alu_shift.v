@@ -65,15 +65,15 @@ module alu_shift(
   pwire doJmp;
   pwire [64:0] valres0;
   pwire [7:0] valres1;  
-  reg is_shift_reg;
-  reg [3:0] coutL_reg;
-  reg coutR_reg;
-  reg [64:0] valres0_reg;
-  reg dir_reg;
+  pwire is_shift_reg;
+  pwire [3:0] coutL_reg;
+  pwire coutR_reg;
+  pwire [64:0] valres0_reg;
+  pwire dir_reg;
   pwire coutR;
   pwire [3:0] coutL;
   pwire [5:0] flags_COASZP;
-  reg [3:0] sz_reg;
+  pwire [3:0] sz_reg;
 
   pwire [64:0] valX;
 

@@ -47,9 +47,9 @@ module suggstQ_buf(
   output pwire [10:0][WIDTH-1:0] read_instr0;
   output pwire [10:0][OTHER-1:0] read_other0;
   
-  reg [WIDTH-1:0] instr[1:0];
-  reg [OTHER-1:0] other[1:0];
-  reg read_en[9:0];
+  pwire [WIDTH-1:0] instr[1:0];
+  pwire [OTHER-1:0] other[1:0];
+  pwire read_en[9:0];
   integer k;
   pwire [WIDTH-1:0] instr_rd;
   pwire [OTHER-1:0] other_rd;
@@ -129,7 +129,7 @@ module suggstQ_box(
   output pwire [10:0][OTHER-1:0] read_other0;
   
 
-  reg [10:0][5:0] read_en0;
+  pwire [10:0][5:0] read_en0;
   
   integer k;
   generate
@@ -217,28 +217,28 @@ module suggestions(
   output pwire [10:0][OTHER-1:0] read_other0;
 
   
-  reg [ADDR_WIDTH-1:0] write_addrA[15:0];
+  pwire [ADDR_WIDTH-1:0] write_addrA[15:0];
   pwire [15:0][ADDR_WIDTH-1:0] write_addrA_d;
-  reg [ADDR_WIDTH-1:0] write_addrB[15:0];
+  pwire [ADDR_WIDTH-1:0] write_addrB[15:0];
   pwire [15:0][ADDR_WIDTH-1:0] write_addrB_d;
   pwire [ADDR_WIDTH-1:0] write_addr[15:0];
 
-  reg [ADDR_WIDTH-1:0] read_addrA[10:0];
+  pwire [ADDR_WIDTH-1:0] read_addrA[10:0];
   pwire [10:0][ADDR_WIDTH-1:0] read_addrA_d;
-  reg [ADDR_WIDTH-1:0] read_addrB[10:0];
+  pwire [ADDR_WIDTH-1:0] read_addrB[10:0];
   pwire [10:0][ADDR_WIDTH-1:0] read_addrB_d;
   pwire [ADDR_WIDTH-1:0] read_addr_d[10:0];
 
   integer k;
   
-  reg [5:0] busy[1:0];
+  pwire [5:0] busy[1:0];
   pwire [1:0][5:0] busy_d;
   pwire doFStall0,doFStall1;
   
-  reg read_thread_reg;
+  pwire read_thread_reg;
 
-  reg [6:0] initCount;
-  reg init;
+  pwire [6:0] initCount;
+  pwire init;
   pwire [6:0] initCount_d;
   
   generate

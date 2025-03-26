@@ -51,9 +51,9 @@ module instrQextra_ram(
   input pwire [DATA_WIDTH-1:0] write_data3;
   input pwire write_wen3;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr0_reg;
-  reg [ADDR_WIDTH-1:0] read_addr1_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr0_reg;
+  pwire [ADDR_WIDTH-1:0] read_addr1_reg;
   
   assign read_data0=ram[read_addr0_reg];
   assign read_data1=ram[read_addr1_reg];
@@ -177,12 +177,12 @@ module instrQextra(
   input pwire [DATA_WIDTH-1:0] write_data2;
   input pwire [DATA_WIDTH-1:0] write_data3;
 
-  reg [3:0] read_addr0[1:0];
-  reg [3:0] read_addr1[1:0];
-  reg [3:0] write_addr0[1:0];
-  reg [3:0] write_addr1[1:0];
-  reg [3:0] write_addr2[1:0];
-  reg [3:0] write_addr3[1:0];
+  pwire [3:0] read_addr0[1:0];
+  pwire [3:0] read_addr1[1:0];
+  pwire [3:0] write_addr0[1:0];
+  pwire [3:0] write_addr1[1:0];
+  pwire [3:0] write_addr2[1:0];
+  pwire [3:0] write_addr3[1:0];
   
   pwire [1:0][3:0] read_addr0_d;
   pwire [1:0][3:0] read_addr1_d;
@@ -196,7 +196,7 @@ module instrQextra(
   pwire [DATA_WIDTH-1:0] write_data2x;
   pwire [DATA_WIDTH-1:0] write_data3x;
 
-  reg [4:0] cnt[1:0];
+  pwire [4:0] cnt[1:0];
   pwire [1:0][4:0] cnt_d;
 
   assign write_data0x=write_start[0] ? write_data0 : 'z;

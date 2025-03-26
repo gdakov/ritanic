@@ -38,8 +38,8 @@ module wtmiss_ram(
   input pwire [DATA_WIDTH-1:0] write_data;
   input pwire write_wen;
 
-  reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
-  reg [ADDR_WIDTH-1:0] read_addr_reg;
+  pwire [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
+  pwire [ADDR_WIDTH-1:0] read_addr_reg;
   
   assign read_data=ram[read_addr_reg];
 
@@ -152,7 +152,7 @@ module wtmiss(
   input pwire except;
   input pwire except_thread;
   input pwire read_clkEn;
-  output pwire reg doSkip;
+  output pwire doSkip;
 
   input pwire miss0;
   input pwire mOp0_en;
@@ -232,37 +232,37 @@ module wtmiss(
 
   pwire [VADDR_WIDTH-1:0] RaddrMain[1:0];
   pwire enOut,last_out,enOutNull;
-  reg [2:0] cnt;
-  reg [2:0] cnt_reg;
-  reg [3:0] stepW;
+  pwire [2:0] cnt;
+  pwire [2:0] cnt_reg;
+  pwire [3:0] stepW;
   pwire [2:0] cnt_plus;
   pwire [2:0] cnt_minus;
-  reg  [1:0] read_addr;
+  pwire  [1:0] read_addr;
   pwire [1:0] read_addr_d;
-  reg  [1:0] write_addr;
+  pwire  [1:0] write_addr;
   pwire [1:0] write_addr_d;
-  reg doSkip_reg,doSkip_reg2,doSkip_reg3;
+  pwire doSkip_reg,doSkip_reg2,doSkip_reg3;
 
   pwire [MOP_WIDTH-1:0] read_mop[1:0];
-  reg [MOP_WIDTH-1:0] read_mop_reg[1:0];
+  pwire [MOP_WIDTH-1:0] read_mop_reg[1:0];
   pwire [MOP_WIDTH-1:0] write_mop[1:0];
   pwire [1:0] rdmiss;
-  reg [1:0] rdmiss_reg;
-  reg [1:0] rdm_done;
-  reg [1:0] rdm_xdone;
+  pwire [1:0] rdmiss_reg;
+  pwire [1:0] rdm_done;
+  pwire [1:0] rdm_xdone;
   pwire [1:0] pause;//can add bit 2 for pause until l2 mlb can respond
-  reg [1:0] pause_reg;
-  reg missP;
-  reg missQ;
-  reg enOut_reg;
+  pwire [1:0] pause_reg;
+  pwire missP;
+  pwire missQ;
+  pwire enOut_reg;
   integer k;
-  reg [3:0] thr[1:0];
-  reg [3:0] invalid[1:0];
-  reg [3:0] invalid_reg[1:0];
-  reg inIt;
-  reg [1:0] inIt_cnt;
+  pwire [3:0] thr[1:0];
+  pwire [3:0] invalid[1:0];
+  pwire [3:0] invalid_reg[1:0];
+  pwire inIt;
+  pwire [1:0] inIt_cnt;
   pwire [1:0] inIt_cnt_d;
-  reg [1:0] read_addr_reg;
+  pwire [1:0] read_addr_reg;
   pwire [3:0] mOp0_attr_o;
   pwire [3:0] mOp1_attr_o;
 

@@ -415,11 +415,11 @@ module predecoder_get(
     output pwire [15:0][3:0] off0;
     output pwire [15:0][12:0] class0;
     output pwire [15:0] instrEn;
-    output pwire reg _splitinsn;
+    output pwire _splitinsn;
     output pwire hasJumps;
     output pwire last_is_FMAMul;
-    output pwire reg error;
-    output pwire reg jerror;
+    output pwire error;
+    output pwire jerror;
     
     output pwire [3:0][79:0] Jinstr0;
     output pwire [3:0][3:0] Jmagic0;
@@ -433,8 +433,8 @@ module predecoder_get(
     output pwire [3:0]      lnkRet0;
     output pwire [3:0][4:0] lnkJumps0;
 
-    reg [19:-1] instrEnd;
-    reg [19:-1] instrEndF;
+    pwire [19:-1] instrEnd;
+    pwire [19:-1] instrEndF;
     
     pwire [19:-2][15:0] cntEnd;
     pwire [19:-1] mask;
@@ -457,7 +457,7 @@ module predecoder_get(
     
     pwire [19:0] is_lnk0;
     pwire [19:0] is_lnk;
-    reg [19:0] is_lnk_reg;
+    pwire [19:0] is_lnk_reg;
     pwire [19:0] first_lnk;
     pwire has_lnk;
     pwire [19:0][4:0] LNK;
@@ -465,8 +465,8 @@ module predecoder_get(
     pwire [19:-1][15:0] lcnt;
     pwire [19:0] is_ret0;
     pwire [19:0] is_ret;
-    reg [19:0] is_ret_reg;
-    reg [19:0] flag_bits0;
+    pwire [19:0] is_ret_reg;
+    pwire [19:0] flag_bits0;
     pwire [19:0] mask0;
 
     pwire [19:-1] FMAmul;

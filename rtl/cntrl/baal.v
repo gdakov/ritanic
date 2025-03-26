@@ -298,24 +298,24 @@ module cntrl_find_outcome(
   input pwire stall;
   output pwire doStall;
 
-  output pwire reg do_sched_reset;
+  output pwire do_sched_reset;
   
-  output pwire reg except;
-  output pwire reg [62:0] exceptIP;
-  output pwire reg [3:0] except_attr;
-  output pwire reg except_thread;
-  output pwire reg except_both;
-  output pwire reg except_due_jump;
-  output pwire reg [7:0] except_jump_ght;
-  output pwire reg [15:0] except_jump_ght2;
-  output pwire reg except_set_instr_flag;
-  output pwire reg except_jmp_mask_en;
-  output pwire reg [3:0] except_jmp_mask;
-  output pwire reg [15:0] msrss_no;
-  output pwire reg msrss_thread;
-  output pwire reg msrss_en;
-  output pwire reg [6_4:0] msrss_data;
-  output pwire reg [23:0] msrss_xdata;
+  output pwire except;
+  output pwire [62:0] exceptIP;
+  output pwire [3:0] except_attr;
+  output pwire except_thread;
+  output pwire except_both;
+  output pwire except_due_jump;
+  output pwire [7:0] except_jump_ght;
+  output pwire [15:0] except_jump_ght2;
+  output pwire except_set_instr_flag;
+  output pwire except_jmp_mask_en;
+  output pwire [3:0] except_jmp_mask;
+  output pwire [15:0] msrss_no;
+  output pwire msrss_thread;
+  output pwire msrss_en;
+  output pwire [6_4:0] msrss_data;
+  output pwire [23:0] msrss_xdata;
   input pwire new_en;
   input pwire new_thread;
   output pwire [5:0] new_addr;
@@ -489,73 +489,73 @@ module cntrl_find_outcome(
   input pwire [3:0] iJump0Attr;
   input pwire [3:0] iJump1Attr;
   output pwire [8:0] flTE;
-  output pwire reg tire_enFl;
-  output pwire reg [5:0] tire0_rT;
+  output pwire tire_enFl;
+  output pwire [5:0] tire0_rT;
   output pwire [8:0] tire0_rF;
-  output pwire reg tire0_enG;
-  output pwire reg tire0_enV;
-  output pwire reg tire0_enF;
-  output pwire reg [5:0] tire1_rT;
+  output pwire tire0_enG;
+  output pwire tire0_enV;
+  output pwire tire0_enF;
+  output pwire [5:0] tire1_rT;
   output pwire [8:0] tire1_rF;
-  output pwire reg tire1_enG;
-  output pwire reg tire1_enV;
-  output pwire reg tire1_enF;
-  output pwire reg [5:0] tire2_rT;
+  output pwire tire1_enG;
+  output pwire tire1_enV;
+  output pwire tire1_enF;
+  output pwire [5:0] tire2_rT;
   output pwire [8:0] tire2_rF;
-  output pwire reg tire2_enG;
-  output pwire reg tire2_enV;
-  output pwire reg tire2_enF;
-  output pwire reg [5:0] tire3_rT;
+  output pwire tire2_enG;
+  output pwire tire2_enV;
+  output pwire tire2_enF;
+  output pwire [5:0] tire3_rT;
   output pwire [8:0] tire3_rF;
-  output pwire reg tire3_enG;
-  output pwire reg tire3_enV;
-  output pwire reg tire3_enF;
-  output pwire reg [5:0] tire4_rT;
+  output pwire tire3_enG;
+  output pwire tire3_enV;
+  output pwire tire3_enF;
+  output pwire [5:0] tire4_rT;
   output pwire [8:0] tire4_rF;
-  output pwire reg tire4_enG;
-  output pwire reg tire4_enV;
-  output pwire reg tire4_enF;
-  output pwire reg [5:0] tire5_rT;
+  output pwire tire4_enG;
+  output pwire tire4_enV;
+  output pwire tire4_enF;
+  output pwire [5:0] tire5_rT;
   output pwire [8:0] tire5_rF;
-  output pwire reg tire5_enG;
-  output pwire reg tire5_enV;
-  output pwire reg tire5_enF;
-  output pwire reg [5:0] tire6_rT;
+  output pwire tire5_enG;
+  output pwire tire5_enV;
+  output pwire tire5_enF;
+  output pwire [5:0] tire6_rT;
   output pwire [8:0] tire6_rF;
-  output pwire reg tire6_enG;
-  output pwire reg tire6_enV;
-  output pwire reg tire6_enF;
-  output pwire reg [5:0] tire7_rT;
+  output pwire tire6_enG;
+  output pwire tire6_enV;
+  output pwire tire6_enF;
+  output pwire [5:0] tire7_rT;
   output pwire [8:0] tire7_rF;
-  output pwire reg tire7_enG;
-  output pwire reg tire7_enV;
-  output pwire reg tire7_enF;
-  output pwire reg [5:0] tire8_rT;
+  output pwire tire7_enG;
+  output pwire tire7_enV;
+  output pwire tire7_enF;
+  output pwire [5:0] tire8_rT;
   output pwire [8:0] tire8_rF;
-  output pwire reg tire8_enG;
-  output pwire reg tire8_enV;
-  output pwire reg tire8_enF;
+  output pwire tire8_enG;
+  output pwire tire8_enV;
+  output pwire tire8_enF;
 
-  output pwire reg dotire;
-  output pwire reg [3:0] retcnt;
-  output pwire reg [8:0] retclr;
+  output pwire dotire;
+  output pwire [3:0] retcnt;
+  output pwire [8:0] retclr;
 
-  output pwire reg jupd0_en;
-  output pwire reg jupdt0_en;
-  output pwire reg jupd0_ght_en;
-  output pwire reg jupd0_ght2_en;
-  output pwire reg [15:0] jupd0_addr;
-  output pwire reg [12:0] jupd0_baddr;
-  output pwire reg [1:0] jupd0_sc;
-  output pwire reg jupd0_tk;
-  output pwire reg jupd1_en;
-  output pwire reg jupdt1_en;
-  output pwire reg jupd1_ght_en;
-  output pwire reg jupd1_ght2_en;
-  output pwire reg [15:0] jupd1_addr;
-  output pwire reg [12:0] jupd1_baddr;
-  output pwire reg [1:0] jupd1_sc;
-  output pwire reg jupd1_tk;
+  output pwire jupd0_en;
+  output pwire jupdt0_en;
+  output pwire jupd0_ght_en;
+  output pwire jupd0_ght2_en;
+  output pwire [15:0] jupd0_addr;
+  output pwire [12:0] jupd0_baddr;
+  output pwire [1:0] jupd0_sc;
+  output pwire jupd0_tk;
+  output pwire jupd1_en;
+  output pwire jupdt1_en;
+  output pwire jupd1_ght_en;
+  output pwire jupd1_ght2_en;
+  output pwire [15:0] jupd1_addr;
+  output pwire [12:0] jupd1_baddr;
+  output pwire [1:0] jupd1_sc;
+  output pwire jupd1_tk;
   
   
   input pwire [9:0] 			ret0_addr;
@@ -639,7 +639,7 @@ module cntrl_find_outcome(
   pwire [BOB_WIDTH-1:0] bob_wdata;
   pwire [BOB_WIDTH-1:0] bob_rdata;
 
-  reg [27:0] sched_rst_cnt;
+  pwire [27:0] sched_rst_cnt;
   pwire [27:0] sched_rst_cnt_d;
   
   pwire [9:0][8:0] IPOff;
@@ -693,10 +693,10 @@ module cntrl_find_outcome(
   pwire both_threads;
   pwire thread0,thread1;
 
-  reg [10:0] excpt_fpu;
+  pwire [10:0] excpt_fpu;
 
   pwire tire_thread;
-  reg tire_thread_reg;
+  pwire tire_thread_reg;
 
   pwire [62:0] exceptIP_d;
   pwire except_thread_d=tire_thread_reg;
@@ -706,13 +706,13 @@ module cntrl_find_outcome(
   pwire [3:0] except_attr_d;
 
   pwire [5:0] flags_d;
-  reg  [5:0] flags[1:0];
+  pwire  [5:0] flags[1:0];
 
  // pwire dotire_d;
   pwire has_some,has_some2;
 
   pwire [5:0] tire_addr;
-  reg  [5:0] tire_addr_reg;
+  pwire  [5:0] tire_addr_reg;
 
   pwire [64:0] indir_IP;
   pwire indir_ready;
@@ -726,9 +726,9 @@ module cntrl_find_outcome(
   pwire jump0CLP;
   pwire jump1CLP;
 
-  reg [5:0] initcount;
+  pwire [5:0] initcount;
   pwire [5:0] initcount_d;
-  reg init;
+  pwire init;
 
   pwire [62:0] excpt_handlerIP;
   pwire [7:0] excpt_code;
@@ -762,7 +762,7 @@ module cntrl_find_outcome(
   pwire [64:0] base_add;
   pwire is_after_spec;
   pwire [9:0] rd_after_spec;
-  reg [62:0] baseIP;
+  pwire [62:0] baseIP;
   pwire [62:0] baseIP_d;
   
   pwire [8:0] retclrP;
@@ -786,10 +786,10 @@ module cntrl_find_outcome(
   pwire msrss_en_d;
   pwire [64:0] msrss_data_d;
 
-  reg [42:0] archReg_xcpt_retIP		[1:0];
-  reg [62:0] archReg_xcpt_handlerIP;
-  reg [15:0] archReg_proc		[1:0];
- // reg [7:0]  archReg_xcpt_code		[1:0];
+  pwire [42:0] archReg_xcpt_retIP		[1:0];
+  pwire [62:0] archReg_xcpt_handlerIP;
+  pwire [15:0] archReg_proc		[1:0];
+ // pwire [7:0]  archReg_xcpt_code		[1:0];
   
   generate
     genvar k,j;

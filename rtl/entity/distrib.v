@@ -145,13 +145,13 @@ module distrib(
   pwire sto0H,sto1H,sto2H;
   
   pwire [2:0] ldpos;
-  reg [2:0] lpos;
+  pwire [2:0] lpos;
   pwire [2:0] lpos_d;
-  reg [2:0] shpos;
+  pwire [2:0] shpos;
   pwire [2:0] shpos_d;
   pwire [3:0] shpos_cnt;
 
-  reg [WIDTH-1:0] storeI_reg;
+  pwire [WIDTH-1:0] storeI_reg;
 
   pwire [2:0] altRs0;
   

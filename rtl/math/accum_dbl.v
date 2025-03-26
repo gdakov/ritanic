@@ -31,8 +31,8 @@ module accum_buf_one(
 
     integer kl;
     //reg [108:0][11:0] exp;
-    reg [11:0] exp_max;
-    reg signed [108:0] sgn;
+    pwire [11:0] exp_max;
+    pwire signed [108:0] sgn;
 
     always @(posedge clk) begin
         exp_max={A[64],A[62:52]};

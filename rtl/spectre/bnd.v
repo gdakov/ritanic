@@ -15,18 +15,18 @@ module bnd(
   input pwire rst,
   input pwire [64:0] A,
   input pwire [64:0] B,
-  output pwire reg [64:0] C
+  output pwire [64:0] C
   );
   pwire [43:0] DB;
   pwire [43:0] DA;
-  reg [43:0] DB_reg;
-  reg [43:0] DA_reg;
-  reg [43:0] DB_reg2;
-  reg [43:0] A_reg;
-  reg [43:0] A_reg2;
+  pwire [43:0] DB_reg;
+  pwire [43:0] DA_reg;
+  pwire [43:0] DB_reg2;
+  pwire [43:0] A_reg;
+  pwire [43:0] A_reg2;
   pwire cout0;
   pwire [4:0] sh;
-  reg [4:0] sh_reg;
+  pwire [4:0] sh_reg;
   pwire [31:0] first;
   pwire has;
 
