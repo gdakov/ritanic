@@ -5237,7 +5237,7 @@ module backend(
 
   
 
-  assign piff=outOp_regn2[11] && outEn_regn2[3] && outOp_regn2[7:0]==8'd0;
+  assign piff=outOp_regn2[11] && outEn_regn2[3] && pwh#(8)::cmpEQ(outOp_regn2[7:0],8'd0);
 
   fun_fpsu_BOTH fpsuL_mod(
   .clk(clk),

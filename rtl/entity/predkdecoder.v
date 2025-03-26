@@ -134,10 +134,10 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
   assign isBasicXOR=(opcode_main[7:3]==5'b00100) & ~opcode_main[2];//not a seprarate class
   
-  //hint_begin_vec=opcode_main[7:0]==8'b11110011 uc jump offset=0; 2x vectorisation
-  //hind_begin_vec_x4=opcode_main[7:0]==8'b01110011 uc jump offset=0; not yet implemented and might not be in the future
-  //hint_end_vec=opcode_main[7:0]==8'b10110011 uc jump offset=0
-  //ext insn for multi uop=opcode_main[7:0]==8'b11110010
+  //hint_begin_vec=pwh#(8)::cmpEQ(opcode_main[7:0],8'b11110011) uc jump offset=0; 2x vectorisation
+  //hind_begin_vec_x4=pwh#(8)::cmpEQ(opcode_main[7:0],8'b01110011) uc jump offset=0; not yet implemented and might not be in the future
+  //hint_end_vec=pwh#(8)::cmpEQ(opcode_main[7:0],8'b10110011) uc jump offset=0
+  //ext insn for multi uop=pwh#(8)::cmpEQ(opcode_main[7:0],8'b11110010)
 
   assign isBasicSysInstr=opcode_main==8'hff&&magic[0]; 
 
@@ -191,7 +191,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign isJalR=(opcode_main==8'd213 || opcode_main==8'd214 || opcode_main==8'd215 || opcode_main==8'd220 || opcode_main==8'd221) && magic[0];
   assign isCexALU=opcode_main==8'd222 && magic[0];
 
-  assign isCLeave=(opcode_main==8'd235 || opcode_main[7:0]==8'd236 || opcode_main[7:0]==8'd238) && magic[0];
+  assign isCLeave=(opcode_main==8'd235 || pwh#(8)::cmpEQ(opcode_main[7:0],8'd236) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd238)) && magic[0];
   //237 and 239 unused so far
   assign isBasicFPUScalarA=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[13:12]==2'b0 && magic[0];
   assign isBasicFPUScalarB=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[13:12]==2'b1 && magic[0];

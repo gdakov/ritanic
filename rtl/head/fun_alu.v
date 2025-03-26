@@ -887,9 +887,9 @@ alu_shift sh5_alu(
   .alt_jxcross(),
   .jxcross(H ? jxcross : uu_B6m_reg[2]),
   .rmode(u6_rmode_reg),
-  .en(u6_clkEn_reg && u6_op_reg[11] && (u6_op_reg[7:0]==1 || u6_op_reg[7:0]
-    ==2 || u6_op_reg[7:0]==3 || u6_op_reg[7:0]==9 || u6_op_reg[7:0]==10 ||
-    u6_op_reg[7:0]==11 || u6_op_reg[7:0]==5 || u6_op_reg[7:0]==7)),  
+  .en(u6_clkEn_reg && u6_op_reg[11] && (pwh#(8)::cmpEQ(u6_op_reg[7:0],1) || u6_op_reg[7:0]
+    ==2 || pwh#(8)::cmpEQ(u6_op_reg[7:0],3) || pwh#(8)::cmpEQ(u6_op_reg[7:0],9) || pwh#(8)::cmpEQ(u6_op_reg[7:0],10) ||
+    pwh#(8)::cmpEQ(u6_op_reg[7:0],11) || pwh#(8)::cmpEQ(u6_op_reg[7:0],5) || pwh#(8)::cmpEQ(u6_op_reg[7:0],7))),  
   .R(uu_A6m[2]),.C(uu_B6m[2]),
   .attr(u6_attr_reg),
   .alt(DataAlt[0]),
@@ -904,9 +904,9 @@ alu_shift sh5_alu(
   .alt_jxcross(),
   .jxcross(H ? jxcross2 : uu_B5m_reg[2]),
   .rmode(u5_rmode_reg),
-  .en(u5_clkEn_reg && u5_op_reg[11] && (u5_op_reg[7:0]==1 || u5_op_reg[7:0]
-    ==2 || u5_op_reg[7:0]==3 || u5_op_reg[7:0]==9 || u5_op_reg[7:0]==10 ||
-    u5_op_reg[7:0]==11 || u5_op_reg[7:0]==5 || u5_op_reg[7:0]==7)),  
+  .en(u5_clkEn_reg && u5_op_reg[11] && (pwh#(8)::cmpEQ(u5_op_reg[7:0],1) || u5_op_reg[7:0]
+    ==2 || pwh#(8)::cmpEQ(u5_op_reg[7:0],3) || pwh#(8)::cmpEQ(u5_op_reg[7:0],9) || pwh#(8)::cmpEQ(u5_op_reg[7:0],10) ||
+    pwh#(8)::cmpEQ(u5_op_reg[7:0],11) || pwh#(8)::cmpEQ(u5_op_reg[7:0],5) || pwh#(8)::cmpEQ(u5_op_reg[7:0],7))),  
   .R(uu_A5m[2]),.C(uu_B5m[2]),
   .attr(u5_attr_reg),
   .alt(DataAlt2[0]),
@@ -921,9 +921,9 @@ imul_gatheronly imul3_mod(
   .alt_jxcross(),
   .jxcross(H ? jxcross3 : uu_B4m_reg[2]),
   .rmode(u4_rmode_reg),
-  .en(u4_clkEn_reg && u4_op_reg[11] && (u4_op_reg[7:0]==1 || u4_op_reg[7:0]
-    ==2 || u4_op_reg[7:0]==3 || u4_op_reg[7:0]==9 || u4_op_reg[7:0]==10 ||
-    u4_op_reg[7:0]==11 || u4_op_reg[7:0]==5 || u4_op_reg[7:0]==7)),  
+  .en(u4_clkEn_reg && u4_op_reg[11] && (pwh#(8)::cmpEQ(u4_op_reg[7:0],1) || u4_op_reg[7:0]
+    ==2 || pwh#(8)::cmpEQ(u4_op_reg[7:0],3) || pwh#(8)::cmpEQ(u4_op_reg[7:0],9) || pwh#(8)::cmpEQ(u4_op_reg[7:0],10) ||
+    pwh#(8)::cmpEQ(u4_op_reg[7:0],11) || pwh#(8)::cmpEQ(u4_op_reg[7:0],5) || pwh#(8)::cmpEQ(u4_op_reg[7:0],7))),  
   .R(uu_A4m[2]),.C(uu_B4m[2]),
   .attr(u4_attr_reg),
   .alt(DataAlt3[0]),

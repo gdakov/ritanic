@@ -359,7 +359,7 @@ module smallInstr_decoder(
   assign reor_en_out=isFPUreor&&~reor_error;
   assign reor_val_out=instr[31:8];
  // assign thisSpecLoad=isBaseSpecLoad || isBaseIndexSpecLoad || ({instr[11],instr[15:12]}==5'd16 && 
- //     opcode_main[7:0]==8'b10110000 && !instr[10]) || ({instr[1],instr[15:12]}==5'd16 &&
+ //     pwh#(8)::cmpEQ(opcode_main[7:0],8'b10110000) && !instr[10]) || ({instr[1],instr[15:12]}==5'd16 &&
  //     opcode_main[7:2]==6'd15 && !instr[0]);
   assign subIsBasicALU=opcode_sub[5:4]==2'b0 || opcode_sub[5:2]==4'b0100;
   assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
@@ -400,7 +400,7 @@ module smallInstr_decoder(
   assign isIndirJump=opcode_main==8'd182 && instr[15:13]==3'd0;
   assign isCall=opcode_main==8'd182 && (instr[15:13]==3'd1 || instr[15:13]==3'd2);
   assign isRet=opcode_main==8'd182 && instr[15:13]==3'd3;
-  assign isMovOrExtB=opcode_main==8'd183 || opcode_main[7:2]==6'b101110 || opcode_main[7:0]==8'd189 || opcode_main[7:0]==8'd210;
+  assign isMovOrExtB=opcode_main==8'd183 || opcode_main[7:2]==6'b101110 || pwh#(8)::cmpEQ(opcode_main[7:0],8'd189) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd210);
   assign isMovOrExtA=opcode_main==8'd188 || opcode_main[7:1]==7'd95 || opcode_main[7:1]==7'd96;
   assign isMovOrExtExcept=magic[1:0]==2'b11 && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
   assign isCSet=opcode_main==8'd194; 
@@ -1557,7 +1557,7 @@ module smallInstr_decoder(
       end
 
       trien[26]=magic[0] && isMovOrExtB && ~isMovOrExtExcept;
-      puseBConst[26]=(magic[1:0]==2'b11 || (magic[1:0]==2'b01 && opcode_main[7:0]==8'd210));
+      puseBConst[26]=(magic[1:0]==2'b11 || (magic[1:0]==2'b01 && pwh#(8)::cmpEQ(opcode_main[7:0],8'd210)));
       pport[26]=PORT_ALU;
       prA_use[26]=opcode_main==8'd185||opcode_main==8'd184;
       prB_use[26]=1'b1;
@@ -1590,7 +1590,7 @@ module smallInstr_decoder(
 	      prTE[26]=instr[18];
 	      prBE[26]=instr[19];
 	  end
-          if (opcode_main[7:0]==8'd184) begin
+          if (pwh#(8)::cmpEQ(opcode_main[7:0],8'd184)) begin
               poperation[26][8]=instr[30];//rT
               poperation[26][9]=instr[28]^instr[30];
               poperation[26][10]=instr[29];//rB

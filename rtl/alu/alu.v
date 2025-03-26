@@ -546,12 +546,12 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
 	  flagSub44_OF_reg<=flagSub44_OF && ~calu[4] | doJmp2;
           flagSub16_OF_reg<=flagSub16_OF && ~calu[4] | doJmp2;
           flagSub8_OF_reg<=flagSub8_OF && ~calu[4] | doJmp2;
-          if (operation[7:0]==8'ha || operation[7:0]==8'he) begin
+          if (pwh#(8)::cmpEQ(operation[7:0],8'ha) || pwh#(8)::cmpEQ(operation[7:0],8'he)) begin
               valRes_reg[31]<=valRes[15];
               flag32_ZF_reg<=flag16_ZF;
               flag32_CF_reg<=flag16_CF;
               flag32_OF_reg<=flag16_OF;
-          end else if (operation[7:0]==8'hb || operation[7:0]==8'hf) begin
+          end else if (pwh#(8)::cmpEQ(operation[7:0],8'hb) || pwh#(8)::cmpEQ(operation[7:0],8'hf)) begin
               valRes_reg[31]<=valRes[7];
               flag32_ZF_reg<=flag8_ZF;
               flag32_CF_reg<=flag8_CF;
