@@ -99,19 +99,19 @@ module smallInstr_decoder(
   parameter [0:0] LARGE_CORE=1;
 
 
-  input clk;
-  input rst;
-  input mode64;
-  input riscmove;
+  input pwire clk;
+  input pwire rst;
+  input pwire mode64;
+  input pwire riscmove;
   
-  input [INSTRQ_WIDTH-1:0] instrQ;
+  input pwire [INSTRQ_WIDTH-1:0] instrQ;
 
-  input [INSTR_WIDTH-1:0] instr;
+  input pwire [INSTR_WIDTH-1:0] instr;
   
   output pwire [OPERATION_WIDTH-1:0] operation;
-  input can_jump_csr;
-  input can_read_csr;
-  input can_write_csr;
+  input pwire can_jump_csr;
+  input pwire can_read_csr;
+  input pwire can_write_csr;
   output pwire [REG_WIDTH-1:0] rA;
   output pwire rA_use;
   output pwire [REG_WIDTH-1:0] rB;
@@ -124,8 +124,8 @@ module smallInstr_decoder(
   output pwire [2:0] rndmode;
   output pwire useBConst;
   output pwire [64:0] constant;
-  input prevClsFma;
-  input [15:0] instr_prev;
+  input pwire prevClsFma;
+  input pwire [15:0] instr_prev;
   output pwire [REG_WIDTH-1:0] rT;
   output pwire rT_use;
   output pwire [3:0] port;
@@ -147,7 +147,7 @@ module smallInstr_decoder(
   output pwire jumpBtbHit;
   output pwire jumpIndir;
   
-  input prevSpecLoad;
+  input pwire prevSpecLoad;
   output pwire thisSpecLoad;
   output pwire isIPRel;
   output pwire rAlloc;
@@ -155,9 +155,9 @@ module smallInstr_decoder(
   output pwire error;
   output pwire reor_en_out;
   output pwire [23:0] reor_val_out;
-  input reor_en;
-  input [23:0] reor_val;
-  input [4:0] stsz_in;
+  input pwire reor_en;
+  input pwire [23:0] reor_val;
+  input pwire [4:0] stsz_in;
   output pwire reg [4:0] stsz_out;
   //7:0 free 15:8 unfree 39:16 fxch/pop/push 
   pwire [3:0] magic;
@@ -321,14 +321,14 @@ module smallInstr_decoder(
   integer tt;
 
   function [0:0] fop_v;
-    input [4:0] op;
+    input pwire [4:0] op;
     fop_v=op==5'b0 || op==5'h18 || op==5'he ||
       op==5'b1 || op==5'd19 || op==5'd21;
   endfunction 
 
   function [0:0] freg_vf;
-    input [4:0] op;
-    input [0:0] is_fp;
+    input pwire [4:0] op;
+    input pwire [0:0] is_fp;
     freg_vf=is_fp && op!=5'd6 && op!=5'd8 && op!=5'd16 &&
 	    op!=5'd7 && op!=5'd9 && op!=5'd13;
   endfunction 

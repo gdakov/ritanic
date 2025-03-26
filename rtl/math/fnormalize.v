@@ -26,13 +26,13 @@ module normalizeD(
 
   localparam [11:0] DEN_DBL=12'h400;
   localparam [15:0] DEN_EXT=16'h4000;
-  input clk;
-  input rst;
-  input [81:0] A;
-  input isDBL;
-  input isEXT;
-  input en;
-  input clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire [81:0] A;
+  input pwire isDBL;
+  input pwire isEXT;
+  input pwire en;
+  input pwire clkEn;
   output pwire [81:0] res;
 
   pwire [15:0] expA;

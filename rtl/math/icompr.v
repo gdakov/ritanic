@@ -11,16 +11,16 @@ limitations under the License.
 */
 
 (* align_width=C,A_out/2,B_out/2 align_height=R *) module icompr(clk,clkEn,R,C,A_out,B_out,and1,is_sig,sig,sm_sig);
-  input clk;
-  input clkEn;
-  input [64:0] R;
-  input [64:0] C;
+  input pwire clk;
+  input pwire clkEn;
+  input pwire [64:0] R;
+  input pwire [64:0] C;
   output pwire [127:0] A_out;
   output pwire [127:0] B_out;
-  input and1;
-  input sm_sig;
-  input sig;
-  input is_sig;
+  input pwire and1;
+  input pwire sm_sig;
+  input pwire sig;
+  input pwire is_sig;
   (* register *) reg REGS_0;
   (* register *) reg REGS_1;
   (* register *) reg REGS_2;

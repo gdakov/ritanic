@@ -15,9 +15,9 @@ limitations under the License.
 
 module DFF(clk,en,d,q);
   parameter WIDTH=1;
-  input clk;
-  input en;
-  input [WIDTH-1:0] d;
+  input pwire clk;
+  input pwire en;
+  input pwire [WIDTH-1:0] d;
   output pwire reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
   
   always @(posedge clk)
@@ -31,10 +31,10 @@ endmodule
 
 module DFF2(clk,rst,en,d,q);
   parameter WIDTH=1;
-  input clk;
-  input rst;
-  input en;
-  input [WIDTH-1:0] d;
+  input pwire clk;
+  input pwire rst;
+  input pwire en;
+  input pwire [WIDTH-1:0] d;
   output pwire reg [WIDTH-1:0] q;//={WIDTH{1'b0}};
   
   always @(posedge clk)
@@ -51,11 +51,11 @@ module muxx3(out,hitA,wf,inA,inB,inF);
   parameter WIDTH=1;
 
   output pwire [WIDTH-1:0] out;
-  input hitA;
-  input wf;
-  input [WIDTH-1:0] inA;
-  input [WIDTH-1:0] inB;
-  input [WIDTH-1:0] inF;
+  input pwire hitA;
+  input pwire wf;
+  input pwire [WIDTH-1:0] inA;
+  input pwire [WIDTH-1:0] inB;
+  input pwire [WIDTH-1:0] inF;
 
   assign out=(hitA & ~wf) ? inA : 'z;
   assign out=(~hitA & ~wf) ? inB : 'z;
@@ -70,8 +70,8 @@ module optional_register(
   parameter WIDTH=32;
   parameter CNT=0;
   
-  input clk;
-  input  [WIDTH-1:0] dataIn;
+  input pwire clk;
+  input pwire  [WIDTH-1:0] dataIn;
   output pwire [WIDTH-1:0] dataOut;
   
   reg [WIDTH-1:0] first;

@@ -24,25 +24,25 @@ module WQ_wakeUP_logic(
   FUWQ1,FUWQen1,
   isData);
 
-  input clk;
-  input rst;
-  input stall;
-  input [5:0] newWQ0;
-  input newRsSelect0;
-  input   newPortEn0;
-  input [1:0] newEQ0;
-  input [5:0] newWQ1;
-  input newRsSelect1;
-  input   newPortEn1;
-  input [1:0] newEQ1;
-  input [5:0] newWQ2;
-  input newRsSelect2;
-  input   newPortEn2;
-  input [1:0] newEQ2;
-  input [5:0] FUWQ0;
-  input     FUWQen0;
-  input [5:0] FUWQ1;
-  input     FUWQen1;
+  input pwire clk;
+  input pwire rst;
+  input pwire stall;
+  input pwire [5:0] newWQ0;
+  input pwire newRsSelect0;
+  input pwire   newPortEn0;
+  input pwire [1:0] newEQ0;
+  input pwire [5:0] newWQ1;
+  input pwire newRsSelect1;
+  input pwire   newPortEn1;
+  input pwire [1:0] newEQ1;
+  input pwire [5:0] newWQ2;
+  input pwire newRsSelect2;
+  input pwire   newPortEn2;
+  input pwire [1:0] newEQ2;
+  input pwire [5:0] FUWQ0;
+  input pwire     FUWQen0;
+  input pwire [5:0] FUWQ1;
+  input pwire     FUWQen1;
   output pwire isData;
 
   reg port_en;
@@ -96,22 +96,22 @@ module WQ_wakeUP_logic_array(
   FUWQ1,FUWQen1,
   isData);
 
-  input clk;
-  input rst;
-  input stall;
-  input [5:0] newWQ0;
-  input [31:0] newRsSelect0;
-  input   newPortEn0;
-  input [5:0] newWQ1;
-  input [31:0] newRsSelect1;
-  input   newPortEn1;
-  input [5:0] newWQ2;
-  input [31:0] newRsSelect2;
-  input   newPortEn2;
-  input [5:0] FUWQ0;
-  input     FUWQen0;
-  input [5:0] FUWQ1;
-  input     FUWQen1;
+  input pwire clk;
+  input pwire rst;
+  input pwire stall;
+  input pwire [5:0] newWQ0;
+  input pwire [31:0] newRsSelect0;
+  input pwire   newPortEn0;
+  input pwire [5:0] newWQ1;
+  input pwire [31:0] newRsSelect1;
+  input pwire   newPortEn1;
+  input pwire [5:0] newWQ2;
+  input pwire [31:0] newRsSelect2;
+  input pwire   newPortEn2;
+  input pwire [5:0] FUWQ0;
+  input pwire     FUWQen0;
+  input pwire [5:0] FUWQ1;
+  input pwire     FUWQen1;
   output pwire [31:0] isData;
   generate
       genvar x;
@@ -154,33 +154,33 @@ module rss_buf(
   localparam FLAGS_WIDTH=`flags_width;
   localparam ROB_WIDTH=10;  
   
-  input clk;
-  input dataRst;
-  input nonDataRst;
-  input rst_thread;
-  input stall;
-  input FU0Hit;
-  input FU1Hit;
-  input FU2Hit;
-  input FU3Hit;
-  input new_thread;
+  input pwire clk;
+  input pwire dataRst;
+  input pwire nonDataRst;
+  input pwire rst_thread;
+  input pwire stall;
+  input pwire FU0Hit;
+  input pwire FU1Hit;
+  input pwire FU2Hit;
+  input pwire FU3Hit;
+  input pwire new_thread;
 //Input of new data from registeres
-  input [2:0][1:0] newANeeded0;
-  input [2:0] newRsSelect0;
-  input [2:0][8:0] newPort0;
+  input pwire [2:0][1:0] newANeeded0;
+  input pwire [2:0] newRsSelect0;
+  input pwire [2:0][8:0] newPort0;
 
 // output pwire data to functional units
 
-  input [2:0] outRsSelect0;
+  input pwire [2:0] outRsSelect0;
   output pwire [2:0] portReady0;
   output pwire [2:0][3:0] outDataEn0;
   output pwire [2:0] outThread0;
   output pwire [2:0] outZeroB0;
     
-  input [3:0] fuFwdA;
-  input [3:0] fuFwdB;
+  input pwire [3:0] fuFwdA;
+  input pwire [3:0] fuFwdB;
 
-  input [2:0] isDataA;
+  input pwire [2:0] isDataA;
 
   output pwire bufFree;
   
@@ -236,7 +236,7 @@ module rss_buf(
     
   assign stall_n=~stall;  
   assign nonDataRst0=(rst_thread) ? nonDataRst & thread_q || dataRst : nonDataRst &~thread_q || dataRst;
-//new data input into buffer 
+//new data input pwire into buffer 
   assign new_stall_n=~(newRsSelectAny & stall);
 
 
@@ -281,7 +281,7 @@ module rss_buf(
 
 
   
-// end new data input into buffer
+// end new data input pwire into buffer
 
 // output pwire from buffer
 
@@ -329,32 +329,32 @@ module rss_D_buf(
   localparam ROB_WIDTH=10;  
   parameter [31:0] B=32'b0;
 
-  input clk;
-  input dataRst;
-  input nonDataRst;
-  input rst_thread;
-  input stall;
-  input FU0Hit;
-  input FU1Hit;
-  input FU2Hit;
-  input FU3Hit;
-  input new_thread;
+  input pwire clk;
+  input pwire dataRst;
+  input pwire nonDataRst;
+  input pwire rst_thread;
+  input pwire stall;
+  input pwire FU0Hit;
+  input pwire FU1Hit;
+  input pwire FU2Hit;
+  input pwire FU3Hit;
+  input pwire new_thread;
 //Input of new data from registeres
-  input [2:0][1:0] newANeeded0;
-  input [2:0] newRsSelect0;
-  input [2:0][6:0] newPort0;
+  input pwire [2:0][1:0] newANeeded0;
+  input pwire [2:0] newRsSelect0;
+  input pwire [2:0][6:0] newPort0;
 
 // output pwire data to functional units
 
     
-  input outRsSelect1;
+  input pwire outRsSelect1;
   output pwire portReady1;
   output pwire [3:0] outDataEn1;
   output pwire outThread1;
 
-  input [3:0] fuFwdA;
+  input pwire [3:0] fuFwdA;
 
-  input isDataA;
+  input pwire isDataA;
 
 // free output
   output pwire bufFree;
@@ -415,7 +415,7 @@ module rss_D_buf(
     
   assign stall_n=~stall;  
   assign nonDataRst0=rst_thread ? nonDataRst & thread_q || dataRst : nonDataRst &~thread_q || dataRst;
-//new data input into buffer 
+//new data input pwire into buffer 
   assign new_stall_n=~(newRsSelectAny & stall);
 
 
@@ -504,8 +504,8 @@ endmodule
 module rss_array_helper(
   sel,inp,outp,out2);
   parameter SIZE=1;
-  input sel;
-  input inp;
+  input pwire sel;
+  input pwire inp;
   inout [SIZE-1:0] outp;
   output pwire [SIZE-1:0] out2;
 
@@ -539,35 +539,35 @@ module rss_array(
   localparam ROB_WIDTH=10;  
   localparam BUF_COUNT=32;
   
-  input clk;
-  input dataRst;
-  input nonDataRst;
-  input rst_thread;
-  input stall;
-  input FU0Hit;
-  input FU1Hit;
-  input FU2Hit;
-  input FU3Hit;
-  input new_thread;
+  input pwire clk;
+  input pwire dataRst;
+  input pwire nonDataRst;
+  input pwire rst_thread;
+  input pwire stall;
+  input pwire FU0Hit;
+  input pwire FU1Hit;
+  input pwire FU2Hit;
+  input pwire FU3Hit;
+  input pwire new_thread;
 //Input of new data from registeres
-  input [2:0][1:0] newANeeded0;
-  input [2:0][BUF_COUNT-1:0] newRsSelect0;
-  input [2:0][8:0] newPort0;
+  input pwire [2:0][1:0] newANeeded0;
+  input pwire [2:0][BUF_COUNT-1:0] newRsSelect0;
+  input pwire [2:0][8:0] newPort0;
 
 // output pwire data to functional units
 
-  input [1:0][BUF_COUNT-1:0] outRsSelect0;
-  input [1:0][3:0] outRsBank0;
-  input [1:0]outFound0;
+  input pwire [1:0][BUF_COUNT-1:0] outRsSelect0;
+  input pwire [1:0][3:0] outRsBank0;
+  input pwire [1:0]outFound0;
   output pwire [1:0][BUF_COUNT-1:0] portReady0;
   output pwire [1:0][3:0] outDataEn0;
   output pwire [1:0] outThread0;
   output pwire [1:0] outZeroB0;
     
-  input [BUF_COUNT*4-1:0] fuFwdA;
-  input [BUF_COUNT*4-1:0] fuFwdB;
+  input pwire [BUF_COUNT*4-1:0] fuFwdA;
+  input pwire [BUF_COUNT*4-1:0] fuFwdB;
 
-  input [1:0][BUF_COUNT-1:0] isDataA;
+  input pwire [1:0][BUF_COUNT-1:0] isDataA;
 
 // free output
   output pwire [BUF_COUNT-1:0]  bufFree;
@@ -640,45 +640,45 @@ module rss_D_array(
   localparam BUF_COUNT=32;
   parameter [31:0] B=32'b0;
 
-  input clk;
-  input dataRst;
-  input nonDataRst;
-  input rst_thread;
-  input stall;
-  input FU0Hit;
-  input FU1Hit;
-  input FU2Hit;
-  input FU3Hit;
-  input new_thread;
+  input pwire clk;
+  input pwire dataRst;
+  input pwire nonDataRst;
+  input pwire rst_thread;
+  input pwire stall;
+  input pwire FU0Hit;
+  input pwire FU1Hit;
+  input pwire FU2Hit;
+  input pwire FU3Hit;
+  input pwire new_thread;
 //Input of new data from registeres
-  input newANeeded0;
-  input newBNeeded0;
-  input [BUF_COUNT-1:0] newRsSelect0;
-  input [6:0] newPort0;
+  input pwire newANeeded0;
+  input pwire newBNeeded0;
+  input pwire [BUF_COUNT-1:0] newRsSelect0;
+  input pwire [6:0] newPort0;
 
-  input newANeeded1;
-  input newBNeeded1;
-  input [BUF_COUNT-1:0] newRsSelect1;
-  input [6:0] newPort1;  
+  input pwire newANeeded1;
+  input pwire newBNeeded1;
+  input pwire [BUF_COUNT-1:0] newRsSelect1;
+  input pwire [6:0] newPort1;  
 
-  input newANeeded2;
-  input newBNeeded2;
-  input [BUF_COUNT-1:0] newRsSelect2;
-  input [6:0] newPort2;  
+  input pwire newANeeded2;
+  input pwire newBNeeded2;
+  input pwire [BUF_COUNT-1:0] newRsSelect2;
+  input pwire [6:0] newPort2;  
 
 // output pwire data to functional units
 
-  input [BUF_COUNT-1:0] outRsSelect1;
-  input [3:0] outRsBank1;
-  input outFound1;
+  input pwire [BUF_COUNT-1:0] outRsSelect1;
+  input pwire [3:0] outRsBank1;
+  input pwire outFound1;
   output pwire [BUF_COUNT-1:0] portReady1;
   output pwire [3:0] outDataEn1;
   output pwire outThread1;
 
-  input [BUF_COUNT*4-1:0] fuFwdA;
+  input pwire [BUF_COUNT*4-1:0] fuFwdA;
 
-  input [BUF_COUNT-1:0] isDataA;
-  input [BUF_COUNT-1:0] isDataB;
+  input pwire [BUF_COUNT-1:0] isDataA;
+  input pwire [BUF_COUNT-1:0] isDataB;
 
 // free output
   output pwire [BUF_COUNT-1:0]  bufFree;
@@ -823,98 +823,98 @@ module rs_s(
   localparam ATTR_WIDTH=4;
 /*verilator hier_block*/ 
 
-  input clk;
-  input clkREF;
-  input clkREF2;
-  input dataRst;
-  input nonDataRst;
-  input rst_thread;
-  input stall;
+  input pwire clk;
+  input pwire clkREF;
+  input pwire clkREF2;
+  input pwire dataRst;
+  input pwire nonDataRst;
+  input pwire rst_thread;
+  input pwire stall;
   output pwire doStall;
-  input FU0Hit;
-  input FU1Hit;
-  input FU2Hit;
-  input FU3Hit;
-  input [3:0] rsEnab;
+  input pwire FU0Hit;
+  input pwire FU1Hit;
+  input pwire FU2Hit;
+  input pwire FU3Hit;
+  input pwire [3:0] rsEnab;
 //Input of new data from registeres
-  input new_thread;
-  input [DATA_WIDTH-1:0]       newDataA0;
-  input [DATA_WIDTH-1:0]       newDataB0;
-  input [CONST_WIDTH-1:0]      newDataC0;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] newRegA0; 
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] newRegB0; 
-  input newANeeded0;
-  input newBNeeded0;
-  input [OPERATION_WIDTH-1:0]   newOpA0;
-  input [OPERATION_WIDTH-1:0]   newOpB0;
-  input [6:0] newPort0;
-  input [II_WIDTH-1:0] newInstrIndexA0;  
-  input [II_WIDTH-1:0] newInstrIndexB0;  
-  input [LSQ_WIDTH-1:0] newLSQA0;
-  input [LSQ_WIDTH-1:0] newLSQB0;
-  input newEnA0;
-  input newEnB0;
-  input rsAlloc0;
-  input [10:0] newGazumpA0;
-  input [10:0] newGazumpB0;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [FN_WIDTH-1:0] newFunitA0;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [FN_WIDTH-1:0] newFunitB0;
-  input [WQ_WIDTH-1:0] newWQA0;
-  input [WQ_WIDTH-1:0] newWQB0;
-  input newLSFlag0;
-  input [ATTR_WIDTH-1:0] newAttr0;
+  input pwire new_thread;
+  input pwire [DATA_WIDTH-1:0]       newDataA0;
+  input pwire [DATA_WIDTH-1:0]       newDataB0;
+  input pwire [CONST_WIDTH-1:0]      newDataC0;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] newRegA0; 
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] newRegB0; 
+  input pwire newANeeded0;
+  input pwire newBNeeded0;
+  input pwire [OPERATION_WIDTH-1:0]   newOpA0;
+  input pwire [OPERATION_WIDTH-1:0]   newOpB0;
+  input pwire [6:0] newPort0;
+  input pwire [II_WIDTH-1:0] newInstrIndexA0;  
+  input pwire [II_WIDTH-1:0] newInstrIndexB0;  
+  input pwire [LSQ_WIDTH-1:0] newLSQA0;
+  input pwire [LSQ_WIDTH-1:0] newLSQB0;
+  input pwire newEnA0;
+  input pwire newEnB0;
+  input pwire rsAlloc0;
+  input pwire [10:0] newGazumpA0;
+  input pwire [10:0] newGazumpB0;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [FN_WIDTH-1:0] newFunitA0;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [FN_WIDTH-1:0] newFunitB0;
+  input pwire [WQ_WIDTH-1:0] newWQA0;
+  input pwire [WQ_WIDTH-1:0] newWQB0;
+  input pwire newLSFlag0;
+  input pwire [ATTR_WIDTH-1:0] newAttr0;
 
-  input [DATA_WIDTH-1:0]       newDataA1;
-  input [DATA_WIDTH-1:0]       newDataB1;
-  input [CONST_WIDTH-1:0]      newDataC1;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] newRegA1; 
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] newRegB1; 
-  input newANeeded1;
-  input newBNeeded1;
-  input [OPERATION_WIDTH-1:0]   newOpA1;
-  input [OPERATION_WIDTH-1:0]   newOpB1;
-  input [6:0] newPort1;
-  input [II_WIDTH-1:0] newInstrIndexA1;  
-  input [II_WIDTH-1:0] newInstrIndexB1;  
-  input [LSQ_WIDTH-1:0] newLSQA1;
-  input [LSQ_WIDTH-1:0] newLSQB1;
-  input newEnA1;
-  input newEnB1;
-  input rsAlloc1;
-  input [10:0] newGazumpA1;
-  input [10:0] newGazumpB1;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [FN_WIDTH-1:0] newFunitA1;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [FN_WIDTH-1:0] newFunitB1;
-  input [WQ_WIDTH-1:0] newWQA1;
-  input [WQ_WIDTH-1:0] newWQB1;
-  input newLSFlag1;
-  input [ATTR_WIDTH-1:0] newAttr1;
+  input pwire [DATA_WIDTH-1:0]       newDataA1;
+  input pwire [DATA_WIDTH-1:0]       newDataB1;
+  input pwire [CONST_WIDTH-1:0]      newDataC1;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] newRegA1; 
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] newRegB1; 
+  input pwire newANeeded1;
+  input pwire newBNeeded1;
+  input pwire [OPERATION_WIDTH-1:0]   newOpA1;
+  input pwire [OPERATION_WIDTH-1:0]   newOpB1;
+  input pwire [6:0] newPort1;
+  input pwire [II_WIDTH-1:0] newInstrIndexA1;  
+  input pwire [II_WIDTH-1:0] newInstrIndexB1;  
+  input pwire [LSQ_WIDTH-1:0] newLSQA1;
+  input pwire [LSQ_WIDTH-1:0] newLSQB1;
+  input pwire newEnA1;
+  input pwire newEnB1;
+  input pwire rsAlloc1;
+  input pwire [10:0] newGazumpA1;
+  input pwire [10:0] newGazumpB1;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [FN_WIDTH-1:0] newFunitA1;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [FN_WIDTH-1:0] newFunitB1;
+  input pwire [WQ_WIDTH-1:0] newWQA1;
+  input pwire [WQ_WIDTH-1:0] newWQB1;
+  input pwire newLSFlag1;
+  input pwire [ATTR_WIDTH-1:0] newAttr1;
 
-  input [DATA_WIDTH-1:0]       newDataA2;
-  input [DATA_WIDTH-1:0]       newDataB2;
-  input [CONST_WIDTH-1:0]      newDataC2;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] newRegA2; 
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] newRegB2; 
-  input newANeeded2;
-  input newBNeeded2;
-  input [OPERATION_WIDTH-1:0]   newOpA2;
-  input [OPERATION_WIDTH-1:0]   newOpB2;
-  input [6:0] newPort2;
-  input [II_WIDTH-1:0] newInstrIndexA2;  
-  input [II_WIDTH-1:0] newInstrIndexB2;  
-  input [LSQ_WIDTH-1:0] newLSQA2;
-  input [LSQ_WIDTH-1:0] newLSQB2;
-  input newEnA2;
-  input newEnB2;
-  input rsAlloc2;
-  input [10:0] newGazumpA2;
-  input [10:0] newGazumpB2;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [FN_WIDTH-1:0] newFunitA2;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [FN_WIDTH-1:0] newFunitB2;
-  input [WQ_WIDTH-1:0] newWQA2;
-  input [WQ_WIDTH-1:0] newWQB2;
-  input newLSFlag2;
-  input [ATTR_WIDTH-1:0] newAttr2;
+  input pwire [DATA_WIDTH-1:0]       newDataA2;
+  input pwire [DATA_WIDTH-1:0]       newDataB2;
+  input pwire [CONST_WIDTH-1:0]      newDataC2;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] newRegA2; 
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] newRegB2; 
+  input pwire newANeeded2;
+  input pwire newBNeeded2;
+  input pwire [OPERATION_WIDTH-1:0]   newOpA2;
+  input pwire [OPERATION_WIDTH-1:0]   newOpB2;
+  input pwire [6:0] newPort2;
+  input pwire [II_WIDTH-1:0] newInstrIndexA2;  
+  input pwire [II_WIDTH-1:0] newInstrIndexB2;  
+  input pwire [LSQ_WIDTH-1:0] newLSQA2;
+  input pwire [LSQ_WIDTH-1:0] newLSQB2;
+  input pwire newEnA2;
+  input pwire newEnB2;
+  input pwire rsAlloc2;
+  input pwire [10:0] newGazumpA2;
+  input pwire [10:0] newGazumpB2;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [FN_WIDTH-1:0] newFunitA2;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [FN_WIDTH-1:0] newFunitB2;
+  input pwire [WQ_WIDTH-1:0] newWQA2;
+  input pwire [WQ_WIDTH-1:0] newWQB2;
+  input pwire newLSFlag2;
+  input pwire [ATTR_WIDTH-1:0] newAttr2;
 
   output pwire [DATA_WIDTH-1:0]       outDataA0;//base
   output pwire [DATA_WIDTH-1:0]       outDataB0;
@@ -971,84 +971,84 @@ module rs_s(
   output pwire [ATTR_WIDTH-1:0] outAttr3;
 
   //functional units inputs/outputs
-  input [DATA_WIDTH-1:0] FU0;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg0;
-  input FUwen0;
+  input pwire [DATA_WIDTH-1:0] FU0;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg0;
+  input pwire FUwen0;
   
-  input [DATA_WIDTH-1:0] FU1;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg1;
-  input FUwen1;
+  input pwire [DATA_WIDTH-1:0] FU1;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg1;
+  input pwire FUwen1;
 
-  input [DATA_WIDTH-1:0] FU2;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg2;
-  input FUwen2;
+  input pwire [DATA_WIDTH-1:0] FU2;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg2;
+  input pwire FUwen2;
 
-  input [DATA_WIDTH-1:0] FU3;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg3;
-  input FUwen3;
+  input pwire [DATA_WIDTH-1:0] FU3;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg3;
+  input pwire FUwen3;
 
-  input [DATA_WIDTH-1:0] FU4;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg4;
-  input FUwen4;
+  input pwire [DATA_WIDTH-1:0] FU4;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg4;
+  input pwire FUwen4;
 
-  input [DATA_WIDTH-1:0] FU5;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg5;
-  input FUwen5;
+  input pwire [DATA_WIDTH-1:0] FU5;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg5;
+  input pwire FUwen5;
 
-  input [DATA_WIDTH-1:0] FU6;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg6;
-  input FUwen6;
+  input pwire [DATA_WIDTH-1:0] FU6;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg6;
+  input pwire FUwen6;
 
-  input [DATA_WIDTH-1:0] FU7;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg7;
-  input FUwen7;
+  input pwire [DATA_WIDTH-1:0] FU7;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg7;
+  input pwire FUwen7;
 
-  input [DATA_WIDTH-1:0] FU8;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg8;
-  input FUwen8;
+  input pwire [DATA_WIDTH-1:0] FU8;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg8;
+  input pwire FUwen8;
 
-  input [DATA_WIDTH-1:0] FU9;
-  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input [REG_WIDTH-1:0] FUreg9;
-  input FUwen9;
+  input pwire [DATA_WIDTH-1:0] FU9;
+  (* bus=WBREG bus_rpl=6 bus_spacing=11 *) input pwire [REG_WIDTH-1:0] FUreg9;
+  input pwire FUwen9;
 
-  (* bus=WQ0REG bus_rpl=6 bus_spacing=11 *) input [5:0] FUWQ0;
-  input FUWQen0;
+  (* bus=WQ0REG bus_rpl=6 bus_spacing=11 *) input pwire [5:0] FUWQ0;
+  input pwire FUWQen0;
 
-  (* bus=WQ1REG bus_rpl=6 bus_spacing=11 *) input [5:0] FUWQ1;
-  input FUWQen1;
+  (* bus=WQ1REG bus_rpl=6 bus_spacing=11 *) input pwire [5:0] FUWQ1;
+  input pwire FUWQen1;
 
 //SIMD
-  input [SIMD_WIDTH-1:0] newDataVA0H;
-  input [SIMD_WIDTH-1:0] newDataVB0H;
-  input [SIMD_WIDTH-1:0] newDataVA0L;
-  input [SIMD_WIDTH-1:0] newDataVB0L;
+  input pwire [SIMD_WIDTH-1:0] newDataVA0H;
+  input pwire [SIMD_WIDTH-1:0] newDataVB0H;
+  input pwire [SIMD_WIDTH-1:0] newDataVA0L;
+  input pwire [SIMD_WIDTH-1:0] newDataVB0L;
   
-  input [SIMD_WIDTH-1:0] newDataVA1H;
-  input [SIMD_WIDTH-1:0] newDataVB1H;
-  input [SIMD_WIDTH-1:0] newDataVA1L;
-  input [SIMD_WIDTH-1:0] newDataVB1L;
-  
-
-  input [SIMD_WIDTH-1:0] newDataVA2H;
-  input [SIMD_WIDTH-1:0] newDataVB2H;
-  input [SIMD_WIDTH-1:0] newDataVA2L;
-  input [SIMD_WIDTH-1:0] newDataVB2L;
-  
-  input [SIMD_WIDTH-1:0] newDataFA0H;
-  input [SIMD_WIDTH-1:0] newDataFB0H;
-  input [16+SIMD_WIDTH-1:0] newDataFA0L;
-  input [16+SIMD_WIDTH-1:0] newDataFB0L;
-  
-  input [SIMD_WIDTH-1:0] newDataFA1H;
-  input [SIMD_WIDTH-1:0] newDataFB1H;
-  input [16+SIMD_WIDTH-1:0] newDataFA1L;
-  input [16+SIMD_WIDTH-1:0] newDataFB1L;
+  input pwire [SIMD_WIDTH-1:0] newDataVA1H;
+  input pwire [SIMD_WIDTH-1:0] newDataVB1H;
+  input pwire [SIMD_WIDTH-1:0] newDataVA1L;
+  input pwire [SIMD_WIDTH-1:0] newDataVB1L;
   
 
-  input [SIMD_WIDTH-1:0] newDataFA2H;
-  input [SIMD_WIDTH-1:0] newDataFB2H;
-  input [16+SIMD_WIDTH-1:0] newDataFA2L;
-  input [16+SIMD_WIDTH-1:0] newDataFB2L;
+  input pwire [SIMD_WIDTH-1:0] newDataVA2H;
+  input pwire [SIMD_WIDTH-1:0] newDataVB2H;
+  input pwire [SIMD_WIDTH-1:0] newDataVA2L;
+  input pwire [SIMD_WIDTH-1:0] newDataVB2L;
+  
+  input pwire [SIMD_WIDTH-1:0] newDataFA0H;
+  input pwire [SIMD_WIDTH-1:0] newDataFB0H;
+  input pwire [16+SIMD_WIDTH-1:0] newDataFA0L;
+  input pwire [16+SIMD_WIDTH-1:0] newDataFB0L;
+  
+  input pwire [SIMD_WIDTH-1:0] newDataFA1H;
+  input pwire [SIMD_WIDTH-1:0] newDataFB1H;
+  input pwire [16+SIMD_WIDTH-1:0] newDataFA1L;
+  input pwire [16+SIMD_WIDTH-1:0] newDataFB1L;
+  
+
+  input pwire [SIMD_WIDTH-1:0] newDataFA2H;
+  input pwire [SIMD_WIDTH-1:0] newDataFB2H;
+  input pwire [16+SIMD_WIDTH-1:0] newDataFA2L;
+  input pwire [16+SIMD_WIDTH-1:0] newDataFB2L;
   
 
   output pwire [SIMD_WIDTH-1:0] outDataVB1H;
@@ -1064,67 +1064,67 @@ module rs_s(
   output pwire [SIMD_WIDTH-1:0] outDataFA3H;
   output pwire [16+SIMD_WIDTH-1:0] outDataFA3L;
   
-  input [SIMD_WIDTH-1:0] FUF0H;
-  input [16+SIMD_WIDTH-1:0] FUF0L;
+  input pwire [SIMD_WIDTH-1:0] FUF0H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF0L;
   
-  input [SIMD_WIDTH-1:0] FUF1H;
-  input [16+SIMD_WIDTH-1:0] FUF1L;
+  input pwire [SIMD_WIDTH-1:0] FUF1H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF1L;
   
-  input [SIMD_WIDTH-1:0] FUF2H;
-  input [16+SIMD_WIDTH-1:0] FUF2L;
+  input pwire [SIMD_WIDTH-1:0] FUF2H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF2L;
   
-  input [SIMD_WIDTH-1:0] FUF3H;
-  input [16+SIMD_WIDTH-1:0] FUF3L;
+  input pwire [SIMD_WIDTH-1:0] FUF3H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF3L;
   
-  input [SIMD_WIDTH-1:0] FUF4H;
-  input [16+SIMD_WIDTH-1:0] FUF4L;
+  input pwire [SIMD_WIDTH-1:0] FUF4H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF4L;
   
-  input [SIMD_WIDTH-1:0] FUF5H;
-  input [16+SIMD_WIDTH-1:0] FUF5L;
+  input pwire [SIMD_WIDTH-1:0] FUF5H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF5L;
   
-  input [SIMD_WIDTH-1:0] FUF6H;
-  input [16+SIMD_WIDTH-1:0] FUF6L;
+  input pwire [SIMD_WIDTH-1:0] FUF6H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF6L;
   
-  input [SIMD_WIDTH-1:0] FUF7H;
-  input [16+SIMD_WIDTH-1:0] FUF7L;
+  input pwire [SIMD_WIDTH-1:0] FUF7H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF7L;
   
-  input [SIMD_WIDTH-1:0] FUF8H;
-  input [16+SIMD_WIDTH-1:0] FUF8L;
+  input pwire [SIMD_WIDTH-1:0] FUF8H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF8L;
   
-  input [SIMD_WIDTH-1:0] FUF9H;
-  input [16+SIMD_WIDTH-1:0] FUF9L;
+  input pwire [SIMD_WIDTH-1:0] FUF9H;
+  input pwire [16+SIMD_WIDTH-1:0] FUF9L;
   
   
 
-  input [SIMD_WIDTH-1:0] FUV0H;
-  input [SIMD_WIDTH-1:0] FUV0L;
+  input pwire [SIMD_WIDTH-1:0] FUV0H;
+  input pwire [SIMD_WIDTH-1:0] FUV0L;
   
-  input [SIMD_WIDTH-1:0] FUV1H;
-  input [SIMD_WIDTH-1:0] FUV1L;
+  input pwire [SIMD_WIDTH-1:0] FUV1H;
+  input pwire [SIMD_WIDTH-1:0] FUV1L;
   
-  input [SIMD_WIDTH-1:0] FUV2H;
-  input [SIMD_WIDTH-1:0] FUV2L;
+  input pwire [SIMD_WIDTH-1:0] FUV2H;
+  input pwire [SIMD_WIDTH-1:0] FUV2L;
   
-  input [SIMD_WIDTH-1:0] FUV3H;
-  input [SIMD_WIDTH-1:0] FUV3L;
+  input pwire [SIMD_WIDTH-1:0] FUV3H;
+  input pwire [SIMD_WIDTH-1:0] FUV3L;
   
-  input [SIMD_WIDTH-1:0] FUV4H;
-  input [SIMD_WIDTH-1:0] FUV4L;
+  input pwire [SIMD_WIDTH-1:0] FUV4H;
+  input pwire [SIMD_WIDTH-1:0] FUV4L;
   
-  input [SIMD_WIDTH-1:0] FUV5H;
-  input [SIMD_WIDTH-1:0] FUV5L;
+  input pwire [SIMD_WIDTH-1:0] FUV5H;
+  input pwire [SIMD_WIDTH-1:0] FUV5L;
   
-  input [SIMD_WIDTH-1:0] FUV6H;
-  input [SIMD_WIDTH-1:0] FUV6L;
+  input pwire [SIMD_WIDTH-1:0] FUV6H;
+  input pwire [SIMD_WIDTH-1:0] FUV6L;
   
-  input [SIMD_WIDTH-1:0] FUV7H;
-  input [SIMD_WIDTH-1:0] FUV7L;
+  input pwire [SIMD_WIDTH-1:0] FUV7H;
+  input pwire [SIMD_WIDTH-1:0] FUV7L;
   
-  input [SIMD_WIDTH-1:0] FUV8H;
-  input [SIMD_WIDTH-1:0] FUV8L;
+  input pwire [SIMD_WIDTH-1:0] FUV8H;
+  input pwire [SIMD_WIDTH-1:0] FUV8L;
   
-  input [SIMD_WIDTH-1:0] FUV9H;
-  input [SIMD_WIDTH-1:0] FUV9L;
+  input pwire [SIMD_WIDTH-1:0] FUV9H;
+  input pwire [SIMD_WIDTH-1:0] FUV9L;
   
   
   

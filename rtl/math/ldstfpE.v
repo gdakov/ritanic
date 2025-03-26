@@ -17,9 +17,9 @@ module LDE2NativeE(
   en,
   res
   );
-  input [79:0] A;
-  input [79:0] An;
-  input en;
+  input pwire [79:0] A;
+  input pwire [79:0] An;
+  input pwire en;
   output pwire [80:0] res;
   //assign except=A[78:64]==0 && A[63:0];//denormal
   assign res=(A[78:64]!=0 && A[78:64]!=15'hefff && en) ? {~A[78],A[79],A[78:64],1'b1,A[62:0]} : 81'bz;
@@ -35,8 +35,8 @@ module stNativeE2E(
   );
   localparam [15:0] DEN=16'h4000;
   localparam [15:0] OVFL=16'hbfff;
-  input [80:0] A;
-  input en;
+  input pwire [80:0] A;
+  input pwire en;
   output pwire [127:0] res;
  
   pwire is_den;

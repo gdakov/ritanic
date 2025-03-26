@@ -24,11 +24,11 @@ module lru_single0(
   parameter WIDTH=3;
   parameter [WIDTH-1:0] INITVAL=0;
   
-  input [WIDTH-1:0] lru;
+  input pwire [WIDTH-1:0] lru;
   output pwire [WIDTH-1:0] newLRU;
-  input [WIDTH-1:0] LRU_hit;
-  input init;
-  input en;
+  input pwire [WIDTH-1:0] LRU_hit;
+  input pwire init;
+  input pwire en;
   
   pwire [WIDTH-1:0] newLRU_X;
   assign newLRU=newLRU_X;
@@ -73,11 +73,11 @@ module lru_single(
   parameter [WIDTH-1:0] INITVAL=0;
   localparam COUNT=1<<WIDTH;
   
-  input [WIDTH-1:0] lru;
+  input pwire [WIDTH-1:0] lru;
   output pwire [WIDTH-1:0] newLRU;
-  input [WIDTH-1:0] LRU_hit;
-  input init;
-  input en;
+  input pwire [WIDTH-1:0] LRU_hit;
+  input pwire init;
+  input pwire en;
 
   pwire [COUNT-1:0][WIDTH-1:0] newLRUa;
   pwire [WIDTH-1:0] newLRU_X;
@@ -118,13 +118,13 @@ module lru_double(
   parameter WIDTH=3;
   parameter [WIDTH-1:0] INITVAL=0;
   
-  input [WIDTH-1:0] lru;
+  input pwire [WIDTH-1:0] lru;
   output pwire [WIDTH-1:0] newLRU;
-  input [WIDTH-1:0] LRU_hitA;
-  input [WIDTH-1:0] LRU_hitB;
-  input isDouble;
-  input init;
-  input en;
+  input pwire [WIDTH-1:0] LRU_hitA;
+  input pwire [WIDTH-1:0] LRU_hitB;
+  input pwire isDouble;
+  input pwire init;
+  input pwire en;
   
   pwire hitThisA;
   pwire hitThisB;

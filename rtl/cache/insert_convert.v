@@ -3,7 +3,7 @@ module insconv(
    bundle,
    bundle_out);
 
-   input [255:0] bundle;
+   input pwire [255:0] bundle;
    output pwire [255:0] bundle_out;
 
 

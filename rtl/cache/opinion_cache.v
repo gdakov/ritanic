@@ -31,18 +31,18 @@ module cc_ram0(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [ADDR_WIDTH-1:0] readA_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readA_addr;
   output pwire [DATA_WIDTH-1:0] readA_data;
-  input readB_clkEn;
-  input [ADDR_WIDTH-1:0] readB_addr;
+  input pwire readB_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readB_addr;
   output pwire [DATA_WIDTH-1:0] readB_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
-  input [3:0] write_ben;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
+  input pwire [3:0] write_ben;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] readA_addr_reg;
@@ -86,19 +86,19 @@ module cc_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [ADDR_WIDTH-1:0] readA_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readA_addr;
   output pwire [DATA_WIDTH-1:0] readA_data;
-  input readB_clkEn;
-  input [ADDR_WIDTH-1:0] readB_addr;
+  input pwire readB_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readB_addr;
   output pwire [DATA_WIDTH-1:0] readB_data;
-  input [ADDR_WIDTH-1:0] write_addrE;
-  input [ADDR_WIDTH-1:0] write_addrO;
-  input [DATA_WIDTH-1:0] write_data;
-  input [1:0] write_wen;
-  input [3:0] write_ben;
+  input pwire [ADDR_WIDTH-1:0] write_addrE;
+  input pwire [ADDR_WIDTH-1:0] write_addrO;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire [1:0] write_wen;
+  input pwire [3:0] write_ben;
   cc_ram ramE_mod(
   clk,
   rst,
@@ -154,25 +154,25 @@ module cc_ram_block(
   localparam ADDR_WIDTH=7;
   localparam ADDR_COUNT=128;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [ADDR_WIDTH-1:0] readA_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readA_addr;
   output pwire [DATA_WIDTH-1:0] readA_data;
   output pwire [152:0] readAZ_data;
-  input readB_clkEn;
-  input [ADDR_WIDTH-1:0] readB_addr;
+  input pwire readB_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readB_addr;
   output pwire [DATA_WIDTH-1:0] readB_data;
   output pwire [152:0] readBZ_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input [152:0] write_xdata;
-  input write_wen;
-  input write_wen_noins;
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input [ADDR_WIDTH-1:0] write_addrEZ;
-  input [ADDR_WIDTH-1:0] write_addrOZ;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire [152:0] write_xdata;
+  input pwire write_wen;
+  input pwire write_wen_noins;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire [ADDR_WIDTH-1:0] write_addrEZ;
+  input pwire [ADDR_WIDTH-1:0] write_addrOZ;
 
  
 
@@ -231,17 +231,17 @@ module ccX_ram0(
   localparam ADDR_WIDTH=7;
   localparam ADDR_COUNT=128;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [ADDR_WIDTH-1:0] readA_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readA_addr;
   output pwire [DATA_WIDTH-1:0] readA_data;
-  input readB_clkEn;
-  input [ADDR_WIDTH-1:0] readB_addr;
+  input pwire readB_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readB_addr;
   output pwire [DATA_WIDTH-1:0] readB_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] readA_addr_reg;
@@ -282,20 +282,20 @@ module ccX_ram(
   localparam ADDR_WIDTH=7;
   localparam ADDR_COUNT=128;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [ADDR_WIDTH-1:0] readA_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readA_addr;
   output pwire [DATA_WIDTH-1:0] readA_data;
   output pwire [7:0] readAZ_data;
-  input readB_clkEn;
-  input [ADDR_WIDTH-1:0] readB_addr;
+  input pwire readB_clkEn;
+  input pwire [ADDR_WIDTH-1:0] readB_addr;
   output pwire [DATA_WIDTH-1:0] readB_data;
   output pwire [7:0] readBZ_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input [4:0] write_addrZ;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire [4:0] write_addrZ;
+  input pwire write_wen;
 
   ccX_ram ramX_mod(
   clk,
@@ -372,47 +372,47 @@ module ccRam_way(
   parameter [2:0] INDEX=0;
   parameter UPPER=0;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [IP_WIDTH-6:0] readA_IP;
-  input [3:0] readA_IP_low;
-  input readA_set_flag;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [IP_WIDTH-6:0] readA_IP;
+  input pwire [3:0] readA_IP_low;
+  input pwire readA_set_flag;
   output pwire [DATA_WIDTH-1:0] readA_data;
-  input [DATA_WIDTH-1:0] readA_data_in;
+  input pwire [DATA_WIDTH-1:0] readA_data_in;
   output pwire [`wport-1:0] readA_dataX;
-  input [`wport-1:0] readA_dataX_in;
+  input pwire [`wport-1:0] readA_dataX_in;
   output pwire [36:0] expun_addr;
-  input [36:0] expun_addr_in;
+  input pwire [36:0] expun_addr_in;
   output pwire readA_hit;
   output pwire expun_hit;
-  input readB_clkEn;
-  input [IP_WIDTH-6:0] readB_IP;
-  input [3:0] readB_IP_low;
-  input readB_set_flag;
+  input pwire readB_clkEn;
+  input pwire [IP_WIDTH-6:0] readB_IP;
+  input pwire [3:0] readB_IP_low;
+  input pwire readB_set_flag;
   output pwire [DATA_WIDTH-1:0] readB_data;
-  input [DATA_WIDTH-1:0] readB_data_in;
+  input pwire [DATA_WIDTH-1:0] readB_data_in;
   output pwire [`wport-1:0] readB_dataX;
-  input [`wport-1:0] readB_dataX_in;
+  input pwire [`wport-1:0] readB_dataX_in;
   output pwire readB_hit;
   output pwire [2:0] read_NRU;
-  input [2:0] read_NRU_in;
-  input [2:0] read_NRU_reg;
-  input [IP_WIDTH-6:0] chkCL_IP;
-  input chkCL_clkEn;
+  input pwire [2:0] read_NRU_in;
+  input pwire [2:0] read_NRU_reg;
+  input pwire [IP_WIDTH-6:0] chkCL_IP;
+  input pwire chkCL_clkEn;
   output pwire chkCL_hit;
-  input [IP_WIDTH-6:0] write_IP;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
-  input invalidate;
+  input pwire [IP_WIDTH-6:0] write_IP;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
+  input pwire invalidate;
 
   output pwire ErrA,ErrB;
-  input write_wen_noins;
-  input [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
-  input [`wport-1:0]write_hitE0; //+1 cycle
-  input [`wport-1:0][ADDR_WIDTH-1:0] write_addrO0;
-  input [`wport-1:0]write_hitO0; //+1 cycle
-  input [`wport-1:0]write_odd0;
+  input pwire write_wen_noins;
+  input pwire [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
+  input pwire [`wport-1:0]write_hitE0; //+1 cycle
+  input pwire [`wport-1:0][ADDR_WIDTH-1:0] write_addrO0;
+  input pwire [`wport-1:0]write_hitO0; //+1 cycle
+  input pwire [`wport-1:0]write_odd0;
 
   reg init;
 
@@ -651,54 +651,54 @@ module ccRam_half(
   localparam IP_WIDTH=44;
   localparam PHYS_WIDTH=44;
 
-  input clk;
-  input rst;
-  input readA_clkEn;
-  input [IP_WIDTH-2:0] readA_IP;
-  input readA_set_flag;
+  input pwire clk;
+  input pwire rst;
+  input pwire readA_clkEn;
+  input pwire [IP_WIDTH-2:0] readA_IP;
+  input pwire readA_set_flag;
   output pwire [DATA_WIDTH-1:0] readA_data;
   output pwire [`wport-1:0] readA_dataX;
   output pwire [7:0] readA_hit_way;
-  input readB_clkEn;
-  input [IP_WIDTH-2:0] readB_IP;
-  input readB_set_flag;
+  input pwire readB_clkEn;
+  input pwire [IP_WIDTH-2:0] readB_IP;
+  input pwire readB_set_flag;
   output pwire [DATA_WIDTH-1:0] readB_data;
   output pwire [`wport-1:0] readB_dataX;
   output pwire [7:0] readB_hit_way;
   output pwire [36:0] expun_addr;
   output pwire readA_hit,readB_hit,expun_hit;
-  input [IP_WIDTH-6:0] chkCL_IP;
-  input chkCL_clkEn;
+  input pwire [IP_WIDTH-6:0] chkCL_IP;
+  input pwire chkCL_clkEn;
   output pwire chkCL_hit;
-  input [IP_WIDTH-6:0] write_IP;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
-  input invalidate;
+  input pwire [IP_WIDTH-6:0] write_IP;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
+  input pwire invalidate;
   output pwire [7:0] tagErrA;
   output pwire [7:0] tagErrB;
-  input write_wen_noins;
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; //+1 cycle
-  input write_bankEn0;
-  input write_odd0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; //+1 cycle
-  input write_bankEn1;
-  input write_odd1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
-  input [255:0] write_data0;
-  input [255:0] write_data1;
+  input pwire write_wen_noins;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire write_hitE0; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire write_hitO0; //+1 cycle
+  input pwire write_bankEn0;
+  input pwire write_odd0;
+  input pwire [4:0] write_begin0;
+  input pwire [4:0] write_end0;
+  input pwire [3:0] write_bBen0;
+  input pwire [3:0] write_enBen0;
+  input pwire [ADDR_WIDTH-1:0] write_addrE1;
+  input pwire write_hitE1; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO1;
+  input pwire write_hitO1; //+1 cycle
+  input pwire write_bankEn1;
+  input pwire write_odd1;
+  input pwire [4:0] write_begin1;
+  input pwire [4:0] write_end1;
+  input pwire [3:0] write_bBen1;
+  input pwire [3:0] write_enBen1;
+  input pwire [255:0] write_data0;
+  input pwire [255:0] write_data1;
   
   pwire [7:0] chkCL_hit_way;
   pwire [7:0] readA_hit_way;

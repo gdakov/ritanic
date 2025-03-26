@@ -19,11 +19,11 @@ module ldD2nativeD(
   en,
   to_dbl,to_ext,
   res);
-  input [64:0] A;
-  input [64:0] Ax;
-  input en;
-  input to_dbl;
-  input to_ext;
+  input pwire [64:0] A;
+  input pwire [64:0] Ax;
+  input pwire en;
+  input pwire to_dbl;
+  input pwire to_ext;
   output pwire [80:0] res;
 
   pwire [51:0] denor;
@@ -79,12 +79,12 @@ module ldS2nativeS(
   to_dbl,
   to_ext,
   res);
-  input [31:0] A;
-  input [31:0] Ax;
-  input en;
-  input to_sngl;
-  input to_dbl;
-  input to_ext;
+  input pwire [31:0] A;
+  input pwire [31:0] Ax;
+  input pwire en;
+  input pwire to_sngl;
+  input pwire to_dbl;
+  input pwire to_ext;
   output pwire [81:0] res;
 
   pwire [22:0] denor;
@@ -141,10 +141,10 @@ endmodule
 module stNativeD2D(A,en,from_dbl,from_ext,res);
   localparam DEN=16'he400;
   localparam OVFL=16'h83fe;
-  input [80:0] A;
-  input en; 
-  input from_dbl;
-  input from_ext;
+  input pwire [80:0] A;
+  input pwire en; 
+  input pwire from_dbl;
+  input pwire from_ext;
   output pwire [64:0] res;
 
   pwire [15:0] expA=from_dbl ? {A[62],A[64],{4{~A[64]}},A[61:52]} : {A[79],A[64],A[78:65]};
@@ -183,11 +183,11 @@ endmodule
 module stNativeS2S(A,en,from_sngl,from_dbl,from_ext,res);
   localparam DEN=16'h4000;
   localparam OVFL=16'h807e;
-  input [81:0] A;
-  input en;
-  input from_sngl;
-  input from_dbl;
-  input from_ext;
+  input pwire [81:0] A;
+  input pwire en;
+  input pwire from_sngl;
+  input pwire from_dbl;
+  input pwire from_ext;
   output pwire [31:0] res;
 
   pwire [15:0] expA;

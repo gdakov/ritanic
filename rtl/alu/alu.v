@@ -27,25 +27,25 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   localparam EXCEPT_WIDTH=9;
   localparam FLAG_WIDTH=6; 
   parameter NOSHIFT=1'b1;  
-  input clk;
-  input rst;
-  input except;
-  input except_thread;
-  input thread;
-  input [OPERATION_WIDTH-1:0] operation;
-  input [4:0] cond;
-  input [5:0] sub; //high power fat wire
-  input dataEn;//1=coming data from rs
-  input nDataAlt;//0=feeding data through multiclk unit
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire except_thread;
+  input pwire thread;
+  input pwire [OPERATION_WIDTH-1:0] operation;
+  input pwire [4:0] cond;
+  input pwire [5:0] sub; //high power fat wire
+  input pwire dataEn;//1=coming data from rs
+  input pwire nDataAlt;//0=feeding data through multiclk unit
   output pwire [EXCEPT_WIDTH-1:0] retData;
   output pwire retEn;
-  input [2:0][65:0] val1;
-  input [2:0][65:0] val2;
-  input [5:0] valS;//flag
+  input pwire [2:0][65:0] val1;
+  input pwire [2:0][65:0] val2;
+  input pwire [5:0] valS;//flag
   inout  [65:0] valRes;  
-  input sec;
-  input error;
-  input [2:0] rmode;
+  input pwire sec;
+  input pwire error;
+  input pwire [2:0] rmode;
   
 
   reg [64:0] valRes_reg;
@@ -97,8 +97,8 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   reg val1_sign8;
 
   function [55:0] fff;
-  input [15:0] val;
-  input [55:0] v2;
+  input pwire [15:0] val;
+  input pwire [55:0] v2;
       fff[14:0]=v2[14:0] ^ val[14:0];
       fff[27:15]=v2[27:15] ^ (v2[14:0] & val[14:0]);
       fff[41:28]=v2[41:28] ^ (v2[27:15] & v2[14:0] & val[14:0]);
@@ -573,8 +573,8 @@ module except_jump_cmp(
   parameter JUMP_TYPE_WIDTH=5;
   parameter FLAGS_WIDTH=`flags_width;
 
-  input [FLAGS_WIDTH-1:0] flags;
-  input [JUMP_TYPE_WIDTH-1:0] jumpType;
+  input pwire [FLAGS_WIDTH-1:0] flags;
+  input pwire [JUMP_TYPE_WIDTH-1:0] jumpType;
   output pwire reg doJump;
 
   pwire C;

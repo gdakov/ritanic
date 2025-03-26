@@ -18,12 +18,12 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   parameter LARGE_CORE=0;
   parameter H=0;
 
-  input [31:0] instr;
-  input [3:0] magic;
-  input flag;
+  input pwire [31:0] instr;
+  input pwire [3:0] magic;
+  input pwire flag;
   output pwire FMA_mul;
-  input prev_FMA_mul;
-  input thread;
+  input pwire prev_FMA_mul;
+  input pwire thread;
   output pwire [12:0] class_;
   output pwire isLNK;
   output pwire isRet;
@@ -398,17 +398,17 @@ module predecoder_get(
     parameter LARGE_CORE=0;
     parameter H=0;
 
-    input clk;
-    input rst;
-    input thread;
-    input [255:0] bundle;
-    input [64:0] btail;
-    input [3:0] bstop;
-    input bFMA_mul;
-    input [127:0] bnext;
-    input [7:0] bnext_tail;
-    input has_next;
-    input [3:0] startOff;
+    input pwire clk;
+    input pwire rst;
+    input pwire thread;
+    input pwire [255:0] bundle;
+    input pwire [64:0] btail;
+    input pwire [3:0] bstop;
+    input pwire bFMA_mul;
+    input pwire [127:0] bnext;
+    input pwire [7:0] bnext_tail;
+    input pwire has_next;
+    input pwire [3:0] startOff;
     output pwire [3:0] startOff_override;
     output pwire [15:0][79:0] instr0;
     output pwire [15:0][3:0] magic0;
@@ -473,13 +473,13 @@ module predecoder_get(
     pwire [11:0] FMAmulI;
 
     function [255+64+16:0] boogy_baboogy;
-        input [3:0] bstop;
-        input cond;
-        input [255+64+16:0] index0;
-        input [255+64+16:0] index1;
-        input [255+64+16:0] index2;
-        input [255+64+16:0] index3;
-        input [255+64+16:0] index_else;
+        input pwire [3:0] bstop;
+        input pwire cond;
+        input pwire [255+64+16:0] index0;
+        input pwire [255+64+16:0] index1;
+        input pwire [255+64+16:0] index2;
+        input pwire [255+64+16:0] index3;
+        input pwire [255+64+16:0] index_else;
         begin
             if (cond && bstop[3:2]==2'b01) boogy_baboogy=index0;
             if (cond && bstop[3:1]==3'b001) boogy_baboogy=index1;

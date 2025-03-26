@@ -27,13 +27,13 @@ module cmlb_ram(
   localparam ADDR_WIDTH=8;
   localparam ADDR_COUNT=256;
   
-  input clk;
-  input rst;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   
@@ -73,22 +73,22 @@ module cmlb_way(
   localparam ADDR_WIDTH=5;
 
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input fStall;
-  input [IP_WIDTH-1:0] addr;
-  input tr_jump;
-  input [20:0] sproc;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire fStall;
+  input pwire [IP_WIDTH-1:0] addr;
+  input pwire tr_jump;
+  input pwire [20:0] sproc;
   output pwire [OUTDATA_WIDTH-1:0] read_data;
   output pwire [2:0] read_lru;
   output pwire read_hit;
-  input [OUTDATA_WIDTH-1:0] write_data;
-  input write_wen;
-  input write_tr;
-  input invalidate;
-  input init;
-  input [2:0] newLRU;
+  input pwire [OUTDATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
+  input pwire write_tr;
+  input pwire invalidate;
+  input pwire init;
+  input pwire [2:0] newLRU;
   
   pwire valid;
   pwire [IP_WIDTH-1:0] ip;
@@ -217,20 +217,20 @@ module cmlb(
   localparam ADDR_WIDTH=5;
 
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input read_thread;
-  input fStall;
-  input [IP_WIDTH-1:0] addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire read_thread;
+  input pwire fStall;
+  input pwire [IP_WIDTH-1:0] addr;
   output pwire [OUTDATA_WIDTH-1:0] read_data;
-  input transl_jump;
+  input pwire transl_jump;
   output pwire read_hit;
-  input [OUTDATA_WIDTH-1:0] write_data;
-  input write_wen;
-  input msrss_en;
-  input [15:0] msrss_addr;
-  input [64:0] msrss_data;
+  input pwire [OUTDATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
+  input pwire msrss_en;
+  input pwire [15:0] msrss_addr;
+  input pwire [64:0] msrss_data;
   
   pwire [3:0][2:0] newLRU;
   pwire [3:0][2:0] oldLRU;

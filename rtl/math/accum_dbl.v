@@ -21,11 +21,11 @@ module accum_buf_one(
     res,
     res_en
     );
-    input clk;
-    input rst;
-    input [67:0] A;
-    input [107:0][67:0] B;
-    input din_en;
+    input pwire clk;
+    input pwire rst;
+    input pwire [67:0] A;
+    input pwire [107:0][67:0] B;
+    input pwire din_en;
     output pwire [67:0] res;
     output pwire res_en; //one clock before res
 

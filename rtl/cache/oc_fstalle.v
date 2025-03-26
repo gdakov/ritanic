@@ -23,12 +23,12 @@ module cc_fstalle(
   read_data
   );
   parameter WIDTH=32;
-  input clk;
-  input rst;
-  input except;
-  input fstall;
-  input en;
-  input [WIDTH-1:0] write_data;  
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire fstall;
+  input pwire en;
+  input pwire [WIDTH-1:0] write_data;  
   output pwire [WIDTH-1:0] read_data;  
 
   reg [2:0] where1;

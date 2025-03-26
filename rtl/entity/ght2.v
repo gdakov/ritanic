@@ -27,13 +27,13 @@ module ght2_ram(
     localparam ADDR_WIDTH=5;
     parameter ADDR_COUNT=32;
 
-    input clk;
-    input [ADDR_WIDTH-1:0] read_addr;
+    input pwire clk;
+    input pwire [ADDR_WIDTH-1:0] read_addr;
     output pwire [DATA_WIDTH-1:0] read_data;
-    input [ADDR_WIDTH-1:0] write_addr;
-    input [DATA_WIDTH-1:0] write_data;
-    input [DATA_WIDTH-1:0] write_bitEn;
-    input write_wen;
+    input pwire [ADDR_WIDTH-1:0] write_addr;
+    input pwire [DATA_WIDTH-1:0] write_data;
+    input pwire [DATA_WIDTH-1:0] write_bitEn;
+    input pwire write_wen;
 
     reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
     integer i;
@@ -77,17 +77,17 @@ module ght3_bank(
     );
     parameter [2:0] INDEX=3'd0;
     
-    input clk;
-    input rst;
-    input read_clkEn;
-    input fstall;
-    input except;
-    input exceptThr;
-    input [15:0] IP_BITS;
-    input [15:0] GHT_mispred;
-    input [3:0] jumpMask;
-    input [3:0] AbtbPred;
-    input [3:0] BbtbPred;
+    input pwire clk;
+    input pwire rst;
+    input pwire read_clkEn;
+    input pwire fstall;
+    input pwire except;
+    input pwire exceptThr;
+    input pwire [15:0] IP_BITS;
+    input pwire [15:0] GHT_mispred;
+    input pwire [3:0] jumpMask;
+    input pwire [3:0] AbtbPred;
+    input pwire [3:0] BbtbPred;
     
     output pwire  AotherPred0;
     output pwire  AotherPred1;
@@ -99,11 +99,11 @@ module ght3_bank(
     output pwire  BotherPred2;
     output pwire  BotherPred3;
 
-    input  write_val;
-    input [15:0] write_addr;
-    input write_wen;
+    input pwire  write_val;
+    input pwire [15:0] write_addr;
+    input pwire write_wen;
 
-    input init;
+    input pwire init;
    
 
     reg read_clkEn_reg; 
@@ -322,8 +322,8 @@ endmodule
 
 
 module sel2_ght_entry(entry,addr,sc);
-    input [255:0] entry;
-    input [7:0] addr;
+    input pwire [255:0] entry;
+    input pwire [7:0] addr;
     output pwire [1:0] sc;
     
     pwire [1:0] sc1;
@@ -370,17 +370,17 @@ module ght2(
     write1_wen
     );
     
-    input clk;
-    input rst;
-    input read_clkEn;
-    input fstall;
-    input except;
-    input exceptThr;
-    input [15:0] IP_BITS;
-    input [15:0] GHT_mispred;
-    input [3:0] jumpMask;
-    input [3:0] AbtbPred;
-    input [3:0] BbtbPred;
+    input pwire clk;
+    input pwire rst;
+    input pwire read_clkEn;
+    input pwire fstall;
+    input pwire except;
+    input pwire exceptThr;
+    input pwire [15:0] IP_BITS;
+    input pwire [15:0] GHT_mispred;
+    input pwire [3:0] jumpMask;
+    input pwire [3:0] AbtbPred;
+    input pwire [3:0] BbtbPred;
     
     output pwire  AotherPred0;
     output pwire  AotherPred1;
@@ -396,13 +396,13 @@ module ght2(
 //    output pwire [7:0] otherIndex2;
 //    output pwire [7:0] otherIndex3;
 
-    input  write0_val;
-    input [15:0] write0_addr;
-    input write0_wen;
+    input pwire  write0_val;
+    input pwire [15:0] write0_addr;
+    input pwire write0_wen;
 
-    input  write1_val;
-    input [15:0] write1_addr;
-    input write1_wen;
+    input pwire  write1_val;
+    input pwire [15:0] write1_addr;
+    input pwire write1_wen;
 
     pwire [2:0] write0_way;
     pwire [2:0] write1_way;

@@ -39,25 +39,25 @@ module alu_shift(
   parameter OPERATION_WIDTH=`operation_width;
   parameter EXCEPT_WIDTH=9;
   
-  input clk;
-  input rst;
-  input except;
-  input except_thread;
-  input [OPERATION_WIDTH-1:0] operation;
-  input [4:0] cond;
-  input [3:0] sz;
-  input [3:0] bit_en;
-  input arith;
-  input dir;
-  input dataEn;//1=coming data from rs
-  input nDataAlt;//0=feeding data through multiclk unit
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire except_thread;
+  input pwire [OPERATION_WIDTH-1:0] operation;
+  input pwire [4:0] cond;
+  input pwire [3:0] sz;
+  input pwire [3:0] bit_en;
+  input pwire arith;
+  input pwire dir;
+  input pwire dataEn;//1=coming data from rs
+  input pwire nDataAlt;//0=feeding data through multiclk unit
   output pwire [EXCEPT_WIDTH-1:0] retData;
-  input [5:0] valS;
-  input [2:0][65:0] val1;
-  input [2:0][65:0] val2;
+  input pwire [5:0] valS;
+  input pwire [2:0][65:0] val1;
+  input pwire [2:0][65:0] val2;
   output pwire [65:0] valRes;
-  input error;
-  input [2:0] rmode;
+  input pwire error;
+  input pwire [2:0] rmode;
   
   pwire is_shift;
   pwire [64:0] en;

@@ -38,27 +38,27 @@ module decoder_permitted_i(
   allret,
   perm
   );
-  input [9:0] branch;
-  input [9:0] taken;
-  input [9:0] indir;
-  input [9:0] alu;
-  input [9:0] shift;
-  input [9:0] load;
-  input [9:0] store;
-  input [9:0] storeL;
-  input [9:0] fma;
-  input [9:0] mul;
-  input [9:0] sys;
-  input [9:0] pos0;
-  input [9:0] FPU;
-  input [9:0] spec;
-  input [9:0] specNext;
-  input [9:0] vec;
-  input [9:0] iAvail;
-  input stall;
-  input halt;
-  input vec_mode;
-  input allret;
+  input pwire [9:0] branch;
+  input pwire [9:0] taken;
+  input pwire [9:0] indir;
+  input pwire [9:0] alu;
+  input pwire [9:0] shift;
+  input pwire [9:0] load;
+  input pwire [9:0] store;
+  input pwire [9:0] storeL;
+  input pwire [9:0] fma;
+  input pwire [9:0] mul;
+  input pwire [9:0] sys;
+  input pwire [9:0] pos0;
+  input pwire [9:0] FPU;
+  input pwire [9:0] spec;
+  input pwire [9:0] specNext;
+  input pwire [9:0] vec;
+  input pwire [9:0] iAvail;
+  input pwire stall;
+  input pwire halt;
+  input pwire vec_mode;
+  input pwire allret;
   output pwire [9:0] perm;
 
   pwire [9:0][9:0] branch_cnt;
@@ -169,27 +169,27 @@ module decoder_aux_const(
   thrmode,
   doStall);
  
-  input clk;
-  input rst;
-  input stall;
-  input [9:0] cls_sys;
-  input [9:0][31:0] instr0; 
+  input pwire clk;
+  input pwire rst;
+  input pwire stall;
+  input pwire [9:0] cls_sys;
+  input pwire [9:0][31:0] instr0; 
   output pwire reg [64:0] aux_const;
   output pwire reg aux_can_jump;
   output pwire reg aux_can_read;
   output pwire reg aux_can_write;
-  input [15:0] msrss_no;
-  input msrss_en;
-  input [64:0] msrss_data;
-  input [10:0] fpE_set;
-  input fpE_en;
-  input fpE_thr;
-  input altEn;
-  input [64:0] altData;
-  input altThr2;
-  input altEn2;
-  input [16:0] altData2;
-  input thread;
+  input pwire [15:0] msrss_no;
+  input pwire msrss_en;
+  input pwire [64:0] msrss_data;
+  input pwire [10:0] fpE_set;
+  input pwire fpE_en;
+  input pwire fpE_thr;
+  input pwire altEn;
+  input pwire [64:0] altData;
+  input pwire altThr2;
+  input pwire altEn2;
+  input pwire [16:0] altData2;
+  input pwire thread;
   output pwire riscmode;
   output pwire disstruss;
   output pwire reg [1:0] thrmode;
@@ -383,8 +383,8 @@ module shmuph_decr(
   inp,
   outp);
   parameter WIDTH=1;
-  input [9:0] sel;
-  input [9:0][WIDTH-1:0] inp;
+  input pwire [9:0] sel;
+  input pwire [9:0][WIDTH-1:0] inp;
   output pwire [WIDTH-1:0] outp;
   assign outp=(sel[0] & ~sel[1]) ? inp[0] : 'z;
   assign outp=(sel[1] & ~sel[0]) ? inp[1] : 'z;
@@ -492,23 +492,23 @@ module decoder_reorder_mux(
   localparam OPERATION_WIDTH=`operation_width+5;
   localparam REG_WIDTH=6;
   
-  input [9:0] avail;
+  input pwire [9:0] avail;
 
-  input enable;
+  input pwire enable;
   
-  input [9:0] sel;
-  input [2:0][9:0]mulsel;
-  input [9:0] pwn_fma;
+  input pwire [9:0] sel;
+  input pwire [2:0][9:0]mulsel;
+  input pwire [9:0] pwn_fma;
 
-  input isMul5;
-  input isMul8;
+  input pwire isMul5;
+  input pwire isMul8;
 
-  input isMul5_twinreg;
+  input pwire isMul5_twinreg;
   
-  input store;
-  input storeL;
-  input [9:0] storeDA;
-  input [9:0] storeDB;
+  input pwire store;
+  input pwire storeL;
+  input pwire [9:0] storeDA;
+  input pwire [9:0] storeDB;
   
   output pwire [OPERATION_WIDTH-1:0] operation;
   output pwire [REG_WIDTH-1:0] rA;
@@ -541,63 +541,63 @@ module decoder_reorder_mux(
   output pwire st_enA;
   output pwire st_enB;
 
-  input [9:0] dec_IPRel;
-  input [9:0] dec_alloc;
-  input [9:0] dec_allocF;
-  input [9:0] dec_rAlloc;
-  input [9:0] dec_lastFl;
-  input [9:0] dec_flWr;
-  input [9:0] dec_rA_isV;
-  input [9:0] dec_rB_isV;
-  input [9:0] dec_rT_isV;
-  input [9:0] dec_ls_flag;
+  input pwire [9:0] dec_IPRel;
+  input pwire [9:0] dec_alloc;
+  input pwire [9:0] dec_allocF;
+  input pwire [9:0] dec_rAlloc;
+  input pwire [9:0] dec_lastFl;
+  input pwire [9:0] dec_flWr;
+  input pwire [9:0] dec_rA_isV;
+  input pwire [9:0] dec_rB_isV;
+  input pwire [9:0] dec_rT_isV;
+  input pwire [9:0] dec_ls_flag;
   
-  input [9:0][OPERATION_WIDTH-1:0] dec0_operation;
+  input pwire [9:0][OPERATION_WIDTH-1:0] dec0_operation;
 
-  input [9:0][REG_WIDTH-1:0] dec0_rA;
+  input pwire [9:0][REG_WIDTH-1:0] dec0_rA;
 
-  input [9:0] dec0_rA_use;
+  input pwire [9:0] dec0_rA_use;
 
-  input [9:0] dec0_rA_useF;
+  input pwire [9:0] dec0_rA_useF;
 
-  input [9:0] dec0_useAConst;
+  input pwire [9:0] dec0_useAConst;
 
-  input [9:0][REG_WIDTH-1:0] dec0_rB;
+  input pwire [9:0][REG_WIDTH-1:0] dec0_rB;
 
-  input [9:0] dec0_rB_use;
+  input pwire [9:0] dec0_rB_use;
 
-  input [9:0] dec0_rB_useF;
+  input pwire [9:0] dec0_rB_useF;
 
-  input [9:0] dec0_useBConst;
+  input pwire [9:0] dec0_useBConst;
 
-  input [9:0][64:0] dec0_constant;
+  input pwire [9:0][64:0] dec0_constant;
 
-  input [64:0] aux_constant;
+  input pwire [64:0] aux_constant;
 
-  input [9:0] dec_cls_sys;
+  input pwire [9:0] dec_cls_sys;
 
-  input [9:0][REG_WIDTH-1:0] dec0_rC;
+  input pwire [9:0][REG_WIDTH-1:0] dec0_rC;
 
-  input [9:0]dec0_rC_use;
+  input pwire [9:0]dec0_rC_use;
 
-  input [9:0]dec0_rC_useF;
+  input pwire [9:0]dec0_rC_useF;
   
   
-  input [9:0][REG_WIDTH-1:0] dec0_rT;
+  input pwire [9:0][REG_WIDTH-1:0] dec0_rT;
 
-  input [9:0]dec0_rT_use;
+  input pwire [9:0]dec0_rT_use;
 
-  input [9:0]dec0_rT_useF;
+  input pwire [9:0]dec0_rT_useF;
 
-  input [9:0][3:0] dec0_port;
+  input pwire [9:0][3:0] dec0_port;
 
-  input [9:0] dec0_useRs;
+  input pwire [9:0] dec0_useRs;
   
-  input signed [9:0][43:0] dec0_srcIPOff;
+  input pwire signed [9:0][43:0] dec0_srcIPOff;
   
-  input [9:0][3:0] dec0_flDep;
+  input pwire [9:0][3:0] dec0_flDep;
   
-  input [9:0] dec_afterTaken;
+  input pwire [9:0] dec_afterTaken;
 
   pwire [64:0] constantA;
   pwire [64:0] constantB;
@@ -706,8 +706,8 @@ module decoder_jpos(
   jump0,
   jump1);
 
-  input [9:0] jump;
-  input [9:0] used;
+  input pwire [9:0] jump;
+  input pwire [9:0] used;
   output pwire [9:0] jump0;
   output pwire [9:0] jump1;
 
@@ -773,7 +773,7 @@ module decoder(
   fp_excpt_thr,
 
   bundleFeed,
-//begin instructions ordered by rs input port
+//begin instructions ordered by rs input pwire port
   rs0i0_rA,rs0i0_rA_use,rs0i0_rA_useF,rs0i0_rA_isV,rs0i0_rA_isAnyV,
   rs0i0_rB,rs0i0_rB_use,rs0i0_rB_useF,rs0i0_rB_isV,rs0i0_rB_isAnyV,rs0i0_useBConst,
   rs0i0_rT,rs0i0_rT_use,rs0i0_rT_useF,rs0i0_rT_isV, 
@@ -1095,56 +1095,56 @@ module decoder(
   localparam REG_WIDTH=6;
   localparam IP_WIDTH=64;
   
-  input clk;
-  input rst;
-  input stall;
-  input fat_stall_en;
-  input except;
-  input [IP_WIDTH-1:0] exceptIP;
-  input [3:0] exceptAttr;
+  input pwire clk;
+  input pwire rst;
+  input pwire stall;
+  input pwire fat_stall_en;
+  input pwire except;
+  input pwire [IP_WIDTH-1:0] exceptIP;
+  input pwire [3:0] exceptAttr;
 
   output pwire [2:0] btbl_step;
 
-  input [9:0] iAvail;
+  input pwire [9:0] iAvail;
   output pwire [9:0] iUsed;
 
-  input GORQ;
-  input [16:0] GORQ_data;
-  input GORQ_thr;
+  input pwire GORQ;
+  input pwire [16:0] GORQ_data;
+  input pwire GORQ_thr;
   
-  input [INSTR_WIDTH-1:0] inst0;
-  input [INSTRQ_WIDTH-1:0] instQ0;
-  input [INSTR_WIDTH-1:0] inst1;
-  input [INSTRQ_WIDTH-1:0] instQ1;
-  input [INSTR_WIDTH-1:0] inst2;
-  input [INSTRQ_WIDTH-1:0] instQ2;
-  input [INSTR_WIDTH-1:0] inst3;
-  input [INSTRQ_WIDTH-1:0] instQ3;
-  input [INSTR_WIDTH-1:0] inst4;
-  input [INSTRQ_WIDTH-1:0] instQ4;
-  input [INSTR_WIDTH-1:0] inst5;
-  input [INSTRQ_WIDTH-1:0] instQ5;
-  input [INSTR_WIDTH-1:0] inst6;
-  input [INSTRQ_WIDTH-1:0] instQ6;
-  input [INSTR_WIDTH-1:0] inst7;
-  input [INSTRQ_WIDTH-1:0] instQ7;
-  input [INSTR_WIDTH-1:0] inst8;
-  input [INSTRQ_WIDTH-1:0] instQ8;
-  input [INSTR_WIDTH-1:0] inst9;
-  input [INSTRQ_WIDTH-1:0] instQ9;
+  input pwire [INSTR_WIDTH-1:0] inst0;
+  input pwire [INSTRQ_WIDTH-1:0] instQ0;
+  input pwire [INSTR_WIDTH-1:0] inst1;
+  input pwire [INSTRQ_WIDTH-1:0] instQ1;
+  input pwire [INSTR_WIDTH-1:0] inst2;
+  input pwire [INSTRQ_WIDTH-1:0] instQ2;
+  input pwire [INSTR_WIDTH-1:0] inst3;
+  input pwire [INSTRQ_WIDTH-1:0] instQ3;
+  input pwire [INSTR_WIDTH-1:0] inst4;
+  input pwire [INSTRQ_WIDTH-1:0] instQ4;
+  input pwire [INSTR_WIDTH-1:0] inst5;
+  input pwire [INSTRQ_WIDTH-1:0] instQ5;
+  input pwire [INSTR_WIDTH-1:0] inst6;
+  input pwire [INSTRQ_WIDTH-1:0] instQ6;
+  input pwire [INSTR_WIDTH-1:0] inst7;
+  input pwire [INSTRQ_WIDTH-1:0] instQ7;
+  input pwire [INSTR_WIDTH-1:0] inst8;
+  input pwire [INSTRQ_WIDTH-1:0] instQ8;
+  input pwire [INSTR_WIDTH-1:0] inst9;
+  input pwire [INSTRQ_WIDTH-1:0] instQ9;
   
-  input [62:0] jqe_IP0;
-  input [62:0] jqe_IP1;
+  input pwire [62:0] jqe_IP0;
+  input pwire [62:0] jqe_IP1;
 
-  input [3:0] jqe_attr0;
-  input [3:0] jqe_attr1;
+  input pwire [3:0] jqe_attr0;
+  input pwire [3:0] jqe_attr1;
 
   output pwire halt;
 
-  input all_retired;
-  input fp_excpt_en;
-  input [10:0] fp_excpt_set;
-  input fp_excpt_thr;
+  input pwire all_retired;
+  input pwire fp_excpt_en;
+  input pwire [10:0] fp_excpt_set;
+  input pwire fp_excpt_thr;
 
   output pwire reg bundleFeed;
   
@@ -1590,16 +1590,16 @@ module decoder(
   output pwire [5:0] wrt1;
   output pwire [5:0] wrt2;
   
-  input [15:0] msrss_no;
-  input msrss_en;
-  input [64:0] msrss_data;
-  input thread;
+  input pwire [15:0] msrss_no;
+  input pwire msrss_en;
+  input pwire [64:0] msrss_data;
+  input pwire thread;
 
   function [5:0] ffx;
-    input thr;
-    input [2:0] thrmode;
-    input wr_gen_purp;
-    input [5:0] reeg;
+    input pwire thr;
+    input pwire [2:0] thrmode;
+    input pwire wr_gen_purp;
+    input pwire [5:0] reeg;
     begin
         ffx=&reeg[4:3] ? {thrmode,reeg[2:0]} : reeg;
     end
@@ -3200,36 +3200,36 @@ module decoder_find_single_dep(
   );
   parameter REG_WIDTH=6;
   
-  input [REG_WIDTH-1:0]	instr0_rT;
-  input 		instr0_rT_use;
-  input 		instr0_rT_useF;
-  input [REG_WIDTH-1:0]	instr1_rT;
-  input 		instr1_rT_use;
-  input 		instr1_rT_useF;
-  input [REG_WIDTH-1:0]	instr2_rT;
-  input 		instr2_rT_use;
-  input 		instr2_rT_useF;
-  input [REG_WIDTH-1:0]	instr3_rT;
-  input 		instr3_rT_use;
-  input 		instr3_rT_useF;
-  input [REG_WIDTH-1:0]	instr4_rT;
-  input 		instr4_rT_use;
-  input 		instr4_rT_useF;
-  input [REG_WIDTH-1:0]	instr5_rT;
-  input 		instr5_rT_use;
-  input 		instr5_rT_useF;
-  input [REG_WIDTH-1:0]	instr6_rT;
-  input 		instr6_rT_use;
-  input 		instr6_rT_useF;
-  input [REG_WIDTH-1:0]	instr7_rT;
-  input 		instr7_rT_use;
-  input 		instr7_rT_useF;
-  input [REG_WIDTH-1:0]	instr8_rT;
-  input 		instr8_rT_use;
-  input 		instr8_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr0_rT;
+  input pwire 		instr0_rT_use;
+  input pwire 		instr0_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr1_rT;
+  input pwire 		instr1_rT_use;
+  input pwire 		instr1_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr2_rT;
+  input pwire 		instr2_rT_use;
+  input pwire 		instr2_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr3_rT;
+  input pwire 		instr3_rT_use;
+  input pwire 		instr3_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr4_rT;
+  input pwire 		instr4_rT_use;
+  input pwire 		instr4_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr5_rT;
+  input pwire 		instr5_rT_use;
+  input pwire 		instr5_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr6_rT;
+  input pwire 		instr6_rT_use;
+  input pwire 		instr6_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr7_rT;
+  input pwire 		instr7_rT_use;
+  input pwire 		instr7_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr8_rT;
+  input pwire 		instr8_rT_use;
+  input pwire 		instr8_rT_useF;
  
-  input [REG_WIDTH-1:0] chkReg;
-  input chk_useF;
+  input pwire [REG_WIDTH-1:0] chkReg;
+  input pwire chk_useF;
   output pwire [REG_WIDTH-1:0] dep;
 
 
@@ -3302,37 +3302,37 @@ module decoder_find_alloc(
   );
   localparam REG_WIDTH=6;
   
-  input [REG_WIDTH-1:0]	instr1_rT;
-  input 		instr1_rT_use;
-  input 		instr1_rT_useF;
-  input [REG_WIDTH-1:0]	instr2_rT;
-  input 		instr2_rT_use;
-  input 		instr2_rT_useF;
-  input [REG_WIDTH-1:0]	instr3_rT;
-  input 		instr3_rT_use;
-  input 		instr3_rT_useF;
-  input [REG_WIDTH-1:0]	instr4_rT;
-  input 		instr4_rT_use;
-  input 		instr4_rT_useF;
-  input [REG_WIDTH-1:0]	instr5_rT;
-  input 		instr5_rT_use;
-  input 		instr5_rT_useF;
-  input [REG_WIDTH-1:0]	instr6_rT;
-  input 		instr6_rT_use;
-  input 		instr6_rT_useF;
-  input [REG_WIDTH-1:0]	instr7_rT;
-  input 		instr7_rT_use;
-  input 		instr7_rT_useF;
-  input [REG_WIDTH-1:0]	instr8_rT;
-  input 		instr8_rT_use;
-  input 		instr8_rT_useF;
-  input [REG_WIDTH-1:0]	instr9_rT;
-  input 		instr9_rT_use;
-  input 		instr9_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr1_rT;
+  input pwire 		instr1_rT_use;
+  input pwire 		instr1_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr2_rT;
+  input pwire 		instr2_rT_use;
+  input pwire 		instr2_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr3_rT;
+  input pwire 		instr3_rT_use;
+  input pwire 		instr3_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr4_rT;
+  input pwire 		instr4_rT_use;
+  input pwire 		instr4_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr5_rT;
+  input pwire 		instr5_rT_use;
+  input pwire 		instr5_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr6_rT;
+  input pwire 		instr6_rT_use;
+  input pwire 		instr6_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr7_rT;
+  input pwire 		instr7_rT_use;
+  input pwire 		instr7_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr8_rT;
+  input pwire 		instr8_rT_use;
+  input pwire 		instr8_rT_useF;
+  input pwire [REG_WIDTH-1:0]	instr9_rT;
+  input pwire 		instr9_rT_use;
+  input pwire 		instr9_rT_useF;
  
-  input [REG_WIDTH-1:0] chkReg;
-  input chkReg_use;
-  input chkReg_useF;
+  input pwire [REG_WIDTH-1:0] chkReg;
+  input pwire chkReg_use;
+  input pwire chkReg_useF;
   output pwire alloc;
   output pwire allocF;
   
@@ -3382,8 +3382,8 @@ module decoder_flag_dep(
   dep
   );
   
-  input [8:0] instr_write_0_8;
-  input doRead;
+  input pwire [8:0] instr_write_0_8;
+  input pwire doRead;
   output pwire [3:0] dep;
 
   pwire [8:0] last;
@@ -3411,8 +3411,8 @@ module decoder_flag_wr(
   lastWr
   );
   
-  input [9:1] instr_write_1_9;
-  input doWrite;
+  input pwire [9:1] instr_write_1_9;
+  input pwire doWrite;
   output pwire lastWr;
 
   
@@ -3444,32 +3444,32 @@ module decoder_get_baseIP(
   exceptIP,
   exceptAttr
   );
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   output pwire reg [62:0] baseIP;
   output pwire reg [3:0] baseAttr;
-  input [9:0] afterTK;
-  input [9:0] iUsed;
-  input [9:0] afterTick;
-  input [8:0] srcIPOff0;
-  input [8:0] srcIPOff1;
-  input [8:0] srcIPOff2;
-  input [8:0] srcIPOff3;
-  input [8:0] srcIPOff4;
-  input [8:0] srcIPOff5;
-  input [8:0] srcIPOff6;
-  input [8:0] srcIPOff7;
-  input [8:0] srcIPOff8;
-  input [8:0] srcIPOff9;
-  input [62:0] jump0IP;
-  input [3:0] jump0Attr;
-  input jump0TK;
-  input [62:0] jump1IP;
-  input [3:0] jump1Attr;
-  input jump1TK;
-  input except;
-  input [62:0] exceptIP;
-  input [3:0] exceptAttr;
+  input pwire [9:0] afterTK;
+  input pwire [9:0] iUsed;
+  input pwire [9:0] afterTick;
+  input pwire [8:0] srcIPOff0;
+  input pwire [8:0] srcIPOff1;
+  input pwire [8:0] srcIPOff2;
+  input pwire [8:0] srcIPOff3;
+  input pwire [8:0] srcIPOff4;
+  input pwire [8:0] srcIPOff5;
+  input pwire [8:0] srcIPOff6;
+  input pwire [8:0] srcIPOff7;
+  input pwire [8:0] srcIPOff8;
+  input pwire [8:0] srcIPOff9;
+  input pwire [62:0] jump0IP;
+  input pwire [3:0] jump0Attr;
+  input pwire jump0TK;
+  input pwire [62:0] jump1IP;
+  input pwire [3:0] jump1Attr;
+  input pwire jump1TK;
+  input pwire except;
+  input pwire [62:0] exceptIP;
+  input pwire [3:0] exceptAttr;
 
   pwire [8:0] srcIPOff[9:0];
   pwire [62:0] nextIP;

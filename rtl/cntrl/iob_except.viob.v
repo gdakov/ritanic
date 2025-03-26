@@ -37,52 +37,52 @@ module bob_except_ram(
   parameter DATA_WIDTH=`except_width; 
 //  localparam UNIT=`except_width;
 
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   
-  input read_burst;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire read_burst;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
   
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
 
-  input [ADDR_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input [DATA_WIDTH-1:0] write6_data;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire [DATA_WIDTH-1:0] write6_data;
+  input pwire write6_wen;
 
-  input [ADDR_WIDTH-1:0] write7_addr;
-  input [DATA_WIDTH-1:0] write7_data;
-  input write7_wen;
+  input pwire [ADDR_WIDTH-1:0] write7_addr;
+  input pwire [DATA_WIDTH-1:0] write7_data;
+  input pwire write7_wen;
 
-  input [ADDR_WIDTH-1:0] write8_addr;
-  input [DATA_WIDTH-1:0] write8_data;
-  input write8_wen;
+  input pwire [ADDR_WIDTH-1:0] write8_addr;
+  input pwire [DATA_WIDTH-1:0] write8_data;
+  input pwire write8_wen;
 
-  input [ADDR_WIDTH-1:0] write9_addr;
-  input [DATA_WIDTH-1:0] write9_data;
-  input write9_wen;
+  input pwire [ADDR_WIDTH-1:0] write9_addr;
+  input pwire [DATA_WIDTH-1:0] write9_data;
+  input pwire write9_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
@@ -151,11 +151,11 @@ module bob_except(
   parameter DATA_WIDTH=`except_width; 
   localparam UNIT=DATA_WIDTH;
 
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   
-  input read_step;
-  input [5:0] read_addr;
+  input pwire read_step;
+  input pwire [5:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data0;
   output pwire [DATA_WIDTH-1:0] read_data1;
   output pwire [DATA_WIDTH-1:0] read_data2;
@@ -167,56 +167,56 @@ module bob_except(
   output pwire [DATA_WIDTH-1:0] read_data8;
   output pwire [DATA_WIDTH-1:0] read_data9;
   
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
 
-  input [ADDR_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input [DATA_WIDTH-1:0] write6_data;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire [DATA_WIDTH-1:0] write6_data;
+  input pwire write6_wen;
 
-  input [ADDR_WIDTH-1:0] write7_addr;
-  input [DATA_WIDTH-1:0] write7_data;
-  input write7_wen;
+  input pwire [ADDR_WIDTH-1:0] write7_addr;
+  input pwire [DATA_WIDTH-1:0] write7_data;
+  input pwire write7_wen;
 
-  input [ADDR_WIDTH-1:0] write8_addr;
-  input [DATA_WIDTH-1:0] write8_data;
-  input write8_wen;
+  input pwire [ADDR_WIDTH-1:0] write8_addr;
+  input pwire [DATA_WIDTH-1:0] write8_data;
+  input pwire write8_wen;
 
 
 
-  input [5:0] writeInit_addr;
-  input writeInit_wen;
-  input [DATA_WIDTH-1:0] writeInit_data0;
-  input [DATA_WIDTH-1:0] writeInit_data1;
-  input [DATA_WIDTH-1:0] writeInit_data2;
-  input [DATA_WIDTH-1:0] writeInit_data3;
-  input [DATA_WIDTH-1:0] writeInit_data4;
-  input [DATA_WIDTH-1:0] writeInit_data5;
-  input [DATA_WIDTH-1:0] writeInit_data6;
-  input [DATA_WIDTH-1:0] writeInit_data7;
-  input [DATA_WIDTH-1:0] writeInit_data8;
-  input [DATA_WIDTH-1:0] writeInit_data9;
+  input pwire [5:0] writeInit_addr;
+  input pwire writeInit_wen;
+  input pwire [DATA_WIDTH-1:0] writeInit_data0;
+  input pwire [DATA_WIDTH-1:0] writeInit_data1;
+  input pwire [DATA_WIDTH-1:0] writeInit_data2;
+  input pwire [DATA_WIDTH-1:0] writeInit_data3;
+  input pwire [DATA_WIDTH-1:0] writeInit_data4;
+  input pwire [DATA_WIDTH-1:0] writeInit_data5;
+  input pwire [DATA_WIDTH-1:0] writeInit_data6;
+  input pwire [DATA_WIDTH-1:0] writeInit_data7;
+  input pwire [DATA_WIDTH-1:0] writeInit_data8;
+  input pwire [DATA_WIDTH-1:0] writeInit_data9;
  
   pwire [DATA_WIDTH-1:0] writeInit_data[9:0];
   pwire [DATA_WIDTH-1:0] read_data[9:0];

@@ -28,20 +28,20 @@ module imul(
   flg
  );
 
-  input clk;
-  input rst;
-  input clkEn;
-  input [12:0] op_prev;
-  input [2:0] rmode;
-  input en;
-  input [64:0] R;
-  input [64:0] C;
-  input [3:0] attr;
+  input pwire clk;
+  input pwire rst;
+  input pwire clkEn;
+  input pwire [12:0] op_prev;
+  input pwire [2:0] rmode;
+  input pwire en;
+  input pwire [64:0] R;
+  input pwire [64:0] C;
+  input pwire [3:0] attr;
   output pwire [64:0] Res;
   output pwire reg alt;
   output pwire reg alt_jxcross;
   output pwire [5:0] flg;
-  input [64:0] jxcross_in;
+  input pwire [64:0] jxcross_in;
 
   reg and1,is_sig,sig,sm_sig,upper,short;
   reg sig_reg,sig_reg2;

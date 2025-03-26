@@ -22,23 +22,23 @@ module msiq_buf(
   chk3_data,chk3_en,chk3_smpc,
   wrt_addr,wrt_en,wrt_can);
   
-  input clk;
-  input rst;
-  input all_clear;
-  input [`lsaddr_width-1:0] chk0_data;
-  input chk0_en;
+  input pwire clk;
+  input pwire rst;
+  input pwire all_clear;
+  input pwire [`lsaddr_width-1:0] chk0_data;
+  input pwire chk0_en;
   output pwire chk0_smpc;
-  input [`lsaddr_width-1:0] chk1_data;
-  input chk1_en;
+  input pwire [`lsaddr_width-1:0] chk1_data;
+  input pwire chk1_en;
   output pwire chk1_smpc;
-  input [`lsaddr_width-1:0] chk2_data;
-  input chk2_en;
+  input pwire [`lsaddr_width-1:0] chk2_data;
+  input pwire chk2_en;
   output pwire chk2_smpc;
-  input [`lsaddr_width-1:0] chk3_data;
-  input chk3_en;
+  input pwire [`lsaddr_width-1:0] chk3_data;
+  input pwire chk3_en;
   output pwire chk3_smpc;
-  input [36:0] wrt_addr;
-  input wrt_en;
+  input pwire [36:0] wrt_addr;
+  input pwire wrt_en;
   output pwire reg wrt_can;
 
   reg [36:0] addr;
@@ -80,23 +80,23 @@ module msiq(
   chk2_data,chk2_en,chk2_smpc,
   chk3_data,chk3_en,chk3_smpc,
   wrt_addr,wrt_en,wrt_can);
-  input clk;
-  input rst;
-  input all_clear;
-  input [`lsaddr_width-1:0] chk0_data;
-  input chk0_en;
+  input pwire clk;
+  input pwire rst;
+  input pwire all_clear;
+  input pwire [`lsaddr_width-1:0] chk0_data;
+  input pwire chk0_en;
   output pwire chk0_smpc;
-  input [`lsaddr_width-1:0] chk1_data;
-  input chk1_en;
+  input pwire [`lsaddr_width-1:0] chk1_data;
+  input pwire chk1_en;
   output pwire chk1_smpc;
-  input [`lsaddr_width-1:0] chk2_data;
-  input chk2_en;
+  input pwire [`lsaddr_width-1:0] chk2_data;
+  input pwire chk2_en;
   output pwire chk2_smpc;
-  input [`lsaddr_width-1:0] chk3_data;
-  input chk3_en;
+  input pwire [`lsaddr_width-1:0] chk3_data;
+  input pwire chk3_en;
   output pwire chk3_smpc;
-  input [36:0] wrt_addr;
-  input wrt_en;
+  input pwire [36:0] wrt_addr;
+  input pwire wrt_en;
   output pwire wrt_can;
  
   pwire [7:0] chk0_smpc_way;

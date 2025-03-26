@@ -21,11 +21,11 @@ module accum_int64_one(
     res,
     res_en
     );
-    input clk;
-    input rst;
-    input [63:0] A;
-    input [107:0][63:0] B;
-    input din_en;
+    input pwire clk;
+    input pwire rst;
+    input pwire [63:0] A;
+    input pwire [107:0][63:0] B;
+    input pwire din_en;
     output pwire [64:0] res;
     output pwire res_en; //one clock before res
 

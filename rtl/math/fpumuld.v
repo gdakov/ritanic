@@ -25,25 +25,25 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   localparam ROUND_DOWN =6;
   parameter [0:0] H=0;//"high" nibble
 
-  input clk;
-  input rst;
-  input [80:0] A;
-  input [64:0] A_alt;
-  input [80:0] B;
-  input pook_in;
-  input and1;
-  input or1;
-  input copyA;
-  input en;
-  input [2:0] rmode;
+  input pwire clk;
+  input pwire rst;
+  input pwire [80:0] A;
+  input pwire [64:0] A_alt;
+  input pwire [80:0] B;
+  input pwire pook_in;
+  input pwire and1;
+  input pwire or1;
+  input pwire copyA;
+  input pwire en;
+  input pwire [2:0] rmode;
   output pwire [67:0] res;
   output pwire [15:0] res_hi;
   inout [67:0] xtra;
-  input isDBL;
-  input [31:0] fpcsr;
+  input pwire isDBL;
+  input pwire [31:0] fpcsr;
   output pwire [10:0] raise;
-  input is_rndD;
-  input is_rndS; 
+  input pwire is_rndD;
+  input pwire is_rndS; 
   
   //reg [80:0] A_reg;
  // reg [80:0] B_reg;

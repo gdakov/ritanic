@@ -26,16 +26,16 @@ module cvt_FP_I_mod(
   alt
 );
   localparam [15:0] BIAS=16'h7fff;
-  input clk;
-  input rst;
-  input en;
-  input clkEn;
-  input [81:0] A;
-  input isDBL;
-  input isEXT;
-  input isSNG;
-  input is32b;
-  input verbatim;
+  input pwire clk;
+  input pwire rst;
+  input pwire en;
+  input pwire clkEn;
+  input pwire [81:0] A;
+  input pwire isDBL;
+  input pwire isEXT;
+  input pwire isSNG;
+  input pwire is32b;
+  input pwire verbatim;
   output pwire [64:0] res;
   output pwire alt;
 

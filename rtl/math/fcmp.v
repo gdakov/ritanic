@@ -18,21 +18,21 @@ module fcmpd(clk,rst,
   A,B,ord,invExcpt,isExt,isDbl,isSng,afm,flags,paired,int_srch,srch_sz,vec,jumpType,
   cmod,res_pkd);
   parameter HAS_SRCH=0;
-  input clk;
-  input rst;
-  input [81:0] A;
-  input [81:0] B;
-  input ord;
-  input invExcpt;
-  input isExt,isDbl,isSng;
-  input afm; //alternative flag mode
+  input pwire clk;
+  input pwire rst;
+  input pwire [81:0] A;
+  input pwire [81:0] B;
+  input pwire ord;
+  input pwire invExcpt;
+  input pwire isExt,isDbl,isSng;
+  input pwire afm; //alternative flag mode
   output pwire [5:0] flags;
-  input paired;
-  input int_srch;
-  input [1:0] srch_sz;
-  input vec;
-  input [4:0] jumpType;
-  input [1:0] cmod;
+  input pwire paired;
+  input pwire int_srch;
+  input pwire [1:0] srch_sz;
+  input pwire vec;
+  input pwire [4:0] jumpType;
+  input pwire [1:0] cmod;
   output pwire [67:0] res_pkd;
   pwire cmpC,x_cmpC;
 
@@ -99,10 +99,10 @@ module fcmpd(clk,rst,
   assign vres1=cmod==3 ? ~flags_other[1] : 1'bz;
   assign vres[1]=paired ? vres1 : 1'bz;
   function [64:0] fracxfrm;
-    input [64:0] d_in;
-    input sngl;
-    input dbl;
-    input ext;
+    input pwire [64:0] d_in;
+    input pwire sngl;
+    input pwire dbl;
+    input pwire ext;
     begin
         fracxfrm[22:0]=d_in[22:0];
 	fracxfrm[23]=d_in[23]|sngl;

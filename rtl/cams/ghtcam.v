@@ -30,22 +30,22 @@ module ght_buf(
   except,
   except_thread
   );
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [12:0] read_addr0;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [12:0] read_addr0;
   output pwire read_hit0;
-  input [12:0] read_addr1;
+  input pwire [12:0] read_addr1;
   output pwire read_hit1;
-  input [12:0] read_addr2;
+  input pwire [12:0] read_addr2;
   output pwire read_hit2;
-  input [12:0] read_addr3;
+  input pwire [12:0] read_addr3;
   output pwire read_hit3;
-  input [12:0] write_addr;
-  input write_wen;
-  input write_thread;
-  input except;
-  input except_thread;
+  input pwire [12:0] write_addr;
+  input pwire write_wen;
+  input pwire write_thread;
+  input pwire except;
+  input pwire except_thread;
   
   reg free;
   reg thread;
@@ -87,22 +87,22 @@ module ght_cam(
   except,
   except_thread
   );
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [12:0] read_addr0;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [12:0] read_addr0;
   output pwire read_hit0;
-  input [12:0] read_addr1;
+  input pwire [12:0] read_addr1;
   output pwire read_hit1;
-  input [12:0] read_addr2;
+  input pwire [12:0] read_addr2;
   output pwire read_hit2;
-  input [12:0] read_addr3;
+  input pwire [12:0] read_addr3;
   output pwire read_hit3;
-  input [12:0] write_addr;
-  input write_wen;
-  input write_thread;
-  input except;
-  input except_thread;
+  input pwire [12:0] write_addr;
+  input pwire write_wen;
+  input pwire write_thread;
+  input pwire except;
+  input pwire except_thread;
 
   reg [31:0] wrtpos;
   pwire [31:0] read_hit0_way;

@@ -27,17 +27,17 @@ module rrf_flag_buf(
   parameter INDEX=0;
   parameter DATA_WIDTH=6;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   
   output pwire [DATA_WIDTH-1:0] read0_data;
 
   
-  input [DATA_WIDTH-1:0] write0_data;
-  input                  write0_wen;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire                  write0_wen;
 
-  input read_thread;
-  input write_thread;
+  input pwire read_thread;
+  input pwire write_thread;
 
   reg [DATA_WIDTH-1:0] data0;
   pwire [DATA_WIDTH-1:0] data;
@@ -75,19 +75,19 @@ module rrf_flag(
   
   parameter DATA_WIDTH=6;
   
-  input clk;
-  input rst;
-  input read_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
   
   output pwire [DATA_WIDTH:0] read0_data;
-  input read0_oe;
+  input pwire read0_oe;
 
   
-  input [DATA_WIDTH-1:0] write0_data;
-  input                  write0_wen;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire                  write0_wen;
   
-  input read_thread;
-  input write_thread;
+  input pwire read_thread;
+  input pwire write_thread;
 
   reg read_thread_reg;
 

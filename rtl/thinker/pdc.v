@@ -8,14 +8,14 @@ module pdc_ram(
   write_addr,
   write_data,
   write_wen);
-  input clk;
-  input rst;
-  input [2:0][10:0] read_addr;
-  input [2:0] read_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire [2:0][10:0] read_addr;
+  input pwire [2:0] read_clkEn;
   output pwire reg [2:0][`pdc_width-1:0] read_data;
-  input [10:0] write_addr;
-  input write_wen;
-  input [`pdc_width-1:0] write_data;
+  input pwire [10:0] write_addr;
+  input pwire write_wen;
+  input pwire [`pdc_width-1:0] write_data;
 
   reg [2:0][`pdc_width-1:0] read_data0;
   reg [2:0][10:0] read_addr0;

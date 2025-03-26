@@ -33,42 +33,42 @@ module lsq_req_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
 
 
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire reg [DATA_WIDTH-1:0] read_data;
-  input read_clkEn;
+  input pwire read_clkEn;
   
 
 
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
   
-  input [ADDR_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire write6_wen;
 
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
@@ -136,11 +136,11 @@ module lsq_req_block(
   localparam ADDR_COUNT=64;
   localparam ADDR2_WIDTH=9;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
 
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   
   output pwire [DATA_WIDTH-1:0]  read0_data;
   output pwire [DATA_WIDTH-1:0]  read1_data;
@@ -150,32 +150,32 @@ module lsq_req_block(
   output pwire [DATA_WIDTH-1:0]  read5_data;
   
 
-  input [ADDR2_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR2_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR2_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR2_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR2_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR2_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR2_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR2_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
   
-  input [ADDR2_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR2_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR2_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR2_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire write6_wen;
 
   pwire [DATA_WIDTH-1:0]  read_data[5:0];
   
@@ -232,42 +232,42 @@ module lsq_ex_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
 
 
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input read_clkEn;
+  input pwire read_clkEn;
   
 
 
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
   
-  input [ADDR_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire write6_wen;
 
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
@@ -329,11 +329,11 @@ module lsq_ex_block(
   localparam ADDR_COUNT=64;
   localparam ADDR2_WIDTH=9;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
 
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   
   output pwire [DATA_WIDTH-1:0]  read0_data;
   output pwire [DATA_WIDTH-1:0]  read1_data;
@@ -343,33 +343,33 @@ module lsq_ex_block(
   output pwire [DATA_WIDTH-1:0]  read5_data;
   
 
-  input [ADDR2_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR2_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR2_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR2_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR2_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR2_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR2_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR2_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
   
-  input [ADDR2_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR2_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR2_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR2_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input [DATA_WIDTH-1:0] write6_data;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire [DATA_WIDTH-1:0] write6_data;
+  input pwire write6_wen;
 
   pwire [DATA_WIDTH-1:0]  read_data[5:0];
   
@@ -422,14 +422,14 @@ module lsq_shared_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   //reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -460,14 +460,14 @@ module lsq_sharedB_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -502,16 +502,16 @@ module lsq_pend_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr0;
-  input [DATA_WIDTH-1:0] write_data0;
-  input write_wen0;
-  input [ADDR_WIDTH-1:0] write_addr1;
-  input write_wen1;
+  input pwire [ADDR_WIDTH-1:0] write_addr0;
+  input pwire [DATA_WIDTH-1:0] write_data0;
+  input pwire write_wen0;
+  input pwire [ADDR_WIDTH-1:0] write_addr1;
+  input pwire write_wen1;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -601,17 +601,17 @@ module lsq_req(
   localparam ADDR2_WIDTH=9;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
 
-  input stall;
+  input pwire stall;
   output pwire doStall;
   output pwire [1:0] doRsPause;
 
-  input except;
-  input except_thread;
+  input pwire except;
+  input pwire except_thread;
 
-  input aStall,readA_clkEn;
+  input pwire aStall,readA_clkEn;
   output pwire readA_rdy,readA_rdyP,readA_thr;
   
   output pwire [DATA_WIDTH-1:0]  read0A_data;
@@ -646,13 +646,13 @@ module lsq_req(
   output pwire [127:0] read5A_DATAU;
   output pwire [1:0]   read5A_dEn;
 
-  input [5:0] readA_conflIn_l;
-  input [5:0] readA_conflInMSI;
+  input pwire [5:0] readA_conflIn_l;
+  input pwire [5:0] readA_conflInMSI;
 
   output pwire [SDATA_WIDTH-1:0] read_data_shr;
-  input write_thread_shr;
-  input  [SDATA_WIDTH-1:0] write_data_shr;
-  input write_wen_shr;
+  input pwire write_thread_shr;
+  input pwire  [SDATA_WIDTH-1:0] write_data_shr;
+  input pwire write_wen_shr;
   output pwire reg [ADDR_WIDTH:0] write_addr_shr;
 
   output pwire [XDATA_WIDTH-1:0]  read0B_xdata;
@@ -671,51 +671,51 @@ module lsq_req(
   output pwire [5:0] readB_ldconfl;
   output pwire [5:0] readB_smpconfl;
   output pwire readB_rdy_en;
-  input readB_clkEn;
+  input pwire readB_clkEn;
 
-  input [ADDR2_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input [XDATA_WIDTH-3:0] write0_xdata;
-  input write0_thr;
-  input write0_wen;
+  input pwire [ADDR2_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire [XDATA_WIDTH-3:0] write0_xdata;
+  input pwire write0_thr;
+  input pwire write0_wen;
 
-  input [ADDR2_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input [XDATA_WIDTH-3:0] write1_xdata;
-  input write1_thr;
-  input write1_wen;
+  input pwire [ADDR2_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire [XDATA_WIDTH-3:0] write1_xdata;
+  input pwire write1_thr;
+  input pwire write1_wen;
 
-  input [ADDR2_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input [XDATA_WIDTH-3:0] write2_xdata;
-  input write2_thr;
-  input write2_wen;
+  input pwire [ADDR2_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire [XDATA_WIDTH-3:0] write2_xdata;
+  input pwire write2_thr;
+  input pwire write2_wen;
 
-  input [ADDR2_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input [XDATA_WIDTH-3:0] write3_xdata;
-  input write3_thr;
-  input write3_wen;
+  input pwire [ADDR2_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire [XDATA_WIDTH-3:0] write3_xdata;
+  input pwire write3_thr;
+  input pwire write3_wen;
   
-  input [ADDR2_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input [XDATA_WIDTH-3:0] write4_xdata;
-  input write4_thr;
-  input write4_wen;
+  input pwire [ADDR2_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire [XDATA_WIDTH-3:0] write4_xdata;
+  input pwire write4_thr;
+  input pwire write4_wen;
 
-  input [ADDR2_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input [XDATA_WIDTH-3:0] write5_xdata;
-  input write5_thr;
-  input write5_wen;
+  input pwire [ADDR2_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire [XDATA_WIDTH-3:0] write5_xdata;
+  input pwire write5_thr;
+  input pwire write5_wen;
   
-  input FU0Hit,FU1Hit,FU2Hit,FU3Hit;
-  input [135:0] FU0Data;
-  input [135:0] FU1Data;
-  input [135:0] FU2Data;
-  input [135:0] FU3Data;
-  input smpc0,smpc1,smpc2,smpc3;
-  input rsEn0,rsEn1,rsEn2,rsEn3;
+  input pwire FU0Hit,FU1Hit,FU2Hit,FU3Hit;
+  input pwire [135:0] FU0Data;
+  input pwire [135:0] FU1Data;
+  input pwire [135:0] FU2Data;
+  input pwire [135:0] FU3Data;
+  input pwire smpc0,smpc1,smpc2,smpc3;
+  input pwire rsEn0,rsEn1,rsEn2,rsEn3;
   
   reg [2*ADDR_COUNT-1:0]  validA;
   reg [2*ADDR_COUNT-1:0] validB;
@@ -919,12 +919,12 @@ module lsq_req(
   assign readA_thr=threadA[readA_addr];
  
   function [0:0] sz_unal; 
-    input [4:0] sz;
+    input pwire [4:0] sz;
     sz_unal=sz==5'd0 || sz==5'd1;
   endfunction
 
   function [5:0] up_to_first_zero;
-    input [5:0] arg;
+    input pwire [5:0] arg;
     begin
         up_to_first_zero[0]=arg[0];
         up_to_first_zero[1]=&arg[1:0];

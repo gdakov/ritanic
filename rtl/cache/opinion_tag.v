@@ -28,14 +28,14 @@ module ccTag_ram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input [`wport-1:0]read_clkEn;
-  input [`wport-1:0][ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [`wport-1:0]read_clkEn;
+  input pwire [`wport-1:0][ADDR_WIDTH-1:0] read_addr;
   output pwire [`wport-1:0][DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -70,14 +70,14 @@ module ccTag_lram(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=64;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -122,26 +122,26 @@ module ccTag(
   localparam PHYS_BITS=44;
   localparam VIRT_BITS=64;
 
-  input clk;
-  input rst;
-  input [`wport-1:0] read_clkEn;
-  input [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [`wport-1:0] read_clkEn;
+  input pwire [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr;
   output pwire [`wport-1:0] read_hit;
   output pwire [`wport-1:0] read_err;
   
-  input [PHYS_BITS-8:0] write_phys_addr;
-  input write_wen;
-  input invalidate;
+  input pwire [PHYS_BITS-8:0] write_phys_addr;
+  input pwire write_wen;
+  input pwire invalidate;
   
   
   output pwire [2:0] hitNRU;
-  input [2:0] hitNRU_in;
-  input [2:0] hitNRU_reg;
+  input pwire [2:0] hitNRU_in;
+  input pwire [2:0] hitNRU_reg;
   output pwire write_hit;
   output pwire [36:0] write_expun_addr;
   output pwire write_exp_en;
   inout [7:0] EI;
-  input init;
+  input pwire init;
 
   pwire [`wport-1:0][PHYS_BITS-8:0] tag_paddr;
   pwire [`wport-1:0]tag_valid;

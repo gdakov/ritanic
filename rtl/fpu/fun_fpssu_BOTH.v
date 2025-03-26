@@ -47,56 +47,56 @@ module fun_fpsu_BOTH(
   localparam [0:0] H=1'b1;
   localparam SIMD_WIDTH=70; //half width
 /*verilator hier_block*/
-  input clk;
-  input rst;
-  input [31:0] fpcsr;
-  (* bus=SIMDL bus_spacing=10 bus_off=0 *) input [67:0] u1_A0;
-  (* bus=SIMDL bus_spacing=10 bus_off=0 *) input [67:0] u1_B0;
-  (* bus=SIMDH bus_spacing=10 bus_off=0 *) input [67:0]    u1_A1;
-  (* bus=SIMDH bus_spacing=10 bus_off=0 *) input [67:0]    u1_B1;
-  input [3:0] u1_en;
-  input [20:0] u1_op;
-  input [3:0] u1_fufwd_A;
-  input [3:0] u1_fuufwd_A;
-  input [3:0] u1_fufwd_B;
-  input [3:0] u1_fuufwd_B;
+  input pwire clk;
+  input pwire rst;
+  input pwire [31:0] fpcsr;
+  (* bus=SIMDL bus_spacing=10 bus_off=0 *) input pwire [67:0] u1_A0;
+  (* bus=SIMDL bus_spacing=10 bus_off=0 *) input pwire [67:0] u1_B0;
+  (* bus=SIMDH bus_spacing=10 bus_off=0 *) input pwire [67:0]    u1_A1;
+  (* bus=SIMDH bus_spacing=10 bus_off=0 *) input pwire [67:0]    u1_B1;
+  input pwire [3:0] u1_en;
+  input pwire [20:0] u1_op;
+  input pwire [3:0] u1_fufwd_A;
+  input pwire [3:0] u1_fuufwd_A;
+  input pwire [3:0] u1_fufwd_B;
+  input pwire [3:0] u1_fuufwd_B;
   output pwire [13:0] u1_ret;
   output pwire u1_ret_en;
-  input u1_XSUB;
+  input pwire u1_XSUB;
 
-  (* bus=SIMDL bus_spacing=10 bus_off=1 *) input [67:0] u3_A0;
-  (* bus=SIMDL bus_spacing=10 bus_off=1 *) input [67:0] u3_B0;
-  (* bus=SIMDH bus_spacing=10 bus_off=1 *) input [67:0]    u3_A1;
-  (* bus=SIMDH bus_spacing=10 bus_off=1 *) input [67:0]    u3_B1;
-  input [3:0] u3_en;
-  input [20:0] u3_op;
-  input [3:0] u3_fufwd_A;
-  input [3:0] u3_fuufwd_A;
-  input [3:0] u3_fufwd_B;
-  input [3:0] u3_fuufwd_B;
+  (* bus=SIMDL bus_spacing=10 bus_off=1 *) input pwire [67:0] u3_A0;
+  (* bus=SIMDL bus_spacing=10 bus_off=1 *) input pwire [67:0] u3_B0;
+  (* bus=SIMDH bus_spacing=10 bus_off=1 *) input pwire [67:0]    u3_A1;
+  (* bus=SIMDH bus_spacing=10 bus_off=1 *) input pwire [67:0]    u3_B1;
+  input pwire [3:0] u3_en;
+  input pwire [20:0] u3_op;
+  input pwire [3:0] u3_fufwd_A;
+  input pwire [3:0] u3_fuufwd_A;
+  input pwire [3:0] u3_fufwd_B;
+  input pwire [3:0] u3_fuufwd_B;
   output pwire [13:0] u3_ret;
   output pwire u3_ret_en;
-  input u3_XSUB;
+  input pwire u3_XSUB;
 
-  (* bus=SIMDL bus_spacing=10 bus_off=2 *) input [67:0] u5_A0;
-  (* bus=SIMDL bus_spacing=10 bus_off=2 *) input [67:0] u5_B0;
-  (* bus=SIMDH bus_spacing=10 bus_off=2 *) input [67:0]    u5_A1;
-  (* bus=SIMDH bus_spacing=10 bus_off=2 *) input [67:0]    u5_B1;
-  input [3:0] u5_en;
-  input [20:0] u5_op;
-  input [3:0] u5_fufwd_A;
-  input [3:0] u5_fuufwd_A;
-  input [3:0] u5_fufwd_B;
-  input [3:0] u5_fuufwd_B;
+  (* bus=SIMDL bus_spacing=10 bus_off=2 *) input pwire [67:0] u5_A0;
+  (* bus=SIMDL bus_spacing=10 bus_off=2 *) input pwire [67:0] u5_B0;
+  (* bus=SIMDH bus_spacing=10 bus_off=2 *) input pwire [67:0]    u5_A1;
+  (* bus=SIMDH bus_spacing=10 bus_off=2 *) input pwire [67:0]    u5_B1;
+  input pwire [3:0] u5_en;
+  input pwire [20:0] u5_op;
+  input pwire [3:0] u5_fufwd_A;
+  input pwire [3:0] u5_fuufwd_A;
+  input pwire [3:0] u5_fufwd_B;
+  input pwire [3:0] u5_fuufwd_B;
   output pwire [13:0] u5_ret;
   output pwire u5_ret_en;
-  input u5_XSUB;
+  input pwire u5_XSUB;
 
 
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH0;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH1;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH2;
-  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input [67:0] FUFH3;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFH0;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFH1;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFH2;
+  (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFH3;
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH4;
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH5;
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFH6;
@@ -107,10 +107,10 @@ module fun_fpsu_BOTH(
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXH5;
   (* register equiload *) (* bus=SIMDH bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXH6;
   
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL0;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL1;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL2;
-  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input [67:0] FUFL3;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFL0;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFL1;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFL2;
+  (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) input pwire [67:0] FUFL3;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL4;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL5;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFL6;
@@ -121,18 +121,18 @@ module fun_fpsu_BOTH(
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXL5;
   (* register equiload *) (* bus=SIMDL bus_spacing=10 bus_rpl=3 *) output pwire [67:0] FUFXL6;
 
-  input [1:0] ALT_INP;
-  (* bus=SIMDL bus_spacing=10 *) input [67:0] ALTDATAL0;
-  (* bus=SIMDL bus_spacing=10 *) input [67:0] ALTDATAL1;
-  (* bus=SIMDH bus_spacing=10 *) input [67:0] ALTDATAH0;
-  (* bus=SIMDH bus_spacing=10 *) input [67:0] ALTDATAH1;
+  input pwire [1:0] ALT_INP;
+  (* bus=SIMDL bus_spacing=10 *) input pwire [67:0] ALTDATAL0;
+  (* bus=SIMDL bus_spacing=10 *) input pwire [67:0] ALTDATAL1;
+  (* bus=SIMDH bus_spacing=10 *) input pwire [67:0] ALTDATAH0;
+  (* bus=SIMDH bus_spacing=10 *) input pwire [67:0] ALTDATAH1;
 
   (* register equiload *) output pwire [5:0] FOOFL0;
   (* register equiload *) output pwire [5:0] FOOFL1;
   (* register equiload *) output pwire [5:0] FOOFL2;
   
 
-  input [135:0] fork_in;
+  input pwire [135:0] fork_in;
   output pwire [135:0] fork_out;
 
   pwire [67:0] xtra0;

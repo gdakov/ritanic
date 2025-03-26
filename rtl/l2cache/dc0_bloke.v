@@ -28,14 +28,14 @@ module dcache2_ram(
   localparam DATA_WIDTH=`dcache2_data_width;
   localparam ADDR_COUNT=256;
   
-  input clk;
-  input rst;
-  input read_nClkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_nClkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -66,14 +66,14 @@ module dcache2_LRU_ram(
   localparam DATA_WIDTH=5;
   localparam ADDR_COUNT=256;
   
-  input clk;
-  input rst;
-  input read_nClkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_nClkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -103,15 +103,15 @@ module dcache2_ram_box(
   localparam ADDR_WIDTH=8;
   localparam DATA_WIDTH=`dcache2_data_width;
   
-  input clk;
-  input rst;
-  input read_nClkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_nClkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [31:0] read_data;
   output pwire [31:0] read_datax;
-  input [31:0] write_data;
-  input write_wen;
-  input [3:0] write_ben;
+  input pwire [31:0] write_data;
+  input pwire write_wen;
+  input pwire [3:0] write_ben;
 
   reg [ADDR_WIDTH-1:0] read_addr_reg;
   reg [31:0] write_data_reg;
@@ -121,14 +121,14 @@ module dcache2_ram_box(
   pwire [DATA_WIDTH-1:0] write_data_ram;
 
   function [31:0] bcombine;
-      input [3:0] bit_en;
-      input [31:0] old_data;
-      input [31:0] new_data;
+      input pwire [3:0] bit_en;
+      input pwire [31:0] old_data;
+      input pwire [31:0] new_data;
       integer t;
       for(t=0;t<4;t=t+1)  bcombine[8*t+:8]=bit_en[t] ? new_data[8*t+:8] : old_data[8*t+:8];
   endfunction
   function [31:0] strip_ECC;
-      input [39:1] dataIn;
+      input pwire [39:1] dataIn;
   
       strip_ECC={dataIn[38:33],dataIn[31:17],dataIn[15:9],dataIn[7:5],dataIn[3]};
 
@@ -189,36 +189,36 @@ module dcache2_bank(
   parameter [4:0] INDEX=5'd0;
   parameter [0:0] TOP=1'b0;
 
-  input clk;
-  input rst;
-  input read_en; //+1 cycle
-  input read_odd; //+1 cycle
+  input pwire clk;
+  input pwire rst;
+  input pwire read_en; //+1 cycle
+  input pwire read_odd; //+1 cycle
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [DATA_WIDTH-1:0] read_data_in;
+  input pwire [DATA_WIDTH-1:0] read_data_in;
   output pwire [DATA_WIDTH-1:0] read_datax;
-  input [DATA_WIDTH-1:0] read_datax_in;
+  input pwire [DATA_WIDTH-1:0] read_datax_in;
 
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; //+1 cycle
-  input write_bankEn0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; //+1 cycle
-  input write_bankEn1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
-  input [DATA_WIDTH-1:0] write_data;
-  input ins_hit;
-  input pook_pokahontas;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire write_hitE0; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire write_hitO0; //+1 cycle
+  input pwire write_bankEn0;
+  input pwire [4:0] write_begin0;
+  input pwire [4:0] write_end0;
+  input pwire [3:0] write_bBen0;
+  input pwire [3:0] write_enBen0;
+  input pwire [ADDR_WIDTH-1:0] write_addrE1;
+  input pwire write_hitE1; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO1;
+  input pwire write_hitO1; //+1 cycle
+  input pwire write_bankEn1;
+  input pwire [4:0] write_begin1;
+  input pwire [4:0] write_end1;
+  input pwire [3:0] write_bBen1;
+  input pwire [3:0] write_enBen1;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire ins_hit;
+  input pwire pook_pokahontas;
   
  // pwire [ADDR_WIDTH-1:0] read_addr[1:0];
   pwire [DATA_WIDTH-1:0] read_data_ram[1:0];
@@ -330,19 +330,19 @@ module dcache2_xbit_ram(
   localparam DATA_WIDTH=`dcache2_data_width;
   localparam ADDR_COUNT=256/2;
   
-  input clk;
-  input rst;
-  input read_nClkEn;
-  input [ADDR_WIDTH-1:0]  read0_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_nClkEn;
+  input pwire [ADDR_WIDTH-1:0]  read0_addr;
   output pwire [DATA_WIDTH-1:0] read0_data;
-  input [ADDR_WIDTH-1:0]  read1_addr;
+  input pwire [ADDR_WIDTH-1:0]  read1_addr;
   output pwire [DATA_WIDTH-1:0] read1_data;
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input                  write1_wen;
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input                  write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire                  write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire                  write0_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read0_addr_reg;
@@ -381,19 +381,19 @@ module dcache2_xbit_ram_box(
   localparam ADDR_WIDTH=8-1;
   localparam DATA_WIDTH=`dcache2_data_width;
   
-  input clk;
-  input rst;
-  input read_nClkEn;
-  input [ADDR_WIDTH-1:0] read0_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_nClkEn;
+  input pwire [ADDR_WIDTH-1:0] read0_addr;
   output pwire [31:0] read0_data;
   output pwire [31:0] read0_datax;
-  input [31:0] write0_data;
-  input write0_wen;
-  input [31:0] write0_ben;
-  input [ADDR_WIDTH-1:0] read1_addr;
-  input [31:0] write1_data;
-  input write1_wen;
-  input [31:0] write1_ben;
+  input pwire [31:0] write0_data;
+  input pwire write0_wen;
+  input pwire [31:0] write0_ben;
+  input pwire [ADDR_WIDTH-1:0] read1_addr;
+  input pwire [31:0] write1_data;
+  input pwire write1_wen;
+  input pwire [31:0] write1_ben;
 
   reg [ADDR_WIDTH-1:0]  read0_addr_reg;
   reg [31:0]            write0_data_reg;
@@ -409,14 +409,14 @@ module dcache2_xbit_ram_box(
   pwire [DATA_WIDTH-1:0] write1_data_ram;
 
   function [31:0] bcombine;
-      input [31:0] bit_en;
-      input [31:0] old_data;
-      input [31:0] new_data;
+      input pwire [31:0] bit_en;
+      input pwire [31:0] old_data;
+      input pwire [31:0] new_data;
       integer t;
       for(t=0;t<32;t=t+1)  bcombine[t]=bit_en[t] ? new_data[t] : old_data[t];
   endfunction
   function [31:0] strip_ECC;
-      input [39:1] dataIn;
+      input pwire [39:1] dataIn;
   
       strip_ECC={dataIn[38:33],dataIn[31:17],dataIn[15:9],dataIn[7:5],dataIn[3]};
 
@@ -487,33 +487,33 @@ module dcache2_bitx_bank(
   parameter [4:0] INDEX=5'd0;
   parameter [0:0] TOP=1'b0;
 
-  input clk;
-  input rst;
-  input read_en; //+1 cycle
-  input read_odd; //+1 cycle
+  input pwire clk;
+  input pwire rst;
+  input pwire read_en; //+1 cycle
+  input pwire read_odd; //+1 cycle
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [DATA_WIDTH-1:0] read_data_in;
+  input pwire [DATA_WIDTH-1:0] read_data_in;
   output pwire [DATA_WIDTH-1:0] read_datax;
-  input [DATA_WIDTH-1:0] read_datax_in;
+  input pwire [DATA_WIDTH-1:0] read_datax_in;
 
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; //+1 cycle
-  input write_odd0;
-  input write_d128_0;
-  input [4:0] write_begin0;
-  input [1:0] write_data0;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; //+1 cycle
-  input write_odd1;
-  input write_d128_1;
-  input [4:0] write_begin1;
-  input [1:0] write_data1;
-  input [DATA_WIDTH-1:0] write_data;
-  input ins_hit;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire write_hitE0; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire write_hitO0; //+1 cycle
+  input pwire write_odd0;
+  input pwire write_d128_0;
+  input pwire [4:0] write_begin0;
+  input pwire [1:0] write_data0;
+  input pwire [ADDR_WIDTH-1:0] write_addrE1;
+  input pwire write_hitE1; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO1;
+  input pwire write_hitO1; //+1 cycle
+  input pwire write_odd1;
+  input pwire write_d128_1;
+  input pwire [4:0] write_begin1;
+  input pwire [1:0] write_data1;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire ins_hit;
   
  // pwire [ADDR_WIDTH-1:0] read_addr[1:0];
   pwire [31:0] read_data_ram[1:0];
@@ -670,70 +670,70 @@ module dcache2_way(
   parameter [4:0] ID=0;
   parameter [1:0] BIG_ID=0;
 
-  input clk;
-  input rst;
-  input read_en; 
-  input read_odd;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_en; 
+  input pwire read_odd;
   output pwire [32*DATA_WIDTH-1:0] read_data;
-  input [32*DATA_WIDTH-1:0] read_data_in;
+  input pwire [32*DATA_WIDTH-1:0] read_data_in;
   output pwire [32*DATA_WIDTH-1:0] read_dataX;
-  input [32*DATA_WIDTH-1:0] read_dataX_in;
+  input pwire [32*DATA_WIDTH-1:0] read_dataX_in;
   output pwire [15:0] read_dataPTR;
-  input [15:0] read_dataPTR_in;
+  input pwire [15:0] read_dataPTR_in;
   output pwire [15:0] read_dataPTRx;
-  input [15:0] read_dataPTRx_in;
+  input pwire [15:0] read_dataPTRx_in;
   output pwire read_hit; //1 cycle before data
   output pwire reg read_inL1;
 
-  input write0_clkEn;
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; //+1 cycle
-  input [31:0] write_bankEn0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input [1:0] write_pbit0;
-  input write_d128_0;
-  input write_odd0,write_split0;
-  input write1_clkEn;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; //+1 cycle
-  input [31:0] write_bankEn1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
-  input [1:0] write_pbit1;
-  input write_d128_1;
-  input write_odd1,write_split1;
-  input [32*DATA_WIDTH-1:0] write_data;
-  input [15:0] write_dataPTR;
+  input pwire write0_clkEn;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire write_hitE0; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire write_hitO0; //+1 cycle
+  input pwire [31:0] write_bankEn0;
+  input pwire [4:0] write_begin0;
+  input pwire [4:0] write_end0;
+  input pwire [3:0] write_bBen0;
+  input pwire [3:0] write_enBen0;
+  input pwire [1:0] write_pbit0;
+  input pwire write_d128_0;
+  input pwire write_odd0,write_split0;
+  input pwire write1_clkEn;
+  input pwire [ADDR_WIDTH-1:0] write_addrE1;
+  input pwire write_hitE1; //+1 cycle
+  input pwire [ADDR_WIDTH-1:0] write_addrO1;
+  input pwire write_hitO1; //+1 cycle
+  input pwire [31:0] write_bankEn1;
+  input pwire [4:0] write_begin1;
+  input pwire [4:0] write_end1;
+  input pwire [3:0] write_bBen1;
+  input pwire [3:0] write_enBen1;
+  input pwire [1:0] write_pbit1;
+  input pwire write_d128_1;
+  input pwire write_odd1,write_split1;
+  input pwire [32*DATA_WIDTH-1:0] write_data;
+  input pwire [15:0] write_dataPTR;
   output pwire ins_hit;
-  input insert;
-  input insert_excl;
-  input insert_dirty;
-  input insert_dupl;
-  input insert_pook;
-  input [4:0] LRU_hit;
+  input pwire insert;
+  input pwire insert_excl;
+  input pwire insert_dirty;
+  input pwire insert_dupl;
+  input pwire insert_pook;
+  input pwire [4:0] LRU_hit;
   output pwire [4:0] read_LRU;
   output pwire [1:0] read_dir;
   output pwire [1:0] read_excl;
   output pwire [36:0] read_expAddr;
-//  input init;
-  input [4:0] read_LRU_in;
-  input [1:0] read_dir_in;
-  input [1:0] read_excl_in;
-  input [36:0] read_expAddr_in;
-  input expAddr_en;
-  input [36:0] expun_cc_addr;
-  input expun_cc_en;
-  input [36:0] expun_dc_addr;
-  input expun_dc_en;
+//  input pwire init;
+  input pwire [4:0] read_LRU_in;
+  input pwire [1:0] read_dir_in;
+  input pwire [1:0] read_excl_in;
+  input pwire [36:0] read_expAddr_in;
+  input pwire expAddr_en;
+  input pwire [36:0] expun_cc_addr;
+  input pwire expun_cc_en;
+  input pwire [36:0] expun_dc_addr;
+  input pwire expun_dc_en;
 
   pwire write0_hitE;
   pwire write0_hitO;
@@ -1459,67 +1459,67 @@ module dcache2_block(
   parameter [1:0] ID=0;
 /*verilator hier_block*/ 
 
-  input clk;
-  input rst;
-  input read_en; 
-  input read_odd;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_en; 
+  input pwire read_odd;
   output pwire reg [32*DATA_WIDTH-1:0] read_data;
   output pwire reg [32*DATA_WIDTH-1:0] read_dataX;
   output pwire reg [15:0] read_dataPTR;
   output pwire reg [15:0] read_dataPTRx;
 
-  input write0_passthrough;
-  input write1_passthrough;
+  input pwire write0_passthrough;
+  input pwire write1_passthrough;
 
-  input write0_clkEn;
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; 
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; 
-  input [31:0] write_bankEn0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input [1:0] write_pbit0;
-  input       write_d128_0;
-  input write_odd0,write_split0;
-  input [159:0] write_data0;
-  input write1_clkEn;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; 
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; 
-  input [31:0] write_bankEn1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
-  input [1:0] write_pbit1;
-  input       write_d128_1;
-  input write_odd1,write_split1;
-  input [159:0] write_data1;
-  input [511:0] busIns_data;
-  input [7:0] busIns_dataPTR;
-  input insBus_A,insBus_B;
+  input pwire write0_clkEn;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire write_hitE0; 
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire write_hitO0; 
+  input pwire [31:0] write_bankEn0;
+  input pwire [4:0] write_begin0;
+  input pwire [4:0] write_end0;
+  input pwire [3:0] write_bBen0;
+  input pwire [3:0] write_enBen0;
+  input pwire [1:0] write_pbit0;
+  input pwire       write_d128_0;
+  input pwire write_odd0,write_split0;
+  input pwire [159:0] write_data0;
+  input pwire write1_clkEn;
+  input pwire [ADDR_WIDTH-1:0] write_addrE1;
+  input pwire write_hitE1; 
+  input pwire [ADDR_WIDTH-1:0] write_addrO1;
+  input pwire write_hitO1; 
+  input pwire [31:0] write_bankEn1;
+  input pwire [4:0] write_begin1;
+  input pwire [4:0] write_end1;
+  input pwire [3:0] write_bBen1;
+  input pwire [3:0] write_enBen1;
+  input pwire [1:0] write_pbit1;
+  input pwire       write_d128_1;
+  input pwire write_odd1,write_split1;
+  input pwire [159:0] write_data1;
+  input pwire [511:0] busIns_data;
+  input pwire [7:0] busIns_dataPTR;
+  input pwire insBus_A,insBus_B;
 //  output pwire ins_hit;
-  input insert;
-  input insert_excl;
-  input insert_dirty;
-  input insert_dupl;
-  input insert_pook;
-  input [4:0] LRU_hit;
+  input pwire insert;
+  input pwire insert_excl;
+  input pwire insert_dirty;
+  input pwire insert_dupl;
+  input pwire insert_pook;
+  input pwire [4:0] LRU_hit;
   output pwire reg [4:0] read_LRU;
   output pwire reg hit_any;
   output pwire reg immoral_some;
   output pwire reg read_dir;
   output pwire reg read_excl;
   output pwire reg [36:0] read_expAddrOut;
-  input read_expAddr_en;
-  input [36:0] expun_cc_addr;
-  input expun_cc_en;
-  input [36:0] expun_dc_addr;
-  input expun_dc_en;
+  input pwire read_expAddr_en;
+  input pwire [36:0] expun_cc_addr;
+  input pwire expun_cc_en;
+  input pwire [36:0] expun_dc_addr;
+  input pwire expun_dc_en;
 
   pwire [8:0] read_hit_way;
   reg [8:0] read_hit_way_reg;

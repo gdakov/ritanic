@@ -18,8 +18,8 @@ module LFSR16_6(
  OUT
  );
   parameter [15:0] INIT=16'hbeef;
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   output pwire reg [5:0] OUT;
 
   pwire [5:0] OUT_a;
@@ -47,8 +47,8 @@ module LFSR16_1(
  OUT
  );
   parameter [15:0] INITVAL=16'he45b;
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   output pwire reg OUT;
   
 
@@ -72,8 +72,8 @@ module LFSR16_1_16(
  OUT2
  );
   parameter [15:0] INITVAL=16'he45b;
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   output pwire reg OUT;
   output pwire [15:0] OUT2;
   

@@ -41,23 +41,23 @@ module dmlb_ram(
   localparam ADDR_WIDTH=4;
   localparam ADDR_COUNT=16;
   
-  input clk;
-  input rst;
-  input [ADDR_WIDTH-1:0] read0_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [ADDR_WIDTH-1:0] read0_addr;
   output pwire [DATA_WIDTH-1:0] read0_data;
-  input [ADDR_WIDTH-1:0] read1_addr;
+  input pwire [ADDR_WIDTH-1:0] read1_addr;
   output pwire [DATA_WIDTH-1:0] read1_data;
-  input [ADDR_WIDTH-1:0] read2_addr;
+  input pwire [ADDR_WIDTH-1:0] read2_addr;
   output pwire [DATA_WIDTH-1:0] read2_data;
-  input [ADDR_WIDTH-1:0] read3_addr;
+  input pwire [ADDR_WIDTH-1:0] read3_addr;
   output pwire [DATA_WIDTH-1:0] read3_data;
-  input [ADDR_WIDTH-1:0] read4_addr;
+  input pwire [ADDR_WIDTH-1:0] read4_addr;
   output pwire [DATA_WIDTH-1:0] read4_data;
-  input [ADDR_WIDTH-1:0] read5_addr;
+  input pwire [ADDR_WIDTH-1:0] read5_addr;
   output pwire [DATA_WIDTH-1:0] read5_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   
@@ -91,13 +91,13 @@ module dmlb_lru_ram(
   localparam ADDR_WIDTH=4;
   localparam ADDR_COUNT=16;
   
-  input clk;
-  input rst;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   
@@ -150,13 +150,13 @@ module dmlb_way(
   localparam ADDRH_WIDTH=3;
 
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [20:0] sproc;
-  input R0_sec_wren;
-  input [5:0][VADDR_WIDTH-18:0]   addr;
-  input [5:0][3:0] attr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [20:0] sproc;
+  input pwire R0_sec_wren;
+  input pwire [5:0][VADDR_WIDTH-18:0]   addr;
+  input pwire [5:0][3:0] attr;
   output pwire [5:0][OUTDATA_WIDTH-1:0] read_data0;
   output pwire [5:0][OUTDATA_WIDTH-1:0] read_data1;
   output pwire [5:0][OUTDATA_WIDTH-1:0] read_data2;
@@ -165,18 +165,18 @@ module dmlb_way(
   output pwire [2:0] read_lruW;
   output pwire [5:0] read_hit;
   output pwire [5:0] read_hitL;
-  input [VADDR_WIDTH-17:0] write_addr;
-  input [OUTDATA_WIDTH-1:0] write_data0;
-  input [OUTDATA_WIDTH-1:0] write_data1;
-  input [OUTDATA_WIDTH-1:0] write_data2;
-  input write_wen;
-  input write_xstant;
-  input write_invl;
-  input force_way_on;
-  input force_way_off;
-  input [2:0] newLRU;
-  input init;
-  input [3:0] initCount;
+  input pwire [VADDR_WIDTH-17:0] write_addr;
+  input pwire [OUTDATA_WIDTH-1:0] write_data0;
+  input pwire [OUTDATA_WIDTH-1:0] write_data1;
+  input pwire [OUTDATA_WIDTH-1:0] write_data2;
+  input pwire write_wen;
+  input pwire write_xstant;
+  input pwire write_invl;
+  input pwire force_way_on;
+  input pwire force_way_off;
+  input pwire [2:0] newLRU;
+  input pwire init;
+  input pwire [3:0] initCount;
   
   pwire valid[5:0];
   pwire shared[5:0];
@@ -328,27 +328,27 @@ module dmlb(
   localparam ADDR_WIDTH=5;
 
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input sec_wren;
-  input [5:0][VADDR_WIDTH-15:0] addr;
-  input [5:0][3:0] attr;
-  input [20:0] sproc;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire sec_wren;
+  input pwire [5:0][VADDR_WIDTH-15:0] addr;
+  input pwire [5:0][3:0] attr;
+  input pwire [20:0] sproc;
   output pwire [5:0][OUTDATA_WIDTH-1:0] read_data;
   output pwire [5:0][OUTDATA_WIDTH-1:0] read_data_next;
   output pwire [5:0][2:0] read_way;
   output pwire [5:0]read_hit;
   //output [1:0] read_2M;
-  input [VADDR_WIDTH-15:0] write_addr;
-  input [OUTDATA_WIDTH-1:0] write_data0;
-  input [OUTDATA_WIDTH-1:0] write_data1;
-  input [OUTDATA_WIDTH-1:0] write_data2;
-  input write_wen;
-  input write_xstant;
-  input write_invl;
-  input force_way_en;
-  input [2:0] force_way;
+  input pwire [VADDR_WIDTH-15:0] write_addr;
+  input pwire [OUTDATA_WIDTH-1:0] write_data0;
+  input pwire [OUTDATA_WIDTH-1:0] write_data1;
+  input pwire [OUTDATA_WIDTH-1:0] write_data2;
+  input pwire write_wen;
+  input pwire write_xstant;
+  input pwire write_invl;
+  input pwire force_way_en;
+  input pwire [2:0] force_way;
   
   pwire [2:0] hitLru;
   pwire [7:0][2:0] lru_way;

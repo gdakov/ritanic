@@ -41,22 +41,22 @@ module fadds(
   localparam ROUND_UP   =5;
   localparam ROUND_DOWN =6;
 
-  input clk;
-  input rst;
-  input [32:0] A;
-  input [32:0] B;
-  input pook_inX;
+  input pwire clk;
+  input pwire rst;
+  input pwire [32:0] A;
+  input pwire [32:0] B;
+  input pwire pook_inX;
   output pook;
-  input pook_op_bit;
-  input isSub;
-  input isRSub;
-  input [31:0] fpcsr;
+  input pwire pook_op_bit;
+  input pwire isSub;
+  input pwire isRSub;
+  input pwire [31:0] fpcsr;
   output pwire [10:0] raise;
-  input [2:0] rmode;
-  input en;
-  input copyA;
-  input logic_en;
-  input [1:0] logic_sel;
+  input pwire [2:0] rmode;
+  input pwire en;
+  input pwire copyA;
+  input pwire logic_en;
+  input pwire [1:0] logic_sel;
   output pwire [32:0] res;
 //need to set bit 53 to one if isDBL; not yet done
 //need to clear/set bits 63-54 if isDBL and corresponging conditions
@@ -553,9 +553,9 @@ module fpuadd_renorS(
   A_out,exp_out
   );
 
-  input [23:0] A;
-  input [8:0] exp;
-  input Ax;
+  input pwire [23:0] A;
+  input pwire [8:0] exp;
+  input pwire Ax;
   output pwire [23:0] A_out;
   output pwire [8:0] exp_out;
 

@@ -13,9 +13,9 @@ limitations under the License.
 `include "../struct.sv"
 
 module addrcalcsec_check_upper3(
-  input [64:0] ptr,
-  input [32:0] A,
-  input [32:0] B,
+  input pwire [64:0] ptr,
+  input pwire [32:0] A,
+  input pwire [32:0] B,
   output pwire [3:0] pos_ack,
   output pwire [3:0] neg_ack,
   output pwire [2:0] pos_nack,
@@ -40,14 +40,14 @@ module addrcalcsec_check_upper3(
   pwire max=exp==5'h1f;
 
   function [0:0] redand8;
-      input [7:0] din;
+      input pwire [7:0] din;
       begin
 	  redand8=din[0] & din[1] & din[2] & din[3] &
 	      din[4] & din[5] & din[6] & din[7];
       end
   endfunction
   function [0:0] redor8;
-      input [7:0] din;
+      input pwire [7:0] din;
       begin
 	  redor8=din[0] | din[1] | din[2] | din[3] |
 	      din[4] | din[5] | din[6] | din[7];
@@ -127,9 +127,9 @@ module addrcalcsec_check_upper3(
 endmodule
 
 module addrcalcsec_range(
-  input [64:0] ptr,
-  input cin_secq,
-  input diff,
+  input pwire [64:0] ptr,
+  input pwire cin_secq,
+  input pwire diff,
   output pwire cout_secq);
 
   pwire [7:0] low={ptr[`ptr_low],1'b0};

@@ -43,23 +43,23 @@ module fadd(
   localparam ROUND_UP   =5;
   localparam ROUND_DOWN =6;
 
-  input clk;
-  input rst;
-  input [80:0] A;
-  input [64:0] A_alt;
-  input [80:0] B;
-  input pook_inX;
-  input pook_op_bit;
-  input isDBL;
-  input isSub;
-  input isRSub;
-  input [31:0] fpcsr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [80:0] A;
+  input pwire [64:0] A_alt;
+  input pwire [80:0] B;
+  input pwire pook_inX;
+  input pwire pook_op_bit;
+  input pwire isDBL;
+  input pwire isSub;
+  input pwire isRSub;
+  input pwire [31:0] fpcsr;
   output pwire [10:0] raise;
-  input [2:0] rmode;
-  input en;
-  input copyA;
-  input logic_en;
-  input [1:0] logic_sel;
+  input pwire [2:0] rmode;
+  input pwire en;
+  input pwire copyA;
+  input pwire logic_en;
+  input pwire [1:0] logic_sel;
   output pwire [67:0] res;
   output pwire [15:0] res_hi;
 //need to set bit 53 to one if isDBL; not yet done
@@ -81,8 +81,8 @@ module fadd(
   assign res_hi=res_X_hi;
 
   function [64:0] fracxfrm0;
-      input [64:0] op;
-      input dbl;
+      input pwire [64:0] op;
+      input pwire dbl;
       
       begin
 	  fracxfrm0[10:0]=op[10:0];
@@ -94,8 +94,8 @@ module fadd(
   endfunction
 
   function [64:0] fracxfrm1;
-      input [64:0] op;
-      input dbl;
+      input pwire [64:0] op;
+      input pwire dbl;
       
       begin
 	  fracxfrm1[10:0]=op[10:0];
@@ -657,9 +657,9 @@ module fpuadd_renor(
   A_out,exp_out
   );
 
-  input [64:0] A;
-  input [15:0] exp;
-  input Ax;
+  input pwire [64:0] A;
+  input pwire [15:0] exp;
+  input pwire Ax;
   output pwire [64:0] A_out;
   output pwire [15:0] exp_out;
 

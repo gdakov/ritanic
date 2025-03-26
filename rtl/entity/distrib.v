@@ -61,20 +61,20 @@ module distrib(
   localparam WIDTH=10;
   localparam POS_WIDTH=10;
   
-  input clk;
-  input rst;
-  input is_vec;
-  input [1:0] is_vec_other;
-  input stall;
-  input [WIDTH-1:0] alu;
-  input [WIDTH-1:0] shift;
-  input [WIDTH-1:0] load;
-  input [WIDTH-1:0] store;
-  input [WIDTH-1:0] storeI;
-  input [WIDTH-1:0] storeL;
-  input [WIDTH-1:0] fpu;
-  input [WIDTH-1:0] load_fpu;
-  input [WIDTH-1:0] mul;
+  input pwire clk;
+  input pwire rst;
+  input pwire is_vec;
+  input pwire [1:0] is_vec_other;
+  input pwire stall;
+  input pwire [WIDTH-1:0] alu;
+  input pwire [WIDTH-1:0] shift;
+  input pwire [WIDTH-1:0] load;
+  input pwire [WIDTH-1:0] store;
+  input pwire [WIDTH-1:0] storeI;
+  input pwire [WIDTH-1:0] storeL;
+  input pwire [WIDTH-1:0] fpu;
+  input pwire [WIDTH-1:0] load_fpu;
+  input pwire [WIDTH-1:0] mul;
   
   output pwire [POS_WIDTH-1:0] pos0;
   output pwire [POS_WIDTH-1:0] pos1;

@@ -38,22 +38,22 @@ module fun_fpusqr0(
   localparam SIMD_WIDTH=68; //half width
   localparam S=H ? 16 : 0;
   localparam REG_WIDTH=9;
-  input clk;
-  input rst;
-  input except;
-  input [31:0] fpcsr;
-  input [S+67:0] uh_A;
-  input [S+67:0] uh_B;
-  input [S+67:0] ul_A;
-  input [S+67:0] ul_B;
-  input [3:0] u1_en;
-  input [12:0] u1_op;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire [31:0] fpcsr;
+  input pwire [S+67:0] uh_A;
+  input pwire [S+67:0] uh_B;
+  input pwire [S+67:0] ul_A;
+  input pwire [S+67:0] ul_B;
+  input pwire [3:0] u1_en;
+  input pwire [12:0] u1_op;
   output pwire [13:0] u1_ret;
   output pwire u1_ret_en;
-  input [REG_WIDTH-1:0] u1_regNo;
-  input [9:0] u1_II;
-  input [3:0] en_early;
-  input [12:0] op_early;
+  input pwire [REG_WIDTH-1:0] u1_regNo;
+  input pwire [9:0] u1_II;
+  input pwire [3:0] en_early;
+  input pwire [12:0] op_early;
   
   output pwire [3:0] outEn;
   output pwire [9:0] outII;

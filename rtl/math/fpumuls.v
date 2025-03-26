@@ -22,16 +22,16 @@ module fpumuls(clk,rst,A,B,copyA,en,rmode,res,raise,fpcsr);
   localparam ROUND_MINUS=4;
   localparam ROUND_UP   =5;
   localparam ROUND_DOWN =6;
-  input clk;
-  input rst;
-  input [32:0] A;
-  input [32:0] B;
-  input copyA;
-  input en;
-  input [2:0] rmode;
+  input pwire clk;
+  input pwire rst;
+  input pwire [32:0] A;
+  input pwire [32:0] B;
+  input pwire copyA;
+  input pwire en;
+  input pwire [2:0] rmode;
   output pwire [32:0] res;
   output pwire [10:0] raise;
-  input [31:0] fpcsr;
+  input pwire [31:0] fpcsr;
   
   
   pwire [32:0] res_X;

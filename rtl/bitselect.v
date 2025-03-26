@@ -20,7 +20,7 @@ module bit_find_last_bit(
   );
   parameter WIDTH=128;
 
-  input [WIDTH-1:0] bits;
+  input pwire [WIDTH-1:0] bits;
   output pwire [WIDTH-1:0] bitsOutIndex;
   output pwire found;
 
@@ -49,7 +49,7 @@ module bit_find_first_bit(
   );
   parameter WIDTH=128;
   
-  input [WIDTH-1:0] bits;
+  input pwire [WIDTH-1:0] bits;
   output pwire [WIDTH-1:0] bitsOutIndex;
   output pwire found;
   
@@ -79,7 +79,7 @@ module bit_find_first_bit_tail(
   );
   parameter WIDTH=128;
   
-  input [WIDTH-1:0] bits;
+  input pwire [WIDTH-1:0] bits;
   output pwire [WIDTH-1:0] bitsOutIndex;
   output pwire found;
   
@@ -174,7 +174,7 @@ endmodule
 
 module bit_is_single_bit(bits,isSingle);
   parameter WIDTH=32;
-  input [WIDTH-1:0] bits;
+  input pwire [WIDTH-1:0] bits;
   output pwire isSingle;
   
   pwire [WIDTH-1:0] singleBits;

@@ -25,10 +25,10 @@ module rsAlloc2(
   );
   parameter WIDTH=`rs_buf_count;
   
-  input clk;
-  input alloc0;
-  input alloc1;
-  input [WIDTH-1:0] bufFree;
+  input pwire clk;
+  input pwire alloc0;
+  input pwire alloc1;
+  input pwire [WIDTH-1:0] bufFree;
   output pwire [WIDTH-1:0] newRsSelect0;
   output pwire [WIDTH-1:0] newRsSelect1;
   output pwire doStall;
@@ -74,16 +74,16 @@ module rsAlloc3(
   );
   parameter WIDTH=`rs_buf_count;
   
-  input clk;
-  input alloc0;
-  input alloc1;
-  input alloc2;
-  input [WIDTH-1:0] bufFree;
+  input pwire clk;
+  input pwire alloc0;
+  input pwire alloc1;
+  input pwire alloc2;
+  input pwire [WIDTH-1:0] bufFree;
   output pwire [WIDTH-1:0] newRsSelect0;
   output pwire [WIDTH-1:0] newRsSelect1;
   output pwire [WIDTH-1:0] newRsSelect2;
   output pwire doStall;
-  input stall;
+  input pwire stall;
 
   pwire [WIDTH-1:0] select0;
   pwire [WIDTH-1:0] select1;

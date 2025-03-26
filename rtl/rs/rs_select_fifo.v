@@ -28,16 +28,16 @@ module rsSelect_helper(
 
   parameter DATA_WIDTH=`rs_buf_count;
 
-  input clk;
-  input rst;
-  input except;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
   output pwire reg hasData;
   output pwire reg [DATA_WIDTH-1:0] read_data;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
-  input [DATA_WIDTH-1:0] rsSelect_data;
-  input rsUpdate;
-  input rsFlush;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
+  input pwire [DATA_WIDTH-1:0] rsSelect_data;
+  input pwire rsUpdate;
+  input pwire rsFlush;
 
   reg [DATA_WIDTH-1:0] read_data1;
   reg [DATA_WIDTH-1:0] read_data2;
@@ -128,11 +128,11 @@ module rsSelectFifo(
   localparam BUF_WIDTH=BUF_COUNT;
   parameter [0:0] DEF_FOUND=1'b1;
   
-  input clk;
-  input rst;
-  input except;
-  input [BUF_WIDTH-1:0] portReady;  
-  input portEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire [BUF_WIDTH-1:0] portReady;  
+  input pwire portEn;
   output pwire found;
   output pwire found_no_z;
   output pwire [BUF_WIDTH-1:0] rsSelect;  
@@ -249,11 +249,11 @@ module rsSelectFifo48(
   localparam BUF_COUNT=48;
   localparam BUF_WIDTH=BUF_COUNT;
   
-  input clk;
-  input rst;
-  input except;
-  input [BUF_WIDTH-1:0] portReady;  
-  input portEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire [BUF_WIDTH-1:0] portReady;  
+  input pwire portEn;
   output pwire found;
   output pwire [BUF_WIDTH-1:0] rsSelect;  
   output pwire [5:0] rsSel8;

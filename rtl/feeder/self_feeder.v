@@ -44,7 +44,7 @@ module ww(
   fp_excpt_thr,
 
   bundleFeed,
-//begin instructions ordered by rs input port
+//begin instructions ordered by rs input pwire port
   rs0i0_rA,rs0i0_rA_use,rs0i0_rA_useF,rs0i0_rA_isV,rs0i0_rA_isAnyV,
   rs0i0_rB,rs0i0_rB_use,rs0i0_rB_useF,rs0i0_rB_isV,rs0i0_rB_isAnyV,rs0i0_useBConst,
   rs0i0_rT,rs0i0_rT_use,rs0i0_rT_useF,rs0i0_rT_isV, 
@@ -374,42 +374,42 @@ module ww(
   parameter [6:0] BUS_ID2=0;
   parameter LARGE_CORE=0;
   parameter H=0;
-  input clk;
-  input rst;
-  input sched_rst;
-  input except;
-  input [VIRT_WIDTH-1:0] exceptIP;
-  input exceptThread;
-  input [3:0] exceptAttr;
-  input except_due_jump;
-  input [7:0] except_ght;
-  input except_flag;
-  input [3:0] except_jmask;
-  input except_jmask_en;
-  input jupd0_en;
-  input jupdt0_en;
-  input jupd0_ght_en;
-  input jupd0_ght2_en;
-  input [15:0] jupd0_addr;
-  input [12:0] jupd0_baddr;
-  input [1:0] jupd0_sc;
-  input jupd0_tk;
-  input jupd0_val;
-  input jupd1_en;
-  input jupdt1_en;
-  input jupd1_ght_en;
-  input jupd1_ght_en;
-  input [15:0] jupd1_addr;
-  input [12:0] jupd1_baddr;
-  input [1:0] jupd1_sc;
-  input jupd1_tk;
-  input jupd1_val;
+  input pwire clk;
+  input pwire rst;
+  input pwire sched_rst;
+  input pwire except;
+  input pwire [VIRT_WIDTH-1:0] exceptIP;
+  input pwire exceptThread;
+  input pwire [3:0] exceptAttr;
+  input pwire except_due_jump;
+  input pwire [7:0] except_ght;
+  input pwire except_flag;
+  input pwire [3:0] except_jmask;
+  input pwire except_jmask_en;
+  input pwire jupd0_en;
+  input pwire jupdt0_en;
+  input pwire jupd0_ght_en;
+  input pwire jupd0_ght2_en;
+  input pwire [15:0] jupd0_addr;
+  input pwire [12:0] jupd0_baddr;
+  input pwire [1:0] jupd0_sc;
+  input pwire jupd0_tk;
+  input pwire jupd0_val;
+  input pwire jupd1_en;
+  input pwire jupdt1_en;
+  input pwire jupd1_ght_en;
+  input pwire jupd1_ght_en;
+  input pwire [15:0] jupd1_addr;
+  input pwire [12:0] jupd1_baddr;
+  input pwire [1:0] jupd1_sc;
+  input pwire jupd1_tk;
+  input pwire jupd1_val;
 
-  input stall;
+  input pwire stall;
 
-  input [BUS_WIDTH-1:0] bus_data;
-  input [9:0] bus_slot;
-  input bus_en;
+  input pwire [BUS_WIDTH-1:0] bus_data;
+  input pwire [9:0] bus_slot;
+  input pwire bus_en;
   
   output pwire [37:0] req_addr;
   output pwire [9:0] req_slot;
@@ -417,15 +417,15 @@ module ww(
   output pwire req_mlbEn;
   output pwire [3:0] req_mlbAttr;
 
-  input [`cmlbData_width-1:0] bus_mlb_data;
-  input [9:0] bus_mlb_slot;
-  input bus_mlb_en;
+  input pwire [`cmlbData_width-1:0] bus_mlb_data;
+  input pwire [9:0] bus_mlb_slot;
+  input pwire bus_mlb_en;
   output pwire [1:0] halt;
 
-  input all_retired;
-  input fp_excpt_en;
-  input [10:0] fp_excpt_set;
-  input fp_excpt_thr;
+  input pwire all_retired;
+  input pwire fp_excpt_en;
+  input pwire [10:0] fp_excpt_set;
+  input pwire fp_excpt_thr;
 
   output pwire bundleFeed;
   
@@ -861,11 +861,11 @@ module ww(
   output pwire [5:0] wrt1;
   output pwire [5:0] wrt2;
   
-  input [15:0] msrss_no;
-  input msrss_en;
-  input [64:0] msrss_data;
-  input [36:0] MSI_expAddr_reg;
-  input MSI_expAddr_en_reg;
+  input pwire [15:0] msrss_no;
+  input pwire msrss_en;
+  input pwire [64:0] msrss_data;
+  input pwire [36:0] MSI_expAddr_reg;
+  input pwire MSI_expAddr_en_reg;
   output pwire MSI_expAddr_hitCC;
   output pwire [36:0] expun_fr_addr;
   output pwire expun_fr_en;
@@ -1171,7 +1171,7 @@ frontendSelf #(1,BUS_ID,BUS_ID2,LARGE_CORE,H) frontB_mod(
   fp_excpt_thr,
 
   bundleFeed,
-//begin instructions ordered by rs input port
+//begin instructions ordered by rs input pwire port
   rs0i0_rA,rs0i0_rA_use,rs0i0_rA_useF,rs0i0_rA_isV,rs0i0_rA_isAnyV,
   rs0i0_rB,rs0i0_rB_use,rs0i0_rB_useF,rs0i0_rB_isV,rs0i0_rB_isAnyV,rs0i0_useBConst,
   rs0i0_rT,rs0i0_rT_use,rs0i0_rT_useF,rs0i0_rT_isV, 

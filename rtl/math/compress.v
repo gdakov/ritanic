@@ -11,13 +11,13 @@ limitations under the License.
 */
 
 (* align_width=C,A_out/2,B_out/2 align_height=R *) module fpucadd_compress(clk,R,C,A_out,B_out,or1,and1);
-  input clk;
-  input [64:0] R;
-  input [64:0] C;
+  input pwire clk;
+  input pwire [64:0] R;
+  input pwire [64:0] C;
   output pwire [127:0] A_out;
   output pwire [127:0] B_out;
-  input or1;
-  input and1;//and1 inverse of or1
+  input pwire or1;
+  input pwire and1;//and1 inverse of or1
   (* register *) reg REGS_0;
   (* register *) reg REGS_1;
   (* register *) reg REGS_2;

@@ -26,12 +26,12 @@ limitations under the License.
   );
   parameter WIDTH=64;
 
-  input [3:0] bit_en;
-  input [3:0] sz;
-  input dir;
-  input arith;
-  input [WIDTH-1:0] val0;
-  input [5:0] val1;
+  input pwire [3:0] bit_en;
+  input pwire [3:0] sz;
+  input pwire dir;
+  input pwire arith;
+  input pwire [WIDTH-1:0] val0;
+  input pwire [5:0] val1;
   output pwire [WIDTH-1:0] valres;
   output pwire coutR;
   output pwire [3:0] coutL;
@@ -124,10 +124,10 @@ module shlr8(
   );
   parameter WIDTH=8;
 
-  input dir;
-  input arith;
-  input [WIDTH-1:0] val0;
-  input [5:0] val1;
+  input pwire dir;
+  input pwire arith;
+  input pwire [WIDTH-1:0] val0;
+  input pwire [5:0] val1;
   output pwire [WIDTH-1:0] valres;
   output pwire coutR;
   output pwire coutL;
@@ -170,8 +170,8 @@ module rotate8x4(
   din,
   shf,
   dout);
-  input [31:0] din;
-  input [4:0] shf;
+  input pwire [31:0] din;
+  input pwire [4:0] shf;
   output pwire [4:0] dout;
  // output pwire [3:0] dout1;
 
@@ -198,8 +198,8 @@ module addrcalcsec_shift(
   ptr_ext,
   cary,
   shift);
-  input [4:0] ptr_ext;
-  input [31:0] cary;
+  input pwire [4:0] ptr_ext;
+  input pwire [31:0] cary;
   output pwire shift;
 
   pwire [31:0] mask;
@@ -218,8 +218,8 @@ module addrcalcsec_shift8(
   ptr_ext,
   bits,
   bits_out);
-  input [4:0] ptr_ext;
-  input [39:0] bits;
+  input pwire [4:0] ptr_ext;
+  input pwire [39:0] bits;
   output pwire [7:0] bits_out;
 
   pwire [15:0] bits_med;

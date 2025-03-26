@@ -33,25 +33,25 @@ module reg_alloc(
   );
   localparam REG_WIDTH=`reg_addr_width;
  /*verilator hier_block*/ 
-  input clk;
-  input rst;
-  input stall;
+  input pwire clk;
+  input pwire rst;
+  input pwire stall;
   output pwire doStall;
-  input except;
-  input ethread;
-  input eboth;
-  input thread;
-  input [8:0] ret_en;
-  input ret_thread;
-  input [4:0] ret_rno0;
-  input [4:0] ret_rno1;
-  input [4:0] ret_rno2;
-  input [4:0] ret_rno3;
-  input [4:0] ret_rno4;
-  input [4:0] ret_rno5;
-  input [4:0] ret_rno6;
-  input [4:0] ret_rno7;
-  input [4:0] ret_rno8;
+  input pwire except;
+  input pwire ethread;
+  input pwire eboth;
+  input pwire thread;
+  input pwire [8:0] ret_en;
+  input pwire ret_thread;
+  input pwire [4:0] ret_rno0;
+  input pwire [4:0] ret_rno1;
+  input pwire [4:0] ret_rno2;
+  input pwire [4:0] ret_rno3;
+  input pwire [4:0] ret_rno4;
+  input pwire [4:0] ret_rno5;
+  input pwire [4:0] ret_rno6;
+  input pwire [4:0] ret_rno7;
+  input pwire [4:0] ret_rno8;
   
   output pwire [8:0] newR0;
   output pwire [8:0] newR1;
@@ -63,9 +63,9 @@ module reg_alloc(
   output pwire [8:0] newR7;
   output pwire [8:0] newR8;
   
-  input rs0i0_en,rs1i0_en,rs2i0_en;
-  input rs0i1_en,rs1i1_en,rs2i1_en;
-  input rs0i2_en,rs1i2_en,rs2i2_en;
+  input pwire rs0i0_en,rs1i0_en,rs2i0_en;
+  input pwire rs0i1_en,rs1i1_en,rs2i1_en;
+  input pwire rs0i2_en,rs1i2_en,rs2i2_en;
   
   
   reg [1:0] pos;
@@ -97,10 +97,10 @@ module reg_alloc(
   integer k;
   
   function [3*REG_WIDTH-1:0] reg_sel;
-      input [2:0] sel;
-      input [REG_WIDTH-1:0] reg0;
-      input [REG_WIDTH-1:0] reg1;
-      input [REG_WIDTH-1:0] reg2;
+      input pwire [2:0] sel;
+      input pwire [REG_WIDTH-1:0] reg0;
+      input pwire [REG_WIDTH-1:0] reg1;
+      input pwire [REG_WIDTH-1:0] reg2;
       case (sel)
           3'b000: reg_sel={3*REG_WIDTH{1'B0}};
           3'b001: reg_sel={{2*REG_WIDTH{1'B0}},reg0};
@@ -265,9 +265,9 @@ module busy_updown_alloc(
   retCnt,
   busy_new);
   
-  input [6:0] busy;
-  input [3:0] regCnt;
-  input [3:0] retCnt;
+  input pwire [6:0] busy;
+  input pwire [3:0] regCnt;
+  input pwire [3:0] retCnt;
   output pwire [6:0] busy_new;
   
   pwire [3:-3] en;
@@ -304,30 +304,30 @@ module get_clear_reg(
   );
 
   localparam REG_WIDTH=`reg_addr_width;
-  input [REG_WIDTH-1:0] newR0;
-  input [REG_WIDTH-1:0] newR1;
-  input [REG_WIDTH-1:0] newR2;
-  input [REG_WIDTH-1:0] newR3;
-  input [REG_WIDTH-1:0] newR4;
-  input [REG_WIDTH-1:0] newR5;
-  input [REG_WIDTH-1:0] newR6;
-  input [REG_WIDTH-1:0] newR7;
-  input [REG_WIDTH-1:0] newR8;
+  input pwire [REG_WIDTH-1:0] newR0;
+  input pwire [REG_WIDTH-1:0] newR1;
+  input pwire [REG_WIDTH-1:0] newR2;
+  input pwire [REG_WIDTH-1:0] newR3;
+  input pwire [REG_WIDTH-1:0] newR4;
+  input pwire [REG_WIDTH-1:0] newR5;
+  input pwire [REG_WIDTH-1:0] newR6;
+  input pwire [REG_WIDTH-1:0] newR7;
+  input pwire [REG_WIDTH-1:0] newR8;
 
-  input [REG_WIDTH-1:0] newRF0;
-  input [REG_WIDTH-1:0] newRF1;
-  input [REG_WIDTH-1:0] newRF2;
-  input [REG_WIDTH-1:0] newRF3;
-  input [REG_WIDTH-1:0] newRF4;
-  input [REG_WIDTH-1:0] newRF5;
-  input [REG_WIDTH-1:0] newRF6;
-  input [REG_WIDTH-1:0] newRF7;
-  input [REG_WIDTH-1:0] newRF8;
+  input pwire [REG_WIDTH-1:0] newRF0;
+  input pwire [REG_WIDTH-1:0] newRF1;
+  input pwire [REG_WIDTH-1:0] newRF2;
+  input pwire [REG_WIDTH-1:0] newRF3;
+  input pwire [REG_WIDTH-1:0] newRF4;
+  input pwire [REG_WIDTH-1:0] newRF5;
+  input pwire [REG_WIDTH-1:0] newRF6;
+  input pwire [REG_WIDTH-1:0] newRF7;
+  input pwire [REG_WIDTH-1:0] newRF8;
 
-  input [8:0] alloc;
+  input pwire [8:0] alloc;
   output pwire [8:0] clr;
 
-  input [8:0] allocS;
+  input pwire [8:0] allocS;
   output pwire [8:0] clrS;
 
   output pwire [REG_WIDTH-1:0] clrR0;
@@ -460,13 +460,13 @@ module get_flag_infl(
   infl
   );
 
-  input [3:0] rs0i1_flagDep;
-  input [3:0] rs0i2_flagDep;
-  input [3:0] rs1i1_flagDep;
-  input [3:0] rs1i2_flagDep;
-  input [3:0] rs2i1_flagDep;
-  input [3:0] rs2i2_flagDep;
-  input srcFlight;
+  input pwire [3:0] rs0i1_flagDep;
+  input pwire [3:0] rs0i2_flagDep;
+  input pwire [3:0] rs1i1_flagDep;
+  input pwire [3:0] rs1i2_flagDep;
+  input pwire [3:0] rs2i1_flagDep;
+  input pwire [3:0] rs2i2_flagDep;
+  input pwire srcFlight;
   output pwire [8:0] infl;
   
   assign infl[1]=rs0i1_flagDep==4'he && srcFlight || ~rs0i1_flagDep[3] || rs0i1_flagDep==4'h8;
@@ -510,43 +510,43 @@ module get_funit(
   
   localparam FN_WIDTH=10;
   
-  input [3:0] rs0i0_index;
-  input [PORT_WIDTH-1:0] rs0i0_port;
-  input rs0i0_en;
+  input pwire [3:0] rs0i0_index;
+  input pwire [PORT_WIDTH-1:0] rs0i0_port;
+  input pwire rs0i0_en;
 
-  input [3:0] rs0i1_index;
-  input [PORT_WIDTH-1:0] rs0i1_port;
-  input rs0i1_en;
+  input pwire [3:0] rs0i1_index;
+  input pwire [PORT_WIDTH-1:0] rs0i1_port;
+  input pwire rs0i1_en;
 
-  input [3:0] rs0i2_index;
-  input [PORT_WIDTH-1:0] rs0i2_port;
-  input rs0i2_en;
-
-
-  input [3:0] rs1i0_index;
-  input [PORT_WIDTH-1:0] rs1i0_port;
-  input rs1i0_en;
-
-  input [3:0] rs1i1_index;
-  input [PORT_WIDTH-1:0] rs1i1_port;
-  input rs1i1_en;
-
-  input [3:0] rs1i2_index;
-  input [PORT_WIDTH-1:0] rs1i2_port;
-  input rs1i2_en;
+  input pwire [3:0] rs0i2_index;
+  input pwire [PORT_WIDTH-1:0] rs0i2_port;
+  input pwire rs0i2_en;
 
 
-  input [3:0] rs2i0_index;
-  input [PORT_WIDTH-1:0] rs2i0_port;
-  input rs2i0_en;
+  input pwire [3:0] rs1i0_index;
+  input pwire [PORT_WIDTH-1:0] rs1i0_port;
+  input pwire rs1i0_en;
 
-  input [3:0] rs2i1_index;
-  input [PORT_WIDTH-1:0] rs2i1_port;
-  input rs2i1_en;
+  input pwire [3:0] rs1i1_index;
+  input pwire [PORT_WIDTH-1:0] rs1i1_port;
+  input pwire rs1i1_en;
 
-  input [3:0] rs2i2_index;
-  input [PORT_WIDTH-1:0] rs2i2_port;
-  input rs2i2_en;
+  input pwire [3:0] rs1i2_index;
+  input pwire [PORT_WIDTH-1:0] rs1i2_port;
+  input pwire rs1i2_en;
+
+
+  input pwire [3:0] rs2i0_index;
+  input pwire [PORT_WIDTH-1:0] rs2i0_port;
+  input pwire rs2i0_en;
+
+  input pwire [3:0] rs2i1_index;
+  input pwire [PORT_WIDTH-1:0] rs2i1_port;
+  input pwire rs2i1_en;
+
+  input pwire [3:0] rs2i2_index;
+  input pwire [PORT_WIDTH-1:0] rs2i2_port;
+  input pwire rs2i2_en;
   
   output pwire [9:0] funit0;
   output pwire [9:0] funit1;
@@ -642,35 +642,35 @@ module get_funit(
   
   localparam FN_WIDTH=10;
   
-  input [3:0] rs0i0_index;
-  input [PORT_WIDTH-1:0] rs0i0_port;
+  input pwire [3:0] rs0i0_index;
+  input pwire [PORT_WIDTH-1:0] rs0i0_port;
 
-  input [3:0] rs0i1_index;
-  input [PORT_WIDTH-1:0] rs0i1_port;
+  input pwire [3:0] rs0i1_index;
+  input pwire [PORT_WIDTH-1:0] rs0i1_port;
 
-  input [3:0] rs0i2_index;
-  input [PORT_WIDTH-1:0] rs0i2_port;
-
-
-  input [3:0] rs1i0_index;
-  input [PORT_WIDTH-1:0] rs1i0_port;
-
-  input [3:0] rs1i1_index;
-  input [PORT_WIDTH-1:0] rs1i1_port;
-
-  input [3:0] rs1i2_index;
-  input [PORT_WIDTH-1:0] rs1i2_port;
+  input pwire [3:0] rs0i2_index;
+  input pwire [PORT_WIDTH-1:0] rs0i2_port;
 
 
-  input [3:0] rs2i0_index;
-  input [PORT_WIDTH-1:0] rs2i0_port;
+  input pwire [3:0] rs1i0_index;
+  input pwire [PORT_WIDTH-1:0] rs1i0_port;
 
-  input [3:0] rs2i1_index;
-  input [PORT_WIDTH-1:0] rs2i1_port;
+  input pwire [3:0] rs1i1_index;
+  input pwire [PORT_WIDTH-1:0] rs1i1_port;
 
-  input [3:0] rs2i2_index;
-  input [PORT_WIDTH-1:0] rs2i2_port;
-  input mul;
+  input pwire [3:0] rs1i2_index;
+  input pwire [PORT_WIDTH-1:0] rs1i2_port;
+
+
+  input pwire [3:0] rs2i0_index;
+  input pwire [PORT_WIDTH-1:0] rs2i0_port;
+
+  input pwire [3:0] rs2i1_index;
+  input pwire [PORT_WIDTH-1:0] rs2i1_port;
+
+  input pwire [3:0] rs2i2_index;
+  input pwire [PORT_WIDTH-1:0] rs2i2_port;
+  input pwire mul;
 
   output pwire [9:0] funit0;
   output pwire [9:0] funit1;
@@ -772,42 +772,42 @@ module get_wSwp(
   localparam PORT_AGU_ONLY=0;
   localparam OP_WIDTH=13;
 
-  input clk;
-  input rst;
-  input [2:0] lsi0;
-  input st0;
-  input [2:0] lsi1;
-  input st1;
-  input [2:0] lsi2;
-  input st2;
+  input pwire clk;
+  input pwire rst;
+  input pwire [2:0] lsi0;
+  input pwire st0;
+  input pwire [2:0] lsi1;
+  input pwire st1;
+  input pwire [2:0] lsi2;
+  input pwire st2;
   output pwire reg [2:0] Wswp;
   output pwire [2:0] lsiA;
   output pwire [2:0] lsiB;
   output pwire [6:0] port0;
   output pwire [6:0] port1;
   output pwire [6:0] port2;
-  input  [0:0] domA0;
-  input  [0:0] domB0;
-  input  [0:0] domA1;
-  input  [0:0] domB1;
-  input  [0:0] domA2;
-  input  [0:0] domB2;
-  input rA_useF0,rB_useF0;
-  input rA_useF1,rB_useF1;
-  input rA_useF2,rB_useF2;
-  input  [OP_WIDTH-1:0] op0;
-  input  [OP_WIDTH-1:0] op1;
-  input  [OP_WIDTH-1:0] op2;
+  input pwire  [0:0] domA0;
+  input pwire  [0:0] domB0;
+  input pwire  [0:0] domA1;
+  input pwire  [0:0] domB1;
+  input pwire  [0:0] domA2;
+  input pwire  [0:0] domB2;
+  input pwire rA_useF0,rB_useF0;
+  input pwire rA_useF1,rB_useF1;
+  input pwire rA_useF2,rB_useF2;
+  input pwire  [OP_WIDTH-1:0] op0;
+  input pwire  [OP_WIDTH-1:0] op1;
+  input pwire  [OP_WIDTH-1:0] op2;
   output pwire [OP_WIDTH-1:0] opA;
   output pwire [OP_WIDTH-1:0] opB;
-  input [3:0] ind0;
-  input [3:0] ind1;
-  input [3:0] ind2;
+  input pwire [3:0] ind0;
+  input pwire [3:0] ind1;
+  input pwire [3:0] ind2;
   output pwire [3:0] indA;
   output pwire [3:0] indB;
-  input [5:0] wq0;
-  input [5:0] wq1;
-  input [5:0] wq2;
+  input pwire [5:0] wq0;
+  input pwire [5:0] wq1;
+  input pwire [5:0] wq2;
   output pwire [5:0] wqA;
   output pwire [5:0] wqB;
   
@@ -933,27 +933,27 @@ module backend_get_ret(
   );
   localparam REG_WIDTH=`reg_addr_width;
 
-  input [REG_WIDTH-1:0] newR0;
-  input [REG_WIDTH-1:0] newR1;
-  input [REG_WIDTH-1:0] newR2;
-  input [REG_WIDTH-1:0] newR3;
-  input [REG_WIDTH-1:0] newR4;
-  input [REG_WIDTH-1:0] newR5;
-  input [REG_WIDTH-1:0] newR6;
-  input [REG_WIDTH-1:0] newR7;
-  input [REG_WIDTH-1:0] newR8;
+  input pwire [REG_WIDTH-1:0] newR0;
+  input pwire [REG_WIDTH-1:0] newR1;
+  input pwire [REG_WIDTH-1:0] newR2;
+  input pwire [REG_WIDTH-1:0] newR3;
+  input pwire [REG_WIDTH-1:0] newR4;
+  input pwire [REG_WIDTH-1:0] newR5;
+  input pwire [REG_WIDTH-1:0] newR6;
+  input pwire [REG_WIDTH-1:0] newR7;
+  input pwire [REG_WIDTH-1:0] newR8;
   
-  input en0,en1,en2,en3,en4,en5,en6,en7,en8; 
+  input pwire en0,en1,en2,en3,en4,en5,en6,en7,en8; 
 
-  input [3:0] rs_index0;
-  input [3:0] rs_index1;
-  input [3:0] rs_index2;
-  input [3:0] rs_index3;
-  input [3:0] rs_index4;
-  input [3:0] rs_index5;
-  input [3:0] rs_index6;
-  input [3:0] rs_index7;
-  input [3:0] rs_index8;
+  input pwire [3:0] rs_index0;
+  input pwire [3:0] rs_index1;
+  input pwire [3:0] rs_index2;
+  input pwire [3:0] rs_index3;
+  input pwire [3:0] rs_index4;
+  input pwire [3:0] rs_index5;
+  input pwire [3:0] rs_index6;
+  input pwire [3:0] rs_index7;
+  input pwire [3:0] rs_index8;
 
   output pwire reg [3:0] ret0;
   output pwire reg [3:0] ret1;
@@ -1039,25 +1039,25 @@ module backend_reorder_free_regs(
   instr_reg6,instr_reg7,instr_reg8,
   instr_reg9
   );
-  input [8:0] rs_reg0;
-  input [8:0] rs_reg1;
-  input [8:0] rs_reg2;
-  input [8:0] rs_reg3;
-  input [8:0] rs_reg4;
-  input [8:0] rs_reg5;
-  input [8:0] rs_reg6;
-  input [8:0] rs_reg7;
-  input [8:0] rs_reg8;
+  input pwire [8:0] rs_reg0;
+  input pwire [8:0] rs_reg1;
+  input pwire [8:0] rs_reg2;
+  input pwire [8:0] rs_reg3;
+  input pwire [8:0] rs_reg4;
+  input pwire [8:0] rs_reg5;
+  input pwire [8:0] rs_reg6;
+  input pwire [8:0] rs_reg7;
+  input pwire [8:0] rs_reg8;
 
-  input [3:0] rs_index0;
-  input [3:0] rs_index1;
-  input [3:0] rs_index2;
-  input [3:0] rs_index3;
-  input [3:0] rs_index4;
-  input [3:0] rs_index5;
-  input [3:0] rs_index6;
-  input [3:0] rs_index7;
-  input [3:0] rs_index8;
+  input pwire [3:0] rs_index0;
+  input pwire [3:0] rs_index1;
+  input pwire [3:0] rs_index2;
+  input pwire [3:0] rs_index3;
+  input pwire [3:0] rs_index4;
+  input pwire [3:0] rs_index5;
+  input pwire [3:0] rs_index6;
+  input pwire [3:0] rs_index7;
+  input pwire [3:0] rs_index8;
 
   output pwire [8:0] instr_reg0;
   output pwire [8:0] instr_reg1;
@@ -1131,18 +1131,18 @@ module get_LDQ_new_en(
   localparam PORT_WIDTH=4;
   localparam PORT_LOAD=4'd1;
   
-  input [PORT_WIDTH-1:0] rs0i0_port;
-  input rs0i0_ldst_flg;
-  input [PORT_WIDTH-1:0] rs1i0_port;
-  input rs1i0_ldst_flg;
-  input [PORT_WIDTH-1:0] rs2i0_port;
-  input rs2i0_ldst_flg;
-  input [PORT_WIDTH-1:0] rs0i1_port;
-  input rs0i1_ldst_flg;
-  input [PORT_WIDTH-1:0] rs1i1_port;
-  input rs1i1_ldst_flg;
-  input [PORT_WIDTH-1:0] rs2i1_port;
-  input rs2i1_ldst_flg;
+  input pwire [PORT_WIDTH-1:0] rs0i0_port;
+  input pwire rs0i0_ldst_flg;
+  input pwire [PORT_WIDTH-1:0] rs1i0_port;
+  input pwire rs1i0_ldst_flg;
+  input pwire [PORT_WIDTH-1:0] rs2i0_port;
+  input pwire rs2i0_ldst_flg;
+  input pwire [PORT_WIDTH-1:0] rs0i1_port;
+  input pwire rs0i1_ldst_flg;
+  input pwire [PORT_WIDTH-1:0] rs1i1_port;
+  input pwire rs1i1_ldst_flg;
+  input pwire [PORT_WIDTH-1:0] rs2i1_port;
+  input pwire rs2i1_ldst_flg;
 
   output pwire [5:0] new_mask;
 
@@ -1167,15 +1167,15 @@ module get_wrtII(
   wrtO0,wrtO1,wrtO2
   );
 
-  input [5:0] wrt0;
-  input [5:0] wrt1;
-  input [5:0] wrt2;
-  input [5:0] lsi0;
-  input [5:0] lsi1;
-  input [5:0] lsi2;
-  input [3:0] II0;
-  input [3:0] II1;
-  input [3:0] II2;
+  input pwire [5:0] wrt0;
+  input pwire [5:0] wrt1;
+  input pwire [5:0] wrt2;
+  input pwire [5:0] lsi0;
+  input pwire [5:0] lsi1;
+  input pwire [5:0] lsi2;
+  input pwire [3:0] II0;
+  input pwire [3:0] II1;
+  input pwire [3:0] II2;
   output pwire [3:0] wrtII0;
   output pwire [3:0] wrtII1;
   output pwire [3:0] wrtII2;
@@ -1235,31 +1235,31 @@ module alloc_WQ(
   );
  /*verilator hier_block*/ 
 
-  input clk;
-  input rst;
-  input stall;
+  input pwire clk;
+  input pwire rst;
+  input pwire stall;
   output pwire doStall;
-  input except;
-  input except_thread;
-  input except_both;
-  input newEn;
-  input newThr;
-  input [5:0] wrt0;
-  input [5:0] wrt1;
-  input [5:0] wrt2;
-  input [5:0] lsi0;
-  input [5:0] lsi1;
-  input [5:0] lsi2;
+  input pwire except;
+  input pwire except_thread;
+  input pwire except_both;
+  input pwire newEn;
+  input pwire newThr;
+  input pwire [5:0] wrt0;
+  input pwire [5:0] wrt1;
+  input pwire [5:0] wrt2;
+  input pwire [5:0] lsi0;
+  input pwire [5:0] lsi1;
+  input pwire [5:0] lsi2;
   output pwire [5:0] WQr0;
   output pwire [5:0] WQr1;
   output pwire [5:0] WQr2;
   output pwire [5:0] WQs0;
   output pwire [5:0] WQs1;
   output pwire [5:0] WQs2;
-  input free0;
-  input [5:0] freeWQ0;
-  input free1;
-  input [5:0] freeWQ1;
+  input pwire free0;
+  input pwire [5:0] freeWQ0;
+  input pwire free1;
+  input pwire [5:0] freeWQ1;
 
   pwire [5:0] wrt[2:0];
   pwire [5:0] WQ[2:0];
@@ -1373,16 +1373,16 @@ endmodule
 
 
 module wrtdata_combine(data,dataN,pdata,en,odata,odataN,opdata,low,sz,etype);
-  input [135:0] data;
-  input [135:0] dataN;
-  input [1:0] pdata;
-  input en;
+  input pwire [135:0] data;
+  input pwire [135:0] dataN;
+  input pwire [1:0] pdata;
+  input pwire en;
   output pwire [127:0] odata;
   output pwire [127:0] odataN;
   output pwire [1:0] opdata;
-  input [1:0] low;
-  input [4:0] sz;
-  input [3:0] etype;
+  input pwire [1:0] low;
+  input pwire [4:0] sz;
+  input pwire [3:0] etype;
 
   pwire is_stack;
 
@@ -1413,9 +1413,9 @@ module get_ben_een(
   bgnBen,
   endBen
   );
-  input [1:0] low;
-  input [4:0] sz;
-  input [4:0] bgn0;
+  input pwire [1:0] low;
+  input pwire [4:0] sz;
+  input pwire [4:0] bgn0;
   output pwire reg [4:0] end0;
   output pwire reg [3:0] bgnBen;
   output pwire reg [3:0] endBen;
@@ -1505,18 +1505,18 @@ module get_lsi_en(
   lsi5,flag5,
   lsi_en);
 
-  input [2:0] lsi0;
-  input flag0;
-  input [2:0] lsi1;
-  input flag1;
-  input [2:0] lsi2;
-  input flag2;
-  input [2:0] lsi3;
-  input flag3;
-  input [2:0] lsi4;
-  input flag4;
-  input [2:0] lsi5;
-  input flag5;
+  input pwire [2:0] lsi0;
+  input pwire flag0;
+  input pwire [2:0] lsi1;
+  input pwire flag1;
+  input pwire [2:0] lsi2;
+  input pwire flag2;
+  input pwire [2:0] lsi3;
+  input pwire flag3;
+  input pwire [2:0] lsi4;
+  input pwire flag4;
+  input pwire [2:0] lsi5;
+  input pwire flag5;
   output pwire [5:0] lsi_en;
 
   generate
@@ -1542,11 +1542,11 @@ module msrss_watch(
   data_out);
   parameter [15:0] ADDR=16'b0;
   parameter [64:0] INITVAL=64'b0;
-  input clk;
-  input rst;
-  input [15:0] msrss_addr;
-  input [64:0] msrss_data;
-  input msrss_en;
+  input pwire clk;
+  input pwire rst;
+  input pwire [15:0] msrss_addr;
+  input pwire [64:0] msrss_data;
+  input pwire msrss_en;
   output pwire reg [1:0][63:0] data_out;
 
   always @(posedge clk) begin
@@ -1568,10 +1568,10 @@ module fexcpt(
   no,
   en);
 
-  input [10:0] mask;
-  input [8:0] in;
-  input [10:0] in_mask;
-  input in_en;
+  input pwire [10:0] mask;
+  input pwire [8:0] in;
+  input pwire [10:0] in_mask;
+  input pwire in_en;
   output pwire [13:0] no;
   output pwire en;
 

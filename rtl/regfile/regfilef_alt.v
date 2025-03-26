@@ -41,42 +41,42 @@ module regfile_ram_f(
   localparam ADDR_WIDTH=4;
   localparam ADDR_COUNT=16;
   
-  input clk;
-  input rst;
-  input retire_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire retire_clkEn;
 
-  input read_non_stall;
+  input pwire read_non_stall;
 
-  input [ADDR_WIDTH-1:0] read0_addr;
+  input pwire [ADDR_WIDTH-1:0] read0_addr;
   (* read_port *) output pwire [DATA_WIDTH-1:0] read0_data;
-  input read0_clkEn;
+  input pwire read0_clkEn;
   
-  input [ADDR_WIDTH-1:0] read1_addr;
+  input pwire [ADDR_WIDTH-1:0] read1_addr;
   (* read_port *) output pwire [DATA_WIDTH-1:0] read1_data;
-  input read1_clkEn;
+  input pwire read1_clkEn;
 
-  input [ADDR_WIDTH-1:0] read2_addr;
+  input pwire [ADDR_WIDTH-1:0] read2_addr;
   (* read_port *) output pwire [DATA_WIDTH-1:0] read2_data;
-  input read2_clkEn;
+  input pwire read2_clkEn;
 
-  input [ADDR_WIDTH-1:0] retireRead_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead_addr;
   (* read_port *) output pwire [DATA_WIDTH-1:0] retireRead_data;
 
-  input [ADDR_WIDTH-1:0] write0_addr;
-  (* write_port *) input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  (* write_port *) input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  (* write_port *) input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  (* write_port *) input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  (* write_port *) input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  (* write_port *) input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  (* write_port *) input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  (* write_port *) input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
   
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
@@ -158,43 +158,43 @@ module regfile_ram_placeholder_f(
   parameter [3:0] INDEX=4'd15; //this is to be overriden to match tile index; range 0-8
   parameter DATA_WIDTH=`alu_width;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input retire_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire retire_clkEn;
 
 
-  input [ADDR_WIDTH-1:0] read0_addr;
+  input pwire [ADDR_WIDTH-1:0] read0_addr;
   (* register equiload *) output pwire [DATA_WIDTH-1:0] read0_data;
   
-  input [ADDR_WIDTH-1:0] read1_addr;
+  input pwire [ADDR_WIDTH-1:0] read1_addr;
   (* register equiload *) output pwire [DATA_WIDTH-1:0] read1_data;
 
-  input [ADDR_WIDTH-1:0] read2_addr;
+  input pwire [ADDR_WIDTH-1:0] read2_addr;
   (* register equiload *) output pwire [DATA_WIDTH-1:0] read2_data;
 
-  input read0_constEn;
-  input read1_constEn;
-  input read2_constEn;
+  input pwire read0_constEn;
+  input pwire read1_constEn;
+  input pwire read2_constEn;
   
-  input [ADDR_WIDTH-1:0] retireRead_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead_addr;
   output pwire [DATA_WIDTH-1:0] retireRead_data;
 
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
 
   reg [ADDR_WIDTH-1:0] read0_addr_reg;
   reg [ADDR_WIDTH-1:0] read1_addr_reg;
@@ -373,97 +373,97 @@ module regfile_ram_block_f(
   parameter rs=0;
   localparam ADDR_WIDTH=`reg_addr_width;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input retire_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire retire_clkEn;
 
 
-  input [ADDR_WIDTH-1:0] read0_addr;
+  input pwire [ADDR_WIDTH-1:0] read0_addr;
   (* register equiload *) output pwire [DATA_WIDTH-1:0] read0_data;
   
-  input [ADDR_WIDTH-1:0] read1_addr;
+  input pwire [ADDR_WIDTH-1:0] read1_addr;
   (* register equiload *) output pwire [DATA_WIDTH-1:0] read1_data;
 
-  input [ADDR_WIDTH-1:0] read2_addr;
+  input pwire [ADDR_WIDTH-1:0] read2_addr;
   (* register equiload *) output pwire [DATA_WIDTH-1:0] read2_data;
 
 
-  input read0_constEn;
-  input read1_constEn;
-  input read2_constEn;
+  input pwire read0_constEn;
+  input pwire read1_constEn;
+  input pwire read2_constEn;
   
-  input [DATA_WIDTH-1:0] read0_const;
-  input [DATA_WIDTH-1:0] read1_const;
-  input [DATA_WIDTH-1:0] read2_const;
+  input pwire [DATA_WIDTH-1:0] read0_const;
+  input pwire [DATA_WIDTH-1:0] read1_const;
+  input pwire [DATA_WIDTH-1:0] read2_const;
 
-  input [ADDR_WIDTH-1:0] retireRead0_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead0_addr;
   output pwire [DATA_WIDTH-1:0] retireRead0_data;
 
-  input [ADDR_WIDTH-1:0] retireRead1_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead1_addr;
   output pwire [DATA_WIDTH-1:0] retireRead1_data;
 
-  input [ADDR_WIDTH-1:0] retireRead2_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead2_addr;
   output pwire [DATA_WIDTH-1:0] retireRead2_data;
 
-  input [ADDR_WIDTH-1:0] retireRead3_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead3_addr;
   output pwire [DATA_WIDTH-1:0] retireRead3_data;
 
-  input [ADDR_WIDTH-1:0] retireRead4_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead4_addr;
   output pwire [DATA_WIDTH-1:0] retireRead4_data;
 
-  input [ADDR_WIDTH-1:0] retireRead5_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead5_addr;
   output pwire [DATA_WIDTH-1:0] retireRead5_data;
 
-  input [ADDR_WIDTH-1:0] retireRead6_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead6_addr;
   output pwire [DATA_WIDTH-1:0] retireRead6_data;
 
-  input [ADDR_WIDTH-1:0] retireRead7_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead7_addr;
   output pwire [DATA_WIDTH-1:0] retireRead7_data;
 
-  input [ADDR_WIDTH-1:0] retireRead8_addr;
+  input pwire [ADDR_WIDTH-1:0] retireRead8_addr;
   output pwire [DATA_WIDTH-1:0] retireRead8_data;
 
 
-  input [ADDR_WIDTH-1:0] write0_addr;
-  input [DATA_WIDTH-1:0] write0_data;
-  input write0_wen;
+  input pwire [ADDR_WIDTH-1:0] write0_addr;
+  input pwire [DATA_WIDTH-1:0] write0_data;
+  input pwire write0_wen;
 
-  input [ADDR_WIDTH-1:0] write1_addr;
-  input [DATA_WIDTH-1:0] write1_data;
-  input write1_wen;
+  input pwire [ADDR_WIDTH-1:0] write1_addr;
+  input pwire [DATA_WIDTH-1:0] write1_data;
+  input pwire write1_wen;
 
-  input [ADDR_WIDTH-1:0] write2_addr;
-  input [DATA_WIDTH-1:0] write2_data;
-  input write2_wen;
+  input pwire [ADDR_WIDTH-1:0] write2_addr;
+  input pwire [DATA_WIDTH-1:0] write2_data;
+  input pwire write2_wen;
 
-  input [ADDR_WIDTH-1:0] write3_addr;
-  input [DATA_WIDTH-1:0] write3_data;
-  input write3_wen;
+  input pwire [ADDR_WIDTH-1:0] write3_addr;
+  input pwire [DATA_WIDTH-1:0] write3_data;
+  input pwire write3_wen;
 
-  input [ADDR_WIDTH-1:0] write4_addr;
-  input [DATA_WIDTH-1:0] write4_data;
-  input write4_wen;
+  input pwire [ADDR_WIDTH-1:0] write4_addr;
+  input pwire [DATA_WIDTH-1:0] write4_data;
+  input pwire write4_wen;
 
-  input [ADDR_WIDTH-1:0] write5_addr;
-  input [DATA_WIDTH-1:0] write5_data;
-  input write5_wen;
+  input pwire [ADDR_WIDTH-1:0] write5_addr;
+  input pwire [DATA_WIDTH-1:0] write5_data;
+  input pwire write5_wen;
 
-  input [ADDR_WIDTH-1:0] write6_addr;
-  input [DATA_WIDTH-1:0] write6_data;
-  input write6_wen;
+  input pwire [ADDR_WIDTH-1:0] write6_addr;
+  input pwire [DATA_WIDTH-1:0] write6_data;
+  input pwire write6_wen;
 
-  input [ADDR_WIDTH-1:0] write7_addr;
-  input [DATA_WIDTH-1:0] write7_data;
-  input write7_wen;
+  input pwire [ADDR_WIDTH-1:0] write7_addr;
+  input pwire [DATA_WIDTH-1:0] write7_data;
+  input pwire write7_wen;
 
-  input [ADDR_WIDTH-1:0] write8_addr;
-  input [DATA_WIDTH-1:0] write8_data;
-  input write8_wen;
+  input pwire [ADDR_WIDTH-1:0] write8_addr;
+  input pwire [DATA_WIDTH-1:0] write8_data;
+  input pwire write8_wen;
 
-  input [ADDR_WIDTH-1:0] write9_addr;
-  input [DATA_WIDTH-1:0] write9_data;
-  input write9_wen;
+  input pwire [ADDR_WIDTH-1:0] write9_addr;
+  input pwire [DATA_WIDTH-1:0] write9_data;
+  input pwire write9_wen;
 
  
 

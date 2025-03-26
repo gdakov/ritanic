@@ -18,17 +18,17 @@ module stq_adata(
   wrt1_en,wrt1_WQ,wrt1_adata,
   upd0_WQ,upd0_adata,
   upd1_WQ,upd1_adata);
-  input clk;
-  input rst;
-  input wrt0_en;
-  input [5:0] wrt0_WQ;
-  input [4:0] wrt0_adata;
-  input wrt1_en;
-  input [5:0] wrt1_WQ;
-  input [4:0] wrt1_adata;
-  input [5:0] upd0_WQ;
+  input pwire clk;
+  input pwire rst;
+  input pwire wrt0_en;
+  input pwire [5:0] wrt0_WQ;
+  input pwire [4:0] wrt0_adata;
+  input pwire wrt1_en;
+  input pwire [5:0] wrt1_WQ;
+  input pwire [4:0] wrt1_adata;
+  input pwire [5:0] upd0_WQ;
   output pwire [4:0] upd0_adata;
-  input [5:0] upd1_WQ;
+  input pwire [5:0] upd1_WQ;
   output pwire [4:0] upd1_adata;
   
   reg [4:0] BGN[63:0];

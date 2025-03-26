@@ -34,47 +34,47 @@ module regfile_get_gazump0(
   parameter DATA_WIDTH=`alu_width;
   localparam ADDR_WIDTH=`reg_addr_width;
 
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
 
-  input read_clkEn;
+  input pwire read_clkEn;
   
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
 
-  input read_constEn;
-  input read_oe;
+  input pwire read_constEn;
+  input pwire read_oe;
   
   output pwire [10:0] match_w;
   
-  input [ADDR_WIDTH-1:0] write0_addr_reg;
-  input write0_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write0_addr_reg;
+  input pwire write0_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write1_addr_reg;
-  input write1_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write1_addr_reg;
+  input pwire write1_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write2_addr_reg;
-  input write2_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write2_addr_reg;
+  input pwire write2_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write3_addr_reg;
-  input write3_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write3_addr_reg;
+  input pwire write3_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write4_addr_reg;
-  input write4_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write4_addr_reg;
+  input pwire write4_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write5_addr_reg;
-  input write5_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write5_addr_reg;
+  input pwire write5_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write6_addr_reg;
-  input write6_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write6_addr_reg;
+  input pwire write6_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write7_addr_reg;
-  input write7_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write7_addr_reg;
+  input pwire write7_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write8_addr_reg;
-  input write8_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write8_addr_reg;
+  input pwire write8_wen_reg;
 
-  input [ADDR_WIDTH-1:0] write9_addr_reg;
-  input write9_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write9_addr_reg;
+  input pwire write9_wen_reg;
 
 
 
@@ -171,66 +171,66 @@ module regfile_get_gazump(
   write9_addr_reg,write9_wen_reg
   );
   localparam ADDR_WIDTH=`reg_addr_width;
-  input clk,rst,read_clkEn;
+  input pwire clk,rst,read_clkEn;
 /*verilator hier_block*/ 
   
-  input [ADDR_WIDTH-1:0] read0_addr;
-  input read0_constEn;
-  input read0_oe;
+  input pwire [ADDR_WIDTH-1:0] read0_addr;
+  input pwire read0_constEn;
+  input pwire read0_oe;
   output pwire [10:0] read0_match;
-  input [ADDR_WIDTH-1:0] read1_addr;
-  input read1_constEn;
-  input read1_oe;
+  input pwire [ADDR_WIDTH-1:0] read1_addr;
+  input pwire read1_constEn;
+  input pwire read1_oe;
   output pwire [10:0] read1_match;
-  input [ADDR_WIDTH-1:0] read2_addr;
-  input read2_constEn;
-  input read2_oe;
+  input pwire [ADDR_WIDTH-1:0] read2_addr;
+  input pwire read2_constEn;
+  input pwire read2_oe;
   output pwire [10:0] read2_match;
-  input [ADDR_WIDTH-1:0] read3_addr;
-  input read3_constEn;
-  input read3_oe;
+  input pwire [ADDR_WIDTH-1:0] read3_addr;
+  input pwire read3_constEn;
+  input pwire read3_oe;
   output pwire [10:0] read3_match;
-  input [ADDR_WIDTH-1:0] read4_addr;
-  input read4_constEn;
-  input read4_oe;
+  input pwire [ADDR_WIDTH-1:0] read4_addr;
+  input pwire read4_constEn;
+  input pwire read4_oe;
   output pwire [10:0] read4_match;
-  input [ADDR_WIDTH-1:0] read5_addr;
-  input read5_constEn;
-  input read5_oe;
+  input pwire [ADDR_WIDTH-1:0] read5_addr;
+  input pwire read5_constEn;
+  input pwire read5_oe;
   output pwire [10:0] read5_match;
-  input [ADDR_WIDTH-1:0] read6_addr;
-  input read6_constEn;
-  input read6_oe;
+  input pwire [ADDR_WIDTH-1:0] read6_addr;
+  input pwire read6_constEn;
+  input pwire read6_oe;
   output pwire [10:0] read6_match;
-  input [ADDR_WIDTH-1:0] read7_addr;
-  input read7_constEn;
-  input read7_oe;
+  input pwire [ADDR_WIDTH-1:0] read7_addr;
+  input pwire read7_constEn;
+  input pwire read7_oe;
   output pwire [10:0] read7_match;
-  input [ADDR_WIDTH-1:0] read8_addr;
-  input read8_constEn;
-  input read8_oe;
+  input pwire [ADDR_WIDTH-1:0] read8_addr;
+  input pwire read8_constEn;
+  input pwire read8_oe;
   output pwire [10:0] read8_match;
 
-  input [ADDR_WIDTH-1:0] write0_addr_reg;
-  input write0_wen_reg;
-  input [ADDR_WIDTH-1:0] write1_addr_reg;
-  input write1_wen_reg;
-  input [ADDR_WIDTH-1:0] write2_addr_reg;
-  input write2_wen_reg;
-  input [ADDR_WIDTH-1:0] write3_addr_reg;
-  input write3_wen_reg;
-  input [ADDR_WIDTH-1:0] write4_addr_reg;
-  input write4_wen_reg;
-  input [ADDR_WIDTH-1:0] write5_addr_reg;
-  input write5_wen_reg;
-  input [ADDR_WIDTH-1:0] write6_addr_reg;
-  input write6_wen_reg;
-  input [ADDR_WIDTH-1:0] write7_addr_reg;
-  input write7_wen_reg;
-  input [ADDR_WIDTH-1:0] write8_addr_reg;
-  input write8_wen_reg;
-  input [ADDR_WIDTH-1:0] write9_addr_reg;
-  input write9_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write0_addr_reg;
+  input pwire write0_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write1_addr_reg;
+  input pwire write1_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write2_addr_reg;
+  input pwire write2_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write3_addr_reg;
+  input pwire write3_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write4_addr_reg;
+  input pwire write4_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write5_addr_reg;
+  input pwire write5_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write6_addr_reg;
+  input pwire write6_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write7_addr_reg;
+  input pwire write7_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write8_addr_reg;
+  input pwire write8_wen_reg;
+  input pwire [ADDR_WIDTH-1:0] write9_addr_reg;
+  input pwire write9_wen_reg;
 
   pwire [ADDR_WIDTH-1:0] read_addr[8:0];
   pwire [8:0] read_constEn;

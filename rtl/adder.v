@@ -16,9 +16,9 @@ limitations under the License.
 
 module aoi21_array(a11,a12,a2,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a11;
-  input [WIDTH-1:0] a12;
-  input [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a11;
+  input pwire [WIDTH-1:0] a12;
+  input pwire [WIDTH-1:0] a2;
   output pwire [WIDTH-1:0] b;
 
   assign b=((a11 & a12)|a2);
@@ -27,9 +27,9 @@ endmodule
 
 module oai21_array(a11,a12,a2,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a11;
-  input [WIDTH-1:0] a12;
-  input [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a11;
+  input pwire [WIDTH-1:0] a12;
+  input pwire [WIDTH-1:0] a2;
   output pwire [WIDTH-1:0] b;
 
   assign b=((a11 & a12)|a2);
@@ -38,8 +38,8 @@ endmodule
 
 module nor_array(a1,a2,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a1;
-  input [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a1;
+  input pwire [WIDTH-1:0] a2;
   output pwire [WIDTH-1:0] b;
 
   assign b=~(a1 | a2);
@@ -48,8 +48,8 @@ endmodule
 
 module nand_array(a1,a2,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a1;
-  input [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a1;
+  input pwire [WIDTH-1:0] a2;
   output pwire [WIDTH-1:0] b;
 
   assign b=~(a1 & a2);
@@ -58,8 +58,8 @@ endmodule
 
 module xor_array(a1,a2,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a1;
-  input [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a1;
+  input pwire [WIDTH-1:0] a2;
   output pwire [WIDTH-1:0] b;
 
   assign b=a1 ^ a2;
@@ -68,8 +68,8 @@ endmodule
 
 module nxor_array(a1,a2,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a1;
-  input [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a1;
+  input pwire [WIDTH-1:0] a2;
   output pwire [WIDTH-1:0] b;
 
   assign b=a1 ~^ a2;
@@ -78,7 +78,7 @@ endmodule
 
 module not_array(a,b);
   parameter WIDTH=1;
-  input [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] a;
   output pwire [WIDTH-1:0] b;
 
   assign b=a;
@@ -87,19 +87,19 @@ endmodule
 
 (* align_width="a,b,nP0,nG0,out" *) module adder_seq(a,b,nP0,nG0,out,c_s,cin,en,cout,cout8,cout16,cout32);
   parameter WIDTH=44;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out;
   output pwire [43:0] c_s;
-  input cin;
-  input en;
+  input pwire cin;
+  input pwire en;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
   output pwire cout32;
   
-  input [WIDTH-1:0] nP0;
-  input [WIDTH-1:0] nG0;
+  input pwire [WIDTH-1:0] nP0;
+  input pwire [WIDTH-1:0] nG0;
 
   (* align_width *) pwire [WIDTH-1:0] P1;
   (* align_width *) pwire [WIDTH-1:0] G1;
@@ -261,11 +261,11 @@ endmodule
 
 (* align_width="a,b,out" *) module adder(a,b,out,cin,en,cout,cout8,cout16,cout32);
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out;
-  input cin;
-  input en;
+  input pwire cin;
+  input pwire en;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
@@ -439,11 +439,11 @@ endmodule
 
 (* align_width="a,b,out" *) module adder_15_11(a,b,out,cin,en,cout,cout11,cout16,cout32);
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out;
-  input cin;
-  input en;
+  input pwire cin;
+  input pwire en;
   output pwire cout;
   output pwire cout11;
   output pwire cout16;
@@ -616,12 +616,12 @@ endmodule
 
 (* align_width="a,b,out" *) module addsub_alu0(a,b,out,sub,en,ben,cout,cout4,cout8,cout16,cout32);
   parameter WIDTH=64;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out;
-  input sub;
-  input en;
-  input [3:0] ben;
+  input pwire sub;
+  input pwire en;
+  input pwire [3:0] ben;
   output pwire cout;
   output pwire cout4;
   output pwire cout8;
@@ -820,15 +820,15 @@ endmodule
 
 (* align_width="a,b,out" *) module addsub_alu(a,b,out,sub,cin,en,sxtEn,pooh,ben,cout,cout4,cout8LL,cout16,cout32,cout_sec,ndiff,cout44);
   parameter WIDTH=64;
-  input [64:0] a;
-  input [64:0] b;
+  input pwire [64:0] a;
+  input pwire [64:0] b;
   output pwire [65:0] out;
-  input [5:0] sub;
-  input cin;
-  input en;
-  input sxtEn;
-  input pooh;
-  input [1:0] ben;
+  input pwire [5:0] sub;
+  input pwire cin;
+  input pwire en;
+  input pwire sxtEn;
+  input pwire pooh;
+  input pwire [1:0] ben;
   output pwire cout;
   output pwire cout4;
   output pwire cout8LL;
@@ -1086,9 +1086,9 @@ endmodule
 
 (* align_width="a,out" *) module adder_inc(a,out,en,cout);
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] a;
   output pwire [WIDTH-1:0] out;
-  input en;
+  input pwire en;
   output pwire cout;
   
 
@@ -1202,8 +1202,8 @@ endmodule
 
 
 module adder_FA1(a,b,out,cout);
-  input a;
-  input b;
+  input pwire a;
+  input pwire b;
   output pwire out;
   output pwire cout;
   
@@ -1212,8 +1212,8 @@ module adder_FA1(a,b,out,cout);
 endmodule
 
 module adder_FA0(a,b,out,cout);
-  input a;
-  input b;
+  input pwire a;
+  input pwire b;
   output pwire out;
   output pwire cout;
   
@@ -1225,8 +1225,8 @@ endmodule
 module adder_constCSA(a,b,out1,out2);
   parameter WIDTH=32;
   parameter [WIDTH-1:0] CONST=0;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH:0] out1;
   output pwire [WIDTH:0] out2;
   
@@ -1247,9 +1247,9 @@ module adder_CSA(a1,a2,a3,out1,out2);
 
   parameter WIDTH=32;
 
-  input [WIDTH-1:0] a1;
-  input [WIDTH-1:0] a2;
-  input [WIDTH-1:0] a3;
+  input pwire [WIDTH-1:0] a1;
+  input pwire [WIDTH-1:0] a2;
+  input pwire [WIDTH-1:0] a3;
   output pwire reg [WIDTH:0] out1;
   output pwire reg [WIDTH:0] out2;
   
@@ -1275,9 +1275,9 @@ endmodule
 
 module get_carry(a,b,cin,cout); //cout=a bigger or equal than b if b inv, cin=1
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
-  input cin;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
+  input pwire cin;
   output pwire cout;
   
 
@@ -1436,16 +1436,16 @@ endmodule
   );
   parameter WIDTH=44;
   parameter PTRBIT=0;
-  input [64:0] a;//base
-  input [64:0] b;
-  input [64:0] c; //index
+  input pwire [64:0] a;//base
+  input pwire [64:0] b;
+  input pwire [64:0] c; //index
   //output [64:0] ptr;
   output pwire [63+PTRBIT:0] out;
   output pwire cout_sec;
   output pwire ndiff;
-  input en;  
-  input [3:0] shift;
-  input [1:0] sh2;
+  input pwire en;  
+  input pwire [3:0] shift;
+  input pwire [1:0] sh2;
   inpu swppr;
 
   pwire [WIDTH-1:0] tmp1;
@@ -1505,13 +1505,13 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder_pipe2o(clk,a,b,out1,out2,cin,en1,en2,cout,cout8,cout16,cout32);
   parameter WIDTH=128;
-  input clk;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire clk;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out1;
   output pwire [WIDTH-1:0] out2;
-  input cin;
-  input en1,en2;
+  input pwire cin;
+  input pwire en1,en2;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
@@ -1692,15 +1692,15 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder2oM(a,b,out0,out1,out2,cin,en0,en1,low32,cout,cout8,cout16,cout32);
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out0;
   output pwire [WIDTH-1:0] out1;
   output pwire [31:0] out2;
-  input cin;
-  input en0;
-  input en1;
-  input low32;
+  input pwire cin;
+  input pwire en0;
+  input pwire en1;
+  input pwire low32;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
@@ -1888,14 +1888,14 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder2oi(biten,a,b,out0,out1,cin,en0,en1,cout,cout8,cout16,cout32);
   parameter WIDTH=32;
-  input [WIDTH-1:0] biten;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] biten;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out0;
   output pwire [WIDTH-1:0] out1;
-  input cin;
-  input en0;
-  input en1;
+  input pwire cin;
+  input pwire en0;
+  input pwire en1;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
@@ -2068,13 +2068,13 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder2o(a,b,out0,out1,cin,en0,en1,cout,cout8,cout16,cout32);
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out0;
   output pwire [WIDTH-1:0] out1;
-  input cin;
-  input en0;
-  input en1;
+  input pwire cin;
+  input pwire en0;
+  input pwire en1;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
@@ -2248,12 +2248,12 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder2c(a,b,out0,out1,cin0,cin1,en0,en1,cout0,cout1,cout0_53,cout1_53);
   parameter WIDTH=32;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out0;
   output pwire [WIDTH-1:0] out1;
-  input cin0,cin1;
-  input en0,en1;
+  input pwire cin0,cin1;
+  input pwire en0,en1;
   output pwire cout0,cout1;
   output pwire cout0_53,cout1_53;
   
@@ -2452,13 +2452,13 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder2ox(a,b,out0,out1,cin,en0,en1,cout,cout8,cout16,cout32);
   parameter WIDTH=32;
-  input [WIDTH:0] a;
-  input [WIDTH:0] b;
+  input pwire [WIDTH:0] a;
+  input pwire [WIDTH:0] b;
   output pwire [WIDTH:0] out0;
   output pwire [WIDTH:0] out1;
-  input cin;
-  input en0;
-  input en1;
+  input pwire cin;
+  input pwire en0;
+  input pwire en1;
   output pwire cout;
   output pwire cout8;
   output pwire cout16;
@@ -2631,13 +2631,13 @@ endmodule
 
 (* align_width="a,b,out0,out1" *) module adder2c_pipe(clk,a,b,out0,out1,cin0,cin1,en0,en1,cout0,cout1,cout0_53,cout1_53);
   parameter WIDTH=32;
-  input clk;
-  input [WIDTH-1:0] a;
-  input [WIDTH-1:0] b;
+  input pwire clk;
+  input pwire [WIDTH-1:0] a;
+  input pwire [WIDTH-1:0] b;
   output pwire [WIDTH-1:0] out0;
   output pwire [WIDTH-1:0] out1;
-  input cin0,cin1;
-  input en0,en1;
+  input pwire cin0,cin1;
+  input pwire en0,en1;
   output pwire cout0,cout1;
   output pwire cout0_53,cout1_53;
   

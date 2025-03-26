@@ -14,10 +14,10 @@ limitations under the License.
 
 module dff_up_to_reg3(clk,rst,cond1,val,val_reg,val_reg2,val_reg3);
   parameter WIDTH=4;
-  input clk;
-  input rst;
-  input cond1;
-  input val;
+  input pwire clk;
+  input pwire rst;
+  input pwire cond1;
+  input pwire val;
   output pwire logic val_reg;
   output pwire logic val_reg2;
   output pwire logic val_reg3;
@@ -110,42 +110,42 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   parameter H=0;
 
 /*verilator public_module*/ 
-  input clk;
-  input rst;
-  input sched_rst;
+  input pwire clk;
+  input pwire rst;
+  input pwire sched_rst;
   output pause_other_frontend_fat_wire;
-  input except;
-  input [VIRT_WIDTH-1:0] exceptIP;
-  input exceptThread;
-  input [3:0] exceptAttr;
-  input exceptDueJump;
-  input [7:0] exceptJumpGHT;
-  input exceptLDConfl;
-  input [3:0] except_jmask;
-  input except_jmask_en;
-  input except_indir;
-  input jupd0_en;
-  input jupdt0_en;
-  input jupd0_ght_en;
-  input jupd0_ght2_en;
-  input [15:0] jupd0_addr;
-  input [12:0] jupd0_baddr;
-  input [1:0] jupd0_sc;
-  input jupd0_tk;
-  input jupd1_en;
-  input jupdt1_en;
-  input jupd1_ght_en;
-  input jupd1_ght2_en;
-  input [15:0] jupd1_addr;
-  input [12:0] jupd1_baddr;
-  input [1:0] jupd1_sc;
-  input jupd1_tk;
+  input pwire except;
+  input pwire [VIRT_WIDTH-1:0] exceptIP;
+  input pwire exceptThread;
+  input pwire [3:0] exceptAttr;
+  input pwire exceptDueJump;
+  input pwire [7:0] exceptJumpGHT;
+  input pwire exceptLDConfl;
+  input pwire [3:0] except_jmask;
+  input pwire except_jmask_en;
+  input pwire except_indir;
+  input pwire jupd0_en;
+  input pwire jupdt0_en;
+  input pwire jupd0_ght_en;
+  input pwire jupd0_ght2_en;
+  input pwire [15:0] jupd0_addr;
+  input pwire [12:0] jupd0_baddr;
+  input pwire [1:0] jupd0_sc;
+  input pwire jupd0_tk;
+  input pwire jupd1_en;
+  input pwire jupdt1_en;
+  input pwire jupd1_ght_en;
+  input pwire jupd1_ght2_en;
+  input pwire [15:0] jupd1_addr;
+  input pwire [12:0] jupd1_baddr;
+  input pwire [1:0] jupd1_sc;
+  input pwire jupd1_tk;
 
 
 
-  input [BUS_WIDTH-1:0] bus_data;
-  input [9:0] bus_slot;
-  input bus_en;
+  input pwire [BUS_WIDTH-1:0] bus_data;
+  input pwire [9:0] bus_slot;
+  input pwire bus_en;
   
   output pwire [37:0] req_addr;
   output pwire [9:0] req_slot;
@@ -153,24 +153,24 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   output pwire req_mlbEn;
   output pwire [3:0] req_mlbAttr;
 
-  input [`cmlbData_width-1:0] bus_mlb_data;
-  input [9:0] bus_mlb_slot;
-  input bus_mlb_en;
+  input pwire [`cmlbData_width-1:0] bus_mlb_data;
+  input pwire [9:0] bus_mlb_slot;
+  input pwire bus_mlb_en;
 
   output pwire miss_now;
   output pwire mlbMiss_now;
-  input miss_now_in;
+  input pwire miss_now_in;
 
   output pwire [9:0][INSTR_WIDTH-1:0] instr0;
 
   output pwire [9:0][`instrQ_width-1:0] extra0;
 
 
-  input [9:0] instrEat;
+  input pwire [9:0] instrEat;
   output pwire [9:0] iAvail;
-  input stall;
+  input pwire stall;
   
-  input [2:0] btbl_step;
+  input pwire [2:0] btbl_step;
   output pwire [IP_WIDTH-2:0] btbl_IP0;
   output pwire [IP_WIDTH-2:0] btbl_IP1;
   output pwire [3:0] btbl_mask0;
@@ -180,28 +180,28 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   output pwire       btbl_clp0;
   output pwire       btbl_clp1;
   
-  input msrss_en;
-  input [15:0] msrss_addr;
-  input [64:0] msrss_data;
+  input pwire msrss_en;
+  input pwire [15:0] msrss_addr;
+  input pwire [64:0] msrss_data;
   output pwire cc_instrEn=instrEn;
   output pwire cc_read_set_flag=read_set_flag_reg;
   output pwire cc_fstall=fstall;
   output pwire cc_except=ixcept;
   output pwire [PHYS_WIDTH-1:0] cc_IP_phys=IP_phys_reg;
-  input cc_read_hit;
-  input cc_read_tagErr;
-  input [DATA_WIDTH/2+128+8-1:0] cc_read_data;
+  input pwire cc_read_hit;
+  input pwire cc_read_tagErr;
+  input pwire [DATA_WIDTH/2+128+8-1:0] cc_read_data;
   assign read_data=cc_read_data[255:0];
-  input [20:0] cc_read_dataX;
+  input pwire [20:0] cc_read_dataX;
   assign read_dataX=cc_read_dataX[14:0];
-  input cc_err;
+  input pwire cc_err;
   output pwire [PHYS_WIDTH-1:0] cc_write_IP={write_IP,5'b0};
   output pwire cc_write_wen=bus_match_reg;
   output pwire cc_invalidate=1'b0;
   output pwire [DATA_WIDTH-1:0] cc_write_data;
   
-  input [36:0] MSI_expAddr;
-  input MSI_expAddr_en;
+  input pwire [36:0] MSI_expAddr;
+  input pwire MSI_expAddr_en;
   output pwire MSI_expAddr_hit;
   output pwire [36:0] expun_addr;
   output pwire expun_wen;
@@ -223,14 +223,14 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   pwire do_seq_any,do_seq_miss;
 
   function [255:0] splice256;
-    (* keep *) input [255:0] in_data;
+    (* keep *) input pwire [255:0] in_data;
     integer k;
     for(k=0;k<256;k=k+1) begin
        splice256[k]=in_data[{k[3:0],k[7:4]}];
     end
   endfunction
   function [255:0] splice256w;
-    input [255:0] in_data;
+    input pwire [255:0] in_data;
     integer k;
     for(k=0;k<256;k=k+1) begin
        splice256[k]=in_data[{k[3:0],k[7:4]}];
@@ -2553,14 +2553,14 @@ module frontReq_ram(
   localparam ADDR_WIDTH=3;
   localparam ADDR_COUNT=8;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -2578,7 +2578,7 @@ endmodule
 
 
 module front_strip_ECC(dataIn,dataOut,par);
-  input [39:1] dataIn;
+  input pwire [39:1] dataIn;
   output pwire [31:0] dataOut;
   output par;
   

@@ -23,15 +23,15 @@ module bob_ram0(
   parameter DATA_WIDTH=`bob_width/4+1;
   parameter ADDR_COUNT=`bob_count;
   
-  input clk;
+  input pwire clk;
   
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
   
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
   
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -58,15 +58,15 @@ module bob_ram(
   parameter DATA_WIDTH=`bob_width;
   parameter ADDR_COUNT=`bob_count;
 
-  input clk;
+  input pwire clk;
   
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
   
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
   pwire dummyW0,dummyW1,dummyW2,dummyW3;
   //verilator lint_off WIDTH
   bob_ram0 ram0(
@@ -113,15 +113,15 @@ module bob_addr(
   retire_addr
   );
   
-  input clk;
-  input rst;
-  input except;
-  input new_en;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire new_en;
   output pwire reg [5:0] new_addr;
-  input stall;
+  input pwire stall;
   output pwire doStall;
   output pwire reg hasRetire;
-  input doRetire;
+  input pwire doRetire;
   output pwire reg [5:0] retire_addr;
 
   reg [5:0] retire_addr0;

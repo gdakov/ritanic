@@ -16,7 +16,7 @@ module popcnt5(
   bits,
   cnt);
 
-  input [4:0] bits;
+  input pwire [4:0] bits;
   output pwire reg [5:0] cnt;
 
   always @*
@@ -63,7 +63,7 @@ module popcnt6(
   bits,
   cnt);
 
-  input [5:0] bits;
+  input pwire [5:0] bits;
   output pwire reg [6:0] cnt;
 
   always @*
@@ -143,7 +143,7 @@ module popcnt3(
   bits,
   cnt);
 
-  input [2:0] bits;
+  input pwire [2:0] bits;
   output pwire reg [3:0] cnt;
   
   always @* begin
@@ -160,7 +160,7 @@ module popcnt3_or_more(
   bits,
   cnt);
 
-  input [2:0] bits;
+  input pwire [2:0] bits;
   output pwire reg [3:1] cnt;
   
   always @* begin
@@ -178,7 +178,7 @@ module popcnt10(
   bits,
   cnt);
 
-  input [9:0] bits;
+  input pwire [9:0] bits;
   output pwire [10:0] cnt;
 
   pwire [5:0] cntA;
@@ -206,7 +206,7 @@ module popcnt15(
   bits,
   cnt);
 
-  input [14:0] bits;
+  input pwire [14:0] bits;
   output pwire [15:0] cnt;
 
   pwire [5:0] cntA;
@@ -232,7 +232,7 @@ module popcnt20(
   bits,
   cnt);
 
-  input [19:0] bits;
+  input pwire [19:0] bits;
   output pwire [20:0] cnt;
 
   pwire [10:0] cntA;
@@ -260,7 +260,7 @@ module popcnt16(
   bits,
   cnt);
 
-  input [15:0] bits;
+  input pwire [15:0] bits;
   output pwire [16:0] cnt;
 
   pwire [6:0] cntA;
@@ -289,7 +289,7 @@ module popcnt5_or_less(
   bits,
   cnt);
 
-  input [4:0] bits;
+  input pwire [4:0] bits;
   output pwire reg [4:0] cnt;
 
   always @*
@@ -337,7 +337,7 @@ module popcnt10_or_less(
   bits,
   cnt);
 
-  input [9:0] bits;
+  input pwire [9:0] bits;
   output pwire [9:0] cnt;
 
   pwire [5:0] cntA;
@@ -365,7 +365,7 @@ module popcnt15_or_less(
   bits,
   cnt);
 
-  input [14:0] bits;
+  input pwire [14:0] bits;
   output pwire [14:0] cnt;
 
   pwire [5:0] cntA;
@@ -391,7 +391,7 @@ module popcnt20_or_less(
   bits,
   cnt);
 
-  input [19:0] bits;
+  input pwire [19:0] bits;
   output pwire [19:0] cnt;
 
   pwire [9:0] cntA;
@@ -419,7 +419,7 @@ module popcnt16_or_less(
   bits,
   cnt);
 
-  input [15:0] bits;
+  input pwire [15:0] bits;
   output pwire [15:0] cnt;
 
   pwire [6:0] cntA;
@@ -447,7 +447,7 @@ module popcnt5_or_more(
   bits,
   cnt);
 
-  input [4:0] bits;
+  input pwire [4:0] bits;
   output pwire reg [5:1] cnt;
 
   always @*
@@ -495,7 +495,7 @@ module popcnt10_or_more(
   bits,
   cnt);
 
-  input [9:0] bits;
+  input pwire [9:0] bits;
   output pwire [9:0] cnt;
 
   pwire [5:0] cntA;
@@ -523,7 +523,7 @@ module popcnt15_or_more(
   bits,
   cnt);
 
-  input [14:0] bits;
+  input pwire [14:0] bits;
   output pwire [14:0] cnt;
 
   pwire [5:0] cntA;
@@ -550,7 +550,7 @@ module popcnt20_or_more(
   bits,
   cnt);
 
-  input [19:0] bits;
+  input pwire [19:0] bits;
   output pwire [19:0] cnt;
 
   pwire [10:0] cntA;
@@ -579,7 +579,7 @@ module popcnt16_or_more(
   bits,
   cnt);
 
-  input [15:0] bits;
+  input pwire [15:0] bits;
   output pwire [15:0] cnt;
 
   pwire [6:0] cntA;

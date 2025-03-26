@@ -29,58 +29,58 @@ module stq_buf_A(
   upd1_en, 
   free_en,free,upd,passe,passe_en);
   localparam WIDTH=36;
-  input clk;
-  input rst;
-  input stallA;
-  input excpt;
+  input pwire clk;
+  input pwire rst;
+  input pwire stallA;
+  input pwire excpt;
   
-  input wrt0_en;
-  input [WIDTH-1:0] wrt0_addrE;
-  input [WIDTH-1:0] wrt0_addrO;
+  input pwire wrt0_en;
+  input pwire [WIDTH-1:0] wrt0_addrE;
+  input pwire [WIDTH-1:0] wrt0_addrO;
 
-  input wrt1_en;
-  input [WIDTH-1:0] wrt1_addrE;
-  input [WIDTH-1:0] wrt1_addrO;
+  input pwire wrt1_en;
+  input pwire [WIDTH-1:0] wrt1_addrE;
+  input pwire [WIDTH-1:0] wrt1_addrO;
 
-  input chk0_en;
+  input pwire chk0_en;
   output pwire [1:0] chk0_addrEO;
-  input [WIDTH-1:0] chk0_addrE;
-  input [WIDTH-1:0] chk0_addrO;
+  input pwire [WIDTH-1:0] chk0_addrE;
+  input pwire [WIDTH-1:0] chk0_addrO;
 
-  input chk1_en;
+  input pwire chk1_en;
   output pwire [1:0] chk1_addrEO;
-  input [WIDTH-1:0] chk1_addrE;
-  input [WIDTH-1:0] chk1_addrO;
+  input pwire [WIDTH-1:0] chk1_addrE;
+  input pwire [WIDTH-1:0] chk1_addrO;
   
-  input chk2_en;
+  input pwire chk2_en;
   output pwire [1:0] chk2_addrEO;
-  input [WIDTH-1:0] chk2_addrE;
-  input [WIDTH-1:0] chk2_addrO;
+  input pwire [WIDTH-1:0] chk2_addrE;
+  input pwire [WIDTH-1:0] chk2_addrO;
   
-  input chk3_en;
+  input pwire chk3_en;
   output pwire [1:0] chk3_addrEO;
-  input [WIDTH-1:0] chk3_addrE;
-  input [WIDTH-1:0] chk3_addrO;
+  input pwire [WIDTH-1:0] chk3_addrE;
+  input pwire [WIDTH-1:0] chk3_addrO;
   
-  input chk4_en;
+  input pwire chk4_en;
   output pwire [1:0] chk4_addrEO;
-  input [WIDTH-1:0] chk4_addrE;
-  input [WIDTH-1:0] chk4_addrO;
+  input pwire [WIDTH-1:0] chk4_addrE;
+  input pwire [WIDTH-1:0] chk4_addrO;
   
-  input chk5_en;
+  input pwire chk5_en;
   output pwire [1:0] chk5_addrEO;
-  input [WIDTH-1:0] chk5_addrE;
-  input [WIDTH-1:0] chk5_addrO;
+  input pwire [WIDTH-1:0] chk5_addrE;
+  input pwire [WIDTH-1:0] chk5_addrO;
 
 
-  input upd0_en;
-  input upd1_en;
+  input pwire upd0_en;
+  input pwire upd1_en;
 
-  input free_en;
+  input pwire free_en;
   output pwire reg free;
   output pwire reg upd;
   output pwire reg passe;
-  input passe_en;
+  input pwire passe_en;
   
   reg [WIDTH-1:0] addrE;
   reg [WIDTH-1:0] addrO;
@@ -159,58 +159,58 @@ module stq_buf_A_array(
   free_en,free,upd,passe,passe_en);
   localparam WIDTH=36;
   localparam BUF_COUNT=64;
-  input clk;
-  input rst;
-  input stallA;
-  input excpt;
+  input pwire clk;
+  input pwire rst;
+  input pwire stallA;
+  input pwire excpt;
   
-  input [BUF_COUNT-1:0] wrt0_en;
-  input [WIDTH-1:0] wrt0_addrE;
-  input [WIDTH-1:0] wrt0_addrO;
+  input pwire [BUF_COUNT-1:0] wrt0_en;
+  input pwire [WIDTH-1:0] wrt0_addrE;
+  input pwire [WIDTH-1:0] wrt0_addrO;
 
-  input [BUF_COUNT-1:0] wrt1_en;
-  input [WIDTH-1:0] wrt1_addrE;
-  input [WIDTH-1:0] wrt1_addrO;
+  input pwire [BUF_COUNT-1:0] wrt1_en;
+  input pwire [WIDTH-1:0] wrt1_addrE;
+  input pwire [WIDTH-1:0] wrt1_addrO;
 
-  input chk0_en;
+  input pwire chk0_en;
   output pwire [BUF_COUNT-1:0] [1:0] chk0_addrEO;
-  input [WIDTH-1:0] chk0_addrE;
-  input [WIDTH-1:0] chk0_addrO;
+  input pwire [WIDTH-1:0] chk0_addrE;
+  input pwire [WIDTH-1:0] chk0_addrO;
 
-  input chk1_en;
+  input pwire chk1_en;
   output pwire [BUF_COUNT-1:0] [1:0] chk1_addrEO;
-  input [WIDTH-1:0] chk1_addrE;
-  input [WIDTH-1:0] chk1_addrO;
+  input pwire [WIDTH-1:0] chk1_addrE;
+  input pwire [WIDTH-1:0] chk1_addrO;
   
-  input chk2_en;
+  input pwire chk2_en;
   output pwire [BUF_COUNT-1:0] [1:0] chk2_addrEO;
-  input [WIDTH-1:0] chk2_addrE;
-  input [WIDTH-1:0] chk2_addrO;
+  input pwire [WIDTH-1:0] chk2_addrE;
+  input pwire [WIDTH-1:0] chk2_addrO;
   
-  input chk3_en;
+  input pwire chk3_en;
   output pwire [BUF_COUNT-1:0] [1:0] chk3_addrEO;
-  input [WIDTH-1:0] chk3_addrE;
-  input [WIDTH-1:0] chk3_addrO;
+  input pwire [WIDTH-1:0] chk3_addrE;
+  input pwire [WIDTH-1:0] chk3_addrO;
   
-  input chk4_en;
+  input pwire chk4_en;
   output pwire [BUF_COUNT-1:0] [1:0] chk4_addrEO;
-  input [WIDTH-1:0] chk4_addrE;
-  input [WIDTH-1:0] chk4_addrO;
+  input pwire [WIDTH-1:0] chk4_addrE;
+  input pwire [WIDTH-1:0] chk4_addrO;
   
-  input chk5_en;
+  input pwire chk5_en;
   output pwire [BUF_COUNT-1:0] [1:0] chk5_addrEO;
-  input [WIDTH-1:0] chk5_addrE;
-  input [WIDTH-1:0] chk5_addrO;
+  input pwire [WIDTH-1:0] chk5_addrE;
+  input pwire [WIDTH-1:0] chk5_addrO;
 
 
-  input [BUF_COUNT-1:0] upd0_en;
-  input [BUF_COUNT-1:0] upd1_en;
+  input pwire [BUF_COUNT-1:0] upd0_en;
+  input pwire [BUF_COUNT-1:0] upd1_en;
 
-  input [BUF_COUNT-1:0] free_en;
+  input pwire [BUF_COUNT-1:0] free_en;
   output pwire [BUF_COUNT-1:0]  free;
   output pwire [BUF_COUNT-1:0]  upd;
   output pwire [BUF_COUNT-1:0]  passe;
-  input [BUF_COUNT-1:0]  passe_en;
+  input pwire [BUF_COUNT-1:0]  passe_en;
   
   generate
       genvar t;

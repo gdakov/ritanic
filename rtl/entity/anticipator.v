@@ -6,15 +6,15 @@ module anticipator_ram(
   read1_addr,read1_data,
   read2_addr,read2_data,
   read3_addr,read3_data);
-  input clk;
-  input rst;
-  input [11:0] read0_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [11:0] read0_addr;
   output pwire [1:0] read0_data;
-  input [11:0] read1_addr;
+  input pwire [11:0] read1_addr;
   output pwire [1:0] read1_data;
-  input [11:0] read2_addr;
+  input pwire [11:0] read2_addr;
   output pwire [1:0] read2_data;
-  input [11:0] read3_addr;
+  input pwire [11:0] read3_addr;
   output pwire [1:0] read3_data;
 
   reg [1:0] ram[4095:0];

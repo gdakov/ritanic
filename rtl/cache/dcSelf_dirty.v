@@ -24,20 +24,20 @@ module dcache_dirty_ram(
   localparam DATA_WIDTH=8;
   localparam ADDR_COUNT=8;
 
-  input clk;
-  input rst;
-  input [ADDR_WIDTH-1:0] read_addr0;
-  input read_clkEn0;
+  input pwire clk;
+  input pwire rst;
+  input pwire [ADDR_WIDTH-1:0] read_addr0;
+  input pwire read_clkEn0;
   output pwire [DATA_WIDTH-1:0] read_data0;
 
-  input [ADDR_WIDTH-1:0] write_addr0;
-  input write_wen0;
-  input [DATA_WIDTH-1:0] write_bitEn0;
-  input [DATA_WIDTH-1:0] write_data0;
-  input [ADDR_WIDTH-1:0] write_addr1;
-  input write_wen1;
-  input [DATA_WIDTH-1:0] write_bitEn1;
-  input [DATA_WIDTH-1:0] write_data1;
+  input pwire [ADDR_WIDTH-1:0] write_addr0;
+  input pwire write_wen0;
+  input pwire [DATA_WIDTH-1:0] write_bitEn0;
+  input pwire [DATA_WIDTH-1:0] write_data0;
+  input pwire [ADDR_WIDTH-1:0] write_addr1;
+  input pwire write_wen1;
+  input pwire [DATA_WIDTH-1:0] write_bitEn1;
+  input pwire [DATA_WIDTH-1:0] write_data1;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
 
@@ -73,18 +73,18 @@ module dcache_dirty(
   localparam ADDR_WIDTH=6;
   localparam DATA_WIDTH=8;
 
-  input clk;
-  input rst;
-  input [ADDR_WIDTH-1:0] read_addr0;
-  input read_clkEn0;
+  input pwire clk;
+  input pwire rst;
+  input pwire [ADDR_WIDTH-1:0] read_addr0;
+  input pwire read_clkEn0;
   output pwire read_dirty0;
-  input [ADDR_WIDTH-1:0] write_addr0;
-  input write_wen0;
-  input [ADDR_WIDTH-1:0] write_addr1;
-  input write_wen1;
-  input insert;
-  input insert_dirty;
-  input init;
+  input pwire [ADDR_WIDTH-1:0] write_addr0;
+  input pwire write_wen0;
+  input pwire [ADDR_WIDTH-1:0] write_addr1;
+  input pwire write_wen1;
+  input pwire insert;
+  input pwire insert_dirty;
+  input pwire init;
 
   pwire [DATA_WIDTH-1:0] read_data0;
   pwire [DATA_WIDTH-1:0] write_data0;

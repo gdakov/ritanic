@@ -32,15 +32,15 @@ module dcache1_ram(
   localparam ADDR_COUNT=64;
   localparam DATA_WIDTH=77;
   
-  input clk;
-  input rst;
-  input [3:0] read_nClkEn;
-  input [3:0] [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire [3:0] read_nClkEn;
+  input pwire [3:0] [ADDR_WIDTH-1:0] read_addr;
   output pwire [3:0] [DATA_WIDTH-1:0] read_data;
-  input [`wport-1:0][ADDR_WIDTH-1:0] write_addr;
-  input [`wport-1:0][DATA_WIDTH-1:0] write_data;
-  input [`wport-1:0] write_wen;
-  input [`wport-1:0][8:0] write_ben;
+  input pwire [`wport-1:0][ADDR_WIDTH-1:0] write_addr;
+  input pwire [`wport-1:0][DATA_WIDTH-1:0] write_data;
+  input pwire [`wport-1:0] write_wen;
+  input pwire [`wport-1:0][8:0] write_ben;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [3:0][ADDR_WIDTH-1:0] read_addr_reg;
@@ -96,31 +96,31 @@ module dcache1_bank(
   localparam DATA_WIDTH=`dcache1_data_width;
   parameter INDEX=0;
   parameter [0:0] TOP=0;
-  input clk;
-  input rst;
-  input [3:0][ADDR_WIDTH-1:0] read_addrE0;
-  input [3:0] read_hitE0; //+1 cycle
-  input [3:0] [ADDR_WIDTH-1:0] read_addrO0;
-  input [3:0] read_hitO0; //+1 cycle
-  input [3:0] read_bankEn0;
-  input [3:0] read_odd0;
+  input pwire clk;
+  input pwire rst;
+  input pwire [3:0][ADDR_WIDTH-1:0] read_addrE0;
+  input pwire [3:0] read_hitE0; //+1 cycle
+  input pwire [3:0] [ADDR_WIDTH-1:0] read_addrO0;
+  input pwire [3:0] read_hitO0; //+1 cycle
+  input pwire [3:0] read_bankEn0;
+  input pwire [3:0] read_odd0;
   output pwire [3:0][1:0][76:0] read_data;
-  input [3:0][1:0][76:0][DATA_WIDTH-1:0] read_data_in;
+  input pwire [3:0][1:0][76:0][DATA_WIDTH-1:0] read_data_in;
   output pwire read_err;
-  input read_err_in;
+  input pwire read_err_in;
 
-  input [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
-  input [`wport-1:0]write_hitE0; //+1 cycle
-  input [`wport-1:0][ADDR_WIDTH-1:0] write_addrO0;
-  input [`wport-1:0]write_hitO0; //+1 cycle
-  input [`wport-1:0]write_bankEn0;
-  input [`wport-1:0][4:0] write_begin0;
-  input [`wport-1:0][4:0] write_end0;
-  input [`wport-1:0][3:0] write_bBen0;
-  input [`wport-1:0][3:0] write_enBen0;
-  input [3:0][`wport-1:0][DATA_WIDTH-1:0] write_data;
-  input ins_hit;
-  input init;
+  input pwire [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
+  input pwire [`wport-1:0]write_hitE0; //+1 cycle
+  input pwire [`wport-1:0][ADDR_WIDTH-1:0] write_addrO0;
+  input pwire [`wport-1:0]write_hitO0; //+1 cycle
+  input pwire [`wport-1:0]write_bankEn0;
+  input pwire [`wport-1:0][4:0] write_begin0;
+  input pwire [`wport-1:0][4:0] write_end0;
+  input pwire [`wport-1:0][3:0] write_bBen0;
+  input pwire [`wport-1:0][3:0] write_enBen0;
+  input pwire [3:0][`wport-1:0][DATA_WIDTH-1:0] write_data;
+  input pwire ins_hit;
+  input pwire init;
   
   pwire [3:0][1:0][ADDR_WIDTH-1:0] read_addr;
   pwire [3:0][1:0][DATA_WIDTH-1:0] read_data_ram;
@@ -279,80 +279,80 @@ module dcache1_way(
   localparam RAM_ADDR_WIDTH=`dcache1_addr_width;
   parameter [2:0] INDEX=0;
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   
-  input [3:0][ADDR_WIDTH-2:0] read_addrE0;
-  input [3:0][ADDR_WIDTH-2:0] read_addrO0;
-  input [3:0][BANK_COUNT-1:0] read_bank0;
-  input [3:0]read_clkEn0;
+  input pwire [3:0][ADDR_WIDTH-2:0] read_addrE0;
+  input pwire [3:0][ADDR_WIDTH-2:0] read_addrO0;
+  input pwire [3:0][BANK_COUNT-1:0] read_bank0;
+  input pwire [3:0]read_clkEn0;
   output pwire [3:0][1:0] read_hit0;
-  input [3:0]read_odd0;
-  input [3:0]read_split0;
+  input pwire [3:0]read_odd0;
+  input pwire [3:0]read_split0;
   output pwire [3:0][1:0] read_pbit0;
-  input [3:0][1:0] read_pbit0_in;
+  input pwire [3:0][1:0] read_pbit0_in;
   output pwire [3:0] read0_err;
   
 
-  input [BANK_COUNT-1:0] read_bankNoRead;//bits are 1 if other bank reads are 0
+  input pwire [BANK_COUNT-1:0] read_bankNoRead;//bits are 1 if other bank reads are 0
   
-  input read_invalidate; 
+  input pwire read_invalidate; 
 
   output pwire [BANK_COUNT-1:0] read_bankHit;
   
   output pwire [3:0][1:0][76:0] read_data;
-  input [3:0][1:0][76:0] read_data_in;
+  input pwire [3:0][1:0][76:0] read_data_in;
   output pwire [3:0] read_err;
-  input [3:0] read_err_in;
+  input pwire [3:0] read_err_in;
  
-  input [3:0][4:0] read_begin0;
+  input pwire [3:0][4:0] read_begin0;
 
 
-  input [3:0][1:0] read_low0;
+  input pwire [3:0][1:0] read_low0;
 
   inout [7:0] read_hitEi;
   inout [7:0] read_hitOi;
 
-  input [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0;
-  input [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
-  input [`wport-1:0][BANK_COUNT-1:0] write_bank0;
-  input [`wport-1:0][4:0] write_begin0;
-  input [`wport-1:0][4:0] write_end0;
-  input [`wport-1:0][3:0] write_bBen0;
-  input [`wport-1:0][3:0] write_enBen0;
-  input [`wport-1:0]write_clkEn0;
-  input [`wport-1:0]write_hit0;
-  input [`wport-1:0][1:0] write_pbit0;
-  input [`wport-1:0]write_d128_0;
+  input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0;
+  input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
+  input pwire [`wport-1:0][BANK_COUNT-1:0] write_bank0;
+  input pwire [`wport-1:0][4:0] write_begin0;
+  input pwire [`wport-1:0][4:0] write_end0;
+  input pwire [`wport-1:0][3:0] write_bBen0;
+  input pwire [`wport-1:0][3:0] write_enBen0;
+  input pwire [`wport-1:0]write_clkEn0;
+  input pwire [`wport-1:0]write_hit0;
+  input pwire [`wport-1:0][1:0] write_pbit0;
+  input pwire [`wport-1:0]write_d128_0;
   output pwire [`wport-1:0][1:0] write_hitCl0;
   output pwire [`wport-1:0][1:0] write_dupl0;
-  input [`wport-1:0]write_split0;
-  input [`wport-1:0]write_odd0;
+  input pwire [`wport-1:0]write_split0;
+  input pwire [`wport-1:0]write_odd0;
   output pwire [`wport-1:0] write0_err;
   
-  input write_insert_early;
-  input [36:0] write_addr;
-  input write_insert;    
-  input write_insertExclusive;
-  input write_insertDirty;
-  input [3:0][`wport-1:0][35:0] write_data;
-  input [15:0] write_dataPTR;
+  input pwire write_insert_early;
+  input pwire [36:0] write_addr;
+  input pwire write_insert;    
+  input pwire write_insertExclusive;
+  input pwire write_insertDirty;
+  input pwire [3:0][`wport-1:0][35:0] write_data;
+  input pwire [15:0] write_dataPTR;
   
 
 
   
   output pwire [5:0] err_tag;
   
-  input recent_in;
+  input pwire recent_in;
   output pwire recent_out;
-  input [5:0] insert_rand;
+  input pwire [5:0] insert_rand;
 
   output pwire insert_hit;
  
   output pwire [ADDR_WIDTH-1:0] wb_addr;
   output pwire wb_valid;  
-  input [5:0][6:0] puke_addr;
-  input [5:0] puke_en;
+  input pwire [5:0][6:0] puke_addr;
+  input pwire [5:0] puke_en;
   
   pwire [3:0] recent;
   
@@ -708,61 +708,61 @@ module dcache1(
   localparam WLINE_WIDTH=1024;
 /*verilator hier_block*/
   
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   
-  input [3:0][ADDR_WIDTH-2:0] read_addrE0;
-  input [3:0][ADDR_WIDTH-2:0] read_addrO0;
-  input [3:0][BANK_COUNT-1:0] read_bank0;
-  input [3:0]read_clkEn0;
+  input pwire [3:0][ADDR_WIDTH-2:0] read_addrE0;
+  input pwire [3:0][ADDR_WIDTH-2:0] read_addrO0;
+  input pwire [3:0][BANK_COUNT-1:0] read_bank0;
+  input pwire [3:0]read_clkEn0;
   output pwire reg [3:0] read_hit0;
   output pwire reg [3:0] [1:0] read_hitCl0;
-  input [3:0]read_odd0;
-  input [3:0]read_split0;
+  input pwire [3:0]read_odd0;
+  input pwire [3:0]read_split0;
   output pwire [3:0][127+8:0] read_dataA0;
   output pwire [3:0][1:0] read_pbit0;
-  input [3:0][4:0] read_beginA0;
-  input [3:0][1:0] read_low0;
-  input [3:0][4:0] read_sz0;
+  input pwire [3:0][4:0] read_beginA0;
+  input pwire [3:0][1:0] read_low0;
+  input pwire [3:0][4:0] read_sz0;
 
-  input  [3:0]  read_pf3;
+  input pwire  [3:0]  read_pf3;
 
   
-  input [BANK_COUNT-1:0] read_bankNoRead;
+  input pwire [BANK_COUNT-1:0] read_bankNoRead;
   
-  input read_invalidate; 
+  input pwire read_invalidate; 
 
-  input [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0;
-  input [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
-  input [`wport-1:0][BANK_COUNT-1:0] write_bank0;
-  input [`wport-1:0]write_clkEn0;
+  input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrE0;
+  input pwire [`wport-1:0][ADDR_WIDTH-2:0] write_addrO0;
+  input pwire [`wport-1:0][BANK_COUNT-1:0] write_bank0;
+  input pwire [`wport-1:0]write_clkEn0;
   output pwire reg [`wport-1:0]write_hit0;
   output pwire reg [`wport-1:0][1:0] write_hitCl0;
   output pwire reg [`wport-1:0][1:0] write_dupl0;
-  input [`wport-1:0]write_split0;
-  input [`wport-1:0]write_odd0;
-  input [`wport-1:0][4:0] write_begin0;
-  input [`wport-1:0][4:0] write_end0;
-  input [`wport-1:0][3:0] write_bgnBen0;
-  input [`wport-1:0][3:0] write_endBen0;
-  input [`wport-1:0][5*32-1:0] write_data0;
-  input [`wport-1:0][5*32-1:0] write_dataM0;
-  input [`wport-1:0][1:0] write_pbit0;
-  input [`wport-1:0]write_d128_0;
-  input write_clear;
+  input pwire [`wport-1:0]write_split0;
+  input pwire [`wport-1:0]write_odd0;
+  input pwire [`wport-1:0][4:0] write_begin0;
+  input pwire [`wport-1:0][4:0] write_end0;
+  input pwire [`wport-1:0][3:0] write_bgnBen0;
+  input pwire [`wport-1:0][3:0] write_endBen0;
+  input pwire [`wport-1:0][5*32-1:0] write_data0;
+  input pwire [`wport-1:0][5*32-1:0] write_dataM0;
+  input pwire [`wport-1:0][1:0] write_pbit0;
+  input pwire [`wport-1:0]write_d128_0;
+  input pwire write_clear;
   
-  input insert_en;    
-  input insert_from_ram;
-  input insert_exclusive;
-  input insert_dirty;
-  input [511:0] busIns_data;
-  input [7:0] busIns_dataPTR;
-  input insbus_A,insbus_B;
+  input pwire insert_en;    
+  input pwire insert_from_ram;
+  input pwire insert_exclusive;
+  input pwire insert_dirty;
+  input pwire [511:0] busIns_data;
+  input pwire [7:0] busIns_dataPTR;
+  input pwire insbus_A,insbus_B;
   output pwire [ADDR_WIDTH-1:0] expun_addr;
   output pwire expun_en;
-  input msrss_en;
-  input [15:0] msrss_addr;
-  input [64:0] msrss_data;
+  input pwire msrss_en;
+  input pwire [15:0] msrss_addr;
+  input pwire [64:0] msrss_data;
   //embedded segment register
   reg [64:0] emsr;
 
@@ -1630,7 +1630,7 @@ endmodule
 
 
 module dc1_strip_ECC(dataIn,dataOut);
-  input [39:1] dataIn;
+  input pwire [39:1] dataIn;
   output pwire [31:0] dataOut;
   
   assign dataOut={dataIn[38:33],dataIn[31:17],dataIn[15:9],dataIn[7:5],dataIn[3]};

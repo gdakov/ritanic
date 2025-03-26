@@ -25,12 +25,12 @@ module simd_non_socialiste(
   B,
   res
   );
-  input clk;
-  input rst;
-  input en;
-  input [12:0] operation;
-  input [67:0] A;
-  input [67:0] B;
+  input pwire clk;
+  input pwire rst;
+  input pwire en;
+  input pwire [12:0] operation;
+  input pwire [67:0] A;
+  input pwire [67:0] B;
   output pwire [67:0] res;
   
   pwire [67:0] res_X;

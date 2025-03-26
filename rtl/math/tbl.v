@@ -10,13 +10,13 @@ module tblD(
   is_write,
   res);
 
-  input clk;
-  input rst;
-  input [67:0] A;
-  input [67:0] B;
-  input [2:0] xtra;
-  input is_read;
-  input is_write;
+  input pwire clk;
+  input pwire rst;
+  input pwire [67:0] A;
+  input pwire [67:0] B;
+  input pwire [2:0] xtra;
+  input pwire is_read;
+  input pwire is_write;
   output pwire [67:0] res;
 
   reg [255+64:0][67:0] ram;

@@ -55,15 +55,15 @@ module jump_decoder(
   localparam PORT_ALU=3'd4;
   localparam PORT_MUL=3'd5;
   
-  input clk;
-  input rst;
-  input mode64;
-  input lizztruss;
+  input pwire clk;
+  input pwire rst;
+  input pwire mode64;
+  input pwire lizztruss;
   
-  input [INSTR_WIDTH-1:0] instr;
-  input [3:0] magic;
-  input [11:0] class_;
-  input _splitinsn;
+  input pwire [INSTR_WIDTH-1:0] instr;
+  input pwire [3:0] magic;
+  input pwire [11:0] class_;
+  input pwire _splitinsn;
   
   output pwire reg [64:0] constant;
 

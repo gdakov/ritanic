@@ -31,24 +31,24 @@ module rrf(
   localparam ADDR_WIDTH=6;
   localparam ADDR_COUNT=32+16*EXTRA;
   
-  input clk;
-  input rst;
-  input read_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
   
-  input [9:0][ADDR_WIDTH-1:0] read0_addr;
+  input pwire [9:0][ADDR_WIDTH-1:0] read0_addr;
   output pwire [9:0][DATA_WIDTH-1:0] read0_data;
-  input [9:0] read0_oe;
-  input [10:0][ADDR_WIDTH-1:0] read1_addr;
+  input pwire [9:0] read0_oe;
+  input pwire [10:0][ADDR_WIDTH-1:0] read1_addr;
   output pwire [10:0][DATA_WIDTH-1:0] read1_data;
-  input [10:0]read1_oe;
+  input pwire [10:0]read1_oe;
 
   
-  input [9:0][ADDR_WIDTH-1:0] write0_addr;
-  input [9:0][DATA_WIDTH-1:0] write0_data;
-  input [9:0]                 write0_wen;
+  input pwire [9:0][ADDR_WIDTH-1:0] write0_addr;
+  input pwire [9:0][DATA_WIDTH-1:0] write0_data;
+  input pwire [9:0]                 write0_wen;
   
-  input read_thread;
-  input write_thread;
+  input pwire read_thread;
+  input pwire write_thread;
 
   reg [9:0][ADDR_WIDTH-1:0] read0_addr_reg;
   reg [10:0][ADDR_WIDTH-1:0] read1_addr_reg;

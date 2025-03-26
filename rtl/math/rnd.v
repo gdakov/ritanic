@@ -24,15 +24,15 @@ module fprnd(
   toSNG,
   B);
 //rnd first, then denormal handling
-  input [80:0] A;
-  input rbit;
-  input tail;
-  input rndbit;
-  input [2:0] rmode;
-  input isDBL;
-  input isEXT;
-  input toDBL;
-  input toSNG;
+  input pwire [80:0] A;
+  input pwire rbit;
+  input pwire tail;
+  input pwire rndbit;
+  input pwire [2:0] rmode;
+  input pwire isDBL;
+  input pwire isEXT;
+  input pwire toDBL;
+  input pwire toSNG;
   output pwire [79:0] B;
 
   pwire [64:0] Ax;

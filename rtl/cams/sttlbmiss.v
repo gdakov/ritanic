@@ -29,14 +29,14 @@ module wtmiss_ram(
   localparam ADDR_WIDTH=2;
   localparam ADDR_COUNT=4;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -147,29 +147,29 @@ module wtmiss(
   localparam WQ_WIDTH=6;
   localparam TLB_IP_WIDTH=52;
  
-  input clk;
-  input rst;
-  input except;
-  input except_thread;
-  input read_clkEn;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire except_thread;
+  input pwire read_clkEn;
   output pwire reg doSkip;
 
-  input miss0;
-  input mOp0_en;
-  input mOp0_thread;
-  input [VADDR_WIDTH-1:0] mOp0_addrMain;
-  input [1:0] mOp0_type;
-  input [4:0] mOp0_sz;
-  input [BANK_COUNT-1:0] mOp0_banks;
-  input [4:0] mOp0_bank0;
-  input mOp0_odd;
-  input [1:0] mOp0_addr_low;
-  input mOp0_split;
-  input [8:0] mOp0_LSQ;
-  input [9:0] mOp0_II;
-  input [5:0] mOp0_WQ;
-  input [3:0] mOp0_attr;
-  input mOp0_lsflag;
+  input pwire miss0;
+  input pwire mOp0_en;
+  input pwire mOp0_thread;
+  input pwire [VADDR_WIDTH-1:0] mOp0_addrMain;
+  input pwire [1:0] mOp0_type;
+  input pwire [4:0] mOp0_sz;
+  input pwire [BANK_COUNT-1:0] mOp0_banks;
+  input pwire [4:0] mOp0_bank0;
+  input pwire mOp0_odd;
+  input pwire [1:0] mOp0_addr_low;
+  input pwire mOp0_split;
+  input pwire [8:0] mOp0_LSQ;
+  input pwire [9:0] mOp0_II;
+  input pwire [5:0] mOp0_WQ;
+  input pwire [3:0] mOp0_attr;
+  input pwire mOp0_lsflag;
 
   output pwire mOp0_en_o;
   output pwire mOp0_thread_o;
@@ -186,22 +186,22 @@ module wtmiss(
   output pwire [5:0] mOp0_WQ_o;
   output pwire mOp0_lsflag_o;
 
-  input miss1;
-  input mOp1_en;
-  input mOp1_thread;
-  input [VADDR_WIDTH-1:0] mOp1_addrMain;
-  input [1:0] mOp1_type;
-  input [4:0] mOp1_sz;
-  input [BANK_COUNT-1:0] mOp1_banks;
-  input [4:0] mOp1_bank0;
-  input mOp1_odd;
-  input [1:0] mOp1_addr_low;
-  input mOp1_split;
-  input [8:0] mOp1_LSQ;
-  input [9:0] mOp1_II;
-  input [5:0] mOp1_WQ;
-  input [3:0] mOp1_attr;
-  input mOp1_lsflag;
+  input pwire miss1;
+  input pwire mOp1_en;
+  input pwire mOp1_thread;
+  input pwire [VADDR_WIDTH-1:0] mOp1_addrMain;
+  input pwire [1:0] mOp1_type;
+  input pwire [4:0] mOp1_sz;
+  input pwire [BANK_COUNT-1:0] mOp1_banks;
+  input pwire [4:0] mOp1_bank0;
+  input pwire mOp1_odd;
+  input pwire [1:0] mOp1_addr_low;
+  input pwire mOp1_split;
+  input pwire [8:0] mOp1_LSQ;
+  input pwire [9:0] mOp1_II;
+  input pwire [5:0] mOp1_WQ;
+  input pwire [3:0] mOp1_attr;
+  input pwire mOp1_lsflag;
   
   output pwire mOp1_en_o;
   output pwire mOp1_thread_o;
@@ -228,7 +228,7 @@ module wtmiss(
   output pwire mlbreq_en;
   output pwire [VADDR_WIDTH-15:0] mlbreq_addr;
   output pwire [3:0] mlbreq_attr;
-  input mlbreq_ack;
+  input pwire mlbreq_ack;
 
   pwire [VADDR_WIDTH-1:0] RaddrMain[1:0];
   pwire enOut,last_out,enOutNull;

@@ -42,26 +42,26 @@ module lsq_decide_ret(
   except,
   except_thread
   );
-  input clk,rst;
-  input bStall;
-  input [5:0] dataB_ret_mask;
-//  input [5:0] dataB_pre_confl;
-  input [5:0] dataB_ld_confl;
-  input [5:0] dataB_wait_confl;
-  input [5:0] dataB_excpt;
-  input [23:0] dataB_exbits;
-  input dataB_thread;
-  input [5:0] dataB_II;
-  input [`lsqshare_width-1:0] dataB_data_shr;
-  input [3:0] dataB_II0;
-  input [3:0] dataB_II1;
-  input [3:0] dataB_II2;
-  input [3:0] dataB_II3;
-  input [3:0] dataB_II4;
-  input [3:0] dataB_II5;
-  input dataB_ready;
+  input pwire clk,rst;
+  input pwire bStall;
+  input pwire [5:0] dataB_ret_mask;
+//  input pwire [5:0] dataB_pre_confl;
+  input pwire [5:0] dataB_ld_confl;
+  input pwire [5:0] dataB_wait_confl;
+  input pwire [5:0] dataB_excpt;
+  input pwire [23:0] dataB_exbits;
+  input pwire dataB_thread;
+  input pwire [5:0] dataB_II;
+  input pwire [`lsqshare_width-1:0] dataB_data_shr;
+  input pwire [3:0] dataB_II0;
+  input pwire [3:0] dataB_II1;
+  input pwire [3:0] dataB_II2;
+  input pwire [3:0] dataB_II3;
+  input pwire [3:0] dataB_II4;
+  input pwire [3:0] dataB_II5;
+  input pwire dataB_ready;
   output pwire dataB_enOut;
-  input [5:0] cntrl_II;
+  input pwire [5:0] cntrl_II;
   output pwire [5:0] out_II;
   output pwire [9:0] retire_enOut;  
   output pwire reg [9:0] retire_fine; 
@@ -70,9 +70,9 @@ module lsq_decide_ret(
   output pwire reg [39:0] retire_exbitsx6;
   output pwire reg [9:0] retire_waitconfl; 
   output pwire reg [`lsqshare_width-1:0] dataB_shr_out;
-  input doRetire;
-  input except;
-  input except_thread;
+  input pwire doRetire;
+  input pwire except;
+  input pwire except_thread;
 
 //  reg non_ret;
   pwire [9:0] dataB_ret_mask2;

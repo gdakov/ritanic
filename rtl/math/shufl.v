@@ -30,19 +30,19 @@ module fperm(
   A,B,
   res);
   parameter C=1'b0;
-  input clk;
-  input rst;
-  input en;
-  input copyA;
-  input swpSngl;
-  input dupSngl;
-  input is_sqrt;
-  input is_div;
-  input tbl_read;
-  input tbl_write;
-  input [2:0] xtra;
-  input [67:0] A;
-  input [67:0] B;
+  input pwire clk;
+  input pwire rst;
+  input pwire en;
+  input pwire copyA;
+  input pwire swpSngl;
+  input pwire dupSngl;
+  input pwire is_sqrt;
+  input pwire is_div;
+  input pwire tbl_read;
+  input pwire tbl_write;
+  input pwire [2:0] xtra;
+  input pwire [67:0] A;
+  input pwire [67:0] B;
   output pwire [67:0] res;
 
   localparam [11:0] BIAS_D=12'd2047;

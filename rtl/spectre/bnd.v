@@ -11,10 +11,10 @@ limitations under the License.
 */
 
 module bnd(
-  input clk,
-  input rst,
-  input [64:0] A,
-  input [64:0] B,
+  input pwire clk,
+  input pwire rst,
+  input pwire [64:0] A,
+  input pwire [64:0] B,
   output pwire reg [64:0] C
   );
   pwire [43:0] DB;

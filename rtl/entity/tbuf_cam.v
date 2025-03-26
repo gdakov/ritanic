@@ -31,16 +31,16 @@ module tbufcam_buf(
   
   localparam WIDTH=11;
   
-  input clk;
-  input rst;
-  input except;
-  input except_thread;
-  input [WIDTH-1:0] new_addr;
-  input new_thread;
-  input new_en;
-  input [WIDTH-1:0] chk_addr0;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire except_thread;
+  input pwire [WIDTH-1:0] new_addr;
+  input pwire new_thread;
+  input pwire new_en;
+  input pwire [WIDTH-1:0] chk_addr0;
   output pwire chk_match0;
-  input [WIDTH-1:0] chk_addr1;
+  input pwire [WIDTH-1:0] chk_addr1;
   output pwire chk_match1;
   output pwire reg free;
   
@@ -87,16 +87,16 @@ module tbufcam(
   localparam WIDTH=11;
   localparam BUF_COUNT=4;
   
-  input clk;
-  input rst;
-  input except;
-  input except_thread;
-  input [WIDTH-1:0] new_addr;
-  input new_thread;
-  input new_en;
-  input [WIDTH-1:0] chk_addr0;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire except_thread;
+  input pwire [WIDTH-1:0] new_addr;
+  input pwire new_thread;
+  input pwire new_en;
+  input pwire [WIDTH-1:0] chk_addr0;
   output pwire chk_match0;
-  input [WIDTH-1:0] chk_addr1;
+  input pwire [WIDTH-1:0] chk_addr1;
   output pwire chk_match1;
   output pwire free;
 

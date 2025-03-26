@@ -13,9 +13,9 @@ limitations under the License.
 module addrcalcsec_mul(
   A,B,attr,res);
 
-  input [64:0] A;
-  input [11:0] B;
-  input [3:0] attr;
+  input pwire [64:0] A;
+  input pwire [11:0] B;
+  input pwire [3:0] attr;
   output pwire [64:0] res;
 
   pwire [7:0] low;

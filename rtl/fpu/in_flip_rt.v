@@ -18,13 +18,13 @@ module in_flip_rt(
   localparam CNT=4;
   parameter WIDTH=32;
   
-  input clk;
-  input rst;
-  input in_en;
+  input pwire clk;
+  input pwire rst;
+  input pwire in_en;
   output pause;
-  input [WIDTH-1:0] d_in;
+  input pwire [WIDTH-1:0] d_in;
   output pwire [WIDTH-1:0] d_out;
-  input dout_en;
+  input pwire dout_en;
   output pwire do_;
 
   reg [CNT-1:0] free;

@@ -24,14 +24,14 @@ module stq_adata_ram(
   );
   localparam WIDTH=`lsaddr_width+1;//adata+en
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [5:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [5:0] read_addr;
   output pwire [WIDTH-1:0] read_data;
-  input [2:0] writeA_wen;
-  input [2:0] [5:0] writeA_addr;
-  input [2:0] [WIDTH-1:0] writeA_data;
+  input pwire [2:0] writeA_wen;
+  input pwire [2:0] [5:0] writeA_addr;
+  input pwire [2:0] [WIDTH-1:0] writeA_data;
 
   reg [WIDTH-1:0] ram[63:0];
   reg [5:0] readA_addr_reg;

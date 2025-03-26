@@ -31,19 +31,19 @@ module suggstQ_buf(
   parameter INDEX=0;
   parameter INITEN=0;
   
-  input clk;
-  input rst;
-  input [15:0] write_instrEn;
-  input write_thread;
-  input write_wen;
-  input [15:0][WADDR_WIDTH-1:0] write_addr0;
-  input [15:0][WIDTH-1:0] write_instr0;
-  input [15:0][OTHER-1:0] write_other0;
+  input pwire clk;
+  input pwire rst;
+  input pwire [15:0] write_instrEn;
+  input pwire write_thread;
+  input pwire write_wen;
+  input pwire [15:0][WADDR_WIDTH-1:0] write_addr0;
+  input pwire [15:0][WIDTH-1:0] write_instr0;
+  input pwire [15:0][OTHER-1:0] write_other0;
 
-  input read_thread;
-  input read_clkEn;
+  input pwire read_thread;
+  input pwire read_clkEn;
   
-  input [10:0][ADDR_WIDTH-1:0] read_addr0;
+  input pwire [10:0][ADDR_WIDTH-1:0] read_addr0;
   output pwire [10:0][WIDTH-1:0] read_instr0;
   output pwire [10:0][OTHER-1:0] read_other0;
   
@@ -113,18 +113,18 @@ module suggstQ_box(
   localparam ADDR_WIDTH=6;
   parameter INDEX=0;
   
-  input clk;
-  input rst;
-  input [15:0] write_instrEn;
-  input write_thread;
-  input write_wen;
-  input [15:0][ADDR_WIDTH-1:0] write_addr0;
-  input [15:0][WIDTH-1:0] write_instr0;
-  input [15:0][OTHER-1:0] write_other0;
+  input pwire clk;
+  input pwire rst;
+  input pwire [15:0] write_instrEn;
+  input pwire write_thread;
+  input pwire write_wen;
+  input pwire [15:0][ADDR_WIDTH-1:0] write_addr0;
+  input pwire [15:0][WIDTH-1:0] write_instr0;
+  input pwire [15:0][OTHER-1:0] write_other0;
 
-  input read_thread;
-  input read_clkEn;
-  input [10:0][ADDR_WIDTH-1:0] read_addr0;
+  input pwire read_thread;
+  input pwire read_clkEn;
+  input pwire [10:0][ADDR_WIDTH-1:0] read_addr0;
   output pwire [10:0][WIDTH-1:0] read_instr0;
   output pwire [10:0][OTHER-1:0] read_other0;
   
@@ -198,20 +198,20 @@ module suggestions(
   localparam ADDR_WIDTH=6;
   parameter INDEX=0;
   
-  input clk;
-  input rst;
-  input [15:0] write_instrEn;
-  input write_thread;
-  input write_wen;
+  input pwire clk;
+  input pwire rst;
+  input pwire [15:0] write_instrEn;
+  input pwire write_thread;
+  input pwire write_wen;
   output pwire doFStall;
-  input except;
-  input except_thread;
-  input [15:0][WIDTH-1:0] write_instr0;
-  input [15:0][OTHER-1:0] write_other0;
+  input pwire except;
+  input pwire except_thread;
+  input pwire [15:0][WIDTH-1:0] write_instr0;
+  input pwire [15:0][OTHER-1:0] write_other0;
 
-  input read_thread;
-  input read_clkEn;
-  input [10:0] read_instrEn;
+  input pwire read_thread;
+  input pwire read_clkEn;
+  input pwire [10:0] read_instrEn;
   output pwire [10:0] read_avail;
   output pwire [10:0][WIDTH-1:0] read_instr0;
   output pwire [10:0][OTHER-1:0] read_other0;
@@ -340,9 +340,9 @@ module instrQ_bndAdd(addr,addr_new,cnt);
 
   parameter CNT_COUNT=16;
   
-  input [5:0] addr;
+  input pwire [5:0] addr;
   output pwire [5:0] addr_new;
-  input [CNT_COUNT:0] cnt;
+  input pwire [CNT_COUNT:0] cnt;
   
   
   generate
@@ -359,12 +359,12 @@ endmodule
 module instrQ_upDown(addr,addr_new,fstall,inEn,stall,outEn,doFStall);
 
   
-  input [5:0] addr;
+  input pwire [5:0] addr;
   output pwire [5:0] addr_new;
-  input fstall;
-  input [15:0] inEn;
-  input stall;
-  input [9:0] outEn;
+  input pwire fstall;
+  input pwire [15:0] inEn;
+  input pwire stall;
+  input pwire [9:0] outEn;
   output pwire doFStall;
   
  

@@ -48,65 +48,65 @@ module stq(
   WLN0_en,WLN0_adata,WLN0_data,WLN0_dataN,WLN0_pbit,
   WLN1_en,WLN1_adata,WLN1_data,WLN1_dataN,WLN1_pbit
   );
-  input clk;
+  input pwire clk;
 
-  input rst;
+  input pwire rst;
 
-  input excpt;
+  input pwire excpt;
 
-  input stall;
+  input pwire stall;
   output pwire doStall;
 
-  input aStall;
+  input pwire aStall;
 
   output pwire aDoStall;
 
-  input st_stall;
+  input pwire st_stall;
 
-  input rsStall;
+  input pwire rsStall;
   output pwire reg [3:0] rsDoStall;
 
-  input do_retire;
-  input [15:0] ret_xbreak;
-  input [5:0] ret_II;
+  input pwire do_retire;
+  input pwire [15:0] ret_xbreak;
+  input pwire [5:0] ret_II;
   output pwire [5:0] ret_II_out;
 
-  input [`lsaddr_width-1:0] chk0_adata;
-  input chk0_en;
-  input [1:0] chk0_enD;
+  input pwire [`lsaddr_width-1:0] chk0_adata;
+  input pwire chk0_en;
+  input pwire [1:0] chk0_enD;
 
-  input [`lsaddr_width-1:0] chk1_adata;
-  input chk1_en;
-  input [1:0] chk1_enD;
+  input pwire [`lsaddr_width-1:0] chk1_adata;
+  input pwire chk1_en;
+  input pwire [1:0] chk1_enD;
 
-  input [`lsaddr_width-1:0] chk2_adata;
-  input chk2_en;
-  input [1:0] chk2_enD;
+  input pwire [`lsaddr_width-1:0] chk2_adata;
+  input pwire chk2_en;
+  input pwire [1:0] chk2_enD;
 
-  input [`lsaddr_width-1:0] chk3_adata;
-  input chk3_en;
-  input [1:0] chk3_enD;
+  input pwire [`lsaddr_width-1:0] chk3_adata;
+  input pwire chk3_en;
+  input pwire [1:0] chk3_enD;
 
-  input chk_rdy;
+  input pwire chk_rdy;
 
-  input [5:0] chk_LSQ;
-  input [5:0] chk_LSQu;
+  input pwire [5:0] chk_LSQ;
+  input pwire [5:0] chk_LSQu;
 
-  input [`lsqshare_width-1:0] LSQ_shr_data;
+  input pwire [`lsqshare_width-1:0] LSQ_shr_data;
   
-  input [59:0][`lsaddr_width-1:0] wrt0_adata;
-  input [59:0]wrt0_en;
-  input [59:0][8:0] wrt0_LSQ;
+  input pwire [59:0][`lsaddr_width-1:0] wrt0_adata;
+  input pwire [59:0]wrt0_en;
+  input pwire [59:0][8:0] wrt0_LSQ;
 
 
-  input [5:0] confl;
-  input [5:0] confl_SMP;
-  input [5:0] confl_X;
+  input pwire [5:0] confl;
+  input pwire [5:0] confl_SMP;
+  input pwire [5:0] confl_X;
   output pwire reg [5:0] confl_out;
 
-  input [59:0][5:0] upd0_WQ;
-  input [59:0]upd0_en;
-  input [59:0][1:0] upd0_pbit;
+  input pwire [59:0][5:0] upd0_WQ;
+  input pwire [59:0]upd0_en;
+  input pwire [59:0][1:0] upd0_pbit;
 
 
 
@@ -395,16 +395,16 @@ module stq(
   reg [64:0] mask2;
   
   function [31:0] lowt;
-      input [31:0] data;
+      input pwire [31:0] data;
       begin
           lowt=data&{data[0],data[31:1]};
       end
   endfunction
   function [3:0] get_ld_bytes;
-      input [4:0] sz;
-      input [7:0] banks;
-      input [2:0] index;
-      input [1:0] low;
+      input pwire [4:0] sz;
+      input pwire [7:0] banks;
+      input pwire [2:0] index;
+      input pwire [1:0] low;
       reg [7:0] first;
       reg [7:0] last;
       begin
@@ -434,10 +434,10 @@ module stq(
       end
   endfunction
   function [3:0] get_st_bytes;
-      input [4:0] sz;
-      input [7:0] banks;
-      input [2:0] index;
-      input [1:0] low;
+      input pwire [4:0] sz;
+      input pwire [7:0] banks;
+      input pwire [2:0] index;
+      input pwire [1:0] low;
       reg [7:0] first;
       reg [7:0] last;
       begin

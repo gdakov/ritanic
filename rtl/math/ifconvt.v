@@ -30,13 +30,13 @@ module ifconv_mod(
 
   localparam [15:0] BIAS=16'h7fff;
 
-  input clk;
-  input rst;
-  input en;
-  input clkEn;
-  input [64:0] A;
-  input toDBL,toEXT,toSNG;
-  input isS;
+  input pwire clk;
+  input pwire rst;
+  input pwire en;
+  input pwire clkEn;
+  input pwire [64:0] A;
+  input pwire toDBL,toEXT,toSNG;
+  input pwire isS;
   output pwire [81:0] res;
   output pwire [1:0] rtyp;
   output pwire reg alt;

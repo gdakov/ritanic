@@ -14,7 +14,7 @@ limitations under the License.
 //verilator lint_off WIDTH
 module hamingChk32(data,hasError,error);
   parameter WIDTH=38;
-  input [WIDTH-1:0] data;
+  input pwire [WIDTH-1:0] data;
   output pwire hasError;
   output pwire [5:0] error;
  
@@ -32,7 +32,7 @@ endmodule
 
 module eccChk32(data,hasError,hardError);
   parameter WIDTH=39;
-  input [WIDTH-1:0] data;
+  input pwire [WIDTH-1:0] data;
   output pwire hasError;
   output pwire hardError;
 
@@ -47,7 +47,7 @@ endmodule
 
 module hamingGet32(data,dataH);
   parameter WIDTH=32;
-  input [WIDTH-1:0] data;
+  input pwire [WIDTH-1:0] data;
   output pwire reg [WIDTH+5:0] dataH;
   
   reg [WIDTH-1:0] errbits[5:0];
@@ -80,7 +80,7 @@ endmodule
 
 module EccGet32(data,dataH);
   parameter WIDTH=32;
-  input [WIDTH-1:0] data;
+  input pwire [WIDTH-1:0] data;
   output pwire [WIDTH+6:0] dataH;
   hamingGet32 #(WIDTH) ham_mod(data,dataH[WIDTH+5:0]);
   assign dataH[WIDTH+6]=^dataH[WIDTH+5:0];
@@ -89,14 +89,14 @@ endmodule
 
 
 module dc1_strip_par(in,out);
-  input [35:0] in;
+  input pwire [35:0] in;
   output pwire [31:0] out;
   
   assign out={in[34:27],in[25:18],in[16:9],in[7:0]};
 endmodule
 
 module dc1_get_par(in,out);
-  input [31:0] in;
+  input pwire [31:0] in;
   output pwire [35:0] out;
 
   assign out={^in[31:24],in[31:24],^in[23:16],in[23:16],^in[15:8],in[15:8],^in[7:0],in[7:0]};

@@ -14,16 +14,16 @@ limitations under the License.
 `include "../struct.sv"
 
 module pfoff_buf(clk,rst,write_en,write_addr,read_en,read_addr,free_en,free,purged,chk_addr,chk_en);
-  input clk;
-  input rst;
-  input write_en;
-  input [36:0] write_addr;
-  input read_en;
+  input pwire clk;
+  input pwire rst;
+  input pwire write_en;
+  input pwire [36:0] write_addr;
+  input pwire read_en;
   output pwire [36:0] read_addr;
-  input free_en;
+  input pwire free_en;
   output pwire reg free;
   output pwire reg purged;
-  input [36:0] chk_addr;
+  input pwire [36:0] chk_addr;
   output pwire chk_en;
 
   reg [36:0] addr;
@@ -52,15 +52,15 @@ endmodule
 
 module pfoff(clk,rst,purge_can,purge_en,purge_addr,read_addr,read_chk,write_en,write_addr);
   parameter WIDTH=7;//20 for data?
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   output purge_can;
-  input purge_en;
+  input pwire purge_en;
   output pwire [36:0] purge_addr;
-  input [36:0] read_addr;
+  input pwire [36:0] read_addr;
   output pwire read_chk;
-  input write_en;
-  input [36:0] write_addr;
+  input pwire write_en;
+  input pwire [36:0] write_addr;
 
   reg [WIDTH-1:0] write_pos;
   pwire [WIDTH-1:0] read_pos;
@@ -99,14 +99,14 @@ module dc0_cntrl_ram(
   localparam DATA_WIDTH=`mOpC_width+2+16;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -137,14 +137,14 @@ module dc0_cntrlD_ram(
   localparam DATA_WIDTH=128+16;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -175,14 +175,14 @@ module dc0_cntrlC_ram(
   localparam DATA_WIDTH=37+5;
   localparam ADDR_COUNT=8;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -216,14 +216,14 @@ module dc0_cntrlC2w_ram(
   localparam DATA_WIDTH=37+5;
   localparam ADDR_COUNT=8;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -256,14 +256,14 @@ module dc0_cntrlC1_ram(
   localparam DATA_WIDTH=37+5+1+1+13;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -295,14 +295,14 @@ module dc0_cntrlM_ram(
   localparam DATA_WIDTH=37+5+1+1+13;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -332,14 +332,14 @@ module dc0_cntrlM1_ram(
   localparam DATA_WIDTH=37+1+1;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -370,14 +370,14 @@ module dc0_cntrlMiC2_ram(
   localparam DATA_WIDTH=37+5;
   localparam ADDR_COUNT=32;
   
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr;
   output pwire [DATA_WIDTH-1:0] read_data;
-  input [ADDR_WIDTH-1:0] write_addr;
-  input [DATA_WIDTH-1:0] write_data;
-  input write_wen;
+  input pwire [ADDR_WIDTH-1:0] write_addr;
+  input pwire [DATA_WIDTH-1:0] write_data;
+  input pwire write_wen;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr_reg;
@@ -455,45 +455,45 @@ module dc0_cntrl(
   parameter [4:0] ID=0;
   localparam STALL_CNT=12;
   localparam ADDR_WIDTH=36;
-  input clk;
-  input rst;
+  input pwire clk;
+  input pwire rst;
   output pwire doSkip;
-  input [36:0] read_addr;
-  input read_en;
-  input [4:0] read_req;
-  input read_dupl;
-  input read_want_excl;
-  input read_io;
-  input [4:0] read_sz;
-  input [4:0] read_bank0;
-  input [1:0] read_low;
-  input [36:0] Cread_addr;
-  input Cread_en;
-  input [4:0] Cread_req;
-  input [1:0] write0_clkEn;
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input [31:0] write_bankEn0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input write_odd0,write_split0;
-  input [159:0] write_data0;
-  input [1:0] write_pbit0;
-  input write_d128_0;
-  input [1:0] write1_clkEn;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input [31:0] write_bankEn1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
-  input write_odd1,write_split1;
-  input [159:0] write_data1;
-  input [1:0] write_pbit1;
-  input write_d128_1;
+  input pwire [36:0] read_addr;
+  input pwire read_en;
+  input pwire [4:0] read_req;
+  input pwire read_dupl;
+  input pwire read_want_excl;
+  input pwire read_io;
+  input pwire [4:0] read_sz;
+  input pwire [4:0] read_bank0;
+  input pwire [1:0] read_low;
+  input pwire [36:0] Cread_addr;
+  input pwire Cread_en;
+  input pwire [4:0] Cread_req;
+  input pwire [1:0] write0_clkEn;
+  input pwire [ADDR_WIDTH-1:0] write_addrE0;
+  input pwire [ADDR_WIDTH-1:0] write_addrO0;
+  input pwire [31:0] write_bankEn0;
+  input pwire [4:0] write_begin0;
+  input pwire [4:0] write_end0;
+  input pwire [3:0] write_bBen0;
+  input pwire [3:0] write_enBen0;
+  input pwire write_odd0,write_split0;
+  input pwire [159:0] write_data0;
+  input pwire [1:0] write_pbit0;
+  input pwire write_d128_0;
+  input pwire [1:0] write1_clkEn;
+  input pwire [ADDR_WIDTH-1:0] write_addrE1;
+  input pwire [ADDR_WIDTH-1:0] write_addrO1;
+  input pwire [31:0] write_bankEn1;
+  input pwire [4:0] write_begin1;
+  input pwire [4:0] write_end1;
+  input pwire [3:0] write_bBen1;
+  input pwire [3:0] write_enBen1;
+  input pwire write_odd1,write_split1;
+  input pwire [159:0] write_data1;
+  input pwire [1:0] write_pbit1;
+  input pwire write_d128_1;
   output pwire [ADDR_WIDTH-1:0] writeI_addrE0;
   output pwire writeI_hitE0; //+1 cycle
   output pwire [ADDR_WIDTH-1:0] writeI_addrO0;
@@ -529,24 +529,24 @@ module dc0_cntrl(
   output pwire readI_io;
   output pwire [64:0] readI_dataIO;
   output pwire readI_ins_A,readI_ins_B;
-  input miss_en;
-  input [36:0] miss_addr;
-  input [4:0] miss_req;
-  input miss_dupl;
-  input miss_want_excl;
+  input pwire miss_en;
+  input pwire [36:0] miss_addr;
+  input pwire [4:0] miss_req;
+  input pwire miss_dupl;
+  input pwire miss_want_excl;
   output pwire [`rbus_width-1:0] rbus_signals;
   output pwire [9:0] rbus_src_req;
   output pwire [9:0] rbus_dst_req;
   output pwire [36:0] rbus_address;
-  input rbus_can;
+  input pwire rbus_can;
   output pwire rbus_want;
   output pwire [4:0] rbus_bank0;
   output pwire [4:0] rbus_sz;
   output pwire [1:0] rbus_low;
-  input [`rbusAN_width-1:0] rbusAN_signals;
-  input [9:0] rbusAN_src_req;
-  input [9:0] rbusAN_dst_req;
-  input [64:0] rbusAN_data64;
+  input pwire [`rbusAN_width-1:0] rbusAN_signals;
+  input pwire [9:0] rbusAN_src_req;
+  input pwire [9:0] rbusAN_dst_req;
+  input pwire [64:0] rbusAN_data64;
 //  output pwire rbusAN_en_out;
 
   pwire [36:0] rbusAN_addr_out;

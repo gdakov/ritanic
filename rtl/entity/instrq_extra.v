@@ -30,26 +30,26 @@ module instrQextra_ram(
   localparam ADDR_WIDTH=5;
   localparam ADDR_COUNT=32;
 
-  input clk;
-  input rst;
-  input read_clkEn;
-  input [ADDR_WIDTH-1:0] read_addr0;
+  input pwire clk;
+  input pwire rst;
+  input pwire read_clkEn;
+  input pwire [ADDR_WIDTH-1:0] read_addr0;
   output pwire [DATA_WIDTH-1:0] read_data0;
-  input [ADDR_WIDTH-1:0] read_addr1;
+  input pwire [ADDR_WIDTH-1:0] read_addr1;
   output pwire [DATA_WIDTH-1:0] read_data1;
 
-  input [ADDR_WIDTH-1:0] write_addr0;
-  input [DATA_WIDTH-1:0] write_data0;
-  input write_wen0;
-  input [ADDR_WIDTH-1:0] write_addr1;
-  input [DATA_WIDTH-1:0] write_data1;
-  input write_wen1;
-  input [ADDR_WIDTH-1:0] write_addr2;
-  input [DATA_WIDTH-1:0] write_data2;
-  input write_wen2;
-  input [ADDR_WIDTH-1:0] write_addr3;
-  input [DATA_WIDTH-1:0] write_data3;
-  input write_wen3;
+  input pwire [ADDR_WIDTH-1:0] write_addr0;
+  input pwire [DATA_WIDTH-1:0] write_data0;
+  input pwire write_wen0;
+  input pwire [ADDR_WIDTH-1:0] write_addr1;
+  input pwire [DATA_WIDTH-1:0] write_data1;
+  input pwire write_wen1;
+  input pwire [ADDR_WIDTH-1:0] write_addr2;
+  input pwire [DATA_WIDTH-1:0] write_data2;
+  input pwire write_wen2;
+  input pwire [ADDR_WIDTH-1:0] write_addr3;
+  input pwire [DATA_WIDTH-1:0] write_data3;
+  input pwire write_wen3;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [ADDR_WIDTH-1:0] read_addr0_reg;
@@ -79,10 +79,10 @@ module iqe_inc_addr(
   inc,
   inc_en
   );
-  input [3:0] addr;
+  input pwire [3:0] addr;
   output pwire [3:0] new_addr;
-  input [4:0] inc;
-  input inc_en;
+  input pwire [4:0] inc;
+  input pwire inc_en;
 
   pwire [4:0] inc2=(~inc_en) ? 5'd1 : inc;
 
@@ -100,11 +100,11 @@ module iqe_up_down(
   dec,dec_en,
   count,count_new
   );
-  input [4:0] inc;
-  input inc_en;
-  input [2:0] dec;
-  input dec_en;
-  input [4:0] count;
+  input pwire [4:0] inc;
+  input pwire inc_en;
+  input pwire [2:0] dec;
+  input pwire dec_en;
+  input pwire [4:0] count;
   output pwire [4:0] count_new;
   
   pwire  [4:-2] cnt;
@@ -157,25 +157,25 @@ module instrQextra(
   localparam ADDR_WIDTH=5;
   localparam ADDR_COUNT=32;
 
-  input clk;
-  input rst;
-  input except;
-  input except_thread;
-  input fStall;
+  input pwire clk;
+  input pwire rst;
+  input pwire except;
+  input pwire except_thread;
+  input pwire fStall;
   output pwire doFStall;
-  input stall;
-  input read_thread;
-  input [2:0] read_cnt;
+  input pwire stall;
+  input pwire read_thread;
+  input pwire [2:0] read_cnt;
   output pwire [DATA_WIDTH-1:0] read_data0;
   output pwire [DATA_WIDTH-1:0] read_data1;
-  input write_wen;
-  input write_thread;
-  input [4:0] write_cnt;
-  input [4:0] write_start;
-  input [DATA_WIDTH-1:0] write_data0;
-  input [DATA_WIDTH-1:0] write_data1;
-  input [DATA_WIDTH-1:0] write_data2;
-  input [DATA_WIDTH-1:0] write_data3;
+  input pwire write_wen;
+  input pwire write_thread;
+  input pwire [4:0] write_cnt;
+  input pwire [4:0] write_start;
+  input pwire [DATA_WIDTH-1:0] write_data0;
+  input pwire [DATA_WIDTH-1:0] write_data1;
+  input pwire [DATA_WIDTH-1:0] write_data2;
+  input pwire [DATA_WIDTH-1:0] write_data3;
 
   reg [3:0] read_addr0[1:0];
   reg [3:0] read_addr1[1:0];

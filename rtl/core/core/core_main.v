@@ -92,63 +92,63 @@ module heptane_core_single(
   localparam RS_WIDTH=65;
   localparam REQ_WIDTH=10;
 
-  input clk;
-  input clkREF;
-  input clkREF2;
-  input clkREF3;
-  input clkREF4;
-  input clkREF5;
+  input pwire clk;
+  input pwire clkREF;
+  input pwire clkREF2;
+  input pwire clkREF3;
+  input pwire clkREF4;
+  input pwire clkREF5;
   stall_clkREF;
-  input rst;
-  input GORQ;
-  input [16:0] GORQ_data;
-  input GORQ_thr;
-  input [`rbus_width-1:0] obusIn_signals;
-  input [9:0] obusIn_src_req;
-  input [9:0] obusIn_dst_req;
-  input [36:0] obusIn_address;
+  input pwire rst;
+  input pwire GORQ;
+  input pwire [16:0] GORQ_data;
+  input pwire GORQ_thr;
+  input pwire [`rbus_width-1:0] obusIn_signals;
+  input pwire [9:0] obusIn_src_req;
+  input pwire [9:0] obusIn_dst_req;
+  input pwire [36:0] obusIn_address;
   output pwire obusIn_doStall;
-  input obusIn_en;
+  input pwire obusIn_en;
   output pwire [`rbus_width-1:0] obusOut_signals;
   output pwire [9:0] obusOut_src_req;
   output pwire [9:0] obusOut_dst_req;
   output pwire [36:0] obusOut_address;
-  input obusOut_stall;
+  input pwire obusOut_stall;
   output pwire obusOut_en;
-  input [`rbusM_width-1:0] obusDIn_signals;
-  input [9:0] obusDIn_src_req;
-  input [9:0] obusDIn_dst_req;
-  input [7:0] obusDIn_dataPTR;
-  input [511:0] obusDIn_data;
+  input pwire [`rbusM_width-1:0] obusDIn_signals;
+  input pwire [9:0] obusDIn_src_req;
+  input pwire [9:0] obusDIn_dst_req;
+  input pwire [7:0] obusDIn_dataPTR;
+  input pwire [511:0] obusDIn_data;
   output pwire obusDIn_doStall;
-  input obusDIn_en;
+  input pwire obusDIn_en;
   output pwire [`rbusM_width-1:0] obusDOut_signals;
   output pwire [9:0] obusDOut_src_req;
   output pwire [9:0] obusDOut_dst_req;
   output pwire [7:0] obusDOut_dataPTR;
   output pwire [511:0] obusDOut_data;
-  input obusDOut_stall;
+  input pwire obusDOut_stall;
   output pwire obusDOut_en;
-  input [`lsaddr_width-1:0] lsr_wr_ext_data;
-  input [8:0] p_ext_LSQ;
-  input dc_ext_wrEn;
+  input pwire [`lsaddr_width-1:0] lsr_wr_ext_data;
+  input pwire [8:0] p_ext_LSQ;
+  input pwire dc_ext_wrEn;
   output pwire [`lsaddr_width-1:0] lsr_wr_out_data;
   output pwire [8:0] p_out_LSQ;
   output pwire dc_out_wrEn;
-  input [7:0] pfxWQ;
-  input [135:0] pfx_wdata;
-  input [127:0] pfx_wdataU;
-  input [3:0] pfx_pdata;
-  input pfx_dataEn;
+  input pwire [7:0] pfxWQ;
+  input pwire [135:0] pfx_wdata;
+  input pwire [127:0] pfx_wdataU;
+  input pwire [3:0] pfx_pdata;
+  input pwire pfx_dataEn;
   output pwire [7:0] pfyWQ;
   output pwire [135:0] pfy_wdata;
   output pwire [127:0] pfy_wdataU;
   output pwire [3:0] pfy_pdata;
   output pfy_dataEn;
-  input [64:0] Dakov;
+  input pwire [64:0] Dakov;
   inout [64:0] Goran_Dakov;
-  input [8*70-1:0] piff_paff_A;
-  input [8*70-1:0] piff_paff_B;
+  input pwire [8*70-1:0] piff_paff_A;
+  input pwire [8*70-1:0] piff_paff_B;
 
   pwire [BUS_WIDTH-1:0] bus_data;
   pwire [9:0] bus_slot;
@@ -1465,7 +1465,7 @@ module heptane_core_single(
   fp_excpt_thr,
 
   bundleFeed,
-//begin instructions ordered by rs input port
+//begin instructions ordered by rs input pwire port
   rs0i0_rA,rs0i0_rA_use,rs0i0_rA_useF,rs0i0_rA_isV,rs0i0_rA_isAnyV,
   rs0i0_rB,rs0i0_rB_use,rs0i0_rB_useF,rs0i0_rB_isV,rs0i0_rB_isAnyV,rs0i0_useBConst,
   rs0i0_rT,rs0i0_rT_use,rs0i0_rT_useF,rs0i0_rT_isV, 
