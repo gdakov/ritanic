@@ -31,10 +31,10 @@ module tblD(
   pwire [5:0] mask1;
 
 
-  assign res=is_read && ~xtra[2] | ~|xtra[1:0] ? ram[(xtra[1:0]&{2{~xtra[2]}})+bits*4+xtra[2]*256]^{3'b0,A[64]&&(xtra==3'b10||xtra==3'b0),64'b0} : 68'bz;
-  assign res=is_read && xtra==3'd5 ? {A[67:66],A[65:53],A[52:0]}&{mask0<<1,47'b0} : 68'bz;
-  assign res=is_read && xtra==3'd6 ? {A[67:66],A[65:53],A[52:0]}&{mask0<<2,47'b0} : 68'bz;
-  assign res=is_read && xtra==3'd7 ? {A[67:66],A[65:53],A[52:0]}&{mask1<<1,47'b0} : 68'bz;
+  assign res=is_read && ~xtra[2] | ~|xtra[1:0] ? ram[(xtra[1:0]&{2{~xtra[2]}})+bits*4+xtra[2]*256]^{3'b0,A[64]&&(pwh#(3)::cmpEQ(xtra,3'b10)||pwh#(3)::cmpEQ(xtra,3'b0)),64'b0} : 68'bz;
+  assign res=is_read && pwh#(3)::cmpEQ(xtra,3'd5) ? {A[67:66],A[65:53],A[52:0]}&{mask0<<1,47'b0} : 68'bz;
+  assign res=is_read && pwh#(3)::cmpEQ(xtra,3'd6) ? {A[67:66],A[65:53],A[52:0]}&{mask0<<2,47'b0} : 68'bz;
+  assign res=is_read && pwh#(3)::cmpEQ(xtra,3'd7) ? {A[67:66],A[65:53],A[52:0]}&{mask1<<1,47'b0} : 68'bz;
 
 
   always @* begin
@@ -50,12 +50,12 @@ module tblD(
       if (xtra[1:0]==2'd0 && A[65:54]==2046) bits0= {1'b1,A[53:49]};
 
       bits1=0;
-      if (xtra==3'd1 && A[65:54]==2041) bits1= {A[54],5'b0};  
-      if (xtra==3'd1 && A[65:54]==2042) bits1= {A[54],1'b1,4'b0};  
-      if (xtra==3'd1 && A[65:54]==2043) bits1= {A[54],1'b1,3'b0,A[53]};  
-      if (xtra==3'd1 && A[65:54]==2044) bits1= {A[54],1'b1,2'b0,A[53:52]};  
-      if (xtra==3'd1 && A[65:54]==2045) bits1= {A[54],1'b1,1'b0,A[53:51]};  
-      if (xtra==3'd1 && A[65:54]==2046) bits1= {A[54],1'b1,A[53:50]};
+      if (pwh#(3)::cmpEQ(xtra,3'd1) && A[65:54]==2041) bits1= {A[54],5'b0};  
+      if (pwh#(3)::cmpEQ(xtra,3'd1) && A[65:54]==2042) bits1= {A[54],1'b1,4'b0};  
+      if (pwh#(3)::cmpEQ(xtra,3'd1) && A[65:54]==2043) bits1= {A[54],1'b1,3'b0,A[53]};  
+      if (pwh#(3)::cmpEQ(xtra,3'd1) && A[65:54]==2044) bits1= {A[54],1'b1,2'b0,A[53:52]};  
+      if (pwh#(3)::cmpEQ(xtra,3'd1) && A[65:54]==2045) bits1= {A[54],1'b1,1'b0,A[53:51]};  
+      if (pwh#(3)::cmpEQ(xtra,3'd1) && A[65:54]==2046) bits1= {A[54],1'b1,A[53:50]};
 
       bits2=0;
       if (|xtra[2:1] && A[65:54]==2045) bits2= {1'b1,5'b0};  
@@ -65,8 +65,8 @@ module tblD(
       if (|xtra[2:1] && A[65:54]==2049) bits2= {1'b1,1'b0,A[53:50]};  
       if (|xtra[2:1] && A[65:54]==2050) bits2= {1'b1,A[53:49]};
 
-      if (xtra==3'd0) bits=bits0;
-      else if (xtra==3'd1) bits=bits1;
+      if (pwh#(3)::cmpEQ(xtra,3'd0)) bits=bits0;
+      else if (pwh#(3)::cmpEQ(xtra,3'd1)) bits=bits1;
       else bits=bits2;
 
       mask0=0;

@@ -1313,7 +1313,7 @@ module missQ(
   assign curConfl=read_confl&confl_mask;
 
   assign rdwr_match2=pwh#(32)::cmpEQ(read_addr,write_addr_end);
-  assign rdwr_match=countF==6'd1 && !alt_bus_hold;
+  assign rdwr_match=pwh#(6)::cmpEQ(countF,6'd1) && !alt_bus_hold;
   assign flush_end=rdwr_match && now_flushing;
 
   assign mOp_write_clear=begin_flush;
@@ -1503,7 +1503,7 @@ module missQ(
               traffic_chain=4'b0;              
           end else begin
               traffic_chain={traffic_chain[3:0],miss0|miss1|miss2|miss3|miss4|miss5};
-              low_traffic=traffic_chain==5'b0;
+              low_traffic=pwh#(5)::cmpEQ(traffic_chain,5'b0);
           end
 	  if (rst) begin
 	     write_addr_end<=5'b0;
@@ -1898,7 +1898,7 @@ module missQ(
               initCount<=5'd0;
           end else if (init) begin
               initCount<=initCount_next;
-              if (initCount==5'h1f) init<=1'b0;
+              if (pwh#(5)::cmpEQ(initCount,5'h1f)) init<=1'b0;
           end
     end
   

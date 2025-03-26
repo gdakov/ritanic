@@ -330,7 +330,7 @@ module suggestions(
           initCount<=7'b0;
       end else if (init) begin
           initCount<=initCount_d;
-          if (initCount==7'd95) init<=1'b0;
+          if (pwh#(7)::cmpEQ(initCount,7'd95)) init<=1'b0;
       end
   end
 

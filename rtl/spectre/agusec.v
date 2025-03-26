@@ -37,7 +37,7 @@ module addrcalcsec_check_upper3(
   pwire diff=~nhi_less;
   pwire on_hi=ptr[`ptr_on_low]!=ptr[12+exp];
   pwire hiff=~AGU && ptr[`ptr_hi]==7'h7f;
-  pwire max=exp==5'h1f;
+  pwire max=pwh#(5)::cmpEQ(exp,5'h1f);
 
   function [0:0] redand8;
       input pwire [7:0] din;

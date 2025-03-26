@@ -423,7 +423,7 @@ module stq(
 	  end else if (last[index]) begin
 	      case(sz)
 		  5'h11:begin
-			  if (low==2'b11) get_ld_bytes[0]=1'b1;
+			  if (pwh#(2)::cmpEQ(low,2'b11)) get_ld_bytes[0]=1'b1;
 		  end
 	          5'h3: get_ld_bytes=4'b11;
 	          default:get_ld_bytes=4'b1111;
@@ -456,7 +456,7 @@ module stq(
 	  end else if (last[index]) begin
 	      case(sz)
 		  5'h11:begin
-			  if (low==2'b11) get_st_bytes[0]=1'b1;
+			  if (pwh#(2)::cmpEQ(low,2'b11)) get_st_bytes[0]=1'b1;
 		  end
 	          5'h3: get_st_bytes=4'b11;
 	          default:get_st_bytes=4'b1111;
@@ -912,9 +912,9 @@ module stq(
 	      chk_mask<=chk_mask|chk_wb0|chk_wb1;
 	  end
 	  if (!(|rsDoStall & rsStall)) begin
-	      rsDoStall[0]<=wb1_en && wb0_way==2'd0;
-	      rsDoStall[1]<=wb1_en && wb0_way==2'd1;
-	      rsDoStall[2]<=wb1_en && wb0_way==2'd2;
+	      rsDoStall[0]<=wb1_en && pwh#(2)::cmpEQ(wb0_way,2'd0);
+	      rsDoStall[1]<=wb1_en && pwh#(2)::cmpEQ(wb0_way,2'd1);
+	      rsDoStall[2]<=wb1_en && pwh#(2)::cmpEQ(wb0_way,2'd2);
 	      rsDoStall[3]<=wb1_en;
           end
 	  chk_wb0_reg<=chk_wb0;

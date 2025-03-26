@@ -201,13 +201,13 @@ module fadds(
   //assign A_h={|A[22:0]}; 
   //assign B_h={|B[22:0]}; 
 
-  assign A_zero=A_exp==9'b0;
-  assign A_infty=A_exp==9'h1fe;
-  assign A_nan=A_exp==9'h1ff;
+  assign A_zero=pwh#(9)::cmpEQ(A_exp,9'b0);
+  assign A_infty=pwh#(9)::cmpEQ(A_exp,9'h1fe);
+  assign A_nan=pwh#(9)::cmpEQ(A_exp,9'h1ff);
   
-  assign B_zero=B_exp==9'b0;
-  assign B_infty=B_exp==9'h1fe;
-  assign B_nan=B_exp==9'h1ff;
+  assign B_zero=pwh#(9)::cmpEQ(B_exp,9'b0);
+  assign B_infty=pwh#(9)::cmpEQ(B_exp,9'h1fe);
+  assign B_nan=pwh#(9)::cmpEQ(B_exp,9'h1ff);
 
   assign spec_snan=(A_nan & ~B_infty & invExcpt || B_nan & ~A_infty & invExcpt || A_infty & B_infty & sxor & invExcpt) &~copyA &~logic_en;  
   assign spec_qnan=(A_nan & ~B_infty & ~invExcpt || B_nan & ~A_infty & ~invExcpt || A_infty & B_infty & sxor & ~invExcpt) &~copyA&~logic_en;
@@ -215,10 +215,10 @@ module fadds(
   assign spec_ninf=((A_infty && A_s && ~B_infty|B_s) || (B_infty && B_s && ~A_infty|A_s))&~copyA&~logic_en;
   assign spec_A=(B_zero && ~A_zero|~A_s|B_s && ~A_nan && ~A_infty && ~logic_en)|copyA;
   assign spec_B=(A_zero && ~B_zero|(~B_s&A_s) && ~B_nan && ~B_infty)&~copyA & ~logic_en;
-  assign spec_logic[0]=logic_en && logic_sel==2'd0 && ~copyA;
-  assign spec_logic[1]=logic_en && logic_sel==2'd1 && ~copyA;
-  assign spec_logic[2]=logic_en && logic_sel==2'd2 && ~copyA;
-  assign spec_logic[3]=logic_en && logic_sel==2'd3 && ~copyA;
+  assign spec_logic[0]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd0) && ~copyA;
+  assign spec_logic[1]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd1) && ~copyA;
+  assign spec_logic[2]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd2) && ~copyA;
+  assign spec_logic[3]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd3) && ~copyA;
  
   assign opA=a_more ?  {1'b1,A[22:0]} : 24'bz;
   assign opB=(sxor & a_more) ?  ~{1'b1,B[22:0]} : 24'bz;
@@ -375,8 +375,8 @@ module fadds(
           else if (!|k) begin
               assign opBs1=(expdiff[5:3]==k && ~expoor) ? {{k*8{sxor}},opB[23:k*8]} : 24'bz;
               assign xop1[1:0]=(expdiff[5:3]==3'b0 && ~expoor) ? 2'b0 : 2'bz;
-              assign xop1[1:0]=(expdiff==9'h18) ? opB[23:22] : 2'bz;
-              assign xop1[1:0]=(expdiff==9'h19) ? {sxor,opB[23]} : 2'bz;
+              assign xop1[1:0]=(pwh#(9)::cmpEQ(expdiff,9'h18)) ? opB[23:22] : 2'bz;
+              assign xop1[1:0]=(pwh#(9)::cmpEQ(expdiff,9'h19)) ? {sxor,opB[23]} : 2'bz;
           end
           if (k<3) begin 
               pwire e_more,e_eq,e_eq2;

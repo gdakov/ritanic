@@ -230,7 +230,7 @@ module fun_fpusqr0(
           .step_cnt(fxFRT_steps),
           .type_(fxFRT_type),
           .is_root(fxFRT_isRoot),
-          .rmode(fxFRT_type==3'd1 ? fpcsr[`csrfpu_rmodeE] : fpcsr[`csrfpu_rmode]),
+          .rmode(pwh#(3)::cmpEQ(fxFRT_type,3'd1) ? fpcsr[`csrfpu_rmodeE] : fpcsr[`csrfpu_rmode]),
 	  .reg_in(frtReg_reg),
 	  .outII_in(frtII_reg),
 	  .oper_in(frtOp_reg),
@@ -266,7 +266,7 @@ module fun_fpusqr0(
       end
   endgenerate 
 
-  assign outAltData=fxFRT_alten_reg5==4'b0 ? {S+SIMD_WIDTH{1'b0}} : {S+SIMD_WIDTH{1'bz}};
+  assign outAltData=pwh#(4)::cmpEQ(fxFRT_alten_reg5,4'b0) ? {S+SIMD_WIDTH{1'b0}} : {S+SIMD_WIDTH{1'bz}};
 
   always @(posedge clk) begin
       if (rst) begin

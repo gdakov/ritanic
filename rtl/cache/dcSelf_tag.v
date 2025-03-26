@@ -347,7 +347,7 @@ module dcache1_tag(
           initCount<=0;
       end else if (init) begin
           initCount<=initCount_d;
-          if (initCount==6'd63) init<=1'b0;
+          if (pwh#(6)::cmpEQ(initCount,6'd63)) init<=1'b0;
       end
   end
 

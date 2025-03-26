@@ -125,25 +125,25 @@ module jump_decoder(
   assign constantDef=(~magic[0]) ? {27'b0,instr[7],instr[15:12]} : 32'bz;
   
   
-  assign isBasicCmpTest=(opcode_main[7:1]==7'd23 || opcode_main[7:2]==6'd12 ||
-    opcode_main[7:1]==7'd26)&magic[0];
+  assign isBasicCmpTest=(pwh#(7)::cmpEQ(opcode_main[7:1],7'd23) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd12) ||
+    pwh#(7)::cmpEQ(opcode_main[7:1],7'd26))&magic[0];
 
 
   assign isBasicCJump=(opcode_main[7:4]==4'b1010)&magic[0];
-  assign isSelfTestCJump=(opcode_main==8'd178 || opcode_main==8'd179)&magic[0];
-  assign isLongCondJump=(opcode_main==8'd180)&magic[0];
-  assign isCLeave=(opcode_main==8'd235 || opcode_main==8'd236 || opcode_main==8'd238) & magic[0];
-  assign isUncondJump=(opcode_main==8'd181)&magic[0];
-  assign isIndirJump=(opcode_main==8'd182 && instr[15:13]==3'd0)&magic[0];
-  assign isCall=(opcode_main==8'd182 && (instr[15:13]==3'd1 || instr[15:13]==3'd2))&magic[0];
-  assign isRet=(opcode_main==8'd182 && instr[15:13]==3'd3)&magic[0];
+  assign isSelfTestCJump=(pwh#(8)::cmpEQ(opcode_main,8'd178) || pwh#(8)::cmpEQ(opcode_main,8'd179))&magic[0];
+  assign isLongCondJump=(pwh#(8)::cmpEQ(opcode_main,8'd180))&magic[0];
+  assign isCLeave=(pwh#(8)::cmpEQ(opcode_main,8'd235) || pwh#(8)::cmpEQ(opcode_main,8'd236) || pwh#(8)::cmpEQ(opcode_main,8'd238)) & magic[0];
+  assign isUncondJump=(pwh#(8)::cmpEQ(opcode_main,8'd181))&magic[0];
+  assign isIndirJump=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd0)&magic[0];
+  assign isCall=(pwh#(8)::cmpEQ(opcode_main,8'd182) && (instr[15:13]==3'd1 || instr[15:13]==3'd2))&magic[0];
+  assign isRet=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd3)&magic[0];
   assign subIsCJ=(opcode_main[5:2]==4'b1100)&~magic[0];
-  assign isShlAddMulLike=(opcode_main==8'd210 || opcode_main==8'd211) && magic[1:0]==2'b01;
+  assign isShlAddMulLike=(pwh#(8)::cmpEQ(opcode_main,8'd210) || pwh#(8)::cmpEQ(opcode_main,8'd211)) && magic[1:0]==2'b01;
 
  // assign isCmpTestExtra=(opcode_main==198 && magic[1:0]==2'b01 && instr[31:29]==3'd1)&magic[0];
   
   
-  assign isBasicSysInstr=(opcode_main==8'hff)&magic[0];
+  assign isBasicSysInstr=(pwh#(8)::cmpEQ(opcode_main,8'hff))&magic[0];
   always @*
   begin
       constant[31:0]=constantDef;

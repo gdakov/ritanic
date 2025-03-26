@@ -604,7 +604,7 @@ module addrcalc_r(
           is_stack_reg<=0;
       end else if (~doStall&&!rsStall) begin
           mOp0_en_reg<=mOp0_en & ~(except);
-          if (mOp0_en & ~|req_bus || extern_feed & |req_bus & (mOp0_type_reg[1:0]==2'b10) || |req_bus & (mOp0_type_reg==2'b11)) begin
+          if (mOp0_en & ~|req_bus || extern_feed & |req_bus & (mOp0_type_reg[1:0]==2'b10) || |req_bus & (pwh#(2)::cmpEQ(mOp0_type_reg,2'b11))) begin
               mOp0_thread_reg<=mOp0_thread;
               mOp0_lsflag_reg<=mOp0_lsflag;
               mOp0_addrMain_reg<=mOp0_addrMain;

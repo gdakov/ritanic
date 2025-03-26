@@ -294,7 +294,7 @@ module addrcalc_block(
   
   function get_d128;
       input pwire [4:0] msz;
-      get_d128=msz==5'h1 || msz==5'h2 || msz==5'h0 || msz==5'ha || msz==5'hc || msz==5'hB || msz==5'hf;
+      get_d128=pwh#(5)::cmpEQ(msz,5'h1) || pwh#(5)::cmpEQ(msz,5'h2) || pwh#(5)::cmpEQ(msz,5'h0) || pwh#(5)::cmpEQ(msz,5'ha) || pwh#(5)::cmpEQ(msz,5'hc) || pwh#(5)::cmpEQ(msz,5'hB) || pwh#(5)::cmpEQ(msz,5'hf);
   endfunction
   
   pwire msrss_thread=1'b0;
@@ -1060,7 +1060,7 @@ module addrcalc_block(
           if (sz!=5'd16 && sz!=5'd17) get_byte_mod4=4'hf;
           else begin
               get_byte_mod4[addr_low]=1'b1;
-              if (sz==5'd17) get_byte_mod4=get_byte_mod4|{get_byte_mod4[2:0],get_byte_mod4[3]};
+              if (pwh#(5)::cmpEQ(sz,5'd17)) get_byte_mod4=get_byte_mod4|{get_byte_mod4[2:0],get_byte_mod4[3]};
           end
       end
   endfunction
@@ -1665,7 +1665,7 @@ module addrcalc_block(
     ~bus_holds_addrcalc_reg4 &  
     (mOpX2_type_reg3!=2'b10) & ~except & ~mOp2_sec_reg3 & ~alt_bus_hold_reg4;
   assign miss3=~FU3Hit & mOpX3_en_reg3 & ~alt_bus_hold_reg4 & 
-    ~bus_holds_addrcalc_reg4 & (~except || mOpX3_register_reg3==9'h1fc);
+    ~bus_holds_addrcalc_reg4 & (~except || pwh#(9)::cmpEQ(mOpX3_register_reg3,9'h1fc));
   
  /* 
   assign miss_clDo[0]=mOpR_en && ~mOpR_clHit[0] && ~miss_doneEven && ~mOpR_odd|mOpR_split;
@@ -2458,7 +2458,7 @@ module addrcalc_block(
           miss_doneOdd<=1'b0;
       end else begin
           if (miss_clDo[0] && mOpR_en && mcam_hasfree) miss_doneEven<=1'b1;
-          if (miss_clDo==2'b10 && mOpR_en && mcam_hasfree) miss_doneOdd<=1'b1;
+          if (pwh#(2)::cmpEQ(miss_clDo,2'b10) && mOpR_en && mcam_hasfree) miss_doneOdd<=1'b1;
       end
 
       if (rst) begin

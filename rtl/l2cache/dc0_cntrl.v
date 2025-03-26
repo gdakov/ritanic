@@ -842,14 +842,14 @@ module dc0_cntrl(
   
   adder_inc #(5) initAdd_mod(initCount,initCount_next,1'b1,);
 
-  assign write_addrM_d=(write_addrM==5'd27) ? 5'd0 : 5'bz;
-  assign read_addrM_d=(read_addrM==5'd27) ? 5'd0 : 5'bz;
-  assign write_addrC2_d=(write_addrC2==5'd27) ? 5'd0 : 5'bz;
-  assign read_addrC2_d=(read_addrC2==5'd27) ? 5'd0 : 5'bz;
-  assign write_addrC1_d=(write_addrC2==5'd20) ? 5'd0 : 5'bz;
-  assign read_addrC1_d=(read_addrC2==5'd20) ? 5'd0 : 5'bz;
-  assign write_addr_d=(write_addrC2==5'd20) ? 5'd0 : 5'bz;
-  assign read_addr_d=(read_addrC2==5'd20) ? 5'd0 : 5'bz;
+  assign write_addrM_d=(pwh#(5)::cmpEQ(write_addrM,5'd27)) ? 5'd0 : 5'bz;
+  assign read_addrM_d=(pwh#(5)::cmpEQ(read_addrM,5'd27)) ? 5'd0 : 5'bz;
+  assign write_addrC2_d=(pwh#(5)::cmpEQ(write_addrC2,5'd27)) ? 5'd0 : 5'bz;
+  assign read_addrC2_d=(pwh#(5)::cmpEQ(read_addrC2,5'd27)) ? 5'd0 : 5'bz;
+  assign write_addrC1_d=(pwh#(5)::cmpEQ(write_addrC2,5'd20)) ? 5'd0 : 5'bz;
+  assign read_addrC1_d=(pwh#(5)::cmpEQ(read_addrC2,5'd20)) ? 5'd0 : 5'bz;
+  assign write_addr_d=(pwh#(5)::cmpEQ(write_addrC2,5'd20)) ? 5'd0 : 5'bz;
+  assign read_addr_d=(pwh#(5)::cmpEQ(read_addrC2,5'd20)) ? 5'd0 : 5'bz;
 
   assign wen_C2=read_clkEnM1 && ~rbusAN_signals_reg[`rbusAN_second];
   
@@ -1032,7 +1032,7 @@ module dc0_cntrl(
           initCount<=5'b0;
       end else if (init) begin
           initCount<=initCount_next;
-          if (initCount==5'd23) init<=1'b0;
+          if (pwh#(5)::cmpEQ(initCount,5'd23)) init<=1'b0;
       end
   end
 endmodule

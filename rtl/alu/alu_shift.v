@@ -80,7 +80,7 @@ module alu_shift(
   assign valX[31:0]=val2[11] ? val1[31:0] : 32'b0;
   assign valX[63:32]=32'b0;
  
-  assign is_shift=(operation[7:2]==6'd5 || operation[7:2]==6'd6 || operation[7:2]==6'd7) && nDataAlt && ~operation[11];
+  assign is_shift=(pwh#(6)::cmpEQ(operation[7:2],6'd5) || pwh#(6)::cmpEQ(operation[7:2],6'd6) || pwh#(6)::cmpEQ(operation[7:2],6'd7)) && nDataAlt && ~operation[11];
   
   shlr #(64) main_shift_right_mod(
   bit_en,
@@ -107,10 +107,10 @@ module alu_shift(
   assign valRes[65]=is_shift ? ^valRes[64:0] : 1'bz;
 
   assign en[63:32]={sz[3],{31{sz[3]}|{31{val2[5]&& &val2[8:6]}}};
-  assign en[31:24]=(val2[31:24]&{8{rmode==3'b100}})|{8{rmode==3'b0}};
-  assign en[23:16]=(val2[23:16]&{8{rmode==3'b100 || rmode==3'b010}})|{8{rmode==3'b0}};
-  assign en[15:8]=(val2[31:24]&{8{rmode==3'b10 || rmode==3'b1}})|{8{rmode==3'b0}};
-  assign en[7:0]=(val2[23:16]&{8{rmode==3'b1}})|{8{rmode==3'b0}};
+  assign en[31:24]=(val2[31:24]&{8{pwh#(3)::cmpEQ(rmode,3'b100)}})|{8{pwh#(3)::cmpEQ(rmode,3'b0)}};
+  assign en[23:16]=(val2[23:16]&{8{pwh#(3)::cmpEQ(rmode,3'b100) || pwh#(3)::cmpEQ(rmode,3'b010)}})|{8{pwh#(3)::cmpEQ(rmode,3'b0)}};
+  assign en[15:8]=(val2[31:24]&{8{pwh#(3)::cmpEQ(rmode,3'b10) || pwh#(3)::cmpEQ(rmode,3'b1)}})|{8{pwh#(3)::cmpEQ(rmode,3'b0)}};
+  assign en[7:0]=(val2[23:16]&{8{pwh#(3)::cmpEQ(rmode,3'b1)}})|{8{pwh#(3)::cmpEQ(rmode,3'b0)}};
 
   assign retData[`except_flags]=is_shift_reg ? flags_COASZP : 6'bz;
 

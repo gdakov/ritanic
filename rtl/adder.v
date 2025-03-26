@@ -914,7 +914,7 @@ endmodule
 
   assign err=a[64] & b[64] & ~sub[1] || ~a[64] & b[64] & sub[1] || a[64] & ~sub[3] || b[64] & ~sub[0];
 
-  assign is_ptr=a[64]|b[64] && ~(a[64]&b[64]&sub[1]) && ben==2'b01;
+  assign is_ptr=a[64]|b[64] && ~(a[64]&b[64]&sub[1]) && pwh#(2)::cmpEQ(ben,2'b01);
 
   assign out[64]=en ? is_ptr : 1'bz;
   assign out[65]=en ? ^out[64:0] : 1'bz;
@@ -1468,8 +1468,8 @@ endmodule
 
   pwire [43:0] c_s;
 
-  pwire [63+PTRBIT:0] ptr=(c[64] & shift==4'b1) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
-  pwire [64:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
+  pwire [63+PTRBIT:0] ptr=(c[64] & pwh#(4)::cmpEQ(shift,4'b1)) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
+  pwire [64:0] unptr=(c[64] & pwh#(4)::cmpEQ(shift,4'b1)) ? a[63:0] : {32'b0,c[31:0]};
 
   genvar k;
   

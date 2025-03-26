@@ -2525,7 +2525,7 @@ module backend(
           if (sz!=5'd16 && sz!=5'd17) get_byte_mod4=4'hf;
           else begin
               get_byte_mod4[addr_low]=1'b1;
-              if (sz==5'd17) get_byte_mod4=get_byte_mod4|{get_byte_mod4[2:0],get_byte_mod4[3]};
+              if (pwh#(5)::cmpEQ(sz,5'd17)) get_byte_mod4=get_byte_mod4|{get_byte_mod4[2:0],get_byte_mod4[3]};
           end
       end
   endfunction
@@ -2572,7 +2572,7 @@ module backend(
 
   function get_d128;
       input pwire [4:0] msz;
-      get_d128=msz==5'h1 || msz==5'h2 || msz==5'h0 || msz==5'ha || msz==5'hc || msz==5'hB || msz==5'hf;
+      get_d128=pwh#(5)::cmpEQ(msz,5'h1) || pwh#(5)::cmpEQ(msz,5'h2) || pwh#(5)::cmpEQ(msz,5'h0) || pwh#(5)::cmpEQ(msz,5'ha) || pwh#(5)::cmpEQ(msz,5'hc) || pwh#(5)::cmpEQ(msz,5'hB) || pwh#(5)::cmpEQ(msz,5'hf);
   endfunction
 
   function [0:0] is_rndE;

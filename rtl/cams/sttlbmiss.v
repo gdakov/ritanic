@@ -382,14 +382,14 @@ module wtmiss(
   assign write_mop[1][`mOp2_lsflag]=  mOp1_lsflag_o;
 
   assign enOut=stepW[2] && cnt!=0;
-  assign last_out=stepW[3] && cnt==3'd0;
+  assign last_out=stepW[3] && pwh#(3)::cmpEQ(cnt,3'd0);
   assign enOutNull=doSkip_reg2 & ~enOut_reg;
 
   assign pause[0]=enOut & rdmiss[0] & ~rdm_done[0];
   assign pause[1]=enOut & rdmiss[1] & ~rdm_done[1];
 
   assign mlbreq_addr=pause[0] ? RaddrMain[0][43:14] : RaddrMain[1][43:14];
-  assign mlbreq_en=enOut && (pause[0] && ~rdm_xdone[0]) | (pause==2'b10 & ~rdm_xdone[1]);
+  assign mlbreq_en=enOut && (pause[0] && ~rdm_xdone[0]) | (pwh#(2)::cmpEQ(pause,2'b10) & ~rdm_xdone[1]);
   assign mlbreq_attr=pause[0] ? read_mop[0][`mOp2_attr] : read_mop[1][`mOp2_attr];
 
   always @(posedge clk) begin
@@ -519,7 +519,7 @@ module wtmiss(
           2'd2: inIt_cnt<=2'd3;
           2'd3: inIt_cnt<=2'd0;
           endcase
-          if (inIt_cnt==2'd3) inIt<=1'd0;
+          if (pwh#(2)::cmpEQ(inIt_cnt,2'd3)) inIt<=1'd0;
       end
   end
 endmodule

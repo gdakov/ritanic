@@ -126,7 +126,7 @@ module cmlb_way(
     ((ip|{14{~tr_jump}})=={sproc,addr[43:0]|{14{~tr_jump}}} && mlb_data[`cmlbData_global])) && addr[43:40]!=4'b1110 && ~invalidate;
  //verilator lint_on WIDTH
   
-  assign write_wen_ram=(write_wen && read_lru==3'b111) || read_clkEn&~fStall&~write_wen;
+  assign write_wen_ram=(write_wen && pwh#(3)::cmpEQ(read_lru,3'b111)) || read_clkEn&~fStall&~write_wen;
   
   assign mlb_data=read_data_ram[`cmlb_data];
   assign read_data=read_hit ? read_data_ram[`cmlb_data] : 'z;

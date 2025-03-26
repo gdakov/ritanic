@@ -472,7 +472,7 @@ module addrcalccam(
 
   adder_inc #(3) initAdd_mod(initCount,initCount_next,1'b1,);
   
-  assign doStep=((curConfl==3'b001 || curConfl==3'b010 || curConfl==3'b100) 
+  assign doStep=((pwh#(3)::cmpEQ(curConfl,3'b001) || pwh#(3)::cmpEQ(curConfl,3'b010) || pwh#(3)::cmpEQ(curConfl,3'b100)) 
     && read_clkEn && cmore[1]|wen && !rsStall)|excpt_fwd;
   assign excpt_fwd=except;// && ((rdvalid0 & valid[~except_thread])!=0 || ((rdvalid1 & valid[~except_thread])!=0 && ~drvalid0_found)!=0);
 
@@ -559,7 +559,7 @@ module addrcalccam(
 	      initCount<=3'b0;
 	  end else if (init) begin
 	      initCount<=initCount_next;
-	      if (initCount==3'h7) init<=1'b0;
+	      if (pwh#(3)::cmpEQ(initCount,3'h7)) init<=1'b0;
 	  end
     end
   

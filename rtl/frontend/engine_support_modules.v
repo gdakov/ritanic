@@ -469,12 +469,12 @@ module get_flag_infl(
   input pwire srcFlight;
   output pwire [8:0] infl;
   
-  assign infl[1]=rs0i1_flagDep==4'he && srcFlight || ~rs0i1_flagDep[3] || rs0i1_flagDep==4'h8;
-  assign infl[2]=rs0i2_flagDep==4'he && srcFlight || ~rs0i2_flagDep[3] || rs0i2_flagDep==4'h8;
-  assign infl[4]=rs1i1_flagDep==4'he && srcFlight || ~rs1i1_flagDep[3] || rs1i1_flagDep==4'h8;
-  assign infl[5]=rs1i2_flagDep==4'he && srcFlight || ~rs1i2_flagDep[3] || rs1i2_flagDep==4'h8;
-  assign infl[7]=rs2i1_flagDep==4'he && srcFlight || ~rs2i1_flagDep[3] || rs2i1_flagDep==4'h8;
-  assign infl[8]=rs2i2_flagDep==4'he && srcFlight || ~rs2i2_flagDep[3] || rs2i2_flagDep==4'h8;
+  assign infl[1]=pwh#(4)::cmpEQ(rs0i1_flagDep,4'he) && srcFlight || ~rs0i1_flagDep[3] || pwh#(4)::cmpEQ(rs0i1_flagDep,4'h8);
+  assign infl[2]=pwh#(4)::cmpEQ(rs0i2_flagDep,4'he) && srcFlight || ~rs0i2_flagDep[3] || pwh#(4)::cmpEQ(rs0i2_flagDep,4'h8);
+  assign infl[4]=pwh#(4)::cmpEQ(rs1i1_flagDep,4'he) && srcFlight || ~rs1i1_flagDep[3] || pwh#(4)::cmpEQ(rs1i1_flagDep,4'h8);
+  assign infl[5]=pwh#(4)::cmpEQ(rs1i2_flagDep,4'he) && srcFlight || ~rs1i2_flagDep[3] || pwh#(4)::cmpEQ(rs1i2_flagDep,4'h8);
+  assign infl[7]=pwh#(4)::cmpEQ(rs2i1_flagDep,4'he) && srcFlight || ~rs2i1_flagDep[3] || pwh#(4)::cmpEQ(rs2i1_flagDep,4'h8);
+  assign infl[8]=pwh#(4)::cmpEQ(rs2i2_flagDep,4'he) && srcFlight || ~rs2i2_flagDep[3] || pwh#(4)::cmpEQ(rs2i2_flagDep,4'h8);
   
   assign infl[0]=1'b0;
   assign infl[3]=1'b0;
@@ -834,9 +834,9 @@ module get_wSwp(
   pwire [2:0] Wswp0;
   pwire stol_swp;
 
-  assign stol[0]=lsi0==3'd7;
-  assign stol[1]=lsi1==3'd7;
-  assign stol[2]=lsi2==3'd7;
+  assign stol[0]=pwh#(3)::cmpEQ(lsi0,3'd7);
+  assign stol[1]=pwh#(3)::cmpEQ(lsi1,3'd7);
+  assign stol[2]=pwh#(3)::cmpEQ(lsi2,3'd7);
   
   assign stol_swp=stol[0] ? Wswp0[1] : 1'bz;
   assign stol_swp=stol[1] ? Wswp0[2] : 1'bz;
@@ -1320,16 +1320,16 @@ module alloc_WQ(
   assign addr_hi2[0]=addr_hi[0];
   assign addr_low2[0]=addr_low[0];
 
-  assign addr_hi1=(addr_hi==7'd63) ? 7'b0 : 7'bz;
-  assign addr_low1=(addr_low==7'd63) ? 7'b0 : 7'bz;
+  assign addr_hi1=(pwh#(7)::cmpEQ(addr_hi,7'd63)) ? 7'b0 : 7'bz;
+  assign addr_low1=(pwh#(7)::cmpEQ(addr_low,7'd63)) ? 7'b0 : 7'bz;
   assign addr_hi2[6:1]=(addr_hi[6:1]==6'd31) ? 6'b0 : 6'bz;
   assign addr_low2[6:1]=(addr_low[6:1]==6'd31) ? 6'b0 : 6'bz;
 
   assign xaddr_hi2[0]=xaddr_hi[0];
   assign xaddr_low2[0]=xaddr_low[0];
 
-  assign xaddr_hi1=(xaddr_hi==7'd63) ? 7'b0 : 7'bz;
-  assign xaddr_low1=(xaddr_low==7'd63) ? 7'b0 : 7'bz;
+  assign xaddr_hi1=(pwh#(7)::cmpEQ(xaddr_hi,7'd63)) ? 7'b0 : 7'bz;
+  assign xaddr_low1=(pwh#(7)::cmpEQ(xaddr_low,7'd63)) ? 7'b0 : 7'bz;
   assign xaddr_hi2[6:1]=(xaddr_hi[6:1]==6'd31) ? 6'b0 : 6'bz;
   assign xaddr_low2[6:1]=(xaddr_low[6:1]==6'd31) ? 6'b0 : 6'bz;
   adder_inc #(7) hiAdd1_mod(addr_hi,addr_hi1,addr_hi!=7'd63,);
@@ -1454,7 +1454,7 @@ module get_ben_een(
   end
   always @* begin
       stepOver=low!=2'd0;
-      stepOver2=low==2'd3;
+      stepOver2=pwh#(2)::cmpEQ(low,2'd3);
       bgnBen=0;
       endBen=0;
       case(sz)

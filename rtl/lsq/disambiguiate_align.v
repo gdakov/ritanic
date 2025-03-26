@@ -920,7 +920,7 @@ module lsq_req(
  
   function [0:0] sz_unal; 
     input pwire [4:0] sz;
-    sz_unal=sz==5'd0 || sz==5'd1;
+    sz_unal=pwh#(5)::cmpEQ(sz,5'd0) || pwh#(5)::cmpEQ(sz,5'd1);
   endfunction
 
   function [5:0] up_to_first_zero;
@@ -1272,11 +1272,11 @@ module lsq_req(
           
           if (write_wen_shr & ~doStall & ~stall & ~except) begin
 
-              if (validA!=0 && write_addr_shr==6'd0) begin
+              if (validA!=0 && pwh#(6)::cmpEQ(write_addr_shr,6'd0)) begin
                   onSameValidA<=1'b0;
               end
 
-              if ((validA!=0 && write_addr_shr==6'd0)||~onSameValidA&~(readA_clkEn & ~foundA)) begin
+              if ((validA!=0 && pwh#(6)::cmpEQ(write_addr_shr,6'd0))||~onSameValidA&~(readA_clkEn & ~foundA)) begin
                   validA_next[write_addr_shr]=1'b1;
               end else begin
                   validA[write_addr_shr]=1'b1;
@@ -1661,11 +1661,11 @@ module lsq_req(
           
           if (write_wen_shr & ~doStall & ~stall & ~except) begin
 
-              if (validB!=0 && write_addr_shr==6'd0) begin
+              if (validB!=0 && pwh#(6)::cmpEQ(write_addr_shr,6'd0)) begin
                   onSameValidB<=1'b0;
               end
 
-              if ((validB!=0 && write_addr_shr==6'd0)||~onSameValidB&~reenabB&~(readB_clkEn & ~foundB)) begin
+              if ((validB!=0 && pwh#(6)::cmpEQ(write_addr_shr,6'd0))||~onSameValidB&~reenabB&~(readB_clkEn & ~foundB)) begin
                   validB_next[write_addr_shr]=1'b1;
               end else begin
                   validB[write_addr_shr]=1'b1;
@@ -1756,7 +1756,7 @@ module lsq_req(
 	  initCount<=6'd0;
       end else if (init) begin
 	  initCount<=initCount_next;
-	  if (initCount==6'h3f) init<=1'b0;
+	  if (pwh#(6)::cmpEQ(initCount,6'h3f)) init<=1'b0;
       end
   end  
 

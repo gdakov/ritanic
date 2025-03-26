@@ -926,7 +926,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 	     do_seq_reg5 && pre_instrEn_reg[j]&&pre_jbefore[j]&&j=={31'b0,read_data_reg[255] && cc_read_IP_regx3[4:1]==0};
           assign pre_other[j][`instrQ_class]=pre_class_reg[j];
           //assign pre_other[j][`instrQ_taken]=btb_hasTK_reg3 ? 1'bz : 1'b0;
-          assign pre_other[j][`instrQ_taken]=(taken_reg4 & isJ) !=4'b0 && tbuf_error==4'b0;
+          assign pre_other[j][`instrQ_taken]=(taken_reg4 & isJ) !=4'b0 && pwh#(4)::cmpEQ(tbuf_error,4'b0);
           assign isJ[0]=pre_off_reg[j]==btbx_joff_reg4[0] && pre_class_reg[j][`iclass_jump];
           assign isJ[1]=pre_off_reg[j]==btbx_joff_reg4[1] && pre_class_reg[j][`iclass_jump];
           assign isJ[2]=pre_off_reg[j]==btbx_joff_reg4[2] && pre_class_reg[j][`iclass_jump];
@@ -1255,7 +1255,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign tgtstall=taken_reg2[5] ? jdec_target[5]==btbx_tgt_reg3[5] && btbz_cond_reg3[5] : 1'bz;
   assign tgtstall=taken_reg2[6] ? jdec_target[6]==btbx_tgt_reg3[6] && btbz_cond_reg3[6] : 1'bz;
   assign tgtstall=taken_reg2[7] ? jdec_target[7]==btbx_tgt_reg3[7] && btbz_cond_reg3[7] : 1'bz;
-  assign tgtstall=taken_reg2==8'b0  ? 1'b0 : 1'bz;
+  assign tgtstall=pwh#(8)::cmpEQ(taken_reg2,8'b0)  ? 1'b0 : 1'bz;
 
   assign iqe_jbits=taken_reg[0] ? {3'b0,btbx_jmask_reg[0]} : 4'bz;
   assign iqe_jbits=taken_reg[1] ? {2'b0,btbx_jmask_reg[1:0]} : 4'bz;
@@ -1672,7 +1672,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
       end else begin
           if (init) begin 
               initCount<=initCount_next;
-              if (initCount==9'd511) begin
+              if (pwh#(9)::cmpEQ(initCount,9'd511)) begin
                   init<=1'b0;
                   instrEn<=1'b1;
               end

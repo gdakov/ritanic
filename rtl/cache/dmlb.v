@@ -228,7 +228,7 @@ module dmlb_way(
 
     end
   endgenerate
-  assign write_wen_ram=(write_wen && write_lru==3'd7 && ~write_xstant) 
+  assign write_wen_ram=(write_wen && pwh#(3)::cmpEQ(write_lru,3'd7) && ~write_xstant) 
   || init || write_wen & write_xstant & ~force_way_off  & (read_hitL[0]|
   force_way_on);
   
@@ -565,7 +565,7 @@ module dmlb(
 	      init<=1'b1;
 	      initCount<=4'd0;
 	  end else begin    
-	      if (init&&initCount==4'd15) init<=1'b0;
+	      if (init&&pwh#(4)::cmpEQ(initCount,4'd15)) init<=1'b0;
 	      if (init) initCount<=wrAddrNxt;
       end
   end

@@ -122,9 +122,9 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   
   assign subIsBasicALU=(!|opcode_sub[5:4] || opcode_sub[5:2]==4'b0100) & ~magic[0];
   assign subIsBasicShift=(~opcode_sub[5] && ~subIsBasicALU && opcode_sub[0]) & ~magic[0];
-  assign subIsFPUE=opcode_sub==6'b010100 && ~magic[0]; 
-  assign subIsFPUSngl=((opcode_sub==6'b010110 || opcode_sub==6'b011000) && opcode_main[7:6]!=2'b11) & ~magic[0];
-  assign subIsLinkRet=(opcode_sub==6'b010110 || opcode_sub==6'b011000) && opcode_main[7:6]==2'b11 && ~magic[0];
+  assign subIsFPUE=pwh#(6)::cmpEQ(opcode_sub,6'b010100) && ~magic[0]; 
+  assign subIsFPUSngl=((pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && opcode_main[7:6]!=2'b11) & ~magic[0];
+  assign subIsLinkRet=(pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && opcode_main[7:6]==2'b11 && ~magic[0];
   assign subIsSIMD=(opcode_sub[5:3]==3'b011 && |opcode_sub[2:1] && ~opcode_sub[0]) & ~magic[0];
   assign subIsMovOrExt=(opcode_sub[5:3]==3'b100 || opcode_sub[5:1]==5'b10100) & ~magic[0];
   assign subIsCmpTest=(opcode_sub[5:1]==5'b10101 || opcode_sub[5:2]==4'b1011) & ~magic[0];
@@ -132,66 +132,66 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100) & ~magic[0];
   assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100) & ~magic[0];
   assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
-  assign isBasicXOR=(opcode_main[7:3]==5'b00100) & ~opcode_main[2];//not a seprarate class
+  assign isBasicXOR=(pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2];//not a seprarate class
   
   //hint_begin_vec=pwh#(8)::cmpEQ(opcode_main[7:0],8'b11110011) uc jump offset=0; 2x vectorisation
   //hind_begin_vec_x4=pwh#(8)::cmpEQ(opcode_main[7:0],8'b01110011) uc jump offset=0; not yet implemented and might not be in the future
   //hint_end_vec=pwh#(8)::cmpEQ(opcode_main[7:0],8'b10110011) uc jump offset=0
   //ext insn for multi uop=pwh#(8)::cmpEQ(opcode_main[7:0],8'b11110010)
 
-  assign isBasicSysInstr=opcode_main==8'hff&&magic[0]; 
+  assign isBasicSysInstr=pwh#(8)::cmpEQ(opcode_main,8'hff)&&magic[0]; 
 
   assign opcode_main=instr[7:0];
   assign opcode_sub=instr[5:0];
   
   
-  assign isBasicALU=(!|opcode_main[7:5] || opcode_main[7:3]==5'b00100) & ~opcode_main[2] & magic[0];
-  assign isBasicMUL=(!|opcode_main[7:5] || opcode_main[7:3]==5'b00100) & opcode_main[2] & magic[0];
+  assign isBasicALU=(!|opcode_main[7:5] || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2] & magic[0];
+  assign isBasicMUL=(!|opcode_main[7:5] || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & opcode_main[2] & magic[0];
   assign isBasicALUExcept=~opcode_main[0] && (magic[1:0]==2'b01 && |instr[28:26]);  
-  assign isBasicShift=(opcode_main[7:1]==7'd20 || opcode_main[7:1]==7'd21 ||
-      opcode_main[7:1]==7'd22)&&magic[0];      
+  assign isBasicShift=(pwh#(7)::cmpEQ(opcode_main[7:1],7'd20) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd21) ||
+      pwh#(7)::cmpEQ(opcode_main[7:1],7'd22))&&magic[0];      
   assign isBasicShiftExcept=magic[1:0]==2'b01 && |instr[29:25];
   
-  assign isBasicCmpTest=(opcode_main[7:1]==7'd23 || opcode_main[7:2]==6'd12 ||
-    opcode_main[7:1]==7'd26 || opcode_main[7:2]==6'd54) && magic[0];
+  assign isBasicCmpTest=(pwh#(7)::cmpEQ(opcode_main[7:1],7'd23) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd12) ||
+    pwh#(7)::cmpEQ(opcode_main[7:1],7'd26) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd54)) && magic[0];
 
-  assign isBaseSpecLoad=(opcode_main==8'd54 || opcode_main==8'd202) && magic[0];
-  assign isBaseIndexSpecLoad=(opcode_main==8'd55 || opcode_main==8'd203) && magic[0];
-  assign isBaseSpecStore=(opcode_main==8'd204 || opcode_main==8'd205) && magic[0];
-  assign isBaseIndexSpecStore=(opcode_main=8'd206 || opcode_main==8'd207) && magic[0];
+  assign isBaseSpecLoad=(pwh#(8)::cmpEQ(opcode_main,8'd54) || pwh#(8)::cmpEQ(opcode_main,8'd202)) && magic[0];
+  assign isBaseIndexSpecLoad=(pwh#(8)::cmpEQ(opcode_main,8'd55) || pwh#(8)::cmpEQ(opcode_main,8'd203)) && magic[0];
+  assign isBaseSpecStore=(pwh#(8)::cmpEQ(opcode_main,8'd204) || pwh#(8)::cmpEQ(opcode_main,8'd205)) && magic[0];
+  assign isBaseIndexSpecStore=(opcode_main=8'd206 || pwh#(8)::cmpEQ(opcode_main,8'd207)) && magic[0];
 
-  assign isImmLoadStore=((opcode_main[7:2]==6'd15) || opcode_main[7:1]==7'b1011000) & magic[0];  
+  assign isImmLoadStore=((pwh#(6)::cmpEQ(opcode_main[7:2],6'd15)) || pwh#(7)::cmpEQ(opcode_main[7:1],7'b1011000)) & magic[0];  
   assign isBaseLoadStore=((opcode_main[7:5]==3'b010) || opcode_main[7:4]==4'b0110) & magic[0];
   assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) || opcode_main[7:4]==4'b0111) & magic[0];
 
 
   assign isBasicCJump=(opcode_main[7:4]==4'b1010) && magic[0];
-  assign isSelfTestCJump=(opcode_main==8'd178 || opcode_main==8'd179) && magic[0];
-  assign isLongCondJump=(opcode_main==8'd180) && magic[0];
-  assign isUncondJump=(opcode_main==8'd181) && magic[0];
-  assign isIndirJump=(opcode_main==8'd182 && instr[15:13]==3'd0) && magic[0];
-  assign isCall=(opcode_main==8'd182 && (instr[15:13]==3'd1 || instr[15:13]==3'd2)) && magic[0];
-  assign isRet=(opcode_main==8'd182 && instr[15:13]==3'd3) && magic[0];
-  assign isMovOrExt=(opcode_main==8'd183 || opcode_main[7:3]==5'b10111 || opcode_main[7:1]==7'd96) && magic[0];
+  assign isSelfTestCJump=(pwh#(8)::cmpEQ(opcode_main,8'd178) || pwh#(8)::cmpEQ(opcode_main,8'd179)) && magic[0];
+  assign isLongCondJump=(pwh#(8)::cmpEQ(opcode_main,8'd180)) && magic[0];
+  assign isUncondJump=(pwh#(8)::cmpEQ(opcode_main,8'd181)) && magic[0];
+  assign isIndirJump=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd0) && magic[0];
+  assign isCall=(pwh#(8)::cmpEQ(opcode_main,8'd182) && (instr[15:13]==3'd1 || instr[15:13]==3'd2)) && magic[0];
+  assign isRet=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd3) && magic[0];
+  assign isMovOrExt=(pwh#(8)::cmpEQ(opcode_main,8'd183) || pwh#(5)::cmpEQ(opcode_main[7:3],5'b10111) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd96)) && magic[0];
   assign isMovOrExtExcept=magic[1:0]==2'b11 && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
-  assign isCSet=(opcode_main==8'd194) && magic[0]; 
-  assign isBasicAddNoFl=(opcode_main==8'd195 || opcode_main==8'd196) && magic[0];
+  assign isCSet=(pwh#(8)::cmpEQ(opcode_main,8'd194)) && magic[0]; 
+  assign isBasicAddNoFl=(pwh#(8)::cmpEQ(opcode_main,8'd195) || pwh#(8)::cmpEQ(opcode_main,8'd196)) && magic[0];
   
-  assign isLeaIPRel=(opcode_main==8'd197) & magic[0];
+  assign isLeaIPRel=(pwh#(8)::cmpEQ(opcode_main,8'd197)) & magic[0];
 
   assign isCmov=opcode_main==198 && magic[1:0]==2'b01;
   
   
-  assign isSimdInt=opcode_main==8'd200 && magic[0];
-  assign isFPUreor=opcode_main==8'd201 && magic[0];
+  assign isSimdInt=pwh#(8)::cmpEQ(opcode_main,8'd200) && magic[0];
+  assign isFPUreor=pwh#(8)::cmpEQ(opcode_main,8'd201) && magic[0];
   
-  assign isShlAddMulLike=(opcode_main==8'd210 || opcode_main==8'd211 ||
-    opcode_main==8'd231 || opcode_main==8'd232) && magic[0];
-  assign isPtrSec=(opcode_main==8'd212 || opcode_main==8'd233 )&& magic[0];
-  assign isJalR=(opcode_main==8'd213 || opcode_main==8'd214 || opcode_main==8'd215 || opcode_main==8'd220 || opcode_main==8'd221) && magic[0];
-  assign isCexALU=opcode_main==8'd222 && magic[0];
+  assign isShlAddMulLike=(pwh#(8)::cmpEQ(opcode_main,8'd210) || pwh#(8)::cmpEQ(opcode_main,8'd211) ||
+    pwh#(8)::cmpEQ(opcode_main,8'd231) || pwh#(8)::cmpEQ(opcode_main,8'd232)) && magic[0];
+  assign isPtrSec=(pwh#(8)::cmpEQ(opcode_main,8'd212) || pwh#(8)::cmpEQ(opcode_main,8'd233) )&& magic[0];
+  assign isJalR=(pwh#(8)::cmpEQ(opcode_main,8'd213) || pwh#(8)::cmpEQ(opcode_main,8'd214) || pwh#(8)::cmpEQ(opcode_main,8'd215) || pwh#(8)::cmpEQ(opcode_main,8'd220) || pwh#(8)::cmpEQ(opcode_main,8'd221)) && magic[0];
+  assign isCexALU=pwh#(8)::cmpEQ(opcode_main,8'd222) && magic[0];
 
-  assign isCLeave=(opcode_main==8'd235 || pwh#(8)::cmpEQ(opcode_main[7:0],8'd236) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd238)) && magic[0];
+  assign isCLeave=(pwh#(8)::cmpEQ(opcode_main,8'd235) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd236) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd238)) && magic[0];
   //237 and 239 unused so far
   assign isBasicFPUScalarA=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[13:12]==2'b0 && magic[0];
   assign isBasicFPUScalarB=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[13:12]==2'b1 && magic[0];
@@ -200,15 +200,15 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign isBasicFPUScalarCmp2=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[15:12]==4'ha && magic[0];
   assign isBasicFPUScalarCmp3=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[15:12]==4'd12;
 
-  assign isCallPrep=(opcode_main==8'd199) && magic[0];
+  assign isCallPrep=(pwh#(8)::cmpEQ(opcode_main,8'd199)) && magic[0];
 
-  assign isGA=opcode_main==8'd237 && magic[0];
+  assign isGA=pwh#(8)::cmpEQ(opcode_main,8'd237) && magic[0];
 
-  assign isPtrBump_other_domain=opcode_main==8'hf7 && magic[1:0]==2'b01;
+  assign isPtrBump_other_domain=pwh#(8)::cmpEQ(opcode_main,8'hf7) && magic[1:0]==2'b01;
 
   assign thisSpecLoad=isBaseSpecLoad || isBaseIndexSpecLoad || isBaseSpecStore || isBaseIndexSpecStore || 
-      ({instr[11],instr[15:12]}==5'd16 &&  opcode_main[7:1]==7'b1011000) || 
-      ({instr[1],instr[15:12]}==5'd15 && opcode_main[7:2]==6'd15);
+      ({instr[11],instr[15:12]}==5'd16 &&  pwh#(7)::cmpEQ(opcode_main[7:1],7'b1011000)) || 
+      ({instr[1],instr[15:12]}==5'd15 && pwh#(6)::cmpEQ(opcode_main[7:2],6'd15));
 
   
   assign clsJump=|{
@@ -221,7 +221,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   isCall,
   isRet,
   subIsCJ,
-  opcode_main==8'hff && ~instr[15] && ~instr[13] && magic[0] && 
+  pwh#(8)::cmpEQ(opcode_main,8'hff) && ~instr[15] && ~instr[13] && magic[0] && 
     instr[30:16]!=15'd22
   };
 
@@ -229,7 +229,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   isIndirJump,
   isRet,
   isFPUreor,
-  opcode_main==8'hff && ~instr[15] && ~instr[13] && magic[0]
+  pwh#(8)::cmpEQ(opcode_main,8'hff) && ~instr[15] && ~instr[13] && magic[0]
   };
 
   assign clsFMA=|{
@@ -262,7 +262,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   subIsSIMD,
   isSimdInt && ((instr[13:9]==5'd0 && ~instr[16]) || (instr[13:9]==5'd5 && ~instr[16]) || (instr[13:8]==6'b11 && instr[16])),
   subIsBasicALU & ~subIsBasicXOR,subIsCmpTest,subIsLinkRet,
-  opcode_main==8'hff && instr[15:13]==3'd1 && magic[0],
+  pwh#(8)::cmpEQ(opcode_main,8'hff) && instr[15:13]==3'd1 && magic[0],
   isBasicFPUScalarA && instr[13:9]!=5'd2 && instr[13:8]!=6'd8,
   isBasicFPUScalarB && instr[13:8]!=6'd18 && instr[13:8]!=6'd21,
   isBasicFPUScalarC && instr[13:8]!=6'd32,
@@ -272,10 +272,10 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   subIsMovOrExt,
   isLeaIPRel,
   isJalR,
-  opcode_main==8'd236 && magic[0]
+  pwh#(8)::cmpEQ(opcode_main,8'd236) && magic[0]
   };
   
-  assign clsPos0=opcode_main==8'hff && instr[15:13]==3'd1 && magic[0] && instr[31:16]==`csr_FPU;
+  assign clsPos0=pwh#(8)::cmpEQ(opcode_main,8'hff) && instr[15:13]==3'd1 && magic[0] && instr[31:16]==`csr_FPU;
   
   assign clsShift=isBasicShift & ~isBasicShiftExcept || subIsBasicShift || subIsFPUD & (opcode_sub[5:1]==5'b11100) ||
     isCexALU & ~instr[12] & instr[10] ||
@@ -332,11 +332,11 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   
   assign clsMul=|{
     isBasicMUL && ({opcode_main[6:3],opcode_main[1]}!=3 && {opcode_main[6:3],opcode_main[1]}!=7),
-    magic[0] && opcode_main==8'd234,
+    magic[0] && pwh#(8)::cmpEQ(opcode_main,8'd234),
     isGA,
     isPtrSec,
     isCexALU & instr[12],
-    opcode_main==8'hff && ~instr[15] && ~instr[13] && magic[0],
+    pwh#(8)::cmpEQ(opcode_main,8'hff) && ~instr[15] && ~instr[13] && magic[0],
      isBasicFPUScalarC && instr[13:8]==6'd32,
 
      isBasicFPUScalarCmp && |instr[12:11],
@@ -560,7 +560,7 @@ module predecoder_get(
 
     assign has_brk=has_next && cntEnd2_15[11];
 
-    assign instrEn=cntEnd2[12:1]|{11'b0,startOff==4'hf};
+    assign instrEn=cntEnd2[12:1]|{11'b0,pwh#(4)::cmpEQ(startOff,4'hf)};
     assign Jen=jcnt_or_more[4:1];
     
     assign is_jmp=is_jmpX & instrEnd[18:-1];

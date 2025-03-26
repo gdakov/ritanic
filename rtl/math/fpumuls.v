@@ -176,13 +176,13 @@ module fpumuls(clk,rst,A,B,copyA,en,rmode,res,raise,fpcsr);
   assign expB={B[30],B[32],B[29:23]};
   
 
-  assign A_zero=expA==9'b0;
-  assign A_infty=expA==9'h1fe;
-  assign A_nan=expA==9'h1ff;
+  assign A_zero=pwh#(9)::cmpEQ(expA,9'b0);
+  assign A_infty=pwh#(9)::cmpEQ(expA,9'h1fe);
+  assign A_nan=pwh#(9)::cmpEQ(expA,9'h1ff);
   
-  assign B_zero=expB==9'b0;
-  assign B_infty=expB==9'h1fe;
-  assign B_nan=expB==9'h1ff;
+  assign B_zero=pwh#(9)::cmpEQ(expB,9'b0);
+  assign B_infty=pwh#(9)::cmpEQ(expB,9'h1fe);
+  assign B_nan=pwh#(9)::cmpEQ(expB,9'h1ff);
 
   assign spec_zero=A_zero&~B_infty&~copyA||B_zero&~A_infty&~copyA;
   assign spec_infty=A_infty&~B_zero&~copyA||B_infty&~A_zero&~copyA;

@@ -646,8 +646,8 @@ module dcache1_way(
           initCount<=6'b0;
       end else if (init) begin
           initCount<=initCount_d;
-          if (initCount==6'd63) init<=1'b0;
-          if (initCount==6'hf) init_dirty<=1'b0;
+          if (pwh#(6)::cmpEQ(initCount,6'd63)) init<=1'b0;
+          if (pwh#(6)::cmpEQ(initCount,6'hf)) init_dirty<=1'b0;
       end
   end
     

@@ -599,7 +599,7 @@ module ccRam_way(
           initCount<=7'b0;
       end else if (init) begin
          initCount<=initCountNext;
-         if (initCount==7'd127)
+         if (pwh#(7)::cmpEQ(initCount,7'd127))
              init<=1'b0;
       end
   end

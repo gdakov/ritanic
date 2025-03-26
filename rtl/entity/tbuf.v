@@ -288,7 +288,7 @@ module freq_update(freq,new_freq);
   output pwire [6:0] new_freq;
   
   adder_inc #(7) ifreq_mod(freq,new_freq,freq!=7'h7f,);
-  assign new_freq=(freq==7'h7f) ? 7'h7f : 7'bz;  
+  assign new_freq=(pwh#(7)::cmpEQ(freq,7'h7f)) ? 7'h7f : 7'bz;  
 endmodule
 
 module sc_update(sc,taken,new_sc);
@@ -1039,16 +1039,16 @@ module tbuf_way(
 //up to here.
 //dataJ includes taken and computed jmask.
   assign sve_j0[0]=has_saved && saved_addr0[12:11]==2'd0 && saved_use[0];    
-  assign sve_j0[1]=has_saved && saved_addr1==2'd0 && saved_use[1];    
+  assign sve_j0[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd0) && saved_use[1];    
 
   assign sve_j1[0]=has_saved && saved_addr0[12:11]==2'd1 && saved_use[0];    
-  assign sve_j1[1]=has_saved && saved_addr1==2'd1 && saved_use[1];    
+  assign sve_j1[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd1) && saved_use[1];    
 
   assign sve_j2[0]=has_saved && saved_addr0[12:11]==2'd2 && saved_use[0];    
-  assign sve_j2[1]=has_saved && saved_addr1==2'd2 && saved_use[1];    
+  assign sve_j2[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd2) && saved_use[1];    
 
   assign sve_j3[0]=has_saved && saved_addr0[12:11]==2'd3 && saved_use[0];    
-  assign sve_j3[1]=has_saved && saved_addr1==2'd3 && saved_use[1];    
+  assign sve_j3[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd3) && saved_use[1];    
 
   assign sve_taken[0]=|(sve_j0 & saved_tk);
   assign sve_taken[1]=|(sve_j1 & saved_tk);
@@ -1230,7 +1230,7 @@ module tbuf_way(
           init<=1'b1;
           init_count<=9'd0;
       end else if (init) begin
-          if (init_count==9'h1ff) init<=1'b0;
+          if (pwh#(9)::cmpEQ(init_count,9'h1ff)) init<=1'b0;
           init_count<=init_next;
       end
       if (rst) begin
@@ -2026,8 +2026,8 @@ module tbuf(
   assign jump_mask=(taken_reg[0] && ~except_jmask_en_reg) ? jump_mask0_reg : 4'bz;
   assign jump_mask=(taken_reg[1:0]==2'b10 && ~except_jmask_en_reg) ? jump_mask1_reg : 4'bz;
   assign jump_mask=(taken_reg[2:0]==3'b100 && ~except_jmask_en_reg) ? jump_mask2_reg : 4'bz;
-  assign jump_mask=(taken_reg==4'b1000 && ~except_jmask_en_reg) ? jump_mask3_reg : 4'bz;
-  assign jump_mask=(taken_reg==4'b0 && ~except_jmask_en_reg) ? 4'hf : 4'bz;
+  assign jump_mask=(pwh#(4)::cmpEQ(taken_reg,4'b1000) && ~except_jmask_en_reg) ? jump_mask3_reg : 4'bz;
+  assign jump_mask=(pwh#(4)::cmpEQ(taken_reg,4'b0) && ~except_jmask_en_reg) ? 4'hf : 4'bz;
   assign jump_mask=(except_jmask_en_reg) ? except_jmask_reg : 4'bz;
 
   assign chk_mask=read_hit_A ? chk_maskA : chk_maskB;

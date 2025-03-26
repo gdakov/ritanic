@@ -252,10 +252,10 @@ module fadd(
   assign spec_ninf=(A_infty && A_s && ~B_infty|B_s && ~copyA) || (B_infty && B_s && ~A_infty|A_s && ~copyA);
   assign spec_A=(B_zero && ~A_zero|~A_s|B_s && ~A_nan && ~A_infty)||copyA;
   assign spec_B=(A_zero && ~B_zero|(~B_s&A_s) && ~B_nan && ~B_infty)&&~copyA;
-  assign spec_logic[0]=logic_en && logic_sel==2'd0 && ~copyA;
-  assign spec_logic[1]=logic_en && logic_sel==2'd1 && ~copyA;
-  assign spec_logic[2]=logic_en && logic_sel==2'd2 && ~copyA;
-  assign spec_logic[3]=logic_en && logic_sel==2'd3 && ~copyA;
+  assign spec_logic[0]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd0) && ~copyA;
+  assign spec_logic[1]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd1) && ~copyA;
+  assign spec_logic[2]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd2) && ~copyA;
+  assign spec_logic[3]=logic_en && pwh#(2)::cmpEQ(logic_sel,2'd3) && ~copyA;
  
  
   assign opA=a_more ?  fracxfrm1(A[63:0],isDBL) : 64'bz;

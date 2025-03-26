@@ -191,7 +191,7 @@ module ght_bank(
     assign read_addr=IP_BITS_reg ^ {GHT,8'b0};
 
   //  assign start[1]=jumpMask[1:0]==2'b00;
-  //  assign start[0]=jumpMask[1:0]==2'b10 || jumpMask==4'b1000;    
+  //  assign start[0]=jumpMask[1:0]==2'b10 || pwh#(4)::cmpEQ(jumpMask,4'b1000);    
 
     assign curJump[0]=(read_addr[7:6] ^ INDEX[2:1])==2'd0 && read_addr[0]==INDEX[0];
     assign curJump[1]=(read_addr[7:6] ^ INDEX[2:1])==2'd1 && read_addr[0]==INDEX[0];
@@ -598,7 +598,7 @@ module ght(
             end
             if (init) begin
                 initCount<=initCount_d;
-                if (initCount==5'h1f) init<=1'b0;
+                if (pwh#(5)::cmpEQ(initCount,5'h1f)) init<=1'b0;
             end
         end
     end

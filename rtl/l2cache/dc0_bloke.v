@@ -1406,7 +1406,7 @@ module dcache2_way(
           initCount<=8'd0;
       end else if (init) begin
           initCount<=initCount_next;
-          if (initCount==8'hff) init<=1'b0;
+          if (pwh#(8)::cmpEQ(initCount,8'hff)) init<=1'b0;
       end
       init_reg<=init;
       init_reg2<=init_reg;

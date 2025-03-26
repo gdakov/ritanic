@@ -267,8 +267,8 @@ module rss_buf(
       end
       assign unFwdCheck=fwdCheck0[0] & ~FU0Hit || fwdCheck0[1] & ~FU1Hit || fwdCheck0[2] & ~FU2Hit || fwdCheck0[3] & ~FU3Hit;
 
-      assign unCheckA=(fuFwdA==4'd0 && ~FU0Hit) | (fuFwdA==4'd1 && ~FU1Hit) | (fuFwdA==4'd2 && ~FU2Hit) | (fuFwdA==4'd3 && ~FU3Hit);
-      assign unCheckB=(fuFwdB==4'd0 && ~FU0Hit) | (fuFwdB==4'd1 && ~FU1Hit) | (fuFwdB==4'd2 && ~FU2Hit) | (fuFwdB==4'd3 && ~FU3Hit);
+      assign unCheckA=(pwh#(4)::cmpEQ(fuFwdA,4'd0) && ~FU0Hit) | (pwh#(4)::cmpEQ(fuFwdA,4'd1) && ~FU1Hit) | (pwh#(4)::cmpEQ(fuFwdA,4'd2) && ~FU2Hit) | (pwh#(4)::cmpEQ(fuFwdA,4'd3) && ~FU3Hit);
+      assign unCheckB=(pwh#(4)::cmpEQ(fuFwdB,4'd0) && ~FU0Hit) | (pwh#(4)::cmpEQ(fuFwdB,4'd1) && ~FU1Hit) | (pwh#(4)::cmpEQ(fuFwdB,4'd2) && ~FU2Hit) | (pwh#(4)::cmpEQ(fuFwdB,4'd3) && ~FU3Hit);
       genvar subloop;
       for(newno=0;newno<3;newno=newno+1) begin : new_gen
           assign portNo_new[newno]=(newRsSelect0[newno] & ~stall) ? newPort0[newno] : 9'bz;
@@ -447,7 +447,7 @@ module rss_D_buf(
 
   assign portReady1=portReady1_q;
   
-  assign unCheckA=(fuFwdA==4'd0 && ~FU0Hit) | (fuFwdA==4'd1 && ~FU1Hit) | (fuFwdA==4'd2 && ~FU2Hit) | (fuFwdA==4'd3 && ~FU3Hit);
+  assign unCheckA=(pwh#(4)::cmpEQ(fuFwdA,4'd0) && ~FU0Hit) | (pwh#(4)::cmpEQ(fuFwdA,4'd1) && ~FU1Hit) | (pwh#(4)::cmpEQ(fuFwdA,4'd2) && ~FU2Hit) | (pwh#(4)::cmpEQ(fuFwdA,4'd3) && ~FU3Hit);
 
 
 

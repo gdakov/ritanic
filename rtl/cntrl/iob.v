@@ -135,11 +135,11 @@ module bob_addr(
   adder_inc #(6) add2_mod(cnt,cnt_inc,1'b1,);
   adder_inc #(6) add3_mod(new_addr,new_addr_d,new_addr!=6'd62,);
 
-  assign new_addr_d=new_addr==6'd62 ? 6'd0 : 6'bz;
+  assign new_addr_d=pwh#(6)::cmpEQ(new_addr,6'd62) ? 6'd0 : 6'bz;
 
   adder #(6) add4_mod(cnt,6'h3f,cnt_dec,1'b0,1'b1,,,,);
 
-  assign doStall=cnt==6'd62;
+  assign doStall=pwh#(6)::cmpEQ(cnt,6'd62);
   
   always @(*) begin
       if (rst) begin
@@ -149,7 +149,7 @@ module bob_addr(
       end else begin
 	  retire_addr=retire_addr0;
 	  if (doRetire && retire_addr0!=6'd62) retire_addr=retire0_inc;
-	  if (doRetire && retire_addr0==6'd62) retire_addr=6'b0;
+	  if (doRetire && pwh#(6)::cmpEQ(retire_addr0,6'd62)) retire_addr=6'b0;
       end
       hasRetire=cnt!=6'd0;
   end
@@ -167,7 +167,7 @@ module bob_addr(
 	  if (new_en && !stall && !doStall && !doRetire) cnt<=cnt_inc;
 	  if (!new_en | stall | doStall && doRetire) cnt<=cnt_dec;
 	  if (doRetire && retire_addr0!=6'd62) retire_addr0<=retire0_inc;
-	  if (doRetire && retire_addr0==6'd62) retire_addr0<=6'b0;
+	  if (doRetire && pwh#(6)::cmpEQ(retire_addr0,6'd62)) retire_addr0<=6'b0;
       end
   end
 

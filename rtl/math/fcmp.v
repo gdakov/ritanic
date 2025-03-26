@@ -165,13 +165,13 @@ module fcmpd(clk,rst,
 //  assign A_x_h={|A[54:33],A[55]};
 //  assign B_x_h={|B[54:33],B[55]};
   
-  assign A_x_zero=x_extA==9'b0;
-  assign A_x_infty=x_extA==9'h1fe;
-  assign A_x_nan=x_extA==9'h1ff;
+  assign A_x_zero=pwh#(9)::cmpEQ(x_extA,9'b0);
+  assign A_x_infty=pwh#(9)::cmpEQ(x_extA,9'h1fe);
+  assign A_x_nan=pwh#(9)::cmpEQ(x_extA,9'h1ff);
   
-  assign B_x_zero=x_extB==9'b0;
-  assign B_x_infty=x_extB==9'h1fe;
-  assign B_x_nan=x_extB==9'h1ff;
+  assign B_x_zero=pwh#(9)::cmpEQ(x_extB,9'b0);
+  assign B_x_infty=pwh#(9)::cmpEQ(x_extB,9'h1fe);
+  assign B_x_nan=pwh#(9)::cmpEQ(x_extB,9'h1ff);
 
   assign A_zero=(extA&emsk)==16'b0;
   assign A_infty=(extA|~emsk)==16'hfffe;
