@@ -83,9 +83,9 @@ module optional_register(
   end  
 
   generate
-      if (CNT==0) assign dataOut=dataIn;
-      if (CNT==1) assign dataOut=first;
-      if (CNT==2) assign dataOut=second;
+      if (pwh#(32)::cmpEQ(CNT,0)) assign dataOut=dataIn;
+      if (pwh#(32)::cmpEQ(CNT,1)) assign dataOut=first;
+      if (pwh#(32)::cmpEQ(CNT,2)) assign dataOut=second;
   endgenerate
   
 endmodule

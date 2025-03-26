@@ -120,18 +120,18 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
 
   pwire thisSpecLoad;
   
-  assign subIsBasicALU=(!|opcode_sub[5:4] || opcode_sub[5:2]==4'b0100) & ~magic[0];
+  assign subIsBasicALU=(!|opcode_sub[5:4] || pwh#(4)::cmpEQ(opcode_sub[5:2],4'b0100)) & ~magic[0];
   assign subIsBasicShift=(~opcode_sub[5] && ~subIsBasicALU && opcode_sub[0]) & ~magic[0];
   assign subIsFPUE=pwh#(6)::cmpEQ(opcode_sub,6'b010100) && ~magic[0]; 
   assign subIsFPUSngl=((pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && opcode_main[7:6]!=2'b11) & ~magic[0];
-  assign subIsLinkRet=(pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && opcode_main[7:6]==2'b11 && ~magic[0];
-  assign subIsSIMD=(opcode_sub[5:3]==3'b011 && |opcode_sub[2:1] && ~opcode_sub[0]) & ~magic[0];
-  assign subIsMovOrExt=(opcode_sub[5:3]==3'b100 || opcode_sub[5:1]==5'b10100) & ~magic[0];
-  assign subIsCmpTest=(opcode_sub[5:1]==5'b10101 || opcode_sub[5:2]==4'b1011) & ~magic[0];
-  assign subIsCJ=opcode_sub[5:2]==4'b1100  && |instr[15:8] && ~magic[0]; //zero offset jumps are hint instructions! 
-  assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100) & ~magic[0];
-  assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100) & ~magic[0];
-  assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
+  assign subIsLinkRet=(pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && pwh#(2)::cmpEQ(opcode_main[7:6],2'b11) && ~magic[0];
+  assign subIsSIMD=(pwh#(3)::cmpEQ(opcode_sub[5:3],3'b011) && |opcode_sub[2:1] && ~opcode_sub[0]) & ~magic[0];
+  assign subIsMovOrExt=(pwh#(3)::cmpEQ(opcode_sub[5:3],3'b100) || pwh#(5)::cmpEQ(opcode_sub[5:1],5'b10100)) & ~magic[0];
+  assign subIsCmpTest=(pwh#(5)::cmpEQ(opcode_sub[5:1],5'b10101) || pwh#(4)::cmpEQ(opcode_sub[5:2],4'b1011)) & ~magic[0];
+  assign subIsCJ=pwh#(4)::cmpEQ(opcode_sub[5:2],4'b1100)  && |instr[15:8] && ~magic[0]; //zero offset jumps are hint instructions! 
+  assign subIsFPUD=(pwh#(4)::cmpEQ(opcode_sub[5:2],4'b1101) || pwh#(5)::cmpEQ(opcode_sub[5:1],5'b11100)) & ~magic[0];
+  assign subIsFPUPD=(pwh#(3)::cmpEQ(opcode_sub[5:3],3'b111) && opcode_sub[5:1]!=5'b11100) & ~magic[0];
+  assign subIsBasicXOR=pwh#(4)::cmpEQ(opcode_sub[5:2],4'b0100);//not a separate class
   assign isBasicXOR=(pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2];//not a seprarate class
   
   //hint_begin_vec=pwh#(8)::cmpEQ(opcode_main[7:0],8'b11110011) uc jump offset=0; 2x vectorisation
@@ -147,10 +147,10 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   
   assign isBasicALU=(!|opcode_main[7:5] || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2] & magic[0];
   assign isBasicMUL=(!|opcode_main[7:5] || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & opcode_main[2] & magic[0];
-  assign isBasicALUExcept=~opcode_main[0] && (magic[1:0]==2'b01 && |instr[28:26]);  
+  assign isBasicALUExcept=~opcode_main[0] && (pwh#(2)::cmpEQ(magic[1:0],2'b01) && |instr[28:26]);  
   assign isBasicShift=(pwh#(7)::cmpEQ(opcode_main[7:1],7'd20) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd21) ||
       pwh#(7)::cmpEQ(opcode_main[7:1],7'd22))&&magic[0];      
-  assign isBasicShiftExcept=magic[1:0]==2'b01 && |instr[29:25];
+  assign isBasicShiftExcept=pwh#(2)::cmpEQ(magic[1:0],2'b01) && |instr[29:25];
   
   assign isBasicCmpTest=(pwh#(7)::cmpEQ(opcode_main[7:1],7'd23) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd12) ||
     pwh#(7)::cmpEQ(opcode_main[7:1],7'd26) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd54)) && magic[0];
@@ -161,11 +161,11 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign isBaseIndexSpecStore=(opcode_main=8'd206 || pwh#(8)::cmpEQ(opcode_main,8'd207)) && magic[0];
 
   assign isImmLoadStore=((pwh#(6)::cmpEQ(opcode_main[7:2],6'd15)) || pwh#(7)::cmpEQ(opcode_main[7:1],7'b1011000)) & magic[0];  
-  assign isBaseLoadStore=((opcode_main[7:5]==3'b010) || opcode_main[7:4]==4'b0110) & magic[0];
-  assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) || opcode_main[7:4]==4'b0111) & magic[0];
+  assign isBaseLoadStore=((pwh#(3)::cmpEQ(opcode_main[7:5],3'b010)) || pwh#(4)::cmpEQ(opcode_main[7:4],4'b0110)) & magic[0];
+  assign isBaseIndexLoadStore=((pwh#(3)::cmpEQ(opcode_main[7:5],3'b100)) || pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111)) & magic[0];
 
 
-  assign isBasicCJump=(opcode_main[7:4]==4'b1010) && magic[0];
+  assign isBasicCJump=(pwh#(4)::cmpEQ(opcode_main[7:4],4'b1010)) && magic[0];
   assign isSelfTestCJump=(pwh#(8)::cmpEQ(opcode_main,8'd178) || pwh#(8)::cmpEQ(opcode_main,8'd179)) && magic[0];
   assign isLongCondJump=(pwh#(8)::cmpEQ(opcode_main,8'd180)) && magic[0];
   assign isUncondJump=(pwh#(8)::cmpEQ(opcode_main,8'd181)) && magic[0];
@@ -173,13 +173,13 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   assign isCall=(pwh#(8)::cmpEQ(opcode_main,8'd182) && (instr[15:13]==3'd1 || instr[15:13]==3'd2)) && magic[0];
   assign isRet=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd3) && magic[0];
   assign isMovOrExt=(pwh#(8)::cmpEQ(opcode_main,8'd183) || pwh#(5)::cmpEQ(opcode_main[7:3],5'b10111) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd96)) && magic[0];
-  assign isMovOrExtExcept=magic[1:0]==2'b11 && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
+  assign isMovOrExtExcept=pwh#(2)::cmpEQ(magic[1:0],2'b11) && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
   assign isCSet=(pwh#(8)::cmpEQ(opcode_main,8'd194)) && magic[0]; 
   assign isBasicAddNoFl=(pwh#(8)::cmpEQ(opcode_main,8'd195) || pwh#(8)::cmpEQ(opcode_main,8'd196)) && magic[0];
   
   assign isLeaIPRel=(pwh#(8)::cmpEQ(opcode_main,8'd197)) & magic[0];
 
-  assign isCmov=opcode_main==198 && magic[1:0]==2'b01;
+  assign isCmov=pwh#(32)::cmpEQ(opcode_main,198) && pwh#(2)::cmpEQ(magic[1:0],2'b01);
   
   
   assign isSimdInt=pwh#(8)::cmpEQ(opcode_main,8'd200) && magic[0];
@@ -193,18 +193,18 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
 
   assign isCLeave=(pwh#(8)::cmpEQ(opcode_main,8'd235) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd236) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd238)) && magic[0];
   //237 and 239 unused so far
-  assign isBasicFPUScalarA=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[13:12]==2'b0 && magic[0];
-  assign isBasicFPUScalarB=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[13:12]==2'b1 && magic[0];
-  assign isBasicFPUScalarC=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[15:12]==4'd2 && magic[0];
-  assign isBasicFPUScalarCmp=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[15:12]==4'd6 && magic[0];
-  assign isBasicFPUScalarCmp2=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[15:12]==4'ha && magic[0];
-  assign isBasicFPUScalarCmp3=opcode_main[7:4]==4'hf && ~&opcode_main[1:0] && instr[15:12]==4'd12;
+  assign isBasicFPUScalarA=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && ~&opcode_main[1:0] && instr[13:12]==2'b0 && magic[0];
+  assign isBasicFPUScalarB=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && ~&opcode_main[1:0] && instr[13:12]==2'b1 && magic[0];
+  assign isBasicFPUScalarC=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && ~&opcode_main[1:0] && instr[15:12]==4'd2 && magic[0];
+  assign isBasicFPUScalarCmp=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && ~&opcode_main[1:0] && instr[15:12]==4'd6 && magic[0];
+  assign isBasicFPUScalarCmp2=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && ~&opcode_main[1:0] && instr[15:12]==4'ha && magic[0];
+  assign isBasicFPUScalarCmp3=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && ~&opcode_main[1:0] && instr[15:12]==4'd12;
 
   assign isCallPrep=(pwh#(8)::cmpEQ(opcode_main,8'd199)) && magic[0];
 
   assign isGA=pwh#(8)::cmpEQ(opcode_main,8'd237) && magic[0];
 
-  assign isPtrBump_other_domain=pwh#(8)::cmpEQ(opcode_main,8'hf7) && magic[1:0]==2'b01;
+  assign isPtrBump_other_domain=pwh#(8)::cmpEQ(opcode_main,8'hf7) && pwh#(2)::cmpEQ(magic[1:0],2'b01);
 
   assign thisSpecLoad=isBaseSpecLoad || isBaseIndexSpecLoad || isBaseSpecStore || isBaseIndexSpecStore || 
       ({instr[11],instr[15:12]}==5'd16 &&  pwh#(7)::cmpEQ(opcode_main[7:1],7'b1011000)) || 
@@ -277,7 +277,7 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   
   assign clsPos0=pwh#(8)::cmpEQ(opcode_main,8'hff) && instr[15:13]==3'd1 && magic[0] && instr[31:16]==`csr_FPU;
   
-  assign clsShift=isBasicShift & ~isBasicShiftExcept || subIsBasicShift || subIsFPUD & (opcode_sub[5:1]==5'b11100) ||
+  assign clsShift=isBasicShift & ~isBasicShiftExcept || subIsBasicShift || subIsFPUD & (pwh#(5)::cmpEQ(opcode_sub[5:1],5'b11100)) ||
     isCexALU & ~instr[12] & instr[10] ||
     subIsFPUPD & prev_FMA_mul || subIsFPUSngl & prev_FMA_mul
     || subIsFPUE & prev_FMA_mul || isSimdInt & instr[16] ||
@@ -481,10 +481,10 @@ module predecoder_get(
         input pwire [255+64+16:0] index3;
         input pwire [255+64+16:0] index_else;
         begin
-            if (cond && bstop[3:2]==2'b01) boogy_baboogy=index0;
-            if (cond && bstop[3:1]==3'b001) boogy_baboogy=index1;
-            if (cond && bstop[3:0]==4'b0001) boogy_baboogy=index2;
-            if (cond &&  bstop[3:0]==4'b0) boogy_baboogy=index3;
+            if (cond && pwh#(2)::cmpEQ(bstop[3:2],2'b01)) boogy_baboogy=index0;
+            if (cond && pwh#(3)::cmpEQ(bstop[3:1],3'b001)) boogy_baboogy=index1;
+            if (cond && pwh#(4)::cmpEQ(bstop[3:0],4'b0001)) boogy_baboogy=index2;
+            if (cond &&  pwh#(4)::cmpEQ(bstop[3:0],4'b0)) boogy_baboogy=index3;
             if (!cond || bstop[3]) boogy_baboogy=index_else;
         end
     endfunction
@@ -500,7 +500,7 @@ module predecoder_get(
             assign brk=cntEnd[k][12] ? k[3:0] && k[4] : 4'bz;
             pwire [4:0] kk;
             //verilator lint_off WIDTH
-            assign kk=boogy_baboogy(bstop[3:0],k==0 && bundle0[255],5'hf,5'he,5'hd,5'hc,k[4:0]);
+            assign kk=boogy_baboogy(bstop[3:0],pwh#(32)::cmpEQ(k,0 )&& bundle0[255],5'hf,5'he,5'hd,5'hc,k[4:0]);
             //verilator lint_on WIDTH
             predecoder_class #(LARGE_CORE,H) cls_mod(bundleF[k*16+:32],~instrEndF[k+:4],flag_bits0[k],FMAmul[k],FMAmul[k-1],thread,class_[k],
               is_lnk0[k],is_ret0[k],LNK[k]);
@@ -513,7 +513,7 @@ module predecoder_get(
                     {LNK[k],kk[4:0],instrEnd[k+:4],is_ret[k]} : 15'bz;
                 assign lnkJumps0[subloop_jump]=lcnt[k][subloop_jump+1] & lcnt[k-1][subloop_jump] ? cntJEnd[k][4:0] : 5'bz;
             
-                if (k==0) assign {Jclass0[subloop_jump],Jmagic0[subloop_jump],Jinstr0[subloop_jump],Joff0[subloop_jump]}= 
+                if (pwh#(32)::cmpEQ(k,0)) assign {Jclass0[subloop_jump],Jmagic0[subloop_jump],Jinstr0[subloop_jump],Joff0[subloop_jump]}= 
                     (mask[k] & ~mask[k-1]) ? {class_[k], instrEnd[k+:4],bundle[k*16+:80],kk[4:0]} : 102'bz;
                 else assign {Jclass0[subloop_jump],Jmagic0[subloop_jump],Jinstr0[subloop_jump],Joff0[subloop_jump]}= 
                     cntJEnd[k-1][subloop_jump] & cntJEnd[k-2][subloop_jump-1] ? {class_[k], instrEnd[k+:4],bundle0[k*16+:80],k[4:0]} : 102'bz;
@@ -521,7 +521,7 @@ module predecoder_get(
                 assign lnkJumps0[subloop_jump]=lcnt_or_less[subloop_jump] ?  5'd1 : 5'bz;
             end
             for(subloop_insn=0;subloop_insn<16;subloop_insn=subloop_insn+1) begin : insn_gen
-                if (k==0) assign {FMAmulI[0],class0[0],magic0[0],instr0[0],off0[0]}=(mask[k] & ~mask[k-1]) ?
+                if (pwh#(32)::cmpEQ(k,0)) assign {FMAmulI[0],class0[0],magic0[0],instr0[0],off0[0]}=(mask[k] & ~mask[k-1]) ?
                     {FMAmulI[k],class_[k],instrEnd[k+:4],bundle[k*16+:80],kk[4:0]} : 102'bz;
                 else assign {FMAmulI[subloop_insn],class0[subloop_insn],magic0[subloop_insn],instr0[subloop_insn],off0[subloop_insn]}=mask[k] & 
                     cntEnd[k-1][subloop_insn] & cntEnd[k-2][subloop_insn-1] ? {FMAmulI[k],class_[k], instrEnd[k+:4],bundle0[k*16+:80],k[4:0]} : 102'bz;
@@ -547,9 +547,9 @@ module predecoder_get(
     
     assign last_is_FMAmul=|(FMAmulI[11:0] & (instrEn[11:0]&~(instrEn[11:0]>>1)));
     //verilator lint_off WIDTH
-    assign bundleF=boogy_baboogy(bstop[3:0],bundle[255] && startOff==0,{bundle0[255+48:0],btail[63:48]},{bundle0[255+32:0],btail[63:32]}, {bundle0[255+16:0],btail[63:16]},{bundle0[255:0],btail[63:0]},bundle0);
+    assign bundleF=boogy_baboogy(bstop[3:0],bundle[255] && pwh#(32)::cmpEQ(startOff,0,){bundle0[255+48:0],btail[63:48]},{bundle0[255+32:0],btail[63:32]}, {bundle0[255+16:0],btail[63:16]},{bundle0[255:0],btail[63:0]},bundle0);
 
-    assign instrEndF=boogy_baboogy(bstop[3:0],bundle0[255] && startOff==0,{instrEnd[16:0],bstop[3:1],instrEnd[-1]},
+    assign instrEndF=boogy_baboogy(bstop[3:0],bundle0[255] && pwh#(32)::cmpEQ(startOff,0,){instrEnd[16:0],bstop[3:1],instrEnd[-1]},
      {instrEnd[17:0],bstop[3:2],instrEnd[-1]},{instrEnd[18:0],bstop[3],instrEnd[-1]},
       {instrEnd[15:0],bstop[3:0],instrEnd[-1]},instrEnd);
     //veritlator lint_on WIDTH
@@ -573,7 +573,7 @@ module predecoder_get(
     always @*
       begin
         instrEnd={2'b0,bnext_stop,bundle[254:240],1'b1};
-        error=cntEnd3[13]&~cntEnd3_15[13] || startOff==15;
+        error=cntEnd3[13]&~cntEnd3_15[13] || pwh#(32)::cmpEQ(startOff,15);
         _splitinsn=bundle[255];
         jerror=~lcnt_or_less[4] || ~jcnt_or_less[4]&~jcnt_or_less_15[4];
         flag_bits0=20'b0;

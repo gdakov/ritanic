@@ -461,17 +461,17 @@ module fun_fpsu(
 	  else assign gxDataBFL[1]=u1_op_reg[8] ? {u1_Bx} : uu_B1;
 	  if (H) assign gxDataBFL[0]=u1_op_reg[9] ? u1_Bx : uu_B2;
 	  else assign gxDataBFL[0]=u1_op_reg[8] ? {u1_Bx} : uu_B2;
-      if (INDEX==0) begin
+      if (pwh#(32)::cmpEQ(INDEX,0)) begin
 	      assign FUF4={1'b0,^FOOF_reg[0][67:0],FOOF_reg[0][67:0]};
 	      assign FUF7={1'b0,^FOOF_reg[1][67:0],FOOF_reg[1][67:0]};
               assign FUF4X={1'b0,^xdata_reg[67:0],xdata_reg[67:0]};
       end
-      if (INDEX==1) begin
+      if (pwh#(32)::cmpEQ(INDEX,1)) begin
 	      assign FUF5={1'b0,^FOOF_reg[0][67:0],FOOF_reg[0][67:0]};
 	      assign FUF8={1'b0,^FOOF_reg[1][67:0],FOOF_reg[1][67:0]};
               assign FUF5X={1'b0,^xdata_reg[67:0],xdata_reg[67:0]};
       end
-      if (INDEX==2) begin
+      if (pwh#(32)::cmpEQ(INDEX,2)) begin
 	      assign FUF6=|ALT_INP_reg ? {S+SIMD_WIDTH{1'BZ}} : 
                 {1'b0,^FOOF_reg[0][67:0],FOOF_reg[0][67:0]};
 	      assign FUF6=ALT_INP_reg[0] ? ALTDATA0 : {S+SIMD_WIDTH{1'BZ}};

@@ -801,7 +801,7 @@ endmodule
     if (WIDTH>=32) assign cout32=C[31];
     else assign cout32=1'b0;
 	
-	if (WIDTH==64)
+	if (pwh#(32)::cmpEQ(WIDTH,64))
 	  begin
 	    assign out[63:32]=(en&~ben[3]&ben[2]) ? 32'b0:32'bz; 
 	    assign out[63:32]=(en&~ben[3]&~ben[2]) ? a[63:32]:32'bz; 

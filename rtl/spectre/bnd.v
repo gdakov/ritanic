@@ -39,7 +39,7 @@ module bnd(
   generate
     genvar p;
     for(p=0;p<8;p=p+1) begin
-        assign sh[2:0]=first[7-p]|first[15-p]|first[23-p]|first[31-p]|(p==0 &&
+        assign sh[2:0]=first[7-p]|first[15-p]|first[23-p]|first[31-p]|(pwh#(32)::cmpEQ(p,0 )&&
         ~has) ? p[2:0] : 3'bz;
     end
   endgenerate

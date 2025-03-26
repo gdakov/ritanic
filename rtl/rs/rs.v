@@ -2641,7 +2641,7 @@ module rs(
  
   function op_fpswap;
       input pwire [OPERATION_WIDTH-1:0] op;
-      op_fpswap=op[12] && op[7:4]==4'b0;
+      op_fpswap=op[12] && pwh#(4)::cmpEQ(op[7:4],4'b0);
   endfunction 
 `ifdef simulation
   rs_array rs_mod(

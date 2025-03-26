@@ -918,7 +918,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
             (isJ[1] && jdec_cleave[1]==2'd1) || (isJ[2] && jdec_cleave[2]==2'd1) ||
             (isJ[3] && jdec_cleave[3]==2'd1);
           assign pre_other[j][`instrQ_magic]=~pre_magic_reg[j];
-          assign pre_other[j][`instrQ_srcIPOff]=read_data_reg[255] && cc_read_IP_reg3[4:1]==4'b0 ? {cc_base_off_reg,pre_off_reg[j]}: 
+          assign pre_other[j][`instrQ_srcIPOff]=read_data_reg[255] && pwh#(4)::cmpEQ(cc_read_IP_reg3[4:1],4'b0) ? {cc_base_off_reg,pre_off_reg[j]}: 
               {cc_base_off,pre_off_reg[j]};
           if (j!=11) assign pre_other[j][`instrQ_srcTick]=cc_base_tick &&//cc_read_IP_reg4[43:9]!=cc_read_IP_reg5[43:9] &&
 	     do_seq_reg5 && pre_instrEn_reg[j]&&pre_jbefore[j]&&j=={31'b0,read_data_reg[255] && cc_read_IP_reg3[4:1]==0}; 
@@ -937,11 +937,11 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           assign pre_other[j][`instrQ_jmp_ind]=isJ[3] ? 2'd3 : 2'bz;
           assign pre_other[j][`instrQ_jmp_ind]=isJ!=0 ? 2'bz : 2'd0;
           assign pre_other[j][`instrQ_btb_way]=btbxx_way_reg;
-          assign pre_other[j][`instrQ_ght_addr]=(startx_reg4&{1'b1,isJ})!=0 || isJ==0 ? GHT_reg4 : 16'bz;
+          assign pre_other[j][`instrQ_ght_addr]=(startx_reg4&{1'b1,isJ})!=0 || pwh#(32)::cmpEQ(isJ,0 )? GHT_reg4 : 16'bz;
           assign pre_other[j][`instrQ_ght_addr]=(startx_reg4[2:0]&isJ[3:1])!=0 ? {GHT_reg4[6:0],1'b0} : 16'bz;
           assign pre_other[j][`instrQ_ght_addr]=(startx_reg4[1:0]&isJ[3:2])!=0 ? {GHT_reg4[5:0],2'b0} : 16'bz;
           assign pre_other[j][`instrQ_ght_addr]=(startx_reg4[0]&isJ[3]) ? {GHT_reg4[4:0],3'b0} : 16'bz;
-          assign pre_other[j][`instrQ_ght2_addr]=(startx_reg4&{1'b1,isJ})!=0 || isJ==0 ? GHT_mispred_reg4 : 16'bz;
+          assign pre_other[j][`instrQ_ght2_addr]=(startx_reg4&{1'b1,isJ})!=0 || pwh#(32)::cmpEQ(isJ,0 )? GHT_mispred_reg4 : 16'bz;
           assign pre_other[j][`instrQ_ght2_addr]=(startx_reg4[2:0]&isJ[3:1])!=0 ? {GHT_mispred_reg4[6:0],1'b0} : 16'bz;
           assign pre_other[j][`instrQ_ght2_addr]=(startx_reg4[1:0]&isJ[3:2])!=0 ? {GHT_mispred_reg4[5:0],2'b0} : 16'bz;
           assign pre_other[j][`instrQ_ght2_addr]=(startx_reg4[0]&isJ[3]) ? {GHT_mispred_reg4[4:0],3'b0} : 16'bz;
@@ -1080,16 +1080,16 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign btb_in_link=(~btb_hasTK) ? (jlninx0 && btbx_jlink0[4:0]!=5'h1f)|| (jlninx1 && btbx_jlink1[4:0]!=5'h1f)||
 	  (jlninx2 && btbx_jlink2[4:0]!=5'h1f) || (jlninx3 && btbx_jlink3[4:0]!=5'h1f) : 1'bz;//if no jump taken then link is last instr in bundle
 
-  assign btb_in_ret=taken[3] ? (btbx_jlink0[4:0]==5'h1f && btbx_jlnjpos0[4] && ~btbx_jlnpos0[4]) ||
-	  (btbx_jlink1[4:0]==5'h1f && btbx_jlnjpos1[4] && ~btbx_jlnpos1[4]) ||
-	  (btbx_jlink2[4:0]==5'h1f && btbx_jlnjpos2[4] && ~btbx_jlnpos2[4]) ||
-	  (btbx_jlink3[4:0]==5'h1f && btbx_jlnjpos3[4] && ~btbx_jlnpos3[4]) : 1'bz;
-  assign btb_in_ret=taken[2] ? (btbx_jlink0[4:0]==5'h1f && btbx_jlnjpos0[3] && ~btbx_jlnpos0[4]) ||
-	 (btbx_jlink1[4:0]==5'h1f && btbx_jlnjpos1[3] && ~btbx_jlnpos1[4]) ||
-	(btbx_jlink2[4:0]==5'h1f && btbx_jlnjpos2[3] && ~btbx_jlnpos2[4]) : 1'bz;
-  assign btb_in_ret=taken[1] ? (btbx_jlink0[4:0]==5'h1f && btbx_jlnjpos0[2] && ~btbx_jlnpos0[4]) ||
-	  (btbx_jlink1[4:0]==5'h1f && btbx_jlnjpos1[2] && ~btbx_jlnpos1[4]) : 1'bz;
-  assign btb_in_ret=taken[0] ? (btbx_jlink0[4:0]==5'h1f && btbx_jlnjpos0[1] && ~btbx_jlnpos0[4]) : 1'bz;
+  assign btb_in_ret=taken[3] ? (pwh#(5)::cmpEQ(btbx_jlink0[4:0],5'h1f) && btbx_jlnjpos0[4] && ~btbx_jlnpos0[4]) ||
+	  (pwh#(5)::cmpEQ(btbx_jlink1[4:0],5'h1f) && btbx_jlnjpos1[4] && ~btbx_jlnpos1[4]) ||
+	  (pwh#(5)::cmpEQ(btbx_jlink2[4:0],5'h1f) && btbx_jlnjpos2[4] && ~btbx_jlnpos2[4]) ||
+	  (pwh#(5)::cmpEQ(btbx_jlink3[4:0],5'h1f) && btbx_jlnjpos3[4] && ~btbx_jlnpos3[4]) : 1'bz;
+  assign btb_in_ret=taken[2] ? (pwh#(5)::cmpEQ(btbx_jlink0[4:0],5'h1f) && btbx_jlnjpos0[3] && ~btbx_jlnpos0[4]) ||
+	 (pwh#(5)::cmpEQ(btbx_jlink1[4:0],5'h1f) && btbx_jlnjpos1[3] && ~btbx_jlnpos1[4]) ||
+	(pwh#(5)::cmpEQ(btbx_jlink2[4:0],5'h1f) && btbx_jlnjpos2[3] && ~btbx_jlnpos2[4]) : 1'bz;
+  assign btb_in_ret=taken[1] ? (pwh#(5)::cmpEQ(btbx_jlink0[4:0],5'h1f) && btbx_jlnjpos0[2] && ~btbx_jlnpos0[4]) ||
+	  (pwh#(5)::cmpEQ(btbx_jlink1[4:0],5'h1f) && btbx_jlnjpos1[2] && ~btbx_jlnpos1[4]) : 1'bz;
+  assign btb_in_ret=taken[0] ? (pwh#(5)::cmpEQ(btbx_jlink0[4:0],5'h1f) && btbx_jlnjpos0[1] && ~btbx_jlnpos0[4]) : 1'bz;
   assign btb_in_ret=(~btb_hasTK) ? 1'b0 : 1'bz;
 
  // assign link_IP_d[0]=1'b0;
@@ -1118,7 +1118,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign req_addr=(~req_en0 & ~req_en1) ?  38'b0 : 38'bz;
   assign req_slot=(~req_en0 & ~req_en1) ? 10'b0 : 10'bz;
   
-  assign miss_recover=(bus_match0_reg3 && ~miss_seq && dreq_reg4==0)|| bus_mlb_match_reg3;
+  assign miss_recover=(bus_match0_reg3 && ~miss_seq && pwh#(32)::cmpEQ(dreq_reg4,0))|| bus_mlb_match_reg3;
 
 
   assign uxcept=except & ~miss_now & ~btb_hold_except & ~except_indir || except_save & ~miss_now &
@@ -1191,16 +1191,16 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 //  assign GHTx=4'b0;
       
   assign start[0]=btb_jmask[0];
-  assign start[1]=btb_jmask[1:0]==2'b10;
-  assign start[2]=btb_jmask[2:0]==3'b100;
-  assign start[3]=btb_jmask[3:0]==4'b1000;
-  assign start[4]=btb_jmask==0;
+  assign start[1]=pwh#(2)::cmpEQ(btb_jmask[1:0],2'b10);
+  assign start[2]=pwh#(3)::cmpEQ(btb_jmask[2:0],3'b100);
+  assign start[3]=pwh#(4)::cmpEQ(btb_jmask[3:0],4'b1000);
+  assign start[4]=pwh#(32)::cmpEQ(btb_jmask,0;)
 
   assign start2[0]=btb_jmask2[0];
-  assign start2[1]=btb_jmask2[1:0]==2'b10;
-  assign start2[2]=btb_jmask2[2:0]==3'b100;
-  assign start2[3]=btb_jmask2[3:0]==4'b1000;
-  assign start2[4]=btb_jmask2==0;
+  assign start2[1]=pwh#(2)::cmpEQ(btb_jmask2[1:0],2'b10);
+  assign start2[2]=pwh#(3)::cmpEQ(btb_jmask2[2:0],3'b100);
+  assign start2[3]=pwh#(4)::cmpEQ(btb_jmask2[3:0],4'b1000);
+  assign start2[4]=pwh#(32)::cmpEQ(btb_jmask2,0;)
 
   assign btb_jmask2=(btb_way ? btb_chmaskB : btb_chmaskA)&{4{btb_hit}};
 
@@ -1260,12 +1260,12 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign iqe_jbits=taken_reg[0] ? {3'b0,btbx_jmask_reg[0]} : 4'bz;
   assign iqe_jbits=taken_reg[1] ? {2'b0,btbx_jmask_reg[1:0]} : 4'bz;
   assign iqe_jbits=taken_reg[2] ? {1'b0,btbx_jmask_reg[2:0]} : 4'bz;
-  assign iqe_jbits=taken_reg[3] || (taken_reg==0) ? btbx_jmask_reg : 4'bz;
+  assign iqe_jbits=taken_reg[3] || (pwh#(32)::cmpEQ(taken_reg,0)) ? btbx_jmask_reg : 4'bz;
   
   assign iqe_jbitZ=taken_REG[0] ? {3'b0,btbx_jmask_REG[0]} : 4'bz;
   assign iqe_jbitZ=taken_REG[1] ? {2'b0,btbx_jmask_REG[1:0]} : 4'bz;
   assign iqe_jbitZ=taken_REG[2] ? {1'b0,btbx_jmask_REG[2:0]} : 4'bz;
-  assign iqe_jbitZ=taken_REG[3] || (taken_REG==0) ? btbx_jmask_REG : 4'bz;
+  assign iqe_jbitZ=taken_REG[3] || (pwh#(32)::cmpEQ(taken_REG,0)) ? btbx_jmask_REG : 4'bz;
 
   assign btbx_cond=btb_cond;
 
@@ -1621,7 +1621,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
  
   pwire kkk;
 
-  assign kkk=pff==16'hfe47;
+  assign kkk=pwh#(32)::cmpEQ(pff,16)'hfe47;
   
   bit_find_first_bit #(8) tkjiA_mod({
     pred_sc7A[0]^pred_sh7A^kkk,
@@ -2225,13 +2225,13 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               miss_slot<=4'b0;
 	      //proturberan<=1'b0;
           end
-          if (miss_cnt==32) miss_seq<=1'b0;
-          if (miss_slot==15 || mlbMiss_now) miss_seq<=1'b0;
+          if (pwh#(32)::cmpEQ(miss_cnt,32)) miss_seq<=1'b0;
+          if (pwh#(32)::cmpEQ(miss_slot,15) || mlbMiss_now) miss_seq<=1'b0;
           if (miss_seq) miss_cnt<=miss_cnt_next;
           if (miss_seq && ~cc_read_hit && IP_chg_reg3) miss_slot<=miss_slot_next;
    //       link_IP<=link_IP_d;
           mlb_data_reg<=mlb_data;
-          IP_chg<=(cc_read_IP[6:5]==2'b11) & do_seq || (cc_read_IP[6]==1'b1) & do_seq_miss || miss_recover;
+          IP_chg<=(pwh#(2)::cmpEQ(cc_read_IP[6:5],2'b11)) & do_seq || (cc_read_IP[6]==1'b1) & do_seq_miss || miss_recover;
           IP_chg_reg<=IP_chg;
           IP_chg_reg2<=IP_chg_reg;
           IP_chg_reg3<=IP_chg_reg2;

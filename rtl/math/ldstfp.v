@@ -41,7 +41,7 @@ module ldD2nativeD(
       for(l=0;l<7;l=l+1) begin
               pwire [51:0] denorK;
 	      pwire [11:0] expK;
-              for(l1=0;l1<((l==6) ? 4 : 8);l1=l1+1) begin
+              for(l1=0;l1<((pwh#(32)::cmpEQ(l,6)) ? 4 : 8);l1=l1+1) begin
 	          pwire [11:0] natExp=12'h3ff-l*8-l1;
 		  //verilator lint_off WIDTH
                   assign denorK=last[l*8+l1] ? A[l*8+l1:0]<<(52-(l*8+l1)) : 52'bz;
@@ -104,7 +104,7 @@ module ldS2nativeS(
       for(l=0;l<3;l=l+1) begin
               pwire [22:0] denorK;
 	      pwire [11:0] expK;
-              for(l1=0;l1<((l==2) ? 7 : 8);l1=l1+1) begin
+              for(l1=0;l1<((pwh#(32)::cmpEQ(l,2)) ? 7 : 8);l1=l1+1) begin
 	          pwire [11:0] natExp=12'h3ff-l*8-l1;
 		  //verilator lint_off WIDTH
                   assign denorK=last[l*8+l1] ? A[l*8+l1:0]<<(23-(l*8+l1)) : 23'bz;

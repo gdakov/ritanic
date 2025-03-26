@@ -282,27 +282,27 @@ module saddrcalc(
  
 //  assign bankNextOff=5'd2; //##
 //  assign hasBankNext=1'b0;//##
-  assign hasIndex=op[7:6]==2'b01;
+  assign hasIndex=pwh#(2)::cmpEQ(op[7:6],2'b01);
   assign stepOverCmplx=|cmplxAddr[1:0];
   assign stepOverCmplx2=&cmplxAddr[1:0];
   assign bank0=cmplxAddr[6:2];
   assign mOp_bank0=bank0;
  
-  assign lastSz[1]=(opsize==1 && stepOver2) || (opsize==2 && stepOver) || (opsize==3 && ~stepOver);
-  assign lastSz[2]=opsize==3 && stepOver;
+  assign lastSz[1]=(pwh#(32)::cmpEQ(opsize,1 )&& stepOver2) || (pwh#(32)::cmpEQ(opsize,2 )&& stepOver) || (pwh#(32)::cmpEQ(opsize,3 )&& ~stepOver);
+  assign lastSz[2]=pwh#(32)::cmpEQ(opsize,3 )&& stepOver;
   assign lastSz[4:3]=2'b0;
-  assign lastSz[0]=(opsize==0) || (opsize==1 & ~stepOver2) || (opsize==2 & ~stepOver);  
-  assign mOp_split_X=(opsize==1) ?
+  assign lastSz[0]=(pwh#(32)::cmpEQ(opsize,0)) || (pwh#(32)::cmpEQ(opsize,1 )& ~stepOver2) || (pwh#(32)::cmpEQ(opsize,2 )& ~stepOver);  
+  assign mOp_split_X=(pwh#(32)::cmpEQ(opsize,1)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) && stepOver2 : 1'bz;
-  assign mOp_split_X=(opsize==2) ?
+  assign mOp_split_X=(pwh#(32)::cmpEQ(opsize,2)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) && stepOver : 1'bz;
-  assign mOp_split_X=(opsize==3) ?
+  assign mOp_split_X=(pwh#(32)::cmpEQ(opsize,3)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) || (pwh#(5)::cmpEQ(bank0,5'h1e) && stepOver) : 1'bz;
-  assign mOp_split_X=(opsize==4) ?
-    bank0[4:1]==4'hf || (pwh#(5)::cmpEQ(bank0,5'h1d) && stepOver2) : 1'bz;
-  assign mOp_split_X=(opsize==5 || opsize==6) ?
-    bank0[4:2]==3'h7 && (bank0[1:0]!=0 || stepOver || opsize==6) : 1'bz;
-  assign mOp_split_X=(opsize==0) ? 1'b0 : 1'bz;
+  assign mOp_split_X=(pwh#(32)::cmpEQ(opsize,4)) ?
+    pwh#(4)::cmpEQ(bank0[4:1],4'hf) || (pwh#(5)::cmpEQ(bank0,5'h1d) && stepOver2) : 1'bz;
+  assign mOp_split_X=(pwh#(32)::cmpEQ(opsize,5 )|| pwh#(32)::cmpEQ(opsize,6)) ?
+    pwh#(3)::cmpEQ(bank0[4:2],3'h7) && (bank0[1:0]!=0 || stepOver || pwh#(32)::cmpEQ(opsize,6)) : 1'bz;
+  assign mOp_split_X=(pwh#(32)::cmpEQ(opsize,0)) ? 1'b0 : 1'bz;
   
   assign all_banks=banks0;
 
@@ -429,11 +429,11 @@ module saddrcalc(
         begin
   /* verilator lint_off WIDTH */
           banks0[i]=pwh#(32)::cmpEQ(bank0,i) || 
-          ((opsize==3 || opsize[2] || (stepOver && opsize==2) || 
-            (stepOver2 && opsize==1)) && bank0==((i-1)&5'h1f)) ||
-          (((opsize==3 && stepOver) | opsize[2]) && bank0==((i-2)&5'h1f)) || 
-          (((opsize==4 && stepOver2) || opsize==5 || opsize==6) && bank0==((i-3)&5'h1f)) ||
-          (((opsize==5 && stepOver) || opsize==6) && bank0==((i-4)&5'h1f)) || (opsize==7 && bank0[4:3]=={i[4:3],3'b0}) ;
+          ((pwh#(32)::cmpEQ(opsize,3 )|| opsize[2] || (stepOver && pwh#(32)::cmpEQ(opsize,2)) || 
+            (stepOver2 && pwh#(32)::cmpEQ(opsize,1))) && bank0==((i-1)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(opsize,3 )&& stepOver) | opsize[2]) && bank0==((i-2)&5'h1f)) || 
+          (((pwh#(32)::cmpEQ(opsize,4 )&& stepOver2) || pwh#(32)::cmpEQ(opsize,5 )|| pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-3)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(opsize,5 )&& stepOver) || pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-4)&5'h1f)) || (pwh#(32)::cmpEQ(opsize,7 )&& bank0[4:3]=={i[4:3],3'b0}) ;
         end
   /* verilator lint_on WIDTH */
     end

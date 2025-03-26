@@ -964,8 +964,8 @@ module cntrl_find_outcome(
   assign jump0_in=has_xbreak0 ? 1'bz : jump0Pos!=4'hf;
   assign jump1_in=has_xbreak0 ? 1'bz : jump1Pos!=4'hf;
 
-  assign break_prejmp_ntick=(~has_break) ? afterTick==0 && tk_after==0 : 1'bz;
-  assign break_prejmp_tick=(~has_break) ? afterTick!=0 && tk_after==0 : 1'bz;
+  assign break_prejmp_ntick=(~has_break) ? pwh#(32)::cmpEQ(afterTick,0 )&& pwh#(32)::cmpEQ(tk_after,0 ): 1'bz;
+  assign break_prejmp_tick=(~has_break) ? afterTick!=0 && pwh#(32)::cmpEQ(tk_after,0 ): 1'bz;
 
   assign tire_rF[0]=tire0_rF;
   assign tire_rF[1]=tire1_rF;
@@ -1023,8 +1023,8 @@ module cntrl_find_outcome(
   assign exceptIP_d=((break_jump1&~break_exceptn) & jump1_taken & ~indir_error) ? {jump1BND,jump1IP} : 63'bz;
   assign exceptIP_d=(indir_error && ((break_jump0&~break_exceptn) & jump0_taken)
     || ((break_jump1&~break_exceptn) & jump1_taken)) ? {excpt_handlerIP[62:43],excpt_handlerIP[42:11],6'd18,5'b0} : 63'bz;
-  assign exceptIP_d=((break_jump0&~break_exceptn) && ~jump0_taken && !(jump0Type[4] && jump0Type[2:0]==3'd1)) ? {bbaseIP[62:43],breakIP} : 63'bz;
-  assign exceptIP_d=((break_jump1&~break_exceptn) & ~jump1_taken && !(jump1Type[4] && jump1Type[2:0]==3'd1)) ? {bbaseIP[62:43],breakIP} : 63'bz;
+  assign exceptIP_d=((break_jump0&~break_exceptn) && ~jump0_taken && !(jump0Type[4] && pwh#(3)::cmpEQ(jump0Type[2:0],3'd1))) ? {bbaseIP[62:43],breakIP} : 63'bz;
+  assign exceptIP_d=((break_jump1&~break_exceptn) & ~jump1_taken && !(jump1Type[4] && pwh#(3)::cmpEQ(jump1Type[2:0],3'd1))) ? {bbaseIP[62:43],breakIP} : 63'bz;
   assign exceptIP_d=((break_jump0&~break_exceptn) && ~jump0_taken && (pwh#(5)::cmpEQ(jump0Type,5'h11))) ? indir_IP[63:1] : 63'bz;
   assign exceptIP_d=((break_jump1&~break_exceptn) & ~jump1_taken && (pwh#(5)::cmpEQ(jump1Type,5'h11))) ? indir_IP[63:1] : 63'bz;
   assign exceptIP_d=((break_jump0&~break_exceptn) && ~jump0_taken && (pwh#(5)::cmpEQ(jump0Type,5'h19))) ? 
@@ -1037,8 +1037,8 @@ module cntrl_find_outcome(
 
   assign except_attr_d=((break_jump0&~break_exceptn) & jump0_taken) ? jump0Attr : 4'bz;
   assign except_attr_d=((break_jump1&~break_exceptn) & jump1_taken) ? jump1Attr : 4'bz;
-  assign except_attr_d=((break_jump0&~break_exceptn) && ~jump0_taken && !(jump0Type[4] && jump0Type[2:0]==3'd1)) ? attr : 4'bz;
-  assign except_attr_d=((break_jump1&~break_exceptn) & ~jump1_taken && !(jump1Type[4] && jump1Type[2:0]==3'd1)) ? attr : 4'bz;
+  assign except_attr_d=((break_jump0&~break_exceptn) && ~jump0_taken && !(jump0Type[4] && pwh#(3)::cmpEQ(jump0Type[2:0],3'd1))) ? attr : 4'bz;
+  assign except_attr_d=((break_jump1&~break_exceptn) & ~jump1_taken && !(jump1Type[4] && pwh#(3)::cmpEQ(jump1Type[2:0],3'd1))) ? attr : 4'bz;
   assign except_attr_d=((break_jump0&~break_exceptn) && ~jump0_taken && (pwh#(5)::cmpEQ(jump0Type,5'h11))) ? attr : 4'bz;
   assign except_attr_d=((break_jump1&~break_exceptn) & ~jump1_taken && (pwh#(5)::cmpEQ(jump1Type,5'h11))) ? attr : 4'bz;
   assign except_attr_d=((break_jump0&~break_exceptn) && ~jump0_taken && (pwh#(5)::cmpEQ(jump0Type,5'h19))) ? {indir_IP[60],indir_IP[61],indir_IP[62],indir_IP[63]} : 4'bz;
@@ -1228,10 +1228,10 @@ module cntrl_find_outcome(
 
   assign dotire_d=~break_pending && has_some && ~init && ~mem_II_stall && indir_ready|~has_indir;
 
-  assign has_indir=(jump0Type[4] && jump0Type[2:0]==3'b001 && jump0Pos!=4'hf) || 
-    (jump1Type[4] && jump1Type[2:0]==3'b001 && jump1Pos!=4'hf);
-  assign i_has_indir=(ijump0Type[4] && ijump0Type[2:0]==3'b001 && ijump0Off!=4'hf) ||
-    (ijump1Type[4] && ijump1Type[2:0]==3'b001 && ijump1Off!=4'hf);
+  assign has_indir=(jump0Type[4] && pwh#(3)::cmpEQ(jump0Type[2:0],3'b001) && jump0Pos!=4'hf) || 
+    (jump1Type[4] && pwh#(3)::cmpEQ(jump1Type[2:0],3'b001) && jump1Pos!=4'hf);
+  assign i_has_indir=(ijump0Type[4] && pwh#(3)::cmpEQ(ijump0Type[2:0],3'b001) && ijump0Off!=4'hf) ||
+    (ijump1Type[4] && pwh#(3)::cmpEQ(ijump1Type[2:0],3'b001) && ijump1Off!=4'hf);
 
   assign indirMismatch=(takenIP!=indir_IP[43:1] || ~indir_IP[64]) && has_indir && indir_ready;
 
@@ -1374,7 +1374,7 @@ module cntrl_find_outcome(
       end else if (!doRetire && !except) begin
           sched_rst_cnt<=sched_rst_cnt_d;
           if (&sched_rst_cnt) do_sched_reset<=1'b1;
-          if (sched_rst_cnt==0) do_sched_reset<=1'b0;
+          if (pwh#(32)::cmpEQ(sched_rst_cnt,0)) do_sched_reset<=1'b0;
       end else begin
           sched_rst_cnt<=0;
           do_sched_reset<=1'b0;

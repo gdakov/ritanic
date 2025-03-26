@@ -140,7 +140,7 @@ module suggstQ_box(
           pwire [10:0][OTHER-1:0] read_otherm;
           
           for (l=0;l<8;l=l+1) begin : buf_gen
-              suggstQ_buf #(l+m*8,l==0) buf_mod(
+              suggstQ_buf #(l+m*8,pwh#(32)::cmpEQ(l,0)) buf_mod(
               clk,
               rst,
               write_instrEn,
@@ -246,16 +246,16 @@ module suggestions(
       genvar w,r;
       for(w=0;w<16;w=w+1) begin : wrt_gen
           instrQ_bndAdd wrAddr0_mod(write_addrA[w],write_addrA_d[w],
-            {write_instrEn&~{1'b0,write_instrEn[15:1]},write_instrEn==16'b0});
+            {write_instrEn&~{1'b0,write_instrEn[15:1]},pwh#(32)::cmpEQ(write_instrEn,16)'b0});
           instrQ_bndAdd wrAddr1_mod(write_addrB[w],write_addrB_d[w],
-            {write_instrEn&~{1'b0,write_instrEn[15:1]},write_instrEn==16'b0});
+            {write_instrEn&~{1'b0,write_instrEn[15:1]},pwh#(32)::cmpEQ(write_instrEn,16)'b0});
           assign write_addr[w]=write_thread ? write_addrB[w] : write_addrA[w];
       end
       for(r=0;r<11;r=r+1) begin : rd_gen
           instrQ_bndAdd #(11) rdAddr0_mod(read_addrA[r],read_addrA_d[r],
-            {read_instrEn&~{1'b0,read_instrEn[10:1]},read_instrEn==11'b0});
+            {read_instrEn&~{1'b0,read_instrEn[10:1]},pwh#(32)::cmpEQ(read_instrEn,11)'b0});
           instrQ_bndAdd #(11) rdAddr1_mod(read_addrB[r],read_addrB_d[r],
-            {read_instrEn&~{1'b0,read_instrEn[10:1]},read_instrEn==11'b0});
+            {read_instrEn&~{1'b0,read_instrEn[10:1]},pwh#(32)::cmpEQ(read_instrEn,11)'b0});
           assign read_addr_d[r]=read_thread ? read_addrB_d[r] : read_addrA_d[r];
           
           get_carry #(6) cmp_mod(busy[read_thread_reg],~(r[5:0]+6'd1),1'b1,read_avail[r]);

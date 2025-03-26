@@ -349,9 +349,9 @@ module smallInstr_decoder(
   assign opcode_sub=instr[5:0];
   
   assign constantDef=(pwh#(4)::cmpEQ(magic,4'b1111)) ? {{2{instr[79]}},instr[79:18]} : 64'bz;
-  assign constantDef=(magic[3:0]==4'b0111) ? {{18{instr[63]}},instr[63:18]} : 64'bz;
-  assign constantDef=(magic[2:0]==3'b011) ? {{34{instr[47]}},instr[47:18]} : 64'bz;
-  assign constantDef=(magic[1:0]==2'b01) ? {{32{instr[31]}},{17{instr[31]}},instr[31],instr[31:18]} : 64'bz;
+  assign constantDef=(pwh#(4)::cmpEQ(magic[3:0],4'b0111)) ? {{18{instr[63]}},instr[63:18]} : 64'bz;
+  assign constantDef=(pwh#(3)::cmpEQ(magic[2:0],3'b011)) ? {{34{instr[47]}},instr[47:18]} : 64'bz;
+  assign constantDef=(pwh#(2)::cmpEQ(magic[1:0],2'b01)) ? {{32{instr[31]}},{17{instr[31]}},instr[31],instr[31:18]} : 64'bz;
   assign constantDef=(~magic[0]) ? {{32{instr[7]}},{26{instr[7]}},instr[7:6],instr[11:8]} : 64'bz;
 
   assign constantN=~constant;
@@ -361,38 +361,38 @@ module smallInstr_decoder(
  // assign thisSpecLoad=isBaseSpecLoad || isBaseIndexSpecLoad || ({instr[11],instr[15:12]}==5'd16 && 
  //     pwh#(8)::cmpEQ(opcode_main[7:0],8'b10110000) && !instr[10]) || ({instr[1],instr[15:12]}==5'd16 &&
  //     pwh#(6)::cmpEQ(opcode_main[7:2],6'd15) && !instr[0]);
-  assign subIsBasicALU=opcode_sub[5:4]==2'b0 || opcode_sub[5:2]==4'b0100;
-  assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
+  assign subIsBasicALU=pwh#(2)::cmpEQ(opcode_sub[5:4],2'b0) || pwh#(4)::cmpEQ(opcode_sub[5:2],4'b0100);
+  assign subIsBasicXOR=pwh#(4)::cmpEQ(opcode_sub[5:2],4'b0100);//not a separate class
   assign subIsBasicShift=~opcode_sub[5] && ~subIsBasicALU && opcode_sub[0];
   assign subIsFPUE=pwh#(6)::cmpEQ(opcode_sub,6'b010100) && ~magic[0]; 
   assign subIsFPUSngl=(pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && opcode_main[7:6]!=2'b11;
-  assign subIsLinkRet=(pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && opcode_main[7:6]==2'b11;
-  assign subIsSIMD=opcode_sub[5:3]==3'b011 && opcode_sub[2:1]!=2'b0 && ~opcode_sub[0];
-  assign subIsMovOrExt=opcode_sub[5:3]==3'b100 || opcode_sub[5:1]==5'b10100;
-  assign subIsCmpTest=opcode_sub[5:1]==5'b10101 || opcode_sub[5:2]==4'b1011;
-  assign subIsCJ=opcode_sub[5:2]==4'b1100;
-  assign subIsFPUD=(opcode_sub[5:2]==4'b1101 || opcode_sub[5:1]==5'b11100);
-  assign subIsFPUPD=(opcode_sub[5:3]==3'b111 && opcode_sub[5:1]!=5'b11100);
+  assign subIsLinkRet=(pwh#(6)::cmpEQ(opcode_sub,6'b010110) || pwh#(6)::cmpEQ(opcode_sub,6'b011000)) && pwh#(2)::cmpEQ(opcode_main[7:6],2'b11);
+  assign subIsSIMD=pwh#(3)::cmpEQ(opcode_sub[5:3],3'b011) && opcode_sub[2:1]!=2'b0 && ~opcode_sub[0];
+  assign subIsMovOrExt=pwh#(3)::cmpEQ(opcode_sub[5:3],3'b100) || pwh#(5)::cmpEQ(opcode_sub[5:1],5'b10100);
+  assign subIsCmpTest=pwh#(5)::cmpEQ(opcode_sub[5:1],5'b10101) || pwh#(4)::cmpEQ(opcode_sub[5:2],4'b1011);
+  assign subIsCJ=pwh#(4)::cmpEQ(opcode_sub[5:2],4'b1100);
+  assign subIsFPUD=(pwh#(4)::cmpEQ(opcode_sub[5:2],4'b1101) || pwh#(5)::cmpEQ(opcode_sub[5:1],5'b11100));
+  assign subIsFPUPD=(pwh#(3)::cmpEQ(opcode_sub[5:3],3'b111) && opcode_sub[5:1]!=5'b11100);
 
-  assign isBasicALU=(opcode_main[7:5]==3'b0 || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2];
+  assign isBasicALU=(pwh#(3)::cmpEQ(opcode_main[7:5],3'b0) || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2];
   assign isBasicXOR=(pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & ~opcode_main[2];//not a seprarate class
-  assign isBasicMUL=(opcode_main[7:5]==3'b0 || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & opcode_main[2];
-  assign isBasicALUExcept=~opcode_main[0] && (magic[1:0]==2'b01 && instr[28:26]!=3'b0);  
+  assign isBasicMUL=(pwh#(3)::cmpEQ(opcode_main[7:5],3'b0) || pwh#(5)::cmpEQ(opcode_main[7:3],5'b00100)) & opcode_main[2];
+  assign isBasicALUExcept=~opcode_main[0] && (pwh#(2)::cmpEQ(magic[1:0],2'b01) && instr[28:26]!=3'b0);  
   assign isBasicShift=pwh#(7)::cmpEQ(opcode_main[7:1],7'd20) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd21) ||
       pwh#(7)::cmpEQ(opcode_main[7:1],7'd22);      
-  assign isBasicShiftExcept=magic[1:0]==2'b01 && instr[29:25]!=5'b0;
+  assign isBasicShiftExcept=pwh#(2)::cmpEQ(magic[1:0],2'b01) && instr[29:25]!=5'b0;
   
   assign isBasicCmpTest=pwh#(7)::cmpEQ(opcode_main[7:1],7'd23) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd12) ||
     pwh#(7)::cmpEQ(opcode_main[7:1],7'd26) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd54) || pwh#(6)::cmpEQ(opcode_main[7:2],6'd56);
 
-  assign isBaseSpecLoad=(pwh#(8)::cmpEQ(opcode_main,8'd54) || pwh#(8)::cmpEQ(opcode_main,8'd202)) && magic[1:0]==2'b01;
+  assign isBaseSpecLoad=(pwh#(8)::cmpEQ(opcode_main,8'd54) || pwh#(8)::cmpEQ(opcode_main,8'd202)) && pwh#(2)::cmpEQ(magic[1:0],2'b01);
   assign isBaseIndexSpecLoad=(pwh#(8)::cmpEQ(opcode_main,8'd55) || pwh#(8)::cmpEQ(opcode_main,8'd203)) && magic[2:0]!=3'b111;
   
   assign isImmLoadStore=(pwh#(6)::cmpEQ(opcode_main[7:2],6'd15)) || pwh#(7)::cmpEQ(opcode_main[7:1],7'b1011000);
-  assign isBaseLoadStore=((opcode_main[7:5]==3'b010) || opcode_main[7:4]==4'b0110) && magic[1:0]==2'b01;
-  assign isBaseIndexLoadStore=((opcode_main[7:5]==3'b100) || opcode_main[7:4]==4'b0111) || magic[2:0]==3'b111;
+  assign isBaseLoadStore=((pwh#(3)::cmpEQ(opcode_main[7:5],3'b010)) || pwh#(4)::cmpEQ(opcode_main[7:4],4'b0110)) && pwh#(2)::cmpEQ(magic[1:0],2'b01);
+  assign isBaseIndexLoadStore=((pwh#(3)::cmpEQ(opcode_main[7:5],3'b100)) || pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111)) || pwh#(3)::cmpEQ(magic[2:0],3'b111);
 
-  assign isBasicCJump=opcode_main[7:4]==4'b1010;
+  assign isBasicCJump=pwh#(4)::cmpEQ(opcode_main[7:4],4'b1010);
   //gap 176-177 for imm load.
   assign isSelfTestCJump=pwh#(8)::cmpEQ(opcode_main,8'd178) || pwh#(8)::cmpEQ(opcode_main,8'd179);
   assign isLongCondJump=pwh#(8)::cmpEQ(opcode_main,8'd180);
@@ -402,13 +402,13 @@ module smallInstr_decoder(
   assign isRet=pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd3;
   assign isMovOrExtB=pwh#(8)::cmpEQ(opcode_main,8'd183) || pwh#(6)::cmpEQ(opcode_main[7:2],6'b101110) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd189) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd210);
   assign isMovOrExtA=pwh#(8)::cmpEQ(opcode_main,8'd188) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd95) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd96);
-  assign isMovOrExtExcept=magic[1:0]==2'b11 && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
+  assign isMovOrExtExcept=pwh#(2)::cmpEQ(magic[1:0],2'b11) && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
   assign isCSet=pwh#(8)::cmpEQ(opcode_main,8'd194); 
   assign isBasicAddNoFl=pwh#(8)::cmpEQ(opcode_main,8'd195) || pwh#(8)::cmpEQ(opcode_main,8'd196) || pwh#(8)::cmpEQ(opcode_main,8'd234);
   
   assign isLeaIPRel=pwh#(8)::cmpEQ(opcode_main,8'd197);
 
-  assign isCmov=opcode_main==198 && magic[1:0]==2'b01;
+  assign isCmov=pwh#(32)::cmpEQ(opcode_main,198) && pwh#(2)::cmpEQ(magic[1:0],2'b01);
   assign isCallPrep=pwh#(8)::cmpEQ(opcode_main,8'd199);
   
  
@@ -421,7 +421,7 @@ module smallInstr_decoder(
 
   assign isShlAddMulLike=1'b0;// pwh#(8)::cmpEQ(opcode_main,8'd211) || 
 //    pwh#(8)::cmpEQ(opcode_main,8'd231) || pwh#(8)::cmpEQ(opcode_main,8'd232);
-  assign isPtrSec=pwh#(8)::cmpEQ(opcode_main,8'd212) || opcode_main==233;
+  assign isPtrSec=pwh#(8)::cmpEQ(opcode_main,8'd212) || pwh#(32)::cmpEQ(opcode_main,233);
   assign isJalR=pwh#(8)::cmpEQ(opcode_main,8'd213) || pwh#(8)::cmpEQ(opcode_main,8'd214) || pwh#(8)::cmpEQ(opcode_main,8'd215) || pwh#(8)::cmpEQ(opcode_main,8'd220) || pwh#(8)::cmpEQ(opcode_main,8'd221) || pwh#(8)::cmpEQ(opcode_main,8'd211) ||
     pwh#(8)::cmpEQ(opcode_main,8'd231) || pwh#(8)::cmpEQ(opcode_main,8'd232);
   //216-219=cmp16,cmp8
@@ -430,16 +430,16 @@ module smallInstr_decoder(
   //231-232=cloop no sub
   assign isCLeave=pwh#(8)::cmpEQ(opcode_main,8'd235) || pwh#(8)::cmpEQ(opcode_main,8'd236) || pwh#(8)::cmpEQ(opcode_main,8'd238);  
 
-  assign isPtrBump_other_domain=pwh#(8)::cmpEQ(opcode_main,8'hfe) && magic[1:0]==2'b01 && LARGE_CORE;
+  assign isPtrBump_other_domain=pwh#(8)::cmpEQ(opcode_main,8'hfe) && pwh#(2)::cmpEQ(magic[1:0],2'b01) && LARGE_CORE;
 
   assign isGA=pwh#(8)::cmpEQ(opcode_main,8'd237);
 
-  assign isBasicFPUScalarA=opcode_main[7:4]==4'hf && opcode_main[3:0]!=14 && instr[13:12]==2'b0;
-  assign isBasicFPUScalarB=opcode_main[7:4]==4'hf && opcode_main[3:0]!=14 && instr[13:12]==2'b1;
-  assign isBasicFPUScalarC=opcode_main[7:4]==4'hf && opcode_main[3:0]!=14 && instr[15:12]==4'd2;
-  assign isBasicFPUScalarCmp=opcode_main[7:4]==4'hf && opcode_main[3:0]!=14 && instr[15:12]==4'd6;
-  assign isBasicFPUScalarCmp2=opcode_main[7:4]==4'hf && opcode_main[3:0] !=14 && instr[15:12]==4'd10;
-  assign isBasicFPUScalarCmp3=opcode_main[7:4]==4'hf && opcode_main[3:0]!=14 && instr[15:12]==4'd12;
+  assign isBasicFPUScalarA=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[13:12]==2'b0;
+  assign isBasicFPUScalarB=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[13:12]==2'b1;
+  assign isBasicFPUScalarC=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[15:12]==4'd2;
+  assign isBasicFPUScalarCmp=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[15:12]==4'd6;
+  assign isBasicFPUScalarCmp2=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0] !=14 && instr[15:12]==4'd10;
+  assign isBasicFPUScalarCmp3=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[15:12]==4'd12;
   //fpu bit[3] is contdition subselect (set to change condition to LT unsigned)
   //fpu bit[2] is conditional (condition LE unsigned)
   //when only bit 3 is set then the condition is overflow
@@ -460,7 +460,7 @@ module smallInstr_decoder(
   assign qtrien   [6]=trien    [20];
   assign qconstant[7]={1'b0,pconstant[25]};
   assign qtrien   [7]=trien    [25];
-  assign qconstant[8]={(magic[3:0]==4'hf && pwh#(8)::cmpEQ(opcode_main,8'd183)) & instr[15],pconstant[26]};
+  assign qconstant[8]={(pwh#(4)::cmpEQ(magic[3:0],4'hf) && pwh#(8)::cmpEQ(opcode_main,8'd183)) & instr[15],pconstant[26]};
   assign qtrien   [8]=trien    [26];
   assign qconstant[9]={1'b0,pconstant[30]};
   assign qtrien   [9]=trien    [30];
@@ -686,7 +686,7 @@ module smallInstr_decoder(
         stsz_out=5'h11;
     end else if (isBasicMUL) begin
         stsz_out=5'h10;
-     end else if (isBasicFPUScalarB && instr[5:3]==3'b0 || instr[6:3]==4'd13) begin
+     end else if (isBasicFPUScalarB && pwh#(3)::cmpEQ(instr[5:3],3'b0) || pwh#(4)::cmpEQ(instr[6:3],4'd13)) begin
         stsz_out=5'he;
      end else if (isBasicFPUScalarB) begin
         stsz_out=5'h2;
@@ -723,13 +723,13 @@ module smallInstr_decoder(
           prC_use[tt]=1'b0;
           pport[tt]=4'b0;
 	  palucond[tt]=5'b0;
-          if (opcode_main[7:4]==4'hf) begin
+          if (pwh#(4)::cmpEQ(opcode_main[7:4],4'hf)) begin
               palucond[tt]={1'b1,opcode_main[3:0]};
           end
           prmode[tt]=3'h7;
           pconstant[tt]=constantDef;
           //pconstant[tt][64]=1'b0;
-     //     pisBigConst[tt]=magic[2:0]==3'b111;
+     //     pisBigConst[tt]=pwh#(3)::cmpEQ(magic[2:0],3'b111);
           pthisSpecLoad[tt]=1'b0;    
           pisIPRel[tt]=1'b0;
 	  prndmode[tt]=3'b111;
@@ -739,7 +739,7 @@ module smallInstr_decoder(
           prT_useF[tt]=1'b0;
           prC_useF[tt]=1'b0;
           pchain[tt]=1'b0;
-	  perror[tt]=magic[2:0]==3'b0; 
+	  perror[tt]=pwh#(3)::cmpEQ(magic[2:0],3'b0); 
           pflags_use[tt]=1'b0;
           pflags_write[tt]=1'b0;
           pclr64[tt]=1'b0;
@@ -774,7 +774,7 @@ module smallInstr_decoder(
       
       trien[0]=~magic[0] && subIsBasicALU|subIsBasicShift;
       poperation[0]={8'b0,opcode_sub[4:2],1'b0,opcode_sub[1]};
-      if (opcode_sub[4:2]==3'b1) begin
+      if (pwh#(3)::cmpEQ(opcode_sub[4:2],3'b1)) begin
           poperation[0]={8'b0,3'b0,opcode_sub[1],1'b0};
           if (!opcode_sub[1]) poperation[0][8]=1'b1;
       end
@@ -833,7 +833,7 @@ module smallInstr_decoder(
        prT[1]={instr[7]&&!(pwh#(6)::cmpEQ(opcode_sub,6'h29) || pwh#(6)::cmpEQ(opcode_sub,6'h26) || pwh#(6)::cmpEQ(opcode_sub,6'h27)),instr[15:12]};
 
        trien[2]=~magic[0] & subIsCmpTest;
-       puseBConst[2]=opcode_sub[0] & ~(opcode_sub[2:1]==2'h3);
+       puseBConst[2]=opcode_sub[0] & ~(pwh#(2)::cmpEQ(opcode_sub[2:1],2'h3));
        prA_use[2]=1'b1;
        prB_use[2]=1'b1;
        prT_use[2]=1'b0;
@@ -842,7 +842,7 @@ module smallInstr_decoder(
        pport[2]=PORT_ALU;
        pflags_write[2]=1'b1;
        prB[2]={instr[6],instr[11:8]};
-       prA[2]={instr[7]&&!(opcode_sub[0] & ~(opcode_sub[2:1]==2'h3)),instr[15:12]};
+       prA[2]={instr[7]&&!(opcode_sub[0] & ~(pwh#(2)::cmpEQ(opcode_sub[2:1],2'h3))),instr[15:12]};
        //verilator lint_off CASEINCOMPLETE
        case (opcode_sub[2:1])
          2'h1:  poperation[2]=`op_sub64;
@@ -888,7 +888,7 @@ module smallInstr_decoder(
        prA_useF[4]=1'b1;
        prB_useF[4]=1'b1;
        prT_useF[4]=1'b1;
-       if (opcode_sub[5:1]==5'b11100) begin
+       if (pwh#(5)::cmpEQ(opcode_sub[5:1],5'b11100)) begin
            pport[4]=instr[6] ? PORT_FMUL : PORT_FADD;
            poperation[4][7:0]=instr[6] ? `fop_mulDH : `fop_mulDL;
        end else begin
@@ -924,7 +924,7 @@ module smallInstr_decoder(
        prA_useF[5]=1'b1;
        prB_useF[5]=1'b1;
        prT_useF[5]=1'b1;
-       if (opcode_sub[5:1]==5'b11101) begin
+       if (pwh#(5)::cmpEQ(opcode_sub[5:1],5'b11101)) begin
            pport[5]=PORT_FANY;
            poperation[5][7:0]=`fop_mulDP;
        end else begin
@@ -1028,12 +1028,12 @@ module smallInstr_decoder(
        end
 
        trien[9]=magic[0] & isBasicALU & ~isBasicALUExcept;
-       puseBConst[9]=opcode_main[0]||magic[1:0]==2'b11;
+       puseBConst[9]=opcode_main[0]||pwh#(2)::cmpEQ(magic[1:0],2'b11);
        poperation[9][7:0]={3'b0,opcode_main[5:3],~opcode_main[0] && ~&magic[1:0] && instr[26] ,opcode_main[1]};
        if (opcode_main[2]) perror[9]=1; //disable 8 and 16 bit insns
        pflags_write[9]=1'b0;
        poperation[9][12]=1'b1;
-       if (magic[1:0]==2'b01) begin
+       if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
            if (~opcode_main[0] && magic[1:0]!=2'b11) begin
                prndmode[9]=instr[25:23];
                pcalu[9]=instr[30:26];
@@ -1048,16 +1048,16 @@ module smallInstr_decoder(
        prAlloc[9]=1'b1;
        pport[9]=PORT_ALU;
           
-       if (opcode_main[0]||magic[1:0]==2'b11) begin
+       if (opcode_main[0]||pwh#(2)::cmpEQ(magic[1:0],2'b11)) begin
            prA[9]={instr[17],instr[11:8]};
            prT[9]=instr[16:12];
            prB[9]=5'd31;
-           if (magic[1:0]==2'b01) begin
+           if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
            end else begin
                perror[9]=0;
            end
        end else begin
-           if (magic[1:0]==2'b01) begin
+           if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
                prA[9]={instr[17],instr[11:8]};
                prT[9]=instr[16:12];
                prB[9]=instr[22:18];
@@ -1087,7 +1087,7 @@ module smallInstr_decoder(
        45: poperation[10]=`op_shr32;
        endcase
             
-       if (magic[1:0]==2'b01) begin
+       if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
            if (instr[30]) begin
                prA[10]={instr[17],instr[11:8]};
                prT[10]=instr[16:12];
@@ -1124,9 +1124,9 @@ module smallInstr_decoder(
        trien[11]=~magic[0] & subIsFPUE;
        puseRs[11]=1'b1;
        prAlloc[11]=1'b1;
-       prA[11]=(opcode_main[7:6]==2'd3) ? {1'b0,rB_reor} : {1'b0,rA_reor};
+       prA[11]=(pwh#(2)::cmpEQ(opcode_main[7:6],2'd3)) ? {1'b0,rB_reor} : {1'b0,rA_reor};
        prT[11]={1'b0,rA_reor};
-       prB[11]=(opcode_main[7:6]==2'd3) ? {1'b0,rA_reor} : {1'b0,rB_reor};
+       prB[11]=(pwh#(2)::cmpEQ(opcode_main[7:6],2'd3)) ? {1'b0,rA_reor} : {1'b0,rB_reor};
        prA_useF[11]=1'b1;
        prB_useF[11]=1'b1;
        prT_useF[11]=1'b1;
@@ -1143,7 +1143,7 @@ module smallInstr_decoder(
        end
 
       trien[12]=magic[0] & isBaseLoadStore;
-      poperation[12][5:0]=(opcode_main[5:2]==4'b1010) ? 6'h22 : opcode_main[5:0];
+      poperation[12][5:0]=(pwh#(4)::cmpEQ(opcode_main[5:2],4'b1010)) ? 6'h22 : opcode_main[5:0];
      // poperation[12][6]=pwh#(6)::cmpEQ(opcode_main[5:0],6'b101010);
       prA_use[12]=1'b0;
       prB_use[12]=1'b1;
@@ -1174,23 +1174,23 @@ module smallInstr_decoder(
 
       trien[13]=magic[0] & isBaseIndexLoadStore;
       poperation[13][7]=1'b0;
-      if (opcode_main[7:4]==4'b0111 && opcode_main[3:2]==2'b10 && !opcode_main[0]) begin
+      if (pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111) && pwh#(2)::cmpEQ(opcode_main[3:2],2'b10) && !opcode_main[0]) begin
           poperation[13][5:0]=6'd22;
           poperation[13][7]=opcode_main[1];
       end else begin
-          poperation[13][5:0]=(opcode_main[7:4]==4'b0111) ? {2'b10,opcode_main[3:0]} : {1'b0,opcode_main[4:0]};
+          poperation[13][5:0]=(pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111)) ? {2'b10,opcode_main[3:0]} : {1'b0,opcode_main[4:0]};
       end
       poperation[13][6]=1'b1;
       poperation[13][11:8]=instr[23:20];
       poperation[13][12]=1'b0;
       prA_use[13]=~(pwh#(4)::cmpEQ(magic,4'b0111) && instr[57]);
-      prT_use[13]=~opcode_main[0] && opcode_main[7:4]==4'b0111 && ~opcode_main[3]|opcode_main[2];
-      prC_use[13]=opcode_main[0] && opcode_main[7:4]==4'b0111;
+      prT_use[13]=~opcode_main[0] && pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111) && ~opcode_main[3]|opcode_main[2];
+      prC_use[13]=opcode_main[0] && pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111);
       prT_useF[13]=~opcode_main[0] && opcode_main[7:4]!=4'b0111;
       prT_isV[13]=~opcode_main[0] && opcode_main[7:4]!=4'b0111 && fop_v(opcode_main[4:0]);
       prC_useF[13]=opcode_main[0] && opcode_main[7:4]!=4'b0111;
       puseRs[13]=1'b1;
-      prAlloc[13]=~opcode_main[0] && !(opcode_main[7:4]==4'b0111 && opcode_main[3:2]==2'b10);// & opcode_main[7:4]==4'b0111;
+      prAlloc[13]=~opcode_main[0] && !(pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111) && pwh#(2)::cmpEQ(opcode_main[3:2],2'b10));// & pwh#(4)::cmpEQ(opcode_main[7:4],4'b0111);
       puseBConst[13]=pwh#(4)::cmpEQ(magic,4'b0111) && instr[58];
       pport[13]=opcode_main[0] ? PORT_STORE : PORT_LOAD;
       pconstant[13]=constantDef>>>6;
@@ -1327,7 +1327,7 @@ module smallInstr_decoder(
 	     4:pconstant[16]={-boogie_baboogie*4<<~vecmode,boogie_baboogie*4<<instr[22:21]};
          //verilator lint_on WIDTH
           endcase
-          if (magic[2:0]==3'b011 && !vecmode) pconstant[16][63:47]={1'b0,instr[47:32]};
+          if (pwh#(3)::cmpEQ(magic[2:0],3'b011) && !vecmode) pconstant[16][63:47]={1'b0,instr[47:32]};
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
           poperation[16][10:8]={3{instr[31]}};
@@ -1402,7 +1402,7 @@ module smallInstr_decoder(
       end
 
       
-      trien[19]=magic[1:0]==2'b11 && isImmLoadStore;
+      trien[19]=pwh#(2)::cmpEQ(magic[1:0],2'b11) && isImmLoadStore;
       pport[19]=PORT_ALU;
       poperation[19]=`op_mov64;
       prT_use[19]=1'b1;;
@@ -1415,7 +1415,7 @@ module smallInstr_decoder(
       
       
       trien[20]=magic[0] & isBasicCJump;
-      puseBConst[20]=magic[1:0]!=2'b01 && instr[18] || magic[1:0]==2'b01 
+      puseBConst[20]=magic[1:0]!=2'b01 && instr[18] || pwh#(2)::cmpEQ(magic[1:0],2'b01) 
 	       && &opcode_main[3:1] || &magic;
       poperation[20][7:0]=opcode_main[0] ? `op_sub32 : `op_sub64;
       poperation[20][12:8]=5'b0;
@@ -1437,8 +1437,8 @@ module smallInstr_decoder(
 		       prA[20]=instr[12:8];
 		       perror[20]=2'b0;
 	       end
-	       pjumpType[20]={1'b0,&magic ? instr[13] : (magic[1:0]==2'b01) ? instr[18] : instr[32],opcode_main[3:1]};  
-      if (magic[1:0]==2'b01 && &opcode_main[3:1]) begin
+	       pjumpType[20]={1'b0,&magic ? instr[13] : (pwh#(2)::cmpEQ(magic[1:0],2'b01)) ? instr[18] : instr[32],opcode_main[3:1]};  
+      if (pwh#(2)::cmpEQ(magic[1:0],2'b01) && &opcode_main[3:1]) begin
           pconstant[20]=instr[31:24];
           pjumpType[20]={1'b0,instr[16:13]};
           prA[20]=instr[12:8];
@@ -1451,9 +1451,9 @@ module smallInstr_decoder(
       pjumpType[21]={1'b0,instr[11:8]};
       pconstant[21][0]=1'b0;
       pflags_use[21]=1'b1;
-      if (magic[1:0]==2'b01 && isLongCondJump) begin
+      if (pwh#(2)::cmpEQ(magic[1:0],2'b01) && isLongCondJump) begin
           pconstant[21]={{43{instr[31]}},instr[31:12],1'b0};
-      end if (magic[1:0]==2'b01 && isCLeave) begin
+      end if (pwh#(2)::cmpEQ(magic[1:0],2'b01) && isCLeave) begin
           pconstant[21]={{43{instr[31]}},instr[31:17],1'b0};
       end 
       if (!opcode_main[2] && isCLeave) begin
@@ -1493,7 +1493,7 @@ module smallInstr_decoder(
       puseRs[23]=1'b0;
       pjumpType[23]=5'b10000;
       /*pconstant[23][0]=1'b0;
-      if (magic[1:0]==2'b01) begin
+      if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
           pconstant[23]={{39{instr[31]}},instr[31:8],1'b0};
       end else if (~magic[0]) begin
           pconstant[23]={{55{instr[15]}},instr[15:8],1'b0};
@@ -1557,14 +1557,14 @@ module smallInstr_decoder(
       end
 
       trien[26]=magic[0] && isMovOrExtB && ~isMovOrExtExcept;
-      puseBConst[26]=(magic[1:0]==2'b11 || (magic[1:0]==2'b01 && pwh#(8)::cmpEQ(opcode_main[7:0],8'd210)));
+      puseBConst[26]=(pwh#(2)::cmpEQ(magic[1:0],2'b11) || (pwh#(2)::cmpEQ(magic[1:0],2'b01) && pwh#(8)::cmpEQ(opcode_main[7:0],8'd210)));
       pport[26]=PORT_ALU;
       prA_use[26]=pwh#(8)::cmpEQ(opcode_main,8'd185)||pwh#(8)::cmpEQ(opcode_main,8'd184);
       prB_use[26]=1'b1;
       prT_use[26]=1'b1;
       puseRs[26]=1'b1;
       prAlloc[26]=1'b1;
-      if (magic[3:0]==4'hf && opcode_main!=8'd210) perror[26]=1;
+      if (pwh#(4)::cmpEQ(magic[3:0],4'hf) && opcode_main!=8'd210) perror[26]=1;
       poperation[26][12]=1'b1;
       //verilator lint_off CASEINCOMPLETE
       case(opcode_main)
@@ -1577,11 +1577,11 @@ module smallInstr_decoder(
       8'd189: poperation[26][7:0]=`op_sxt8_32;
       endcase
       //verilator lint_on CASEINCOMPLETE
-      if (magic[3:0]==4'hf) begin
+      if (pwh#(4)::cmpEQ(magic[3:0],4'hf)) begin
           pconstant[26]=instr[79:16]; 
           if (oddmode[3]) pconstant[26][63:44]=20'h1;//invalid range; pls note that code pointers don't check bounds!
       end
-      if (magic[1:0]==2'b01) begin
+      if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
           prA[26]={instr[17],instr[11:8]};
           prT[26]={instr[17],instr[11:8]};
           prB[26]=instr[16:12];
@@ -1620,7 +1620,7 @@ module smallInstr_decoder(
       endcase
       //verilator lint_on CASEINCOMPLETE
  
-      if (magic[1:0]==2'b01) begin
+      if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
           prA[27]={instr[17],instr[11:8]};
           prT[27]={instr[17],instr[11:8]};
           prB[27]=instr[16:12];
@@ -1651,7 +1651,7 @@ module smallInstr_decoder(
 	  prT[28]={4'h7,instr[8]};
 	  //prA[28]=5'd13;
           poperation[28][12]=1'b1;
-	      if (magic[1:0]==2'b01) pconstant[28]={8'b0,7'h7f,5'd23,{9{instr[31]}},instr[31:9],13'b0};
+	      if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) pconstant[28]={8'b0,7'h7f,5'd23,{9{instr[31]}},instr[31:9],13'b0};
 	      else pconstant[28]={8'b0,7'h7f,5'd23,{9{instr[44]}},instr[44:9]};
           pIPRel[28]=1'b1;
       end else begin
@@ -1663,15 +1663,15 @@ module smallInstr_decoder(
           prAlloc[28]=1'b1;
           prT_use[28]=1'b1;
           pflags_use[28]=1'b1;
-          if (magic[1:0]==2'b01) prT[28]={instr[17],instr[11:8]};
+          if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) prT[28]={instr[17],instr[11:8]};
           else perror[28]=1;
       end
       
       trien[29]=magic[0] & isBasicAddNoFl || isPtrBump_other_domain;
           //if no magic, it's register-register nxor and carry flag for ptr bit!
-      puseBConst[29]=magic[2:0]==3'b011;
+      puseBConst[29]=pwh#(3)::cmpEQ(magic[2:0],3'b011);
       poperation[29][11:0]=isPtrBump_other_domain ? `op_mul64 : 
-pwh#(8)::cmpEQ(opcode_main,8'd234) ? `op_dec|4096 : magic[1:0]==2'b01 ? `op_nxor64 : 
+pwh#(8)::cmpEQ(opcode_main,8'd234) ? `op_dec|4096 : pwh#(2)::cmpEQ(magic[1:0],2'b01) ? `op_nxor64 : 
 opcode_main[0] ? `op_add64 : `op_add32;
       poperation[29][12]=1'b1;
       pport[29]=pwh#(8)::cmpEQ(opcode_main,8'd234) ? PORT_MUL : PORT_ALU;
@@ -1682,7 +1682,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prAlloc[29]=1'b1;
           
       if (magic[0]) begin
-          if (magic[1:0]==2'b01) begin
+          if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) begin
               prA[29]={instr[17],instr[11:8]};
               prT[29]=instr[16:12];
               prB[29]=instr[22:18];
@@ -1783,7 +1783,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
               prT_useF[31]=~instr[30];
               pcalu[31]={1'b0,{4{~instr[30]}}};
           end
-          if (magic[1:0]==2'b01) 
+          if (pwh#(2)::cmpEQ(magic[1:0],2'b01)) 
               pconstant[31]={{58{instr[30]}},instr[23:18]};
           prA[31]={instr[17],instr[11:8]};
           prT[31]={instr[16],instr[15:12]};
@@ -1867,7 +1867,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
           poperation[32][7:0]=8'hff;//mov 128 bit untyped
 	  if (instr[21:17]!=0) perror[32]=1;
       end
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[32]=instr[32]; if (instr[32]) prA[32][4:1]=4'b0;
 	  prBE[32]=instr[33]; if (instr[33]) prB[32][4:1]=4'b0;
 	  prTE[32]=instr[34]; if (instr[34]) prT[32][4:1]=4'b0;
@@ -1880,7 +1880,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       
       trien[33]=magic[0] & isBasicFPUScalarA;
       puseRs[33]=1'b1;
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[33]=instr[32]; if (instr[32]) prA[33][4:2]=3'b0;
 	  prBE[33]=instr[33]; if (instr[33]) prB[33][4:2]=3'b0;
 	  prTE[33]=instr[34]; if (instr[34]) prT[33][4:2]=3'b0;
@@ -1923,7 +1923,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prA[34]=instr[21:17];
       prB[34]=instr[26:22];
       prT[34]=instr[31:27];
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[34]=instr[32]; if (instr[32]) prA[34][4:1]=4'b0;
 	  prBE[34]=instr[33]; if (instr[33]) prB[34][4:1]=4'b0;
 	  prTE[34]=instr[34]; if (instr[34]) prT[34][4:1]=4'b0;
@@ -2006,7 +2006,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prA[36]=instr[21:17];
       prB[36]=instr[26:22];
       prT[36]=instr[31:27];
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[36]=instr[32]; if (instr[32]) prA[36][4:1]=4'b0;
 	  prBE[36]=instr[33]; if (instr[33]) prB[36][4:1]=4'b0;
 	  prTE[36]=instr[34]; if (instr[34]) prT[36][4:1]=4'b0;
@@ -2042,7 +2042,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prA[37]=instr[21:17];
       prB[37]=instr[26:22];
       prT[37]=instr[31:27];
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[37]=instr[32]; if (instr[32]) prA[37][4:1]=4'b0;
 	  prBE[37]=instr[33]; if (instr[33]) prB[37][4:1]=4'b0;
 	  prTE[37]=instr[34]; if (instr[34]) prT[37][4:1]=4'b0;
@@ -2080,7 +2080,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prB[38]=instr[26:22];
       prT_useF[38]=1'b1;
       prT[38]=instr[31:27];
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[38]=instr[32]; if (instr[32]) prA[38][4:1]=4'b0;
 	  prBE[38]=instr[33]; if (instr[33]) prB[38][4:1]=4'b0;
 	  prTE[38]=instr[34]; if (instr[34]) prT[38][4:1]=4'b0;
@@ -2121,7 +2121,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prB[39]=instr[26:22];
       prT_useF[39]=1'b0;
       prT[39]=instr[31:27];
-      if (magic[2:0]==3'b011) begin
+      if (pwh#(3)::cmpEQ(magic[2:0],3'b011)) begin
           prAX[39]=instr[32]; if (instr[32]) prA[39][4:1]=4'b0;
 	  prBE[39]=instr[33]; if (instr[33]) prB[39][4:1]=4'b0;
 	  prTE[39]=instr[34]; if (instr[34]) prT[39][4:1]=4'b0;

@@ -547,8 +547,8 @@ module ratV_dep(
   assign data=(addr=={2'b11,rs2i1_index})& clkREF12 ? newR7 : 'z;
   assign data=(addr=={2'b11,rs2i2_index})& clkREF12 ? newR8 : 'z;
 
-  assign retired=(addr[5:4]==2'b11)& clkREF12  ? 1'b0 : 1'bz;
-  assign isDep=addr[5:4]==2'b11 && clkREF12 ? 1'b1 : 1'bz ;
+  assign retired=(pwh#(2)::cmpEQ(addr[5:4],2'b11))& clkREF12  ? 1'b0 : 1'bz;
+  assign isDep=pwh#(2)::cmpEQ(addr[5:4],2'b11) && clkREF12 ? 1'b1 : 1'bz ;
 
   assign funit=(addr=={2'b11,rs0i0_index})& clkREF12 ? newU0 : 'z;
   assign funit=(addr=={2'b11,rs0i1_index})& clkREF12 ? newU1 : 'z;

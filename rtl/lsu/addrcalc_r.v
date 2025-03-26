@@ -441,7 +441,7 @@ module addrcalc_r(
 
   assign addrTlb=addrMain_mlb;
 
-  assign mOp_rsEn=mOp0_en_reg & mlb_hit & ~pause_miss_reg2 & ~bus_hold & ~mlb_proceed & ~mOp0_lsfwd_reg & ~(mOp0_type_reg[1:0]==2'b10); 
+  assign mOp_rsEn=mOp0_en_reg & mlb_hit & ~pause_miss_reg2 & ~bus_hold & ~mlb_proceed & ~mOp0_lsfwd_reg & ~(pwh#(2)::cmpEQ(mOp0_type_reg[1:0],2'b10)); 
 //dummy page walker
   assign reqmlb_ack=mlb_proceed & req_can & reqmlb_next;
 
@@ -535,11 +535,11 @@ module addrcalc_r(
       for (i=0;i<32;i=i+1)
         begin
           banks0[i]=pwh#(32)::cmpEQ(bank0,i) || 
-          ((opsize==6 || opsize==3 || opsize[2] || (stepOver && opsize==2) || 
-            (stepOver2 && opsize==1)) && bank0==((i-1)&5'h1f)) ||
-          (((opsize==3 && stepOver) || opsize[2] || opsize==6) && bank0==((i-2)&5'h1f)) || 
-          (((opsize==4 && stepOver2) || opsize==5 || opsize==6) && bank0==((i-3)&5'h1f)) ||
-          (((opsize==5 && stepOver) || opsize==6) && bank0==((i-4)&5'h1f)) || (opsize==7 && bank0[4:3]=={i[4:3],3'b0});
+          ((pwh#(32)::cmpEQ(opsize,6 )|| pwh#(32)::cmpEQ(opsize,3 )|| opsize[2] || (stepOver && pwh#(32)::cmpEQ(opsize,2)) || 
+            (stepOver2 && pwh#(32)::cmpEQ(opsize,1))) && bank0==((i-1)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(opsize,3 )&& stepOver) || opsize[2] || pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-2)&5'h1f)) || 
+          (((pwh#(32)::cmpEQ(opsize,4 )&& stepOver2) || pwh#(32)::cmpEQ(opsize,5 )|| pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-3)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(opsize,5 )&& stepOver) || pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-4)&5'h1f)) || (pwh#(32)::cmpEQ(opsize,7 )&& bank0[4:3]=={i[4:3],3'b0});
         end
     end
       /* verilator lint_on WIDTH */
@@ -604,7 +604,7 @@ module addrcalc_r(
           is_stack_reg<=0;
       end else if (~doStall&&!rsStall) begin
           mOp0_en_reg<=mOp0_en & ~(except);
-          if (mOp0_en & ~|req_bus || extern_feed & |req_bus & (mOp0_type_reg[1:0]==2'b10) || |req_bus & (pwh#(2)::cmpEQ(mOp0_type_reg,2'b11))) begin
+          if (mOp0_en & ~|req_bus || extern_feed & |req_bus & (pwh#(2)::cmpEQ(mOp0_type_reg[1:0],2'b10)) || |req_bus & (pwh#(2)::cmpEQ(mOp0_type_reg,2'b11))) begin
               mOp0_thread_reg<=mOp0_thread;
               mOp0_lsflag_reg<=mOp0_lsflag;
               mOp0_addrMain_reg<=mOp0_addrMain;

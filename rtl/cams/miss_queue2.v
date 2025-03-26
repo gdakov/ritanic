@@ -1442,17 +1442,17 @@ module missQ(
   
       for(q=0;q<32;q=q+1) begin
           bank4[q]=read_mop[4][`mOp1_bank0]==q || 
-          ((sz4==3 || sz4[2] || (stepOver4 && sz4==2) || 
-            (stepOver42 && sz4==1)) && read_mop[4][`mOp1_bank0]==((q-1)&5'h1f)) ||
-          (((sz4==3 && stepOver4) | sz4[2]) && read_mop[4][`mOp1_bank0]==((q-2)&5'h1f)) || 
-          (((sz4==4 && stepOver42) || sz4==5) && read_mop[4][`mOp1_bank0]==((q-3)&5'h1f)) ||
-          ((sz4==5 && stepOver4) && read_mop[4][`mOp1_bank0]==((q-4)&5'h1f)) ;
+          ((pwh#(32)::cmpEQ(sz4,3 )|| sz4[2] || (stepOver4 && pwh#(32)::cmpEQ(sz4,2)) || 
+            (stepOver42 && pwh#(32)::cmpEQ(sz4,1))) && read_mop[4][`mOp1_bank0]==((q-1)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(sz4,3 )&& stepOver4) | sz4[2]) && read_mop[4][`mOp1_bank0]==((q-2)&5'h1f)) || 
+          (((pwh#(32)::cmpEQ(sz4,4 )&& stepOver42) || pwh#(32)::cmpEQ(sz4,5)) && read_mop[4][`mOp1_bank0]==((q-3)&5'h1f)) ||
+          ((pwh#(32)::cmpEQ(sz4,5 )&& stepOver4) && read_mop[4][`mOp1_bank0]==((q-4)&5'h1f)) ;
           bank5[q]=read_mop[5][`mOp1_bank0]==q || 
-          ((sz5==3 || sz5[2] || (stepOver5 && sz5==2) || 
-            (stepOver52 && sz5==1)) && read_mop[5][`mOp1_bank0]==((q-1)&5'h1f)) ||
-          (((sz5==3 && stepOver5) | sz5[2]) && read_mop[5][`mOp1_bank0]==((q-2)&5'h1f)) || 
-          (((sz5==5 && stepOver52) || sz5==5) && read_mop[5][`mOp1_bank0]==((q-3)&5'h1f)) ||
-          ((sz5==5 && stepOver5) && read_mop[5][`mOp1_bank0]==((q-4)&5'h1f)) ;
+          ((pwh#(32)::cmpEQ(sz5,3 )|| sz5[2] || (stepOver5 && pwh#(32)::cmpEQ(sz5,2)) || 
+            (stepOver52 && pwh#(32)::cmpEQ(sz5,1))) && read_mop[5][`mOp1_bank0]==((q-1)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(sz5,3 )&& stepOver5) | sz5[2]) && read_mop[5][`mOp1_bank0]==((q-2)&5'h1f)) || 
+          (((pwh#(32)::cmpEQ(sz5,5 )&& stepOver52) || pwh#(32)::cmpEQ(sz5,5)) && read_mop[5][`mOp1_bank0]==((q-3)&5'h1f)) ||
+          ((pwh#(32)::cmpEQ(sz5,5 )&& stepOver5) && read_mop[5][`mOp1_bank0]==((q-4)&5'h1f)) ;
       end
   end
   

@@ -122,7 +122,7 @@ module decoder_permitted_i(
           
           assign permB[k]=branch_cnt[k][2] & taken_cnt[k][1] & indir_cnt[k][1] & ~mulx_more_cnt[3];
 
-          if (k<9) assign perm[k]=permX[k] && (fma_dke[k][0] | (permX[k+1] && fma_dke[k+1][2]) | fma_dke[k][2] | (k==0)) &&
+          if (k<9) assign perm[k]=permX[k] && (fma_dke[k][0] | (permX[k+1] && fma_dke[k+1][2]) | fma_dke[k][2] | (pwh#(32)::cmpEQ(k,0))) &&
               !spec[k] | permX[k+1];
           else  assign perm[k]=permX[k] && fma_dke[k][0] | fma_dke[k][2] && !spec[k];
           
@@ -1909,8 +1909,8 @@ module decoder(
           .distrust(lizztruss),
           .instrQ(instQ[k]),
           .instr(inst[k]),
-          .instr_prev(k==0 ? instr_save[15:0] : instr[k-1][15:0]),
-          .prevClsFMA(k==0 ? was_FMA_last : instrQ[k-1][`instrQ_class+`iclass_store2]),
+          .instr_prev(pwh#(32)::cmpEQ(k,0 )? instr_save[15:0] : instr[k-1][15:0]),
+          .prevClsFMA(pwh#(32)::cmpEQ(k,0 )? was_FMA_last : instrQ[k-1][`instrQ_class+`iclass_store2]),
           .operation(dec_operation[k]),
 	  .can_jump_csr(aux_can_jump),
 	  .can_read_csr(aux_can_read),
@@ -2012,8 +2012,8 @@ module decoder(
           iUsed_reg,
           1'b1,
           rs_index[k],
-          k==5 && has_mul,k==8 && has_mul,
-          rs_store[k] && rs_storeL==0,
+          pwh#(32)::cmpEQ(k,5 )&& has_mul,pwh#(32)::cmpEQ(k,8 )&& has_mul,
+          rs_store[k] && pwh#(32)::cmpEQ(rs_storeL,0,)
           rs_storeL[k],
           rs_storeDA,
           rs_storeDB,
@@ -2279,43 +2279,43 @@ module decoder(
           );
 
           decoder_find_single_dep depA_mod(
-          dec_rT_reg[0],dec_rT_use_reg[0] && k>0,dec_rT_useF_reg[0] && (k>0)|(k==0&cls_loadFPU_reg[k-1]),
-          k==1 ? dec_rT_reg[1-1] : dec_rT_reg[1],dec_rT_use_reg[1] && k>1,dec_rT_useF_reg[1] && (k>1)|(k==1&cls_loadFPU_reg[k-1]),
-          k==2 ? dec_rT_reg[2-1] : dec_rT_reg[2],dec_rT_use_reg[2] && k>2,dec_rT_useF_reg[2] && (k>2)|(k==2&cls_loadFPU_reg[k-1]),
-          k==3 ? dec_rT_reg[3-1] : dec_rT_reg[3],dec_rT_use_reg[3] && k>3,dec_rT_useF_reg[3] && (k>3)|(k==3&cls_loadFPU_reg[k-1]),
-          k==4 ? dec_rT_reg[4-1] : dec_rT_reg[4],dec_rT_use_reg[4] && k>4,dec_rT_useF_reg[4] && (k>4)|(k==4&cls_loadFPU_reg[k-1]),
-          k==5 ? dec_rT_reg[5-1] : dec_rT_reg[5],dec_rT_use_reg[5] && k>5,dec_rT_useF_reg[5] && (k>5)|(k==5&cls_loadFPU_reg[k-1]),
-          k==6 ? dec_rT_reg[6-1] : dec_rT_reg[6],dec_rT_use_reg[6] && k>6,dec_rT_useF_reg[6] && (k>6)|(k==6&cls_loadFPU_reg[k-1]),
-          k==7 ? dec_rT_reg[7-1] : dec_rT_reg[7],dec_rT_use_reg[7] && k>7,dec_rT_useF_reg[7] && (k>7)|(k==7&cls_loadFPU_reg[k-1]),
-          k==8 ? dec_rT_reg[8-1] : dec_rT_reg[8],dec_rT_use_reg[8] && k>8,dec_rT_useF_reg[8] && (k>8)|(k==8&cls_loadFPU_reg[k-1]),
+          dec_rT_reg[0],dec_rT_use_reg[0] && k>0,dec_rT_useF_reg[0] && (k>0)|(pwh#(32)::cmpEQ(k,0&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,1 )? dec_rT_reg[1-1] : dec_rT_reg[1],dec_rT_use_reg[1] && k>1,dec_rT_useF_reg[1] && (k>1)|(pwh#(32)::cmpEQ(k,1&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,2 )? dec_rT_reg[2-1] : dec_rT_reg[2],dec_rT_use_reg[2] && k>2,dec_rT_useF_reg[2] && (k>2)|(pwh#(32)::cmpEQ(k,2&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,3 )? dec_rT_reg[3-1] : dec_rT_reg[3],dec_rT_use_reg[3] && k>3,dec_rT_useF_reg[3] && (k>3)|(pwh#(32)::cmpEQ(k,3&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,4 )? dec_rT_reg[4-1] : dec_rT_reg[4],dec_rT_use_reg[4] && k>4,dec_rT_useF_reg[4] && (k>4)|(pwh#(32)::cmpEQ(k,4&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,5 )? dec_rT_reg[5-1] : dec_rT_reg[5],dec_rT_use_reg[5] && k>5,dec_rT_useF_reg[5] && (k>5)|(pwh#(32)::cmpEQ(k,5&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,6 )? dec_rT_reg[6-1] : dec_rT_reg[6],dec_rT_use_reg[6] && k>6,dec_rT_useF_reg[6] && (k>6)|(pwh#(32)::cmpEQ(k,6&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,7 )? dec_rT_reg[7-1] : dec_rT_reg[7],dec_rT_use_reg[7] && k>7,dec_rT_useF_reg[7] && (k>7)|(pwh#(32)::cmpEQ(k,7&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,8 )? dec_rT_reg[8-1] : dec_rT_reg[8],dec_rT_use_reg[8] && k>8,dec_rT_useF_reg[8] && (k>8)|(pwh#(32)::cmpEQ(k,8&cls_loadFPU_reg)[k-1]),
           dec_rA_reg[k],dec_rA_useF_reg[k],
           dep_rA[k]
           );
 
           decoder_find_single_dep depB_mod(
-          dec_rT_reg[0],dec_rT_use_reg[0] && k>0,dec_rT_useF_reg[0] && (k>0)|(k==0&cls_loadFPU_reg[k-1]),
-          k==1 ? dec_rT_reg[1-1] : dec_rT_reg[1],dec_rT_use_reg[1] && k>1,dec_rT_useF_reg[1] && (k>1)|(k==1&cls_loadFPU_reg[k-1]),
-          k==2 ? dec_rT_reg[2-1] : dec_rT_reg[2],dec_rT_use_reg[2] && k>2,dec_rT_useF_reg[2] && (k>2)|(k==2&cls_loadFPU_reg[k-1]),
-          k==3 ? dec_rT_reg[3-1] : dec_rT_reg[3],dec_rT_use_reg[3] && k>3,dec_rT_useF_reg[3] && (k>3)|(k==3&cls_loadFPU_reg[k-1]),
-          k==4 ? dec_rT_reg[4-1] : dec_rT_reg[4],dec_rT_use_reg[4] && k>4,dec_rT_useF_reg[4] && (k>4)|(k==4&cls_loadFPU_reg[k-1]),
-          k==5 ? dec_rT_reg[5-1] : dec_rT_reg[5],dec_rT_use_reg[5] && k>5,dec_rT_useF_reg[5] && (k>5)|(k==5&cls_loadFPU_reg[k-1]),
-          k==6 ? dec_rT_reg[6-1] : dec_rT_reg[6],dec_rT_use_reg[6] && k>6,dec_rT_useF_reg[6] && (k>6)|(k==6&cls_loadFPU_reg[k-1]),
-          k==7 ? dec_rT_reg[7-1] : dec_rT_reg[7],dec_rT_use_reg[7] && k>7,dec_rT_useF_reg[7] && (k>7)|(k==7&cls_loadFPU_reg[k-1]),
-          k==8 ? dec_rT_reg[8-1] : dec_rT_reg[8],dec_rT_use_reg[8] && k>8,dec_rT_useF_reg[8] && (k>8)|(k==8&cls_loadFPU_reg[k-1]),
+          dec_rT_reg[0],dec_rT_use_reg[0] && k>0,dec_rT_useF_reg[0] && (k>0)|(pwh#(32)::cmpEQ(k,0&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,1 )? dec_rT_reg[1-1] : dec_rT_reg[1],dec_rT_use_reg[1] && k>1,dec_rT_useF_reg[1] && (k>1)|(pwh#(32)::cmpEQ(k,1&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,2 )? dec_rT_reg[2-1] : dec_rT_reg[2],dec_rT_use_reg[2] && k>2,dec_rT_useF_reg[2] && (k>2)|(pwh#(32)::cmpEQ(k,2&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,3 )? dec_rT_reg[3-1] : dec_rT_reg[3],dec_rT_use_reg[3] && k>3,dec_rT_useF_reg[3] && (k>3)|(pwh#(32)::cmpEQ(k,3&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,4 )? dec_rT_reg[4-1] : dec_rT_reg[4],dec_rT_use_reg[4] && k>4,dec_rT_useF_reg[4] && (k>4)|(pwh#(32)::cmpEQ(k,4&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,5 )? dec_rT_reg[5-1] : dec_rT_reg[5],dec_rT_use_reg[5] && k>5,dec_rT_useF_reg[5] && (k>5)|(pwh#(32)::cmpEQ(k,5&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,6 )? dec_rT_reg[6-1] : dec_rT_reg[6],dec_rT_use_reg[6] && k>6,dec_rT_useF_reg[6] && (k>6)|(pwh#(32)::cmpEQ(k,6&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,7 )? dec_rT_reg[7-1] : dec_rT_reg[7],dec_rT_use_reg[7] && k>7,dec_rT_useF_reg[7] && (k>7)|(pwh#(32)::cmpEQ(k,7&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,8 )? dec_rT_reg[8-1] : dec_rT_reg[8],dec_rT_use_reg[8] && k>8,dec_rT_useF_reg[8] && (k>8)|(pwh#(32)::cmpEQ(k,8&cls_loadFPU_reg)[k-1]),
           dec_rB_reg[k],dec_rB_useF_reg[k],
           dep_rB[k]
           );
           
           decoder_find_single_dep depC_mod(
-          dec_rT_reg[0],dec_rT_use_reg[0] && k>0,dec_rT_useF_reg[0] && (k>0)|(k==0&cls_loadFPU_reg[k-1]),
-          k==1 ? dec_rT_reg[1-1] : dec_rT_reg[1],dec_rT_use_reg[1] && k>1,dec_rT_useF_reg[1] && (k>1)|(k==1&cls_loadFPU_reg[k-1]),
-          k==2 ? dec_rT_reg[2-1] : dec_rT_reg[2],dec_rT_use_reg[2] && k>2,dec_rT_useF_reg[2] && (k>2)|(k==2&cls_loadFPU_reg[k-1]),
-          k==3 ? dec_rT_reg[3-1] : dec_rT_reg[3],dec_rT_use_reg[3] && k>3,dec_rT_useF_reg[3] && (k>3)|(k==3&cls_loadFPU_reg[k-1]),
-          k==4 ? dec_rT_reg[4-1] : dec_rT_reg[4],dec_rT_use_reg[4] && k>4,dec_rT_useF_reg[4] && (k>4)|(k==4&cls_loadFPU_reg[k-1]),
-          k==5 ? dec_rT_reg[5-1] : dec_rT_reg[5],dec_rT_use_reg[5] && k>5,dec_rT_useF_reg[5] && (k>5)|(k==5&cls_loadFPU_reg[k-1]),
-          k==6 ? dec_rT_reg[6-1] : dec_rT_reg[6],dec_rT_use_reg[6] && k>6,dec_rT_useF_reg[6] && (k>6)|(k==6&cls_loadFPU_reg[k-1]),
-          k==7 ? dec_rT_reg[7-1] : dec_rT_reg[7],dec_rT_use_reg[7] && k>7,dec_rT_useF_reg[7] && (k>7)|(k==7&cls_loadFPU_reg[k-1]),
-          k==8 ? dec_rT_reg[8-1] : dec_rT_reg[8],dec_rT_use_reg[8] && k>8,dec_rT_useF_reg[8] && (k>8)|(k==8&cls_loadFPU_reg[k-1]),
+          dec_rT_reg[0],dec_rT_use_reg[0] && k>0,dec_rT_useF_reg[0] && (k>0)|(pwh#(32)::cmpEQ(k,0&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,1 )? dec_rT_reg[1-1] : dec_rT_reg[1],dec_rT_use_reg[1] && k>1,dec_rT_useF_reg[1] && (k>1)|(pwh#(32)::cmpEQ(k,1&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,2 )? dec_rT_reg[2-1] : dec_rT_reg[2],dec_rT_use_reg[2] && k>2,dec_rT_useF_reg[2] && (k>2)|(pwh#(32)::cmpEQ(k,2&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,3 )? dec_rT_reg[3-1] : dec_rT_reg[3],dec_rT_use_reg[3] && k>3,dec_rT_useF_reg[3] && (k>3)|(pwh#(32)::cmpEQ(k,3&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,4 )? dec_rT_reg[4-1] : dec_rT_reg[4],dec_rT_use_reg[4] && k>4,dec_rT_useF_reg[4] && (k>4)|(pwh#(32)::cmpEQ(k,4&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,5 )? dec_rT_reg[5-1] : dec_rT_reg[5],dec_rT_use_reg[5] && k>5,dec_rT_useF_reg[5] && (k>5)|(pwh#(32)::cmpEQ(k,5&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,6 )? dec_rT_reg[6-1] : dec_rT_reg[6],dec_rT_use_reg[6] && k>6,dec_rT_useF_reg[6] && (k>6)|(pwh#(32)::cmpEQ(k,6&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,7 )? dec_rT_reg[7-1] : dec_rT_reg[7],dec_rT_use_reg[7] && k>7,dec_rT_useF_reg[7] && (k>7)|(pwh#(32)::cmpEQ(k,7&cls_loadFPU_reg)[k-1]),
+          pwh#(32)::cmpEQ(k,8 )? dec_rT_reg[8-1] : dec_rT_reg[8],dec_rT_use_reg[8] && k>8,dec_rT_useF_reg[8] && (k>8)|(pwh#(32)::cmpEQ(k,8&cls_loadFPU_reg)[k-1]),
           dec_rC_reg[k],dec_rC_useF_reg[k],
           dep_rC[k]
           );
@@ -2388,7 +2388,7 @@ module decoder(
   assign was_FMA_last_d=(~iUsed[0]) ? was_FMA_last : 1'bz;
   assign instr_save_d=(~iUsed[0]) ? instr_save : 15'bz;
 
-  assign msrss_retIP_data=msrss_retIP_en_reg==10'b0 ? 64'b0 : 64'bz;
+  assign msrss_retIP_data=pwh#(32)::cmpEQ(msrss_retIP_en_reg,10)'b0 ? 64'b0 : 64'bz;
   assign msrss_retIP_data[63:44]=msrss_retIP_en_reg!=10'b0 ? {baseAttr[0],baseAttr[1],1'b0,baseAttr[3],16'b0} : 20'bz; 
   assign msrss_retIP_data[0]=msrss_retIP_en_reg!=10'b0 ? 1'b0 : 1'bz; 
 
@@ -3093,7 +3093,7 @@ module decoder(
               dec_rA_use_reg[n]<=dec_rA_use[n] && iUsed[n];
               dec_rA_useF_reg[n]<=dec_rA_useF[n] && iUsed[n];
               dec_rB_reg[n]<=ffx(thread,thrmode,1'b0,dec_rB[n]);
-              dec_rB_use_reg[n]<=dec_rB_use[n] && iUsed[n] && !(dec_rB==31 && instrQ[n][-4+`instrQ_magic]);
+              dec_rB_use_reg[n]<=dec_rB_use[n] && iUsed[n] && !(pwh#(32)::cmpEQ(dec_rB,31) && instrQ[n][-4+`instrQ_magic]);
               dec_rB_useF_reg[n]<=dec_rB_useF[n] && iUsed[n];
               dec_useBConst_reg[n]<=dec_useBConst[n] && iUsed[n];
               dec_useAConst_reg[n]<=dec_useBConst[n] && iUsed[n] && dec_IPRel[n] && dec_rA_use[n];

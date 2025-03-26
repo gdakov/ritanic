@@ -192,7 +192,7 @@ module fadds(
 
   assign pook=B_zero;
 
-  assign pook_in=pook_inX && expdiff==0 && ~sxor && pook_inX;
+  assign pook_in=pook_inX && pwh#(32)::cmpEQ(expdiff,0 )&& ~sxor && pook_inX;
  
 
   assign A_exp={A[30],A[32],A[29:23]};
@@ -248,13 +248,13 @@ module fadds(
   assign B_s=B[31]^(isSub&~isRSub);
   assign A_s1=a_more ? A_s : B_s;
   assign B_s1=a_more ? B_s : A_s;
-  assign A_s2=(a_more & ~(expdiffA==0 && alt_en && sxor)) ? A_s : B_s;
+  assign A_s2=(a_more & ~(pwh#(32)::cmpEQ(expdiffA,0 )&& alt_en && sxor)) ? A_s : B_s;
 
   assign alt_en=~cout64_SZ1;
 
   assign resS_rnbit=(expdiffA!=0) ? ~opB[0] : 1'b0;
-  assign altpath=(expdiffA==0 || expdiffA==1 || expdiffB==1) && sxor;
-  assign rndpath=(expdiffA==1 || expdiffB==1) && sxor;
+  assign altpath=(pwh#(32)::cmpEQ(expdiffA,0 )|| pwh#(32)::cmpEQ(expdiffA,1 )|| pwh#(32)::cmpEQ(expdiffB,1)) && sxor;
+  assign rndpath=(pwh#(32)::cmpEQ(expdiffA,1 )|| pwh#(32)::cmpEQ(expdiffB,1)) && sxor;
   
   assign res_X[22:0]=(renor_simple & ~spec_any & en_reg) ? renorS[22:0] : 23'bz;
   assign {res_X[32],res_X[30:23]}=(renor_simple & ~spec_any & en_reg) ? renorE : 9'bz;
@@ -287,7 +287,7 @@ module fadds(
   
   assign renor_simple=altpath_reg && ~renor_round;
   
-  assign expoor=expdiff[8:5]!=4'b0 || expdiff[8:3]==6'b000011;//&& expdiff!=16'h40; 
+  assign expoor=expdiff[8:5]!=4'b0 || pwh#(6)::cmpEQ(expdiff[8:3],6'b000011);//&& expdiff!=16'h40; 
 
   assign resX[31]=A_s1_reg;
   
@@ -374,15 +374,15 @@ module fadds(
           if (|k && k<3) assign {opBs1,xop1[1:0]}=(expdiff[5:3]==k && ~expoor) ? {{k*8{sxor}},opB[23:k*8-2]} : 26'bz;
           else if (!|k) begin
               assign opBs1=(expdiff[5:3]==k && ~expoor) ? {{k*8{sxor}},opB[23:k*8]} : 24'bz;
-              assign xop1[1:0]=(expdiff[5:3]==3'b0 && ~expoor) ? 2'b0 : 2'bz;
+              assign xop1[1:0]=(pwh#(3)::cmpEQ(expdiff[5:3],3'b0) && ~expoor) ? 2'b0 : 2'bz;
               assign xop1[1:0]=(pwh#(9)::cmpEQ(expdiff,9'h18)) ? opB[23:22] : 2'bz;
               assign xop1[1:0]=(pwh#(9)::cmpEQ(expdiff,9'h19)) ? {sxor,opB[23]} : 2'bz;
           end
           if (k<3) begin 
               pwire e_more,e_eq,e_eq2;
               get_carry #(4) cmp8_mod(~(k[3:0]+4'b1),expdiff[6:3],1'b1,e_more);
-              assign e_eq=expdiff[5:3]==(k+1) && expdiff[2:0]==3'b0;
-              assign e_eq2=expdiff[5:3]==(k+1) && expdiff[2:1]==2'b0;
+              assign e_eq=expdiff[5:3]==(k+1) && pwh#(3)::cmpEQ(expdiff[2:0],3'b0);
+              assign e_eq2=expdiff[5:3]==(k+1) && pwh#(2)::cmpEQ(expdiff[2:1],2'b0);
               assign tailBs1[k]=e_more|expoor && (|{opB[k*8+:7],opB[k*8+7]&~e_eq});
               assign tailBs1_c[k]=e_more|expoor && |opB[k*8+:8];
               assign tailBs1_L[k]=e_more|expoor && (|{opB[k*8+:6],opB[k*8+6+:2]&~{e_eq2,e_eq}});
@@ -442,9 +442,9 @@ module fadds(
   adder_CSA #(24) suppCSAx (opA,opB,24'b1,partt_A,partt_B);
   
   adder2c #(24) suppAddZeroOff(partt_A[23:0],partt_B[23:0],
-      resS1,resSR1,1'b0,1'b1,expdiffA==0 && ~alt_en,expdiffA==0&& ~alt_en,cout64_SZ1,cout64_SZR1,,);
+      resS1,resSR1,1'b0,1'b1,pwh#(32)::cmpEQ(expdiffA,0 )&& ~alt_en,pwh#(32)::cmpEQ(expdiffA,0&)& ~alt_en,cout64_SZ1,cout64_SZR1,,);
   adder2c #(24) suppAddZeroOffz(part_A[23:0],part_B[23:0],
-      resS1,resSR1,1'b0,1'b1,expdiffA==0 && alt_en,expdiffA==0 && alt_en,cout64_Sz1,cout64_SzR1,,);
+      resS1,resSR1,1'b0,1'b1,pwh#(32)::cmpEQ(expdiffA,0 )&& alt_en,pwh#(32)::cmpEQ(expdiffA,0 )&& alt_en,cout64_Sz1,cout64_SzR1,,);
   adder2c #(24) suppAddOneOff (par1Off_A[23:0],par1Off_B[23:0],resS1,resSR1,
       1'b0,1'b1,expdiffA!=0,expdiffA!=0,cout64_S1,cout64_SR1,,);
 
@@ -525,7 +525,7 @@ module fadds(
         //  isDBL_reg<=isDBL;
           altpath_reg<=altpath;
           rndpath_reg<=rndpath;
-          A_s1_reg<=(expdiffA==0 && sxor && alt_en) ? B_s1 : A_s1;
+          A_s1_reg<=(pwh#(32)::cmpEQ(expdiffA,0 )&& sxor && alt_en) ? B_s1 : A_s1;
           opB_reg<=opB[0];
           spec_snan_reg<=spec_snan;
 	  spec_qnan_reg<=spec_qnan;

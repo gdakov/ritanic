@@ -84,19 +84,19 @@ module fcmpd(clk,rst,
 
   bit_find_first_bit #(16) srch_mod(srchbits[srch_sz],s_first,s_has);
 
-  assign vres[0]=cmod==0 ? flags[5] : 1'bz;
-  assign vres[0]=cmod==1 ? ~flags[5] : 1'bz;
-  assign vres[0]=cmod==2 ? flags[1] : 1'bz;
-  assign vres[0]=cmod==3 ? ~flags[1] : 1'bz;
+  assign vres[0]=pwh#(32)::cmpEQ(cmod,0 )? flags[5] : 1'bz;
+  assign vres[0]=pwh#(32)::cmpEQ(cmod,1 )? ~flags[5] : 1'bz;
+  assign vres[0]=pwh#(32)::cmpEQ(cmod,2 )? flags[1] : 1'bz;
+  assign vres[0]=pwh#(32)::cmpEQ(cmod,3 )? ~flags[1] : 1'bz;
 
-  assign vres[1]=cmod==0 && ~paired ? flags[5] : 1'bz;
-  assign vres[1]=cmod==1 && ~paired ? ~flags[5] : 1'bz;
-  assign vres[1]=cmod==2 && ~paired ? flags[1] : 1'bz;
-  assign vres[1]=cmod==3 && ~paired? ~flags[1] : 1'bz;
-  assign vres1=cmod==0 ? flags_other[5] : 1'bz;
-  assign vres1=cmod==1 ? ~flags_other[5] : 1'bz;
-  assign vres1=cmod==2 ? flags_other[1] : 1'bz;
-  assign vres1=cmod==3 ? ~flags_other[1] : 1'bz;
+  assign vres[1]=pwh#(32)::cmpEQ(cmod,0 )&& ~paired ? flags[5] : 1'bz;
+  assign vres[1]=pwh#(32)::cmpEQ(cmod,1 )&& ~paired ? ~flags[5] : 1'bz;
+  assign vres[1]=pwh#(32)::cmpEQ(cmod,2 )&& ~paired ? flags[1] : 1'bz;
+  assign vres[1]=pwh#(32)::cmpEQ(cmod,3 )&& ~paired? ~flags[1] : 1'bz;
+  assign vres1=pwh#(32)::cmpEQ(cmod,0 )? flags_other[5] : 1'bz;
+  assign vres1=pwh#(32)::cmpEQ(cmod,1 )? ~flags_other[5] : 1'bz;
+  assign vres1=pwh#(32)::cmpEQ(cmod,2 )? flags_other[1] : 1'bz;
+  assign vres1=pwh#(32)::cmpEQ(cmod,3 )? ~flags_other[1] : 1'bz;
   assign vres[1]=paired ? vres1 : 1'bz;
   function [64:0] fracxfrm;
     input pwire [64:0] d_in;

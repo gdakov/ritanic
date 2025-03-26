@@ -292,10 +292,10 @@ always @* begin
   read1_pbit=read1_data_ramx[read1_odd_reg][{1'b0,read1_addrEO_reg[read1_odd_reg][ADDR_WIDTH+4],read1_addr_reg[3:0]}+:2];
   read2_pbit=read2_data_ramx[read2_odd_reg][{1'b0,read2_addrEO_reg[read2_odd_reg][ADDR_WIDTH+4],read2_addr_reg[3:0]}+:2];
   read3_pbit=read3_data_ramx[read3_odd_reg][{1'b0,read3_addrEO_reg[read3_odd_reg][ADDR_WIDTH+4],read3_addr_reg[3:0]}+:2];
-  if (read0_addr_reg[3:0]==4'hf) read0_pbit[1]=read0_data_ramx[~read0_odd_reg][0];
-  if (read1_addr_reg[3:0]==4'hf) read1_pbit[1]=read1_data_ramx[~read1_odd_reg][0];
-  if (read2_addr_reg[3:0]==4'hf) read2_pbit[1]=read2_data_ramx[~read2_odd_reg][0];
-  if (read3_addr_reg[3:0]==4'hf) read3_pbit[1]=read3_data_ramx[~read3_odd_reg][0];
+  if (pwh#(4)::cmpEQ(read0_addr_reg[3:0],4'hf)) read0_pbit[1]=read0_data_ramx[~read0_odd_reg][0];
+  if (pwh#(4)::cmpEQ(read1_addr_reg[3:0],4'hf)) read1_pbit[1]=read1_data_ramx[~read1_odd_reg][0];
+  if (pwh#(4)::cmpEQ(read2_addr_reg[3:0],4'hf)) read2_pbit[1]=read2_data_ramx[~read2_odd_reg][0];
+  if (pwh#(4)::cmpEQ(read3_addr_reg[3:0],4'hf)) read3_pbit[1]=read3_data_ramx[~read3_odd_reg][0];
 end
 always @(posedge clk) begin
   if (rst) begin

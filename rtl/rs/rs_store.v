@@ -1184,21 +1184,21 @@ module rs_s(
   assign outRsSelect_reg2[2]=32'b0;
   assign outRsSelect_reg2[0]=32'b0;
   
-  assign newIsFpA[0]=newPort0[4] && (newPort0[2:0]==3'b010 || newPort0[2]);
-  assign newIsFpA[1]=newPort1[4] && (newPort1[2:0]==3'b010 || newPort1[2]);
-  assign newIsFpA[2]=newPort2[4] && (newPort2[2:0]==3'b010 || newPort2[2]);
+  assign newIsFpA[0]=newPort0[4] && (pwh#(3)::cmpEQ(newPort0[2:0],3'b010) || newPort0[2]);
+  assign newIsFpA[1]=newPort1[4] && (pwh#(3)::cmpEQ(newPort1[2:0],3'b010) || newPort1[2]);
+  assign newIsFpA[2]=newPort2[4] && (pwh#(3)::cmpEQ(newPort2[2:0],3'b010) || newPort2[2]);
   
-  assign newIsFpB[0]=newPort0[6] && (newPort0[2:0]==3'b000 || newPort0[2]);
-  assign newIsFpB[1]=newPort1[6] && (newPort1[2:0]==3'b000 || newPort1[2]);
-  assign newIsFpB[2]=newPort2[6] && (newPort2[2:0]==3'b000 || newPort2[2]);
+  assign newIsFpB[0]=newPort0[6] && (pwh#(3)::cmpEQ(newPort0[2:0],3'b000) || newPort0[2]);
+  assign newIsFpB[1]=newPort1[6] && (pwh#(3)::cmpEQ(newPort1[2:0],3'b000) || newPort1[2]);
+  assign newIsFpB[2]=newPort2[6] && (pwh#(3)::cmpEQ(newPort2[2:0],3'b000) || newPort2[2]);
 
-  assign newIsVA[0]=newPort0[3] && (newPort0[2:0]==3'b010 || newPort0[2]);
-  assign newIsVA[1]=newPort1[3] && (newPort1[2:0]==3'b010 || newPort1[2]);
-  assign newIsVA[2]=newPort2[3] && (newPort2[2:0]==3'b010 || newPort2[2]);
+  assign newIsVA[0]=newPort0[3] && (pwh#(3)::cmpEQ(newPort0[2:0],3'b010) || newPort0[2]);
+  assign newIsVA[1]=newPort1[3] && (pwh#(3)::cmpEQ(newPort1[2:0],3'b010) || newPort1[2]);
+  assign newIsVA[2]=newPort2[3] && (pwh#(3)::cmpEQ(newPort2[2:0],3'b010) || newPort2[2]);
   
-  assign newIsVB[0]=newPort0[5] && (newPort0[2:0]==3'b000 || newPort0[2]);
-  assign newIsVB[1]=newPort1[5] && (newPort1[2:0]==3'b000 || newPort1[2]);
-  assign newIsVB[2]=newPort2[5] && (newPort2[2:0]==3'b000 || newPort2[2]);
+  assign newIsVB[0]=newPort0[5] && (pwh#(3)::cmpEQ(newPort0[2:0],3'b000) || newPort0[2]);
+  assign newIsVB[1]=newPort1[5] && (pwh#(3)::cmpEQ(newPort1[2:0],3'b000) || newPort1[2]);
+  assign newIsVB[2]=newPort2[5] && (pwh#(3)::cmpEQ(newPort2[2:0],3'b000) || newPort2[2]);
 
 `ifdef simulation
   rss_array rs_mod(

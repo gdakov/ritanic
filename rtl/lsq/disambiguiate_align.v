@@ -1673,7 +1673,7 @@ module lsq_req(
 
               threadB[write_addr_shr]<=write_thread_shr;
 
-              if (curB==0) curB[write_addr_shr[5:0]]=1'b1;
+              if (pwh#(32)::cmpEQ(curB,0)) curB[write_addr_shr[5:0]]=1'b1;
 
 
 	      

@@ -490,7 +490,7 @@ module addrcalccam(
 	  end else if (!rsStall) begin
 	      if (wen && ~doStep|cmore[1]) begin
 	            valid[0][write_addr]<=1'b1;
-		    if (vMask!=0&&write_addr==0) begin
+		    if (vMask!=0&&pwh#(32)::cmpEQ(write_addr,0)) begin
 		        vMaskN=8'b1;
 			vOn_next=1'b1;
                         if (doStep) vMask[read_addr]=1'b0;

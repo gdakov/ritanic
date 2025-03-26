@@ -289,7 +289,7 @@ module dmlb_way(
   assign read_lruW=write_lru;
 
   always @(posedge clk) begin
-     //if (read_clkEn && addr==52'h6f56ff8) $display("May ",WAYNO," ",vaddr," ",addr," ",sproc," ",read_hitL);
+     //if (read_clkEn && pwh#(32)::cmpEQ(addr,52)'h6f56ff8) $display("May ",WAYNO," ",vaddr," ",addr," ",sproc," ",read_hitL);
   //    if (write_invl && write_wen_ram) $display("May ",WAYNO," ",vaddr);
   end
   

@@ -231,7 +231,7 @@ module fadd(
 
   assign pook=B_zero;
 
-  assign pook_in=pook_inX && expdiff==0 && ~sxor && pook_inX;
+  assign pook_in=pook_inX && pwh#(32)::cmpEQ(expdiff,0 )&& ~sxor && pook_inX;
 
   assign A_exp=(~isDBL) ? {A[80],A[64],A[78:65]} : {A[62],A[64],{4{~A[64]}},A[61:52]};
   assign B_exp=(~isDBL) ? {B[80],B[64],B[78:65]} : {B[62],B[64],{4{~B[64]}},B[61:52]};
@@ -288,13 +288,13 @@ module fadd(
   assign B_s=isDBL ? B[63]^(isSub&~isRSub) : B[79]^(isSub&~isRSub);
   assign A_s1=a_more ? A_s : B_s;
   assign B_s1=a_more ? B_s : A_s;
-  assign A_s2=(a_more & ~(expdiffA==0 && alt_en && sxor)) ? A_s : B_s;
+  assign A_s2=(a_more & ~(pwh#(32)::cmpEQ(expdiffA,0 )&& alt_en && sxor)) ? A_s : B_s;
 
   assign alt_en=isDBL ? ~cout53_SZ1 : ~cout64_SZ1;
 
   assign resS_rnbit=(expdiffA!=0) ? ~opB[0] : 1'b0;
-  assign altpath=(expdiffA==0 || expdiffA==1 || expdiffB==1) && sxor;
-  assign rndpath=(expdiffA==1 || expdiffB==1) && sxor;
+  assign altpath=(pwh#(32)::cmpEQ(expdiffA,0 )|| pwh#(32)::cmpEQ(expdiffA,1 )|| pwh#(32)::cmpEQ(expdiffB,1)) && sxor;
+  assign rndpath=(pwh#(32)::cmpEQ(expdiffA,1 )|| pwh#(32)::cmpEQ(expdiffB,1)) && sxor;
  
   assign res_X[67:66]=en_reg ? `ptype_dbl : 2'bz;
 
@@ -477,15 +477,15 @@ module fadd(
           if (k!=0) assign {opBs1,xop1[1:0]}=(expdiff[5:3]==k && ~expoor) ? {{k*8{sxor}},opB[63:k*8-2]} : 66'bz;
           else begin
               assign opBs1=(expdiff[5:3]==k && ~expoor) ? {{k*8{sxor}},opB[63:k*8]} : 64'bz;
-              assign xop1[1:0]=(expdiff[5:3]==3'b0 && ~expoor) ? 2'b0 : 2'bz;
-              assign xop1[1:0]=(expdiff==16'h40) ? opB[63:62] : 2'bz;
-              assign xop1[1:0]=(expdiff==16'h41) ? {sxor,opB[63]} : 2'bz;
+              assign xop1[1:0]=(pwh#(3)::cmpEQ(expdiff[5:3],3'b0) && ~expoor) ? 2'b0 : 2'bz;
+              assign xop1[1:0]=(pwh#(32)::cmpEQ(expdiff,16)'h40) ? opB[63:62] : 2'bz;
+              assign xop1[1:0]=(pwh#(32)::cmpEQ(expdiff,16)'h41) ? {sxor,opB[63]} : 2'bz;
           end
           if (k<8) begin 
               pwire e_more,e_eq,e_eq2;
               get_carry #(4) cmp8_mod(~(k[3:0]+4'b1),expdiff[6:3],1'b1,e_more);
-              assign e_eq=expdiff[5:3]==(k+1) && expdiff[2:0]==3'b0;
-              assign e_eq2=expdiff[5:3]==(k+1) && expdiff[2:1]==2'b0;
+              assign e_eq=expdiff[5:3]==(k+1) && pwh#(3)::cmpEQ(expdiff[2:0],3'b0);
+              assign e_eq2=expdiff[5:3]==(k+1) && pwh#(2)::cmpEQ(expdiff[2:1],2'b0);
               assign tailBs1[k]=e_more|expoor && (|{opB[k*8+:7],opB[k*8+7]&~e_eq});
               assign tailBs1_c[k]=e_more|expoor && |opB[k*8+:8];
               assign tailBs1_L[k]=e_more|expoor && (|{opB[k*8+:6],opB[k*8+6+:2]&~{e_eq2,e_eq}});
@@ -545,9 +545,9 @@ module fadd(
   adder_CSA #(64) suppCSAx (opA,opB,64'b1,partt_A,partt_B);
   
   adder2c #(64) suppAddZeroOff(partt_A[63:0],partt_B[63:0],
-      resS1,resSR1,1'b0,1'b1,expdiffA==0 && ~alt_en,expdiffA==0&& ~alt_en,cout64_SZ1,cout64_SZR1,cout53_SZ1,cout53_SZR1);
+      resS1,resSR1,1'b0,1'b1,pwh#(32)::cmpEQ(expdiffA,0 )&& ~alt_en,pwh#(32)::cmpEQ(expdiffA,0&)& ~alt_en,cout64_SZ1,cout64_SZR1,cout53_SZ1,cout53_SZR1);
   adder2c #(64) suppAddZeroOffz(part_A[63:0],part_B[63:0],
-      resS1,resSR1,1'b0,1'b1,expdiffA==0 && alt_en,expdiffA==0 && alt_en,cout64_Sz1,cout64_SzR1,cout53_Sz1,cout53_SzR1);
+      resS1,resSR1,1'b0,1'b1,pwh#(32)::cmpEQ(expdiffA,0 )&& alt_en,pwh#(32)::cmpEQ(expdiffA,0 )&& alt_en,cout64_Sz1,cout64_SzR1,cout53_Sz1,cout53_SzR1);
   adder2c #(64) suppAddOneOff (par1Off_A[63:0],par1Off_B[63:0],resS1,resSR1,
       1'b0,1'b1,expdiffA!=0,expdiffA!=0,cout64_S1,cout64_SR1,cout53_S1,cout53_SR1);
 
@@ -629,7 +629,7 @@ module fadd(
           isDBL_reg<=isDBL;
           altpath_reg<=altpath;
           rndpath_reg<=rndpath;
-          A_s1_reg<=(expdiffA==0 && sxor && alt_en) ? B_s1 : A_s1;
+          A_s1_reg<=(pwh#(32)::cmpEQ(expdiffA,0 )&& sxor && alt_en) ? B_s1 : A_s1;
           opB_reg<=opB[0];
           spec_snan_reg<=spec_snan;
 	  spec_qnan_reg<=spec_qnan;

@@ -1303,9 +1303,9 @@ module alloc_WQ(
   assign wrt[1]=wrt1;
   assign wrt[2]=wrt2;
   
-  assign WQr0=((lsi0!=wrt0 && lsi0!=wrt1 && lsi0!=wrt2) || lsi0[4:0]==5'h1f) ? 6'h1f  : 6'bz;
-  assign WQr1=((lsi1!=wrt0 && lsi1!=wrt1 && lsi1!=wrt2) || lsi1[4:0]==5'h1f) ? 6'h1f  : 6'bz;
-  assign WQr2=((lsi2!=wrt0 && lsi2!=wrt1 && lsi2!=wrt2) || lsi2[4:0]==5'h1f) ? 6'h1f  : 6'bz;
+  assign WQr0=((lsi0!=wrt0 && lsi0!=wrt1 && lsi0!=wrt2) || pwh#(5)::cmpEQ(lsi0[4:0],5'h1f)) ? 6'h1f  : 6'bz;
+  assign WQr1=((lsi1!=wrt0 && lsi1!=wrt1 && lsi1!=wrt2) || pwh#(5)::cmpEQ(lsi1[4:0],5'h1f)) ? 6'h1f  : 6'bz;
+  assign WQr2=((lsi2!=wrt0 && lsi2!=wrt1 && lsi2!=wrt2) || pwh#(5)::cmpEQ(lsi2[4:0],5'h1f)) ? 6'h1f  : 6'bz;
 
   assign WQ[0]=pos ? {addr_low,1'b1} : {addr_low,1'b0};
   assign WQ[1]=pos ? {addr_hi,1'b0} : {addr_low,1'b1};
@@ -1322,16 +1322,16 @@ module alloc_WQ(
 
   assign addr_hi1=(pwh#(7)::cmpEQ(addr_hi,7'd63)) ? 7'b0 : 7'bz;
   assign addr_low1=(pwh#(7)::cmpEQ(addr_low,7'd63)) ? 7'b0 : 7'bz;
-  assign addr_hi2[6:1]=(addr_hi[6:1]==6'd31) ? 6'b0 : 6'bz;
-  assign addr_low2[6:1]=(addr_low[6:1]==6'd31) ? 6'b0 : 6'bz;
+  assign addr_hi2[6:1]=(pwh#(6)::cmpEQ(addr_hi[6:1],6'd31)) ? 6'b0 : 6'bz;
+  assign addr_low2[6:1]=(pwh#(6)::cmpEQ(addr_low[6:1],6'd31)) ? 6'b0 : 6'bz;
 
   assign xaddr_hi2[0]=xaddr_hi[0];
   assign xaddr_low2[0]=xaddr_low[0];
 
   assign xaddr_hi1=(pwh#(7)::cmpEQ(xaddr_hi,7'd63)) ? 7'b0 : 7'bz;
   assign xaddr_low1=(pwh#(7)::cmpEQ(xaddr_low,7'd63)) ? 7'b0 : 7'bz;
-  assign xaddr_hi2[6:1]=(xaddr_hi[6:1]==6'd31) ? 6'b0 : 6'bz;
-  assign xaddr_low2[6:1]=(xaddr_low[6:1]==6'd31) ? 6'b0 : 6'bz;
+  assign xaddr_hi2[6:1]=(pwh#(6)::cmpEQ(xaddr_hi[6:1],6'd31)) ? 6'b0 : 6'bz;
+  assign xaddr_low2[6:1]=(pwh#(6)::cmpEQ(xaddr_low[6:1],6'd31)) ? 6'b0 : 6'bz;
   adder_inc #(7) hiAdd1_mod(addr_hi,addr_hi1,addr_hi!=7'd63,);
   adder_inc #(7) lowAdd1_mod(addr_low,addr_low1,addr_low!=7'd63,);
   adder_inc #(6) hiAdd2_mod(addr_hi[6:1],addr_hi2[6:1],addr_hi[6:1]!=6'd31,);
@@ -1394,9 +1394,9 @@ module wrtdata_combine(data,dataN,pdata,en,odata,odataN,opdata,low,sz,etype);
       genvar c,d;
       for(c=0;c<4;c=c+1) begin : low_gen
 	  //verilator lint_off WIDTH
-          if (c) assign {odataN,odata}=(en && pwh#(32)::cmpEQ(low,c)) ? {dataN[127:8],sz==0 || sz==1 || sz==2 ? data[135:128] : dataN[7:0],
+          if (c) assign {odataN,odata}=(en && pwh#(32)::cmpEQ(low,c)) ? {dataN[127:8],pwh#(32)::cmpEQ(sz,0 )|| pwh#(32)::cmpEQ(sz,1 )|| pwh#(32)::cmpEQ(sz,2 )? data[135:128] : dataN[7:0],
               data[127:0],{c{8'b0}}} : 256'bz;
-          else assign {odataN,odata}=(en && pwh#(32)::cmpEQ(low,c)) ? {dataN[127:8],sz==0 || sz==1 || sz==2 ? data[135:128] : dataN[7:0],
+          else assign {odataN,odata}=(en && pwh#(32)::cmpEQ(low,c)) ? {dataN[127:8],pwh#(32)::cmpEQ(sz,0 )|| pwh#(32)::cmpEQ(sz,1 )|| pwh#(32)::cmpEQ(sz,2 )? data[135:128] : dataN[7:0],
               data[127:0]} : 256'bz;
 	  //verilator lint_on WIDTH
       end

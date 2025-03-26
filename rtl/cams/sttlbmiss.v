@@ -269,7 +269,7 @@ module wtmiss(
   wtmiss_ram ramA_mod(
   .clk(clk),
   .rst(rst),
-  .read_clkEn(enOut&&pause==0),
+  .read_clkEn(enOut&&pwh#(32)::cmpEQ(pause,0)),
   .read_addr(read_addr_d),
   .read_data({rdmiss[0],read_mop[0]}),
   .write_addr(inIt ? inIt_cnt : write_addr),
@@ -279,7 +279,7 @@ module wtmiss(
   wtmiss_ram ramB_mod(
   .clk(clk),
   .rst(rst),
-  .read_clkEn(enOut&&pause==0),
+  .read_clkEn(enOut&&pwh#(32)::cmpEQ(pause,0)),
   .read_addr(read_addr_d),
   .read_data({rdmiss[1],read_mop[1]}),
   .write_addr(inIt ? inIt_cnt : write_addr),
@@ -310,11 +310,11 @@ module wtmiss(
   assign mOp0_WQ_o=(enOut_reg|enOutNull) ?       read_mop_reg[0][`mOp2_WQ] : mOp0_WQ;
   assign mOp0_lsflag_o=(enOut_reg|enOutNull) ?   read_mop_reg[0][`mOp2_lsflag] : mOp0_lsflag;
   assign mOp0_en_o=enOut_reg ?   rdmiss_reg[0] & ~invalid[0][read_addr_reg] && 
-	 pause_reg==0 && ~except: 1'bz;
+	 pwh#(32)::cmpEQ(pause_reg,0 )&& ~except: 1'bz;
   assign mOp0_en_o=enOutNull ?   1'b0 : 1'bz;
   assign mOp0_en_o=~enOut_reg & ~enOutNull ? mOp0_en : 1'bz;
   assign mEx0_addr=RaddrMain[0];
-  assign mEx0_en=enOut & (pause==0) & rdmiss[0] & ~invalid[0][read_addr] & ~except;
+  assign mEx0_en=enOut & (pwh#(32)::cmpEQ(pause,0)) & rdmiss[0] & ~invalid[0][read_addr] & ~except;
  
   assign mOp1_thread_o=(enOut_reg|enOutNull) ?   read_mop_reg[1][`mOp2_thread] : mOp1_thread;
   assign mOp1_sz_o=(enOut_reg|enOutNull) ?       read_mop_reg[1][`mOp2_sz] : mOp1_sz;
@@ -332,11 +332,11 @@ module wtmiss(
   assign mOp1_WQ_o=(enOut_reg|enOutNull) ?       read_mop_reg[1][`mOp2_WQ] : mOp1_WQ;
   assign mOp1_lsflag_o=(enOut_reg|enOutNull) ?   read_mop_reg[1][`mOp2_lsflag] : mOp1_lsflag;
   assign mOp1_en_o=enOut_reg ?   rdmiss_reg[1] & ~invalid[0][read_addr_reg] &&
-	 pause_reg==0 && ~except : 1'bz;
+	 pwh#(32)::cmpEQ(pause_reg,0 )&& ~except : 1'bz;
   assign mOp1_en_o=enOutNull ?   1'b0 : 1'bz;
   assign mOp1_en_o=~enOut_reg & ~enOutNull ? mOp1_en : 1'bz;
   assign mEx1_addr=RaddrMain[1];
-  assign mEx1_en=enOut & (pause==0) & rdmiss[1] & ~invalid[0][read_addr] & ~except;
+  assign mEx1_en=enOut & (pwh#(32)::cmpEQ(pause,0)) & rdmiss[1] & ~invalid[0][read_addr] & ~except;
  
   assign RaddrMain[0]=read_mop[0][`mOp2_addrMain]; 
   assign RaddrMain[1]=read_mop[1][`mOp2_addrMain]; 
@@ -418,14 +418,14 @@ module wtmiss(
           enOut_reg<=1'b0;
           cnt_reg<=3'b0;
       end else begin
-          if (pause==0) cnt_reg<=cnt;
-          if (pause==0) stepW<={stepW[2:0],miss0|miss1|doSkip};
+          if (pwh#(32)::cmpEQ(pause,0)) cnt_reg<=cnt;
+          if (pwh#(32)::cmpEQ(pause,0)) stepW<={stepW[2:0],miss0|miss1|doSkip};
           if (miss0|miss1&&(~enOut||pause!=0)) begin
               doSkip<=1'b1;
               cnt<=cnt_plus;
               write_addr<=write_addr_d;
              // missP<=1'b1;
-              if (pause==0) enOut_reg<=enOut;
+              if (pwh#(32)::cmpEQ(pause,0)) enOut_reg<=enOut;
               if (pause!=0 && enOut) begin
                   if (pause[0]) begin
                       rdm_done[0]<=mlbreq_ack;
@@ -436,7 +436,7 @@ module wtmiss(
                   end
 	     
               end
-          end else if (miss0|miss1&&enOut&&pause==0) begin
+          end else if (miss0|miss1&&enOut&&pwh#(32)::cmpEQ(pause,0)) begin
               doSkip<=1'b1;
               write_addr<=write_addr_d;
               rdm_done<=2'b0;
@@ -444,7 +444,7 @@ module wtmiss(
               missQ<=~last_out;
               //missP<=1'b1;
               enOut_reg<=1'b1;
-          end else if ((pause==0) & enOut)begin
+          end else if ((pwh#(32)::cmpEQ(pause,0)) & enOut)begin
               if (last_out) cnt<=3'd0;
               if (last_out) stepW<=4'b0;
               if (last_out) doSkip<=1'b0;
@@ -469,7 +469,7 @@ module wtmiss(
                   rdm_xdone[1]<=1'b1;
               end
           end else begin
-              if (pause==0) enOut_reg<=enOut;
+              if (pwh#(32)::cmpEQ(pause,0)) enOut_reg<=enOut;
 	      else enOut_reg<=1'b0;
           end
           if (except) begin
@@ -507,7 +507,7 @@ module wtmiss(
       if (rst) begin
           read_addr<=2'b0;
       end else begin
-          if (enOut&&pause==0) read_addr<=read_addr_d;
+          if (enOut&&pwh#(32)::cmpEQ(pause,0)) read_addr<=read_addr_d;
       end
       if (rst) begin
           inIt<=1'b1;

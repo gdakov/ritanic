@@ -278,14 +278,14 @@ module addrcalc(
           pwire otherness;
           assign otherness=~(otherR_banks[p] & all_banks[p]);
         
-          if (INDEX==0) begin
+          if (pwh#(32)::cmpEQ(INDEX,0)) begin
               assign bit_confl[p]=otherness && ~other_flip|~(all_banks[p]&&other0_banks[p]|other1_banks[p]);
           end
-          if (INDEX==1) begin
+          if (pwh#(32)::cmpEQ(INDEX,1)) begin
               assign bit_confl[p]=other_flip ? otherness && ~(other1_banks[p]&all_banks[p]) :
                 otherness && ~(other0_banks[p]&all_banks[p]);
           end
-/*          if (INDEX==2) begin
+/*          if (pwh#(32)::cmpEQ(INDEX,2)) begin
               assign bit_confl[p]=(otherness && ~other_flip && !(other1_banks[p] & all_banks[p]))
                 ? 1'b1 : 1'bz;
               assign bit_confl[p]=(otherness && other_flip && !(other0_banks[p] & all_banks[p]))
@@ -295,7 +295,7 @@ module addrcalc(
           end*/
           assign mOp_banks[p]=(all_banks[p] & read_clkEn_reg) & bit_confl[p]; 
       end
-      if (INDEX==1) begin
+      if (pwh#(32)::cmpEQ(INDEX,1)) begin
         assign mOp_noBanks=~(mOp_banks|other0_banks|other1_banks|otherR_banks);
       end
 
@@ -303,44 +303,44 @@ module addrcalc(
  
 //  assign bankNextOff=5'd2; //##
 //  assign hasBankNext=1'b0;//##
-  assign hasIndex=op[7:6]==2'b01;
+  assign hasIndex=pwh#(2)::cmpEQ(op[7:6],2'b01);
   assign stepOverCmplx=|cmplxAddr[1:0];
   assign stepOverCmplx2=&cmplxAddr[1:0];
   assign bank0=cmplxAddr[6:2];
   assign mOp_bank0=bank0;
 
   assign mOp_rsBanks=all_banks & {32{mOp_rsEn}}; 
-  assign lastSz[1]=(opsize==1 && stepOver2) || (opsize==2 && stepOver) || (opsize==3 && ~stepOver);
-  assign lastSz[2]=opsize==3 && stepOver;
+  assign lastSz[1]=(pwh#(32)::cmpEQ(opsize,1 )&& stepOver2) || (pwh#(32)::cmpEQ(opsize,2 )&& stepOver) || (pwh#(32)::cmpEQ(opsize,3 )&& ~stepOver);
+  assign lastSz[2]=pwh#(32)::cmpEQ(opsize,3 )&& stepOver;
   assign lastSz[4:3]=2'b0;
-  assign lastSz[0]=(opsize==0) || (opsize==1 & ~stepOver2) || (opsize==2 & ~stepOver);  
-  assign mOp_split=(opsize==1) ?
+  assign lastSz[0]=(pwh#(32)::cmpEQ(opsize,0)) || (pwh#(32)::cmpEQ(opsize,1 )& ~stepOver2) || (pwh#(32)::cmpEQ(opsize,2 )& ~stepOver);  
+  assign mOp_split=(pwh#(32)::cmpEQ(opsize,1)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) && stepOver2 : 1'bz;
-  assign mOp_split=(opsize==2) ?
+  assign mOp_split=(pwh#(32)::cmpEQ(opsize,2)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) && stepOver : 1'bz;
-  assign mOp_split=(opsize==3) ?
+  assign mOp_split=(pwh#(32)::cmpEQ(opsize,3)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) || (pwh#(5)::cmpEQ(bank0,5'h1e) && stepOver) : 1'bz;
-  assign mOp_split=(opsize==4) ?
-    bank0[4:1]==4'hf || (pwh#(5)::cmpEQ(bank0,5'h1d) && stepOver2) : 1'bz;
-  assign mOp_split=(opsize==5||opsize==6) ?
-    bank0[4:2]==3'h7 && (bank0[1:0]!=0 || stepOver || opsize==6) : 1'bz;
-  assign mOp_split=(opsize==0) ? 1'b0 : 1'bz;
+  assign mOp_split=(pwh#(32)::cmpEQ(opsize,4)) ?
+    pwh#(4)::cmpEQ(bank0[4:1],4'hf) || (pwh#(5)::cmpEQ(bank0,5'h1d) && stepOver2) : 1'bz;
+  assign mOp_split=(pwh#(32)::cmpEQ(opsize,5|)|pwh#(32)::cmpEQ(opsize,6)) ?
+    pwh#(3)::cmpEQ(bank0[4:2],3'h7) && (bank0[1:0]!=0 || stepOver || pwh#(32)::cmpEQ(opsize,6)) : 1'bz;
+  assign mOp_split=(pwh#(32)::cmpEQ(opsize,0)) ? 1'b0 : 1'bz;
   
   assign mOp_skip_LDQ=~mlb_data[`dmlbData_wp] && ~mlb_data[`dmlbData_wp]|~addrNext[13];
   
   assign all_banks=banks0;
 
-  assign split=(opsize==1) ?
+  assign split=(pwh#(32)::cmpEQ(opsize,1)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) && stepOver2 : 1'bz;
-  assign split=(opsize==2) ?
+  assign split=(pwh#(32)::cmpEQ(opsize,2)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) && stepOver : 1'bz;
-  assign split=(opsize==3) ?
+  assign split=(pwh#(32)::cmpEQ(opsize,3)) ?
     pwh#(5)::cmpEQ(bank0,5'h1f) || (pwh#(5)::cmpEQ(bank0,5'h1e) && stepOver) : 1'bz;
-  assign split=(opsize==4) ?
-    bank0[4:1]==4'hf || (pwh#(5)::cmpEQ(bank0,5'h1d) && stepOver2) : 1'bz;
-  assign split=(opsize==5 || opsize==6) ?
-    bank0[4:2]==3'h7 && (bank0[1:0]!=0 || stepOver || opsize==6) : 1'bz;
-  assign split=(opsize==0) ? 1'b0 : 1'bz;
+  assign split=(pwh#(32)::cmpEQ(opsize,4)) ?
+    pwh#(4)::cmpEQ(bank0[4:1],4'hf) || (pwh#(5)::cmpEQ(bank0,5'h1d) && stepOver2) : 1'bz;
+  assign split=(pwh#(32)::cmpEQ(opsize,5 )|| pwh#(32)::cmpEQ(opsize,6)) ?
+    pwh#(3)::cmpEQ(bank0[4:2],3'h7) && (bank0[1:0]!=0 || stepOver || pwh#(32)::cmpEQ(opsize,6)) : 1'bz;
+  assign split=(pwh#(32)::cmpEQ(opsize,0)) ? 1'b0 : 1'bz;
 
   assign conflict=(((|(~bit_confl_reg))||mOp_type_reg[1]) && ~bus_hold_reg2 && 
     read_clkEn_reg2 && ~fault_cann_reg);
@@ -489,11 +489,11 @@ module addrcalc(
        /* verilator lint_off WIDTH */
        begin
           banks0[i]=pwh#(32)::cmpEQ(bank0,i) || 
-          ((opsize==6 || opsize==3 || opsize[2] || (stepOver && opsize==2) || 
-            (stepOver2 && opsize==1)) && bank0==((i-1)&5'h1f)) ||
-          (((opsize==3 && stepOver) || opsize[2] || opsize==6 ) && bank0==((i-2)&5'h1f)) || 
-          (((opsize==4 && stepOver2) || opsize==5 || opsize==6) && bank0==((i-3)&5'h1f)) ||
-          (((opsize==5 && stepOver) || opsize==6) && bank0==((i-4)&5'h1f)) || (opsize==7 && bank0[4:3]=={i[4:3],3'b0});
+          ((pwh#(32)::cmpEQ(opsize,6 )|| pwh#(32)::cmpEQ(opsize,3 )|| opsize[2] || (stepOver && pwh#(32)::cmpEQ(opsize,2)) || 
+            (stepOver2 && pwh#(32)::cmpEQ(opsize,1))) && bank0==((i-1)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(opsize,3 )&& stepOver) || opsize[2] || pwh#(32)::cmpEQ(opsize,6 )) && bank0==((i-2)&5'h1f)) || 
+          (((pwh#(32)::cmpEQ(opsize,4 )&& stepOver2) || pwh#(32)::cmpEQ(opsize,5 )|| pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-3)&5'h1f)) ||
+          (((pwh#(32)::cmpEQ(opsize,5 )&& stepOver) || pwh#(32)::cmpEQ(opsize,6)) && bank0==((i-4)&5'h1f)) || (pwh#(32)::cmpEQ(opsize,7 )&& bank0[4:3]=={i[4:3],3'b0});
         end
       /* verilator lint_on WIDTH */
     end
@@ -613,7 +613,7 @@ module addrcalc_get_shiftSize(op,shiftSize,sh2);
   output pwire [3:0] shiftSize;
   output pwire [1:0] sh2;
   always @* begin
-      if (op[7:6]==2'b01) begin
+      if (pwh#(2)::cmpEQ(op[7:6],2'b01)) begin
           case(op[9:8])
        2'd0: shiftSize=4'b1;
        2'd1: shiftSize=4'b10;

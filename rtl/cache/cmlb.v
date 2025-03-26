@@ -330,7 +330,7 @@ module cmlb(
       else if (init_pending)
         begin
           init_count<=init_count_d;
-          if (init_count==63)
+          if (pwh#(32)::cmpEQ(init_count,63))
             init_pending<=1'b0;
         end
         

@@ -552,7 +552,7 @@ module stq(
           assign chk5_match_first[b]=chk5_hasA[b] ? chk5_firstA[b] : chk5_firstB[b];
 	  assign chk5_match_has[b]=chk5_hasA[b] | chk5_hasB[b] | chk5_hasA[b+4] | chk5_hasB[b+4];
 
-	  if (b==0) begin : with_free
+	  if (pwh#(32)::cmpEQ(b,0)) begin : with_free
               stq_buf_L_array arr0_mod(
               clk,
               rst,
@@ -889,7 +889,7 @@ module stq(
 	      WLN1_WQ<=WLN1_WQ_inc;
 	      mask2[WLN0_WQ]=1'b0;
 	      mask[WLN0_WQ]=1'b0;
-	      if (WLN0_WQ==63) begin mask=nmask; nmask=64'b0; end
+	      if (pwh#(32)::cmpEQ(WLN0_WQ,63)) begin mask=nmask; nmask=64'b0; end
 	  end else if (!st_stall && WLN0_en) begin
 	      WLN0_WQ<=WLN1_WQ_inc;
 	      WLN1_WQ<=WLN1_WQ_inc2;
@@ -897,7 +897,7 @@ module stq(
 	      mask2[WLN1_WQ]=1'b0;
 	      mask[WLN0_WQ]=1'b0;
 	      mask[WLN1_WQ]=1'b0;
-	      if (WLN0_WQ==63 || WLN1_WQ==63) begin mask=nmask; nmask=64'b0; end
+	      if (pwh#(32)::cmpEQ(WLN0_WQ,63) || pwh#(32)::cmpEQ(WLN1_WQ,63)) begin mask=nmask; nmask=64'b0; end
 	  end
 	  if (excpt) begin
 	      mask=64'b0;

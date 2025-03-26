@@ -190,8 +190,8 @@ module ght_bank(
     
     assign read_addr=IP_BITS_reg ^ {GHT,8'b0};
 
-  //  assign start[1]=jumpMask[1:0]==2'b00;
-  //  assign start[0]=jumpMask[1:0]==2'b10 || pwh#(4)::cmpEQ(jumpMask,4'b1000);    
+  //  assign start[1]=pwh#(2)::cmpEQ(jumpMask[1:0],2'b00);
+  //  assign start[0]=pwh#(2)::cmpEQ(jumpMask[1:0],2'b10) || pwh#(4)::cmpEQ(jumpMask,4'b1000);    
 
     assign curJump[0]=(read_addr[7:6] ^ INDEX[2:1])==2'd0 && read_addr[0]==INDEX[0];
     assign curJump[1]=(read_addr[7:6] ^ INDEX[2:1])==2'd1 && read_addr[0]==INDEX[0];
@@ -201,19 +201,19 @@ module ght_bank(
     assign otherPred0X=(curJump[0] & ~AbtbPred[0] & jumpMask[0]) ? GHT0_sc : 2'bz;
     assign otherPred0X=(curJump[0] & AbtbPred[0] || ~jumpMask[0]) ? (Abtb_sc0|{GHTx_upper0,1'b0})&{1'b1,jumpMask[0]} : 2'bz;
     
-    assign otherPred1X=(curJump[1] & ~AbtbPred[1] && jumpMask[1:0]==2'b10) ? GHT1_sc[1] : 2'bz;
-    assign otherPred1X=(curJump[1] & ~AbtbPred[1] && jumpMask[1:0]==2'b11) ? GHT1_sc[0] : 2'bz;
+    assign otherPred1X=(curJump[1] & ~AbtbPred[1] && pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? GHT1_sc[1] : 2'bz;
+    assign otherPred1X=(curJump[1] & ~AbtbPred[1] && pwh#(2)::cmpEQ(jumpMask[1:0],2'b11)) ? GHT1_sc[0] : 2'bz;
     assign otherPred1X=(curJump[1] & AbtbPred[1] || ~jumpMask[1]) ? (Abtb_sc1|{GHTx_upper1,1'b0})&{1'b1,jumpMask[1]} : 2'bz;
     
-    assign otherPred2X=(curJump[2] & ~AbtbPred[2] && jumpMask[2:0]==3'b100) ? GHT2_sc[2] : 2'bz;
-    assign otherPred2X=(curJump[2] & ~AbtbPred[2] && jumpMask[2:0]==3'b110) ? GHT2_sc[1] : 2'bz;
-    assign otherPred2X=(curJump[2] & ~AbtbPred[2] && jumpMask[2:0]==3'b111) ? GHT2_sc[0] : 2'bz;
+    assign otherPred2X=(curJump[2] & ~AbtbPred[2] && pwh#(3)::cmpEQ(jumpMask[2:0],3'b100)) ? GHT2_sc[2] : 2'bz;
+    assign otherPred2X=(curJump[2] & ~AbtbPred[2] && pwh#(3)::cmpEQ(jumpMask[2:0],3'b110)) ? GHT2_sc[1] : 2'bz;
+    assign otherPred2X=(curJump[2] & ~AbtbPred[2] && pwh#(3)::cmpEQ(jumpMask[2:0],3'b111)) ? GHT2_sc[0] : 2'bz;
     assign otherPred2X=(curJump[2] & AbtbPred[2] || ~jumpMask[2]) ? (Abtb_sc2|{GHTx_upper2,1'b0})&{1'b1,jumpMask[2]} : 2'bz;
 
-    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && jumpMask[3:0]==4'b1000) ? GHT3_sc[3] : 2'bz;
-    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && jumpMask[3:0]==4'b1100) ? GHT3_sc[2] : 2'bz;
-    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && jumpMask[3:0]==4'b1110) ? GHT3_sc[1] : 2'bz;
-    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && jumpMask[3:0]==4'b1111) ? GHT3_sc[0] : 2'bz;
+    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1000)) ? GHT3_sc[3] : 2'bz;
+    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1100)) ? GHT3_sc[2] : 2'bz;
+    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1110)) ? GHT3_sc[1] : 2'bz;
+    assign otherPred3X=(curJump[3] & ~AbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1111)) ? GHT3_sc[0] : 2'bz;
     assign otherPred3X=(curJump[3] & AbtbPred[3]  || ~jumpMask[3]) ? (Abtb_sc3|{GHTx_upper3,1'b0})&{1'b1,jumpMask[3]} : 2'bz;
 
     assign AotherPred0=curJump[0] ?otherPred0X : 2'bz;
@@ -224,19 +224,19 @@ module ght_bank(
     assign otherPred0W=(curJump[0] & ~BbtbPred[0] & jumpMask[0]) ? GHT0_sc : 2'bz;
     assign otherPred0W=(curJump[0] & BbtbPred[0] || ~jumpMask[0]) ? (Bbtb_sc0|{GHTx_upper0,1'b0})&{1'b1,jumpMask[0]} : 2'bz;
     
-    assign otherPred1W=(curJump[1] & ~BbtbPred[1] && jumpMask[1:0]==2'b10) ? GHT1_sc[1] : 2'bz;
-    assign otherPred1W=(curJump[1] & ~BbtbPred[1] && jumpMask[1:0]==2'b11) ? GHT1_sc[0] : 2'bz;
+    assign otherPred1W=(curJump[1] & ~BbtbPred[1] && pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? GHT1_sc[1] : 2'bz;
+    assign otherPred1W=(curJump[1] & ~BbtbPred[1] && pwh#(2)::cmpEQ(jumpMask[1:0],2'b11)) ? GHT1_sc[0] : 2'bz;
     assign otherPred1W=(curJump[1] & BbtbPred[1] || ~jumpMask[1]) ? (Bbtb_sc1|{GHTx_upper1,1'b0})&{1'b1,jumpMask[1]} : 2'bz;
     
-    assign otherPred2W=(curJump[2] & ~BbtbPred[2] && jumpMask[2:0]==3'b100) ? GHT2_sc[2] : 2'bz;
-    assign otherPred2W=(curJump[2] & ~BbtbPred[2] && jumpMask[2:0]==3'b110) ? GHT2_sc[1] : 2'bz;
-    assign otherPred2W=(curJump[2] & ~BbtbPred[2] && jumpMask[2:0]==3'b111) ? GHT2_sc[0] : 2'bz;
+    assign otherPred2W=(curJump[2] & ~BbtbPred[2] && pwh#(3)::cmpEQ(jumpMask[2:0],3'b100)) ? GHT2_sc[2] : 2'bz;
+    assign otherPred2W=(curJump[2] & ~BbtbPred[2] && pwh#(3)::cmpEQ(jumpMask[2:0],3'b110)) ? GHT2_sc[1] : 2'bz;
+    assign otherPred2W=(curJump[2] & ~BbtbPred[2] && pwh#(3)::cmpEQ(jumpMask[2:0],3'b111)) ? GHT2_sc[0] : 2'bz;
     assign otherPred2W=(curJump[2] & BbtbPred[2] || ~jumpMask[2]) ? (Bbtb_sc2|{GHTx_upper2,1'b0})&{1'b1,jumpMask[2]} : 2'bz;
 
-    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && jumpMask[3:0]==4'b1000) ? GHT3_sc[3] : 2'bz;
-    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && jumpMask[3:0]==4'b1100) ? GHT3_sc[2] : 2'bz;
-    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && jumpMask[3:0]==4'b1110) ? GHT3_sc[1] : 2'bz;
-    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && jumpMask[3:0]==4'b1111) ? GHT3_sc[0] : 2'bz;
+    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1000)) ? GHT3_sc[3] : 2'bz;
+    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1100)) ? GHT3_sc[2] : 2'bz;
+    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1110)) ? GHT3_sc[1] : 2'bz;
+    assign otherPred3W=(curJump[3] & ~BbtbPred[3] && pwh#(4)::cmpEQ(jumpMask[3:0],4'b1111)) ? GHT3_sc[0] : 2'bz;
     assign otherPred3W=(curJump[3] & BbtbPred[3]  || ~jumpMask[3]) ? (Bbtb_sc3|{GHTx_upper3,1'b0})&{1'b1,jumpMask[3]} : 2'bz;
     
     assign BotherPred0=curJump[0] ?otherPred0W : 2'bz;
@@ -267,11 +267,11 @@ module ght_bank(
     assign GHTx_sc0=GHT0_sc;
     assign GHTx_sc1=jumpMask[0] ? GHT1_sc[0] : GHT1_sc[1];
     assign GHTx_sc2=jumpMask[0] ? GHT2_sc[0] : 2'bz;
-    assign GHTx_sc2=(jumpMask[1:0]==2'b10) ? GHT2_sc[1] : 2'bz;
+    assign GHTx_sc2=(pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? GHT2_sc[1] : 2'bz;
     assign GHTx_sc2=(!|jumpMask[1:0]) ? GHT2_sc[2] : 2'bz;
     assign GHTx_sc3=jumpMask[0] ? GHT3_sc[0] : 2'bz;
-    assign GHTx_sc3=(jumpMask[1:0]==2'b10) ? GHT3_sc[1] : 2'bz;
-    assign GHTx_sc3=(jumpMask[2:0]==3'b100) ? GHT3_sc[2] : 2'bz;
+    assign GHTx_sc3=(pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? GHT3_sc[1] : 2'bz;
+    assign GHTx_sc3=(pwh#(3)::cmpEQ(jumpMask[2:0],3'b100)) ? GHT3_sc[2] : 2'bz;
     assign GHTx_sc3=(!|jumpMask[2:0]) ? GHT3_sc[3] : 2'bz;
 
     assign GHTx_sc=curJump[0] ? GHTx_sc0 : 2'bz;
@@ -283,11 +283,11 @@ module ght_bank(
     assign GHTx_addr0=read_addr[15:8];
     assign GHTx_addr1=jumpMask[0] ? read1_addr[0] : read1_addr[1];
     assign GHTx_addr2=jumpMask[0] ? read2_addr[0] : 8'bz;
-    assign GHTx_addr2=(jumpMask[1:0]==2'b10) ? read2_addr[1] : 8'bz;
+    assign GHTx_addr2=(pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? read2_addr[1] : 8'bz;
     assign GHTx_addr2=(!|jumpMask[1:0]) ? read2_addr[2] : 8'bz;
     assign GHTx_addr3=jumpMask[0] ? read3_addr[0] : 8'bz;
-    assign GHTx_addr3=(jumpMask[1:0]==2'b10) ? read3_addr[1] : 8'bz;
-    assign GHTx_addr3=(jumpMask[2:0]==3'b100) ? read3_addr[2] : 8'bz;
+    assign GHTx_addr3=(pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? read3_addr[1] : 8'bz;
+    assign GHTx_addr3=(pwh#(3)::cmpEQ(jumpMask[2:0],3'b100)) ? read3_addr[2] : 8'bz;
     assign GHTx_addr3=(!|jumpMask[2:0]) ? read3_addr[3] : 8'bz;
 
     assign GHTx_addr=curJump[0] ? GHTx_addr0 : 8'bz;
@@ -305,11 +305,11 @@ module ght_bank(
     assign GHTx_upper0=upper0;
     assign GHTx_upper1=jumpMask[0] ? upper1 : upper0;
     assign GHTx_upper2=jumpMask[0] ? upper2 : 1'bz;
-    assign GHTx_upper2=(jumpMask[1:0]==2'b10) ? upper1 : 1'bz;
+    assign GHTx_upper2=(pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? upper1 : 1'bz;
     assign GHTx_upper2=(!|jumpMask[1:0]) ? upper0 : 1'bz;
     assign GHTx_upper3=jumpMask[0] ? upper3 : 1'bz;
-    assign GHTx_upper3=(jumpMask[1:0]==2'b10) ? upper2 : 1'bz;
-    assign GHTx_upper3=(jumpMask[2:0]==3'b100) ? upper1 : 1'bz;
+    assign GHTx_upper3=(pwh#(2)::cmpEQ(jumpMask[1:0],2'b10)) ? upper2 : 1'bz;
+    assign GHTx_upper3=(pwh#(3)::cmpEQ(jumpMask[2:0],3'b100)) ? upper1 : 1'bz;
     assign GHTx_upper3=(!|jumpMask[2:0]) ? upper0 : 1'bz;
 
     sel_ght_entry sel_mod(read_data,read_addr[15:8],upper0,GHT0_sc);

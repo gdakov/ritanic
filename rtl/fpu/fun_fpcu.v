@@ -451,7 +451,7 @@ module fun_fpu(
   assign do_jmp=do_jmp0 | u1_op_reg[17];
 
   generate
-    if (INDEX==2) fperm #(0) fperm1CL_mod(
+    if (pwh#(32)::cmpEQ(INDEX,2)) fperm #(0) fperm1CL_mod(
         .clk(clk),
         .rst(rst),
         .en(~(H? fxFCADD_dbl_reg2:fxFCADD_dblext_reg2)&~fxFCADD_sn_reg2),
@@ -484,19 +484,19 @@ module fun_fpu(
       else assign gfDataBFL[1]=u1_op_reg[8] ? {uu_B1[70+15:70],u1_Bx} : uu_B1;
       if (H) assign gfDataBFL[0]=u1_op_reg[9] ? u1_Bx : uu_B2;
       else assign gfDataBFL[0]=u1_op_reg[8] ? {uu_B2[70+15:70],u1_Bx} : uu_B2;
-      if (INDEX==0) begin
+      if (pwh#(32)::cmpEQ(INDEX,0)) begin
 	      assign FUF4={FOOF_reg[0][68+15:68],^FOOF_reg[0][68+15:68],^FOOF_reg[0][67:0],FOOF_reg[0][67:0]};
 	      assign FUF7=isXTRA_reg2 ? xtra2_reg : 
                 {FOOF_reg[1][68+15:68],^FOOF_reg[1][68+15:68],^FOOF_reg[1][67:0],FOOF_reg[1][67:0]};
               assign FUF4X={16'b0,1'b0,^xtra2_reg[67:0],xtra2_reg[67:0]};
       end
-      if (INDEX==1) begin
+      if (pwh#(32)::cmpEQ(INDEX,1)) begin
 	      assign FUF5={FOOF_reg[0][68+15:68],^FOOF_reg[0][68+15:68],^FOOF_reg[0][67:0],FOOF_reg[0][67:0]};
 	      assign FUF8=isXTRA_reg2 ? xtra2_reg : 
                 {FOOF_reg[1][68+15:68],^FOOF_reg[1][68+15:68],^FOOF_reg[1][67:0],FOOF_reg[1][67:0]};
               assign FUF5X={16'b0,1'b0,^xtra2_reg[67:0],xtra2_reg[67:0]};
       end
-      if (INDEX==2) begin
+      if (pwh#(32)::cmpEQ(INDEX,2)) begin
 	      assign FUF6=|ALT_INP_reg ? {S+SIMD_WIDTH{1'BZ}} : 
                 {FOOF_reg[0][68+15:68],^FOOF_reg[0][68+15:68],^FOOF_reg[0][67:0],FOOF_reg[0][67:0]};
 	      assign FUF6=ALT_INP_reg[0] ? ALTDATA0 : {S+SIMD_WIDTH{1'BZ}};

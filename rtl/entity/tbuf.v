@@ -92,7 +92,7 @@ module tbuf_ram1(
 
   LFSR_16_6 #(init_lfsr) rand_mod(clk,rst,data_rand);
 
-  assign match=!write_cond || data_rand[1] || data_rand[1:0]==2'b0;
+  assign match=!write_cond || data_rand[1] || pwh#(2)::cmpEQ(data_rand[1:0],2'b0);
 
   always @(posedge clk)
     begin
@@ -184,7 +184,7 @@ module tbuf_ram_block(
   read_data[28:0],
   write_addr,
   write_data[28:0],
-  write_wen&&ioen==15
+  write_wen&&pwh#(32)::cmpEQ(ioen,15)
   );
 
   tbuf_ram1 ram10_mod(
@@ -236,7 +236,7 @@ module tbuf_ram_block(
   read_data[DATA_WIDTH-1:29+4*63],
   write_addr,
   {1'b0,write_data[DATA_WIDTH-1:29+4*63]},
-  write_wen&&ioen==15
+  write_wen&&pwh#(32)::cmpEQ(ioen,15)
   );
 endmodule
 
@@ -2024,8 +2024,8 @@ module tbuf(
   assign jump3_jmask=jump_mask3;
  
   assign jump_mask=(taken_reg[0] && ~except_jmask_en_reg) ? jump_mask0_reg : 4'bz;
-  assign jump_mask=(taken_reg[1:0]==2'b10 && ~except_jmask_en_reg) ? jump_mask1_reg : 4'bz;
-  assign jump_mask=(taken_reg[2:0]==3'b100 && ~except_jmask_en_reg) ? jump_mask2_reg : 4'bz;
+  assign jump_mask=(pwh#(2)::cmpEQ(taken_reg[1:0],2'b10) && ~except_jmask_en_reg) ? jump_mask1_reg : 4'bz;
+  assign jump_mask=(pwh#(3)::cmpEQ(taken_reg[2:0],3'b100) && ~except_jmask_en_reg) ? jump_mask2_reg : 4'bz;
   assign jump_mask=(pwh#(4)::cmpEQ(taken_reg,4'b1000) && ~except_jmask_en_reg) ? jump_mask3_reg : 4'bz;
   assign jump_mask=(pwh#(4)::cmpEQ(taken_reg,4'b0) && ~except_jmask_en_reg) ? 4'hf : 4'bz;
   assign jump_mask=(except_jmask_en_reg) ? except_jmask_reg : 4'bz;
