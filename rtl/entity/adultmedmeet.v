@@ -1168,8 +1168,8 @@ module smallInstr_decoder(
           prB[12]={instr[17],instr[11:8]};
           prT[12]=instr[16:12];
       end
-      if (poperation[12][5:1]==5'h16) begin poperation[12][7:0]=`op_cax; poperation[12][9:8]=2'b0; pport[12]=PORT_ALU; end
-      if (poperation[12][5:1]==5'h17 && poperation[12][0]) perror[19]=1'b1;
+      if (pwh#(5)::cmpEQ(poperation[12][5:1],5'h16)) begin poperation[12][7:0]=`op_cax; poperation[12][9:8]=2'b0; pport[12]=PORT_ALU; end
+      if (pwh#(5)::cmpEQ(poperation[12][5:1],5'h17) && poperation[12][0]) perror[19]=1'b1;
 
 
       trien[13]=magic[0] & isBaseIndexLoadStore;
@@ -1207,8 +1207,8 @@ module smallInstr_decoder(
       prA_use[13]=1'b1;
       pisIPRel[13]=1'b0;//possible use of size 6x
       if (|poperation[13][9:8] && ~poperation[13][6]) perror[13]=1;
-      if (poperation[13][5:1]==5'h16) begin poperation[13][7:0]=`op_cax; pport[13]=PORT_ALU; end
-      if (poperation[13][5:1]==5'h17 && poperation[13][0]) perror[19]=1'b1;
+      if (pwh#(5)::cmpEQ(poperation[13][5:1],5'h16)) begin poperation[13][7:0]=`op_cax; pport[13]=PORT_ALU; end
+      if (pwh#(5)::cmpEQ(poperation[13][5:1],5'h17) && poperation[13][0]) perror[19]=1'b1;
       if (riscmove) perror[13]=1;
       
       trien[14]=magic[0] & isCmov;//
@@ -1358,7 +1358,7 @@ module smallInstr_decoder(
       poperation[17][12]=instr[16:12]==15;
       prB[17]=instr[16:12];
       if (opcode_main[7]|opcode_main[0] && instr[11]) perror[17]=1;          
-      if (isBaseSpecStore && poperation[17][5:1]==5'h17) begin
+      if (isBaseSpecStore && pwh#(5)::cmpEQ(poperation[17][5:1],5'h17)) begin
           poperation[17][5:0]=6'h20;
           poperation[17][7]=1'b1; //says it sets flags!
           prAlloc[17]=1'b0;
@@ -1394,7 +1394,7 @@ module smallInstr_decoder(
           prC[18]={1'b1,INDEX[3:0]+4'd1};
           prC_use[18]=prT_use[18];
           prC_useF[18]=prT_useF[18];
-      if (isBaseIndexSpecStore && poperation[18][5:1]==5'h17) begin
+      if (isBaseIndexSpecStore && pwh#(5)::cmpEQ(poperation[18][5:1],5'h17)) begin
           poperation[18][5:0]=6'h20;
           poperation[18][7]=1'b1; //says it sets flags!
           prAlloc[18]=1'b0;
