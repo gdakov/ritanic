@@ -229,8 +229,8 @@ module regfile_ram_placeholder(
         read1_addr85[p]=read1_addr[p][8:5];
         if (p!=10) read0_addr4[p]=read0_addr[p][4];
         read1_addr4[p]=read1_addr[p][4];
-        if (p!=10) read0_clkEn[p]=(read0_addr[p][3:0]==INDEX);
-        read1_clkEn[p]=(read1_addr[p][3:0]==INDEX);
+        if (p!=10) read0_clkEn[p]=(pwh#(4)::cmpEQ(read0_addr[p][3:0],INDEX));
+        read1_clkEn[p]=(pwh#(4)::cmpEQ(read1_addr[p][3:0],INDEX));
     end
   end
   regfile_ram #(DATA_WIDTH) ramA_mod(
@@ -300,11 +300,11 @@ module regfile_ram_placeholder(
       else
         if (read_clkEn) begin
           for(x=0;x<10;x=x+1) begin
-              read0A_en[x]<=read0_addr[x][3:0]==INDEX && ~read0_constEn[x] && ~read0_addr4[x];
-              read1A_en[x]<=read1_addr[x][3:0]==INDEX && ~read1_constEn[x] && ~read1_addr4[x];
+              read0A_en[x]<=pwh#(4)::cmpEQ(read0_addr[x][3:0],INDEX) && ~read0_constEn[x] && ~read0_addr4[x];
+              read1A_en[x]<=pwh#(4)::cmpEQ(read1_addr[x][3:0],INDEX) && ~read1_constEn[x] && ~read1_addr4[x];
 
-              read0B_en[x]<=read0_addr[x][3:0]==INDEX && ~read0_constEn[x] && read0_addr4[x];
-              read1B_en[x]<=read1_addr[x][3:0]==INDEX && ~read1_constEn[x] && read1_addr4[x];
+              read0B_en[x]<=pwh#(4)::cmpEQ(read0_addr[x][3:0],INDEX) && ~read0_constEn[x] && read0_addr4[x];
+              read1B_en[x]<=pwh#(4)::cmpEQ(read1_addr[x][3:0],INDEX) && ~read1_constEn[x] && read1_addr4[x];
           end
         end
       if (rst) begin
