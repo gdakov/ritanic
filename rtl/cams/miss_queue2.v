@@ -955,7 +955,7 @@ module missQ(
  
   assign read_thread={2'b0,read_mop[3][`mOp1_thr],read_mop[2][`mOp1_thr],read_mop[1][`mOp1_thr],read_mop[0][`mOp1_thr]};
 
-  assign thrinhibitconfl={2'b0,{4{validR[read_addr]==1'b0}}}; 
+  assign thrinhibitconfl={2'b0,{4{pwh#(1)::cmpEQ(validR[read_addr],1'b0)}}}; 
  
   assign nowfl=now_flushing;
 

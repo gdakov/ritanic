@@ -43,21 +43,21 @@ module msiq_buf(
 
   pwire [36:0] addr;
 
-  assign chk0_smpc=(chk0_data[`lsaddr_addrE]==addr[36:1] && chk0_en && 
+  assign chk0_smpc=(pwh#(36)::cmpEQ(chk0_data[`lsaddr_addrE],addr[36:1]) && chk0_en && 
     ~chk0_data[`lsaddr_odd] | chk0_data[`lsaddr_split] && ~addr[0]) |
-    (chk0_data[`lsaddr_addrO]==addr[36:1] && chk0_en && 
+    (pwh#(36)::cmpEQ(chk0_data[`lsaddr_addrO],addr[36:1]) && chk0_en && 
      chk0_data[`lsaddr_odd] | chk0_data[`lsaddr_split] && addr[0]);
-  assign chk1_smpc=(chk1_data[`lsaddr_addrE]==addr[36:1] && chk1_en && 
+  assign chk1_smpc=(pwh#(36)::cmpEQ(chk1_data[`lsaddr_addrE],addr[36:1]) && chk1_en && 
     ~chk1_data[`lsaddr_odd] | chk1_data[`lsaddr_split] && ~addr[0]) |
-    (chk1_data[`lsaddr_addrO]==addr[36:1] && chk1_en && 
+    (pwh#(36)::cmpEQ(chk1_data[`lsaddr_addrO],addr[36:1]) && chk1_en && 
      chk1_data[`lsaddr_odd] | chk1_data[`lsaddr_split] && addr[0]);
-  assign chk2_smpc=(chk2_data[`lsaddr_addrE]==addr[36:1] && chk2_en && 
+  assign chk2_smpc=(pwh#(36)::cmpEQ(chk2_data[`lsaddr_addrE],addr[36:1]) && chk2_en && 
     ~chk2_data[`lsaddr_odd] | chk2_data[`lsaddr_split] && ~addr[0]) |
-    (chk2_data[`lsaddr_addrO]==addr[36:1] && chk2_en && 
+    (pwh#(36)::cmpEQ(chk2_data[`lsaddr_addrO],addr[36:1]) && chk2_en && 
      chk2_data[`lsaddr_odd] | chk2_data[`lsaddr_split] && addr[0]);
-  assign chk3_smpc=(chk3_data[`lsaddr_addrE]==addr[36:1] && chk3_en && 
+  assign chk3_smpc=(pwh#(36)::cmpEQ(chk3_data[`lsaddr_addrE],addr[36:1]) && chk3_en && 
     ~chk3_data[`lsaddr_odd] | chk3_data[`lsaddr_split] && ~addr[0]) |
-    (chk3_data[`lsaddr_addrO]==addr[36:1] && chk3_en && 
+    (pwh#(36)::cmpEQ(chk3_data[`lsaddr_addrO],addr[36:1]) && chk3_en && 
      chk3_data[`lsaddr_odd] | chk3_data[`lsaddr_split] && addr[0]);
 
   always @(posedge clk) begin
