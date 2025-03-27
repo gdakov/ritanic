@@ -488,12 +488,12 @@ module rat_flags(
         newR0,newR1,newR2,newR3,newR4,newR5,newR6,newR7,newR8,
         newU0,newU1,newU2,newU3,newU4,newU5,newU6,newU7,newU8
         );
-        assign read_data[k]=(read_addr_reg[k]==4'he || read_addr_reg[k]==4'hd) ?
+        assign read_data[k]=(pwh#(4)::cmpEQ(read_addr_reg[k],4'he) || pwh#(4)::cmpEQ(read_addr_reg[k],4'hd)) ?
           read_data_buf : 'z;
-        assign read_fun[k]=(read_addr_reg[k]==4'he || read_addr_reg[k]==4'hd) ?
+        assign read_fun[k]=(pwh#(4)::cmpEQ(read_addr_reg[k],4'he) || pwh#(4)::cmpEQ(read_addr_reg[k],4'hd)) ?
           read_fun_buf : 'z;
-        assign read_retired[k]=(read_addr_reg[k]==4'he) ? read_retired_buf : 1'BZ;
-        assign read_retired[k]=(read_addr_reg[k]==4'hd) ? 1'b1 : 1'BZ;
+        assign read_retired[k]=(pwh#(4)::cmpEQ(read_addr_reg[k],4'he)) ? read_retired_buf : 1'BZ;
+        assign read_retired[k]=(pwh#(4)::cmpEQ(read_addr_reg[k],4'hd)) ? 1'b1 : 1'BZ;
     end
 
   endgenerate

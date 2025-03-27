@@ -858,8 +858,8 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           assign jmp_moff[k]=jmp_magic[k][0] ? 4'd1 : 4'bz;
           assign jmp_moff[k]=(jmp_magic[k][1:0]==2'b10) ? 4'd2 : 4'bz;
           assign jmp_moff[k]=(jmp_magic[k][2:0]==3'b100) ? 4'd3 : 4'bz;
-          assign jmp_moff[k]=(jmp_magic[k][3:0]==4'b1000) ? 4'd4 : 4'bz;
-          assign jmp_moff[k]=(jmp_magic[k][3:0]==4'b0) ? 4'd5 : 4'bz;
+          assign jmp_moff[k]=(pwh#(4)::cmpEQ(jmp_magic[k][3:0],4'b1000)) ? 4'd4 : 4'bz;
+          assign jmp_moff[k]=(pwh#(4)::cmpEQ(jmp_magic[k][3:0],4'b0)) ? 4'd5 : 4'bz;
           
           assign last_off=taken[k] ? btbx_joff[k] : 4'bz;
           
@@ -902,21 +902,21 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           assign halt_d[1]=isJ[0] ? pre_jbefore[j] && jdec_halt[1] : 1'bz
           assign halt_d[2]=isJ[0] ? pre_jbefore[j] && jdec_halt[2] : 1'bz
           assign halt_d[3]=isJ[0] ? pre_jbefore[j] && jdec_halt[3] : 1'bz
-          if (j>1) assign pre_other[j+1][`instrQ_nop]=(isJ[0] && jdec_cleave[0]==2'd1) ||
-            (isJ[1] && jdec_cleave[1]==2'd1) || (isJ[2] && jdec_cleave[2]==2'd1) ||
-            (isJ[3] && jdec_cleave[3]==2'd1) || (INSN[j-1].isJ[0] && jdec_cleave[0]==2'd1) ||
-            (INSN[j-1].isJ[1] && jdec_cleave[1]==2'd1) || (INSN[j-1].isJ[2] && jdec_cleave[2]==2'd1) ||
-            (INSN[j-1].isJ[3] && jdec_cleave[3]==2'd1) || || (INSN[j-2].isJ[0] && jdec_cleave[0]==2'd1) ||
-            (INSN[j-2].isJ[1] && jdec_cleave[1]==2'd1) || (INSN[j-2].isJ[2] && jdec_cleave[2]==2'd1) ||
-            (INSN[j-2].isJ[3] && jdec_cleave[3]==2'd1);
-          else if (j>0) assign pre_other[j+1][`instrQ_nop]=(isJ[0] && jdec_cleave[0]==2'd1) ||
-            (isJ[1] && jdec_cleave[1]==2'd1) || (isJ[2] && jdec_cleave[2]==2'd1) ||
-            (isJ[3] && jdec_cleave[3]==2'd1) || (INSN[j-1].isJ[0] && jdec_cleave[0]==2'd1) ||
-            (INSN[j-1].isJ[1] && jdec_cleave[1]==2'd1) || (INSN[j-1].isJ[2] && jdec_cleave[2]==2'd1) ||
-            (INSN[j-1].isJ[3] && jdec_cleave[3]==2'd1);
-          else assign pre_other[j+1][`instrQ_nop]=(isJ[0] && jdec_cleave[0]==2'd1) ||
-            (isJ[1] && jdec_cleave[1]==2'd1) || (isJ[2] && jdec_cleave[2]==2'd1) ||
-            (isJ[3] && jdec_cleave[3]==2'd1);
+          if (j>1) assign pre_other[j+1][`instrQ_nop]=(isJ[0] && pwh#(2)::cmpEQ(jdec_cleave[0],2'd1)) ||
+            (isJ[1] && pwh#(2)::cmpEQ(jdec_cleave[1],2'd1)) || (isJ[2] && pwh#(2)::cmpEQ(jdec_cleave[2],2'd1)) ||
+            (isJ[3] && pwh#(2)::cmpEQ(jdec_cleave[3],2'd1)) || (INSN[j-1].isJ[0] && pwh#(2)::cmpEQ(jdec_cleave[0],2'd1)) ||
+            (INSN[j-1].isJ[1] && pwh#(2)::cmpEQ(jdec_cleave[1],2'd1)) || (INSN[j-1].isJ[2] && pwh#(2)::cmpEQ(jdec_cleave[2],2'd1)) ||
+            (INSN[j-1].isJ[3] && pwh#(2)::cmpEQ(jdec_cleave[3],2'd1)) || || (INSN[j-2].isJ[0] && pwh#(2)::cmpEQ(jdec_cleave[0],2'd1)) ||
+            (INSN[j-2].isJ[1] && pwh#(2)::cmpEQ(jdec_cleave[1],2'd1)) || (INSN[j-2].isJ[2] && pwh#(2)::cmpEQ(jdec_cleave[2],2'd1)) ||
+            (INSN[j-2].isJ[3] && pwh#(2)::cmpEQ(jdec_cleave[3],2'd1));
+          else if (j>0) assign pre_other[j+1][`instrQ_nop]=(isJ[0] && pwh#(2)::cmpEQ(jdec_cleave[0],2'd1)) ||
+            (isJ[1] && pwh#(2)::cmpEQ(jdec_cleave[1],2'd1)) || (isJ[2] && pwh#(2)::cmpEQ(jdec_cleave[2],2'd1)) ||
+            (isJ[3] && pwh#(2)::cmpEQ(jdec_cleave[3],2'd1)) || (INSN[j-1].isJ[0] && pwh#(2)::cmpEQ(jdec_cleave[0],2'd1)) ||
+            (INSN[j-1].isJ[1] && pwh#(2)::cmpEQ(jdec_cleave[1],2'd1)) || (INSN[j-1].isJ[2] && pwh#(2)::cmpEQ(jdec_cleave[2],2'd1)) ||
+            (INSN[j-1].isJ[3] && pwh#(2)::cmpEQ(jdec_cleave[3],2'd1));
+          else assign pre_other[j+1][`instrQ_nop]=(isJ[0] && pwh#(2)::cmpEQ(jdec_cleave[0],2'd1)) ||
+            (isJ[1] && pwh#(2)::cmpEQ(jdec_cleave[1],2'd1)) || (isJ[2] && pwh#(2)::cmpEQ(jdec_cleave[2],2'd1)) ||
+            (isJ[3] && pwh#(2)::cmpEQ(jdec_cleave[3],2'd1));
           assign pre_other[j][`instrQ_magic]=~pre_magic_reg[j];
           assign pre_other[j][`instrQ_srcIPOff]=read_data_reg[255] && pwh#(4)::cmpEQ(cc_read_IP_reg3[4:1],4'b0) ? {cc_base_off_reg,pre_off_reg[j]}: 
               {cc_base_off,pre_off_reg[j]};
@@ -1494,7 +1494,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   .tgt3O(btb_tgt3),
   .write_off0(jmp_off_reg[0]),.write_off1(jmp_off_reg[1]),.write_off2(jmp_off_reg[2]),.write_off3(jmp_off_reg[3]),
   .write_cond(~{jdec_type[3][4],jdec_type[2][4],jdec_type[1][4],jdec_type[0][4]}&{4{(instr_reg[0][15:0]!=16'b11110011 || !magic_reg[0][0])&~vecmode_reg3}}),
-  .write_indir({jdec_type[3]==5'h11,jdec_type[2]==5'h11,jdec_type[1]==5'h11,jdec_type[0]==5'h11}),
+  .write_indir({pwh#(5)::cmpEQ(jdec_type[3],5'h11),pwh#(5)::cmpEQ(jdec_type[2],5'h11),pwh#(5)::cmpEQ(jdec_type[1],5'h11),pwh#(5)::cmpEQ(jdec_type[0],5'h11)}),
   .write_init0((jini0|vecmode_reg3)&jdec_is_jmp[0]&~jdec_cntk[0]),
   .write_init1((jini1|vecmode_reg3)&jdec_is_jmp[1]&~jdec_cntk[1]),
   .write_init2((jini2|vecmode_reg3)&jdec_is_jmp[2]&~jdec_cntk[2]),
@@ -2231,7 +2231,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           if (miss_seq && ~cc_read_hit && IP_chg_reg3) miss_slot<=miss_slot_next;
    //       link_IP<=link_IP_d;
           mlb_data_reg<=mlb_data;
-          IP_chg<=(pwh#(2)::cmpEQ(cc_read_IP[6:5],2'b11)) & do_seq || (cc_read_IP[6]==1'b1) & do_seq_miss || miss_recover;
+          IP_chg<=(pwh#(2)::cmpEQ(cc_read_IP[6:5],2'b11)) & do_seq || (pwh#(1)::cmpEQ(cc_read_IP[6],1'b1)) & do_seq_miss || miss_recover;
           IP_chg_reg<=IP_chg;
           IP_chg_reg2<=IP_chg_reg;
           IP_chg_reg3<=IP_chg_reg2;

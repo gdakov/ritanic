@@ -548,7 +548,7 @@ module fun_fpsu(
              fxFADD_ext=(pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_addEE) ||
                 pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subEE)) && u1_en_reg[3];
               fxFADD_dblext=fxFADD_dbl||fxFADD_ext;
-	      fxFADD_int=u1_en_reg[2] && u1_op_reg[5]==1'b0;
+	      fxFADD_int=u1_en_reg[2] && pwh#(1)::cmpEQ(u1_op_reg[5],1'b0);
 	      fxFADD_sub[0]=pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDL) ||
 	        pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDH) ||
                 pwh#(8)::cmpEQ(u1_op_reg[7:0],`fop_subDP) ||

@@ -1998,8 +1998,8 @@ module decoder(
           adder #(9) srcAddA1_mod({afterTick[k],dec_srcIPOff[k]},9'd1,dec_srcIPOffA[k],1'b0,~dec_magic[k][0],,,,);
           adder #(9) srcAddA2_mod({afterTick[k],dec_srcIPOff[k]},9'd2,dec_srcIPOffA[k],1'b0,dec_magic[k][1:0]==2'b01,,,,);
           adder #(9) srcAddA3_mod({afterTick[k],dec_srcIPOff[k]},9'd3,dec_srcIPOffA[k],1'b0,dec_magic[k][2:0]==3'b011,,,,);
-          adder #(9) srcAddA4_mod({afterTick[k],dec_srcIPOff[k]},9'd4,dec_srcIPOffA[k],1'b0,dec_magic[k][3:0]==4'b0111,,,,);
-          adder #(9) srcAddA5_mod({afterTick[k],dec_srcIPOff[k]},9'd5,dec_srcIPOffA[k],1'b0,dec_magic[k][3:0]==4'b1111,,,,);
+          adder #(9) srcAddA4_mod({afterTick[k],dec_srcIPOff[k]},9'd4,dec_srcIPOffA[k],1'b0,pwh#(4)::cmpEQ(dec_magic[k][3:0],4'b0111),,,,);
+          adder #(9) srcAddA5_mod({afterTick[k],dec_srcIPOff[k]},9'd5,dec_srcIPOffA[k],1'b0,pwh#(4)::cmpEQ(dec_magic[k][3:0],4'b1111),,,,);
 
           
           adder #(44) srcXAdd_mod({34'b0,dec_srcIPOffA_reg[k],1'b0   },{dec_constant_reg[k][43:0]},dec_srcIPOffx[k],1'b0, 1'b1,,,,);

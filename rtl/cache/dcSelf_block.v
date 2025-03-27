@@ -1176,10 +1176,10 @@ module dcache1(
 
   LFSR16_6 rnd_mod(clk,rst,insert_rand);
   
-  assign read_pbit0=read_pbit0P_reg2|{1'b0,|emsr && read_sz_reg[0]==5'd19};
-  assign read_pbit1=read_pbit1P_reg2|{1'b0,|emsr && read_sz_reg[1]==5'd19};
-  assign read_pbit2=read_pbit2P_reg2|{1'b0,|emsr && read_sz_reg[2]==5'd19};
-  assign read_pbit3=read_pbit3P_reg2|{1'b0,read3_pf_reg} | {1'b0,|emsr && read_sz_reg[3]==5'd19};
+  assign read_pbit0=read_pbit0P_reg2|{1'b0,|emsr && pwh#(5)::cmpEQ(read_sz_reg[0],5'd19)};
+  assign read_pbit1=read_pbit1P_reg2|{1'b0,|emsr && pwh#(5)::cmpEQ(read_sz_reg[1],5'd19)};
+  assign read_pbit2=read_pbit2P_reg2|{1'b0,|emsr && pwh#(5)::cmpEQ(read_sz_reg[2],5'd19)};
+  assign read_pbit3=read_pbit3P_reg2|{1'b0,read3_pf_reg} | {1'b0,|emsr && pwh#(5)::cmpEQ(read_sz_reg[3],5'd19)};
   
   assign read_hitCl0Q=read_hit0_way[0] | read_hit0_way[1] | read_hit0_way[2] | 
     read_hit0_way[3] | read_hit0_way[4] | read_hit0_way[5] |  
@@ -1237,10 +1237,10 @@ module dcache1(
   assign read_dataA2=read_dataA[2];
   assign read_dataA3=read_dataA[3];
 
-  assign read_dataX0={128{read_sz_reg[0][4:1]==4'd6 || read_sz_reg[0]==5'd14}}&rddata2[0];
-  assign read_dataX1={128{read_sz_reg[1][4:1]==4'd6 || read_sz_reg[1]==5'd14}}&rddata2[0];
-  assign read_dataX2={128{read_sz_reg[2][4:1]==4'd6 || read_sz_reg[2]==5'd14}}&rddata2[0];
-  assign read_dataX3={128{read_sz_reg[3][4:1]==4'd6 || read_sz_reg[3]==5'd14}}&rddata2[0];
+  assign read_dataX0={128{read_sz_reg[0][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[0],5'd14)}}&rddata2[0];
+  assign read_dataX1={128{read_sz_reg[1][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[1],5'd14)}}&rddata2[0];
+  assign read_dataX2={128{read_sz_reg[2][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[2],5'd14)}}&rddata2[0];
+  assign read_dataX3={128{read_sz_reg[3][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[3],5'd14)}}&rddata2[0];
  
   assign ways_gen[0].read_dataP={LINE_WIDTH{1'B0}}; 
   assign ways_gen[0].read_pbit0P=2'b0;

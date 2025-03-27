@@ -70,12 +70,12 @@ module tblD(
       else bits=bits2;
 
       mask0=0;
-      if (xtra[1]==1'd0 && A[65:54]==2041) mask0= {5'b0,1'b1};  
-      if (xtra[1]==1'd0 && A[65:54]==2042) mask0= {4'b0,2'b11};  
-      if (xtra[1]==1'd0 && A[65:54]==2043) mask0= {3'b0,3'b111};  
-      if (xtra[1]==1'd0 && A[65:54]==2044) mask0= {2'b0,4'b1111};  
-      if (xtra[1]==1'd0 && A[65:54]==2045) mask0= {1'b0,5'b11111};  
-      if (xtra[1]==1'd0 && A[65:54]==2046) mask0= 6'b111111;
+      if (pwh#(1)::cmpEQ(xtra[1],1'd0) && A[65:54]==2041) mask0= {5'b0,1'b1};  
+      if (pwh#(1)::cmpEQ(xtra[1],1'd0) && A[65:54]==2042) mask0= {4'b0,2'b11};  
+      if (pwh#(1)::cmpEQ(xtra[1],1'd0) && A[65:54]==2043) mask0= {3'b0,3'b111};  
+      if (pwh#(1)::cmpEQ(xtra[1],1'd0) && A[65:54]==2044) mask0= {2'b0,4'b1111};  
+      if (pwh#(1)::cmpEQ(xtra[1],1'd0) && A[65:54]==2045) mask0= {1'b0,5'b11111};  
+      if (pwh#(1)::cmpEQ(xtra[1],1'd0) && A[65:54]==2046) mask0= 6'b111111;
 
       mask1=0;
       if (xtra[1]!=1'd0 && A[65:54]==2045) mask1= {5'b0,1'b1};  

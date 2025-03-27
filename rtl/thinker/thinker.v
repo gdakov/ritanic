@@ -368,7 +368,7 @@ module pager(
       end else begin
           dly[y]<=dly[y]<<1;
           //if (FUHit)  $display("bmup ",FUreg," ",data_in);
-          if (dly[y]==3'b100) begin
+          if (pwh#(3)::cmpEQ(dly[y],3'b100)) begin
               if (read_data_pdbr[y][`pdc_valid] && read_data_pdbr[y][`pdc_vaddr]==ptr[y][43:25]) begin
                  ptr[y]<={2'b0,read_data_pdbr[y][`pdc_addr],14'b0};
                  addr[y]<=addr[y]<<22;

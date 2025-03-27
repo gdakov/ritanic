@@ -682,7 +682,7 @@ module smallInstr_decoder(
         stsz=5'hd;
     end else if (isBasicFPUScalarA) begin
         stsz_out=5'h1;
-    end else if (isBasicMUL && operation[4]==1'b0) begin
+    end else if (isBasicMUL && pwh#(1)::cmpEQ(operation[4],1'b0)) begin
         stsz_out=5'h11;
     end else if (isBasicMUL) begin
         stsz_out=5'h10;

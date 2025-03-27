@@ -4763,11 +4763,11 @@ module backend(
           assign gazumpB[u]=isBVW_reg[u/3] ? gazumpBV[u] : 11'bz;
           assign gazumpB[u]=(~isBVW_reg[u/3] & ~isBFW_reg[u/3]) ? gazumpBG[u] : 11'bz;
      end
-      assign isAF[u]=rs_rA_useF[u] && (~rs_rA_isV[u] || (rs_rA_isAnyV[u] && domA[u]==2'b00));
-      assign isBF[u]=rs_rB_useF[u] && (~rs_rB_isV[u] || (rs_rB_isAnyV[u] && domB[u]==2'b00));
+      assign isAF[u]=rs_rA_useF[u] && (~rs_rA_isV[u] || (rs_rA_isAnyV[u] && pwh#(2)::cmpEQ(domA[u],2'b00)));
+      assign isBF[u]=rs_rB_useF[u] && (~rs_rB_isV[u] || (rs_rB_isAnyV[u] && pwh#(2)::cmpEQ(domB[u],2'b00)));
       //warning: error might occur in "any" dom{A|B}.
-      assign isAV[u]=rs_rA_useF[u] && (rs_rA_isV[u] || (rs_rA_isAnyV[u] && domA[u]==2'b01));
-      assign isBV[u]=rs_rB_useF[u] && (rs_rB_isV[u] || (rs_rB_isAnyV[u] && domB[u]==2'b01));
+      assign isAV[u]=rs_rA_useF[u] && (rs_rA_isV[u] || (rs_rA_isAnyV[u] && pwh#(2)::cmpEQ(domA[u],2'b01)));
+      assign isBV[u]=rs_rB_useF[u] && (rs_rB_isV[u] || (rs_rB_isAnyV[u] && pwh#(2)::cmpEQ(domB[u],2'b01)));
   end
   
   endgenerate

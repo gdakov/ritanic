@@ -855,7 +855,7 @@ module cntrl_find_outcome(
       assign flTE=lfl[k] ? flE : 9'bz;
   
       if (k<9) begin
-          assign no_tire[k]=ret[k]==4'hf;
+          assign no_tire[k]=pwh#(4)::cmpEQ(ret[k],4'hf);
           assign tireG[k]=no_tire[k] ? 1'b0 : 1'bz;
           assign tireV[k]=no_tire[k] ? 1'b0 : 1'bz;
           assign tireF[k]=no_tire[k] ? 1'b0 : 1'bz;
@@ -1094,9 +1094,9 @@ module cntrl_find_outcome(
   
   assign flags_d=xbreak0[0] ? flags[tire_thread_reg] : 6'bz;
 
-  assign tireG[0]=(ret[0]==4'hf) ? 1'b0 : 1'bz;
-  assign tireV[0]=(ret[0]==4'hf) ? 1'b0 : 1'bz;
-  assign tireF[0]=(ret[0]==4'hf) ? 1'b0 : 1'bz;
+  assign tireG[0]=(pwh#(4)::cmpEQ(ret[0],4'hf)) ? 1'b0 : 1'bz;
+  assign tireV[0]=(pwh#(4)::cmpEQ(ret[0],4'hf)) ? 1'b0 : 1'bz;
+  assign tireF[0]=(pwh#(4)::cmpEQ(ret[0],4'hf)) ? 1'b0 : 1'bz;
   
   assign proc_d=(pwh#(5)::cmpEQ(jump0Type,5'h1e) || pwh#(5)::cmpEQ(jump1Type,5'h1e)) ? indir_IP[15:0] : archReg_proc[tire_thread_reg];
 	 
