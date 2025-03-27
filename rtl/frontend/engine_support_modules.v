@@ -408,42 +408,42 @@ module get_clear_reg(
   always @* begin
       for (k=0;k<3;k=k+1) begin
           rs0_newR[k]=9'd0;
-          if (newR0[3:0]==k*3 && alloc[0]) rs0_newR[k]=newR0;
-          if (newR1[3:0]==k*3 && alloc[1]) rs0_newR[k]=newR1;
-          if (newR2[3:0]==k*3 && alloc[2]) rs0_newR[k]=newR2;
+          if (pwh#(4)::cmpEQ(newR0[3:0],k*3) && alloc[0]) rs0_newR[k]=newR0;
+          if (pwh#(4)::cmpEQ(newR1[3:0],k*3) && alloc[1]) rs0_newR[k]=newR1;
+          if (pwh#(4)::cmpEQ(newR2[3:0],k*3) && alloc[2]) rs0_newR[k]=newR2;
 
           rs1_newR[k]=9'd1;
-          if (newR3[3:0]==k*3+1 && alloc[3]) rs1_newR[k]=newR3;
-          if (newR4[3:0]==k*3+1 && alloc[4]) rs1_newR[k]=newR4;
-          if (newR5[3:0]==k*3+1 && alloc[5]) rs1_newR[k]=newR5;
+          if (pwh#(4)::cmpEQ(newR3[3:0],k*3+1) && alloc[3]) rs1_newR[k]=newR3;
+          if (pwh#(4)::cmpEQ(newR4[3:0],k*3+1) && alloc[4]) rs1_newR[k]=newR4;
+          if (pwh#(4)::cmpEQ(newR5[3:0],k*3+1) && alloc[5]) rs1_newR[k]=newR5;
           
           rs2_newR[k]=9'd2;
-          if (newR6[3:0]==k*3+2 && alloc[6]) rs2_newR[k]=newR6;
-          if (newR7[3:0]==k*3+2 && alloc[7]) rs2_newR[k]=newR7;
-          if (newR8[3:0]==k*3+2 && alloc[8]) rs2_newR[k]=newR8;
+          if (pwh#(4)::cmpEQ(newR6[3:0],k*3+2) && alloc[6]) rs2_newR[k]=newR6;
+          if (pwh#(4)::cmpEQ(newR7[3:0],k*3+2) && alloc[7]) rs2_newR[k]=newR7;
+          if (pwh#(4)::cmpEQ(newR8[3:0],k*3+2) && alloc[8]) rs2_newR[k]=newR8;
           
-          rs0_hasR[k]=(newR0[3:0]==k*3 && alloc[0]) || (newR1[3:0]==k*3 && alloc[1]) || (newR2[3:0]==k*3 && alloc[2]);
-          rs1_hasR[k]=(newR3[3:0]==k*3+1 && alloc[3]) || (newR4[3:0]==k*3+1 && alloc[4]) || (newR5[3:0]==k*3+1 && alloc[5]);
-          rs2_hasR[k]=(newR6[3:0]==k*3+2 && alloc[6]) || (newR7[3:0]==k*3+2 && alloc[7]) || (newR8[3:0]==k*3+2 && alloc[8]);
+          rs0_hasR[k]=(pwh#(4)::cmpEQ(newR0[3:0],k*3) && alloc[0]) || (pwh#(4)::cmpEQ(newR1[3:0],k*3) && alloc[1]) || (pwh#(4)::cmpEQ(newR2[3:0],k*3) && alloc[2]);
+          rs1_hasR[k]=(pwh#(4)::cmpEQ(newR3[3:0],k*3+1) && alloc[3]) || (pwh#(4)::cmpEQ(newR4[3:0],k*3+1) && alloc[4]) || (pwh#(4)::cmpEQ(newR5[3:0],k*3+1) && alloc[5]);
+          rs2_hasR[k]=(pwh#(4)::cmpEQ(newR6[3:0],k*3+2) && alloc[6]) || (pwh#(4)::cmpEQ(newR7[3:0],k*3+2) && alloc[7]) || (pwh#(4)::cmpEQ(newR8[3:0],k*3+2) && alloc[8]);
 
-          rs0_hasS[k]=(newRF0[3:0]==k*3 && allocS[0]) || (newRF1[3:0]==k*3 && allocS[1]) || (newRF2[3:0]==k*3 && allocS[2]);
-          rs1_hasS[k]=(newRF3[3:0]==k*3+1 && allocS[3]) || (newRF4[3:0]==k*3+1 && allocS[4]) || (newRF5[3:0]==k*3+1 && allocS[5]);
-          rs2_hasS[k]=(newRF6[3:0]==k*3+2 && allocS[6]) || (newRF7[3:0]==k*3+2 && allocS[7]) || (newRF8[3:0]==k*3+2 && allocS[8]);
+          rs0_hasS[k]=(pwh#(4)::cmpEQ(newRF0[3:0],k*3) && allocS[0]) || (pwh#(4)::cmpEQ(newRF1[3:0],k*3) && allocS[1]) || (pwh#(4)::cmpEQ(newRF2[3:0],k*3) && allocS[2]);
+          rs1_hasS[k]=(pwh#(4)::cmpEQ(newRF3[3:0],k*3+1) && allocS[3]) || (pwh#(4)::cmpEQ(newRF4[3:0],k*3+1) && allocS[4]) || (pwh#(4)::cmpEQ(newRF5[3:0],k*3+1) && allocS[5]);
+          rs2_hasS[k]=(pwh#(4)::cmpEQ(newRF6[3:0],k*3+2) && allocS[6]) || (pwh#(4)::cmpEQ(newRF7[3:0],k*3+2) && allocS[7]) || (pwh#(4)::cmpEQ(newRF8[3:0],k*3+2) && allocS[8]);
           
 	  rs0_newRF[k]=9'd0;
-          if (newRF0[3:0]==k*3 && allocS[0]) rs0_newRF[k]=newRF0;
-          if (newRF1[3:0]==k*3 && allocS[1]) rs0_newRF[k]=newRF1;
-          if (newRF2[3:0]==k*3 && allocS[2]) rs0_newRF[k]=newRF2;
+          if (pwh#(4)::cmpEQ(newRF0[3:0],k*3) && allocS[0]) rs0_newRF[k]=newRF0;
+          if (pwh#(4)::cmpEQ(newRF1[3:0],k*3) && allocS[1]) rs0_newRF[k]=newRF1;
+          if (pwh#(4)::cmpEQ(newRF2[3:0],k*3) && allocS[2]) rs0_newRF[k]=newRF2;
 
           rs1_newRF[k]=9'd1;
-          if (newRF3[3:0]==k*3+1 && allocS[3]) rs1_newRF[k]=newRF3;
-          if (newRF4[3:0]==k*3+1 && allocS[4]) rs1_newRF[k]=newRF4;
-          if (newRF5[3:0]==k*3+1 && allocS[5]) rs1_newRF[k]=newRF5;
+          if (pwh#(4)::cmpEQ(newRF3[3:0],k*3+1) && allocS[3]) rs1_newRF[k]=newRF3;
+          if (pwh#(4)::cmpEQ(newRF4[3:0],k*3+1) && allocS[4]) rs1_newRF[k]=newRF4;
+          if (pwh#(4)::cmpEQ(newRF5[3:0],k*3+1) && allocS[5]) rs1_newRF[k]=newRF5;
           
           rs2_newRF[k]=9'd2;
-          if (newRF6[3:0]==k*3+2 && allocS[6]) rs2_newRF[k]=newRF6;
-          if (newRF7[3:0]==k*3+2 && allocS[7]) rs2_newRF[k]=newRF7;
-          if (newRF8[3:0]==k*3+2 && allocS[8]) rs2_newRF[k]=newRF8;
+          if (pwh#(4)::cmpEQ(newRF6[3:0],k*3+2) && allocS[6]) rs2_newRF[k]=newRF6;
+          if (pwh#(4)::cmpEQ(newRF7[3:0],k*3+2) && allocS[7]) rs2_newRF[k]=newRF7;
+          if (pwh#(4)::cmpEQ(newRF8[3:0],k*3+2) && allocS[8]) rs2_newRF[k]=newRF8;
       end
   end
 endmodule
@@ -975,19 +975,19 @@ module backend_get_ret(
   always @* begin
       for (k=0;k<3;k=k+1) begin
           rs_newR[k]=4'd9;
-          if (newR0[3:0]==k*3 && en0) rs_newR[k]=4'd0;
-          if (newR1[3:0]==k*3 && en1) rs_newR[k]=4'd1;
-          if (newR2[3:0]==k*3 && en2) rs_newR[k]=4'd2;
+          if (pwh#(4)::cmpEQ(newR0[3:0],k*3) && en0) rs_newR[k]=4'd0;
+          if (pwh#(4)::cmpEQ(newR1[3:0],k*3) && en1) rs_newR[k]=4'd1;
+          if (pwh#(4)::cmpEQ(newR2[3:0],k*3) && en2) rs_newR[k]=4'd2;
 
           rs_newR[3+k]=4'd9;
-          if (newR3[3:0]==k*3+1 && en3) rs_newR[3+k]=4'd3;
-          if (newR4[3:0]==k*3+1 && en4) rs_newR[3+k]=4'd4;
-          if (newR5[3:0]==k*3+1 && en5) rs_newR[3+k]=4'd5;
+          if (pwh#(4)::cmpEQ(newR3[3:0],k*3+1) && en3) rs_newR[3+k]=4'd3;
+          if (pwh#(4)::cmpEQ(newR4[3:0],k*3+1) && en4) rs_newR[3+k]=4'd4;
+          if (pwh#(4)::cmpEQ(newR5[3:0],k*3+1) && en5) rs_newR[3+k]=4'd5;
           
           rs_newR[6+k]=4'd9;
-          if (newR6[3:0]==k*3+2 && en6) rs_newR[6+k]=4'd6;
-          if (newR7[3:0]==k*3+2 && en7) rs_newR[6+k]=4'd7;
-          if (newR8[3:0]==k*3+2 && en8) rs_newR[6+k]=4'd8;
+          if (pwh#(4)::cmpEQ(newR6[3:0],k*3+2) && en6) rs_newR[6+k]=4'd6;
+          if (pwh#(4)::cmpEQ(newR7[3:0],k*3+2) && en7) rs_newR[6+k]=4'd7;
+          if (pwh#(4)::cmpEQ(newR8[3:0],k*3+2) && en8) rs_newR[6+k]=4'd8;
           
 
       end

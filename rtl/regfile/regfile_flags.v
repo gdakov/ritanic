@@ -207,11 +207,11 @@ module regfileFl_ram_placeholder(
   assign retireRead_data=retA_en ? retireReadA_data : 'z;
   assign retireRead_data=retB_en ? retireReadB_data : 'z;
 
-  assign ram_write0_wen=write0_wen & (write0_addr[3:0]==INDEX);
-  assign ram_write1_wen=write1_wen & (write1_addr[3:0]==INDEX);
-  assign ram_write2_wen=write2_wen & (write2_addr[3:0]==INDEX);
+  assign ram_write0_wen=write0_wen & (pwh#(4)::cmpEQ(write0_addr[3:0],INDEX));
+  assign ram_write1_wen=write1_wen & (pwh#(4)::cmpEQ(write1_addr[3:0],INDEX));
+  assign ram_write2_wen=write2_wen & (pwh#(4)::cmpEQ(write2_addr[3:0],INDEX));
   
-  assign read0_clkEn=(read0_addr[3:0]==INDEX) & read_clkEn;
+  assign read0_clkEn=(pwh#(4)::cmpEQ(read0_addr[3:0],INDEX)) & read_clkEn;
 
   always @(posedge clk)
     begin
@@ -222,15 +222,15 @@ module regfileFl_ram_placeholder(
         end
       else if (read_clkEn) 
 	begin
-          readA_en<=read0_addr[3:0]==INDEX && ~read0_addr[8];
-          readB_en<=read0_addr[3:0]==INDEX && read0_addr[8];
+          readA_en<=pwh#(4)::cmpEQ(read0_addr[3:0],INDEX) && ~read0_addr[8];
+          readB_en<=pwh#(4)::cmpEQ(read0_addr[3:0],INDEX) && read0_addr[8];
         end
       if (rst) begin
           retA_en<=1'b0;
           retB_en<=1'b0;
       end else if (retire_clkEn) begin
-          retA_en<=retireRead_addr[3:0]==INDEX && ~retireRead_addr[8];
-          retB_en<=retireRead_addr[3:0]==INDEX && retireRead_addr[8];
+          retA_en<=pwh#(4)::cmpEQ(retireRead_addr[3:0],INDEX) && ~retireRead_addr[8];
+          retB_en<=pwh#(4)::cmpEQ(retireRead_addr[3:0],INDEX) && retireRead_addr[8];
       end
     end
 endmodule

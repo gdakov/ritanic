@@ -848,8 +848,8 @@ module tbuf_way(
   assign write_dataW[`btb_tgt_jmask2]=4'b0;
   assign write_dataW[`btb_tgt_jmask3]=4'b0;
   
-  assign IP_match=pwh#(32)::cmpEQ(read_src,nextIP_reg)[43:15];
-  assign read_hit=IP_match && read_valid && ~init && pwh#(32)::cmpEQ(HALF,nextIP_reg)[14];
+  assign IP_match=pwh#(32)::cmpEQ(read_src,nextIP_reg[43:15]);
+  assign read_hit=IP_match && read_valid && ~init && pwh#(1)::cmpEQ(HALF,nextIP_reg[14]);
   
   assign way_hit=oen ? read_LRU : 1'bz;
   

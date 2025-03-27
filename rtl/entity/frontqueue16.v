@@ -1662,8 +1662,8 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
       if (rst) begin
           dreq<=16'b0;
       end else for (m=0;m<16;m=m+1) begin
-          if (req_en && req_slot[3:0]==m[3:0]) dreq[m]<=1'b1;
-          if (bus_en && bus_slot[3:0]==m[3:0] && bus_match) dreq[m]<=1'b0;
+          if (req_en && pwh#(4)::cmpEQ(req_slot[3:0],m[3:0])) dreq[m]<=1'b1;
+          if (bus_en && pwh#(4)::cmpEQ(bus_slot[3:0],m[3:0]) && bus_match) dreq[m]<=1'b0;
           if (sched_rst) dreq[m]<=1'b0;
       end
       if (rst) begin

@@ -88,36 +88,36 @@ module lsq_decide_ret(
   generate
     genvar k;
     for(k=0;k<10;k=k+1) begin
-        assign dataB_ret_mask2[k]=(dataB_ret_mask[0] && dataB_II0[3:0]==k) ||
-	  (dataB_ret_mask[1] && dataB_II1[3:0]==k) ||
-	  (dataB_ret_mask[2] && dataB_II2[3:0]==k) ||
-	  (dataB_ret_mask[3] && dataB_II3[3:0]==k) ||
-	  (dataB_ret_mask[4] && dataB_II4[3:0]==k) ||
-	  (dataB_ret_mask[5] && dataB_II5[3:0]==k);
-        assign dataB_err_mask2[k]=(dataB_excpt[0] && dataB_ret_mask[0] && dataB_II0[3:0]==k) ||
-	  (dataB_excpt[1] && dataB_ret_mask[1] && dataB_II1[3:0]==k) ||
-	  (dataB_excpt[2] && dataB_ret_mask[2] && dataB_II2[3:0]==k) ||
-	  (dataB_excpt[3] && dataB_ret_mask[3] && dataB_II3[3:0]==k) ||
-	  (dataB_excpt[4] && dataB_ret_mask[4] && dataB_II4[3:0]==k) ||
-	  (dataB_excpt[5] && dataB_ret_mask[5] && dataB_II5[3:0]==k);
-        assign dataB_err_mask3[k]=(dataB_ld_confl[0] && dataB_ret_mask[0] && dataB_II0[3:0]==k) ||
-	  (dataB_ld_confl[1] && dataB_ret_mask[1] && dataB_II1[3:0]==k) ||
-	  (dataB_ld_confl[2] && dataB_ret_mask[2] && dataB_II2[3:0]==k) ||
-	  (dataB_ld_confl[3] && dataB_ret_mask[3] && dataB_II3[3:0]==k) ||
-	  (dataB_ld_confl[4] && dataB_ret_mask[4] && dataB_II4[3:0]==k) ||
-	  (dataB_ld_confl[5] && dataB_ret_mask[5] && dataB_II5[3:0]==k);
-        assign dataB_err_mask4[k]=(dataB_wait_confl[0] && dataB_ret_mask[0] && dataB_II0[3:0]==k) ||
-	  (dataB_wait_confl[1] && dataB_ret_mask[1] && dataB_II1[3:0]==k) ||
-	  (dataB_wait_confl[2] && dataB_ret_mask[2] && dataB_II2[3:0]==k) ||
-	  (dataB_wait_confl[3] && dataB_ret_mask[3] && dataB_II3[3:0]==k) ||
-	  (dataB_wait_confl[4] && dataB_ret_mask[4] && dataB_II4[3:0]==k) ||
-	  (dataB_wait_confl[5] && dataB_ret_mask[5] && dataB_II5[3:0]==k);
-        assign dataB_ebits_item[k]=(dataB_exbits[3:0] & {4{dataB_ret_mask[0] && dataB_II0[3:0]==k}})|
-        (dataB_exbits[7:4] & {4{dataB_ret_mask[1] && dataB_II1[3:0]==k}})|
-        (dataB_exbits[11:8] & {4{dataB_ret_mask[2] && dataB_II2[3:0]==k}})|
-        (dataB_exbits[15:12] & {4{dataB_ret_mask[3] && dataB_II3[3:0]==k}})|
-        (dataB_exbits[19:16] & {4{dataB_ret_mask[4] && dataB_II4[3:0]==k}})|
-        (dataB_exbits[23:20] & {4{dataB_ret_mask[5] && dataB_II5[3:0]==k}});
+        assign dataB_ret_mask2[k]=(dataB_ret_mask[0] && pwh#(4)::cmpEQ(dataB_II0[3:0],k)) ||
+	  (dataB_ret_mask[1] && pwh#(4)::cmpEQ(dataB_II1[3:0],k)) ||
+	  (dataB_ret_mask[2] && pwh#(4)::cmpEQ(dataB_II2[3:0],k)) ||
+	  (dataB_ret_mask[3] && pwh#(4)::cmpEQ(dataB_II3[3:0],k)) ||
+	  (dataB_ret_mask[4] && pwh#(4)::cmpEQ(dataB_II4[3:0],k)) ||
+	  (dataB_ret_mask[5] && pwh#(4)::cmpEQ(dataB_II5[3:0],k));
+        assign dataB_err_mask2[k]=(dataB_excpt[0] && dataB_ret_mask[0] && pwh#(4)::cmpEQ(dataB_II0[3:0],k)) ||
+	  (dataB_excpt[1] && dataB_ret_mask[1] && pwh#(4)::cmpEQ(dataB_II1[3:0],k)) ||
+	  (dataB_excpt[2] && dataB_ret_mask[2] && pwh#(4)::cmpEQ(dataB_II2[3:0],k)) ||
+	  (dataB_excpt[3] && dataB_ret_mask[3] && pwh#(4)::cmpEQ(dataB_II3[3:0],k)) ||
+	  (dataB_excpt[4] && dataB_ret_mask[4] && pwh#(4)::cmpEQ(dataB_II4[3:0],k)) ||
+	  (dataB_excpt[5] && dataB_ret_mask[5] && pwh#(4)::cmpEQ(dataB_II5[3:0],k));
+        assign dataB_err_mask3[k]=(dataB_ld_confl[0] && dataB_ret_mask[0] && pwh#(4)::cmpEQ(dataB_II0[3:0],k)) ||
+	  (dataB_ld_confl[1] && dataB_ret_mask[1] && pwh#(4)::cmpEQ(dataB_II1[3:0],k)) ||
+	  (dataB_ld_confl[2] && dataB_ret_mask[2] && pwh#(4)::cmpEQ(dataB_II2[3:0],k)) ||
+	  (dataB_ld_confl[3] && dataB_ret_mask[3] && pwh#(4)::cmpEQ(dataB_II3[3:0],k)) ||
+	  (dataB_ld_confl[4] && dataB_ret_mask[4] && pwh#(4)::cmpEQ(dataB_II4[3:0],k)) ||
+	  (dataB_ld_confl[5] && dataB_ret_mask[5] && pwh#(4)::cmpEQ(dataB_II5[3:0],k));
+        assign dataB_err_mask4[k]=(dataB_wait_confl[0] && dataB_ret_mask[0] && pwh#(4)::cmpEQ(dataB_II0[3:0],k)) ||
+	  (dataB_wait_confl[1] && dataB_ret_mask[1] && pwh#(4)::cmpEQ(dataB_II1[3:0],k)) ||
+	  (dataB_wait_confl[2] && dataB_ret_mask[2] && pwh#(4)::cmpEQ(dataB_II2[3:0],k)) ||
+	  (dataB_wait_confl[3] && dataB_ret_mask[3] && pwh#(4)::cmpEQ(dataB_II3[3:0],k)) ||
+	  (dataB_wait_confl[4] && dataB_ret_mask[4] && pwh#(4)::cmpEQ(dataB_II4[3:0],k)) ||
+	  (dataB_wait_confl[5] && dataB_ret_mask[5] && pwh#(4)::cmpEQ(dataB_II5[3:0],k));
+        assign dataB_ebits_item[k]=(dataB_exbits[3:0] & {4{dataB_ret_mask[0] && pwh#(4)::cmpEQ(dataB_II0[3:0],k)}})|
+        (dataB_exbits[7:4] & {4{dataB_ret_mask[1] && pwh#(4)::cmpEQ(dataB_II1[3:0],k)}})|
+        (dataB_exbits[11:8] & {4{dataB_ret_mask[2] && pwh#(4)::cmpEQ(dataB_II2[3:0],k)}})|
+        (dataB_exbits[15:12] & {4{dataB_ret_mask[3] && pwh#(4)::cmpEQ(dataB_II3[3:0],k)}})|
+        (dataB_exbits[19:16] & {4{dataB_ret_mask[4] && pwh#(4)::cmpEQ(dataB_II4[3:0],k)}})|
+        (dataB_exbits[23:20] & {4{dataB_ret_mask[5] && pwh#(4)::cmpEQ(dataB_II5[3:0],k)}});
     end
   endgenerate
 

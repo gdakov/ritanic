@@ -351,7 +351,7 @@ module ght_bank(
         genvar j;
         for(j=0;j<256;j=j+1) begin : bitEn_gen
             pwire ae0;
-            assign ae0=pwh#(32)::cmpEQ(j,write_addr)[15:8];
+            assign ae0=pwh#(32)::cmpEQ(j,write_addr[15:8]);
             
             assign write_bitEn[j*2]= ae0 || init;
             assign write_bitEn[j*2+1]=write_bitEn[j*2];
@@ -389,9 +389,9 @@ module sel_ght_entry(entry,addr,update,sc);
         for (k=0;k<16;k=k+1) begin
             pwire [1:0] sc0;
             for(p=0;p<16;p=p+1) begin
-                assign sc0=( p[3:0]==addr[3:0]) ? entry[2*(k*16+p)+:2] : 2'bz;
+                assign sc0=( pwh#(4)::cmpEQ(p[3:0],addr[3:0])) ? entry[2*(k*16+p)+:2] : 2'bz;
             end
-            assign sc1=(k[3:0]==addr[7:4]) ? sc0 : 2'bz;
+            assign sc1=(pwh#(4)::cmpEQ(k[3:0],addr[7:4])) ? sc0 : 2'bz;
         end
     endgenerate
 endmodule

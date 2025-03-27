@@ -282,19 +282,19 @@ module regfile_ram_placeholder_f(
   
   assign retireRead_data=retA_en ? retireReadA_data : retireReadB_data;
   
-  assign ram_write0A_wen=write0_wen && write0_addr[3:0]==INDEX && ~write0_addr[4];
-  assign ram_write1A_wen=write1_wen && write1_addr[3:0]==INDEX && ~write1_addr[4];
-  assign ram_write2A_wen=write2_wen && write2_addr[3:0]==INDEX && ~write2_addr[4];
-  assign ram_write3A_wen=write3_wen && write3_addr[3:0]==INDEX && ~write3_addr[4];
+  assign ram_write0A_wen=write0_wen && pwh#(4)::cmpEQ(write0_addr[3:0],INDEX) && ~write0_addr[4];
+  assign ram_write1A_wen=write1_wen && pwh#(4)::cmpEQ(write1_addr[3:0],INDEX) && ~write1_addr[4];
+  assign ram_write2A_wen=write2_wen && pwh#(4)::cmpEQ(write2_addr[3:0],INDEX) && ~write2_addr[4];
+  assign ram_write3A_wen=write3_wen && pwh#(4)::cmpEQ(write3_addr[3:0],INDEX) && ~write3_addr[4];
 
-  assign ram_write0B_wen=write0_wen && write0_addr[3:0]==INDEX && write0_addr[4];
-  assign ram_write1B_wen=write1_wen && write1_addr[3:0]==INDEX && write1_addr[4];
-  assign ram_write2B_wen=write2_wen && write2_addr[3:0]==INDEX && write2_addr[4];
-  assign ram_write3B_wen=write3_wen && write3_addr[3:0]==INDEX && write3_addr[4];
+  assign ram_write0B_wen=write0_wen && pwh#(4)::cmpEQ(write0_addr[3:0],INDEX) && write0_addr[4];
+  assign ram_write1B_wen=write1_wen && pwh#(4)::cmpEQ(write1_addr[3:0],INDEX) && write1_addr[4];
+  assign ram_write2B_wen=write2_wen && pwh#(4)::cmpEQ(write2_addr[3:0],INDEX) && write2_addr[4];
+  assign ram_write3B_wen=write3_wen && pwh#(4)::cmpEQ(write3_addr[3:0],INDEX) && write3_addr[4];
 
-  assign read0_clkEn=(read0_addr[3:0]==INDEX);
-  assign read1_clkEn=(read1_addr[3:0]==INDEX);
-  assign read2_clkEn=(read2_addr[3:0]==INDEX);
+  assign read0_clkEn=(pwh#(4)::cmpEQ(read0_addr[3:0],INDEX));
+  assign read1_clkEn=(pwh#(4)::cmpEQ(read1_addr[3:0],INDEX));
+  assign read2_clkEn=(pwh#(4)::cmpEQ(read2_addr[3:0],INDEX));
 
   always @(posedge clk)
     begin
@@ -310,13 +310,13 @@ module regfile_ram_placeholder_f(
         end
       else
         if (read_clkEn) begin
-          read0A_en<=read0_addr[3:0]==INDEX && ~read0_constEn && ~read0_addr[4];
-          read1A_en<=read1_addr[3:0]==INDEX && ~read1_constEn && ~read1_addr[4];
-          read2A_en<=read2_addr[3:0]==INDEX && ~read2_constEn && ~read2_addr[4];
+          read0A_en<=pwh#(4)::cmpEQ(read0_addr[3:0],INDEX) && ~read0_constEn && ~read0_addr[4];
+          read1A_en<=pwh#(4)::cmpEQ(read1_addr[3:0],INDEX) && ~read1_constEn && ~read1_addr[4];
+          read2A_en<=pwh#(4)::cmpEQ(read2_addr[3:0],INDEX) && ~read2_constEn && ~read2_addr[4];
 
-          read0B_en<=read0_addr[3:0]==INDEX && ~read0_constEn && read0_addr[4];
-          read1B_en<=read1_addr[3:0]==INDEX && ~read1_constEn && read1_addr[4];
-          read2B_en<=read2_addr[3:0]==INDEX && ~read2_constEn && read2_addr[4];
+          read0B_en<=pwh#(4)::cmpEQ(read0_addr[3:0],INDEX) && ~read0_constEn && read0_addr[4];
+          read1B_en<=pwh#(4)::cmpEQ(read1_addr[3:0],INDEX) && ~read1_constEn && read1_addr[4];
+          read2B_en<=pwh#(4)::cmpEQ(read2_addr[3:0],INDEX) && ~read2_constEn && read2_addr[4];
         end
       if (rst) begin
           retA_en<=1'b0;

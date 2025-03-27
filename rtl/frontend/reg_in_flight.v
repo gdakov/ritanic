@@ -361,22 +361,22 @@ module reginfl_ram_placeholder(
   assign read8_data=read8_en ? ram_read8_data : 'z;
 
   
-  assign ram_write0_wen=write0_wen && write0_addr[3:0]==INDEX;
-  assign ram_write1_wen=write1_wen && write1_addr[3:0]==INDEX;
-  assign ram_write2_wen=write2_wen && write2_addr[3:0]==INDEX;
-  assign ram_write3_wen=write3_wen && write3_addr[3:0]==INDEX;
+  assign ram_write0_wen=write0_wen && pwh#(4)::cmpEQ(write0_addr[3:0],INDEX);
+  assign ram_write1_wen=write1_wen && pwh#(4)::cmpEQ(write1_addr[3:0],INDEX);
+  assign ram_write2_wen=write2_wen && pwh#(4)::cmpEQ(write2_addr[3:0],INDEX);
+  assign ram_write3_wen=write3_wen && pwh#(4)::cmpEQ(write3_addr[3:0],INDEX);
   assign ram_write4_wen=write4_wen;
 
 
-  assign read0_clkEn=(read0_addr[3:0]==INDEX) & read_clkEn;
-  assign read1_clkEn=(read1_addr[3:0]==INDEX) & read_clkEn;
-  assign read2_clkEn=(read2_addr[3:0]==INDEX) & read_clkEn;
-  assign read3_clkEn=(read3_addr[3:0]==INDEX) & read_clkEn;
-  assign read4_clkEn=(read4_addr[3:0]==INDEX) & read_clkEn;
-  assign read5_clkEn=(read5_addr[3:0]==INDEX) & read_clkEn;
-  assign read6_clkEn=(read6_addr[3:0]==INDEX) & read_clkEn;
-  assign read7_clkEn=(read7_addr[3:0]==INDEX) & read_clkEn;
-  assign read8_clkEn=(read8_addr[3:0]==INDEX) & read_clkEn;
+  assign read0_clkEn=(pwh#(4)::cmpEQ(read0_addr[3:0],INDEX)) & read_clkEn;
+  assign read1_clkEn=(pwh#(4)::cmpEQ(read1_addr[3:0],INDEX)) & read_clkEn;
+  assign read2_clkEn=(pwh#(4)::cmpEQ(read2_addr[3:0],INDEX)) & read_clkEn;
+  assign read3_clkEn=(pwh#(4)::cmpEQ(read3_addr[3:0],INDEX)) & read_clkEn;
+  assign read4_clkEn=(pwh#(4)::cmpEQ(read4_addr[3:0],INDEX)) & read_clkEn;
+  assign read5_clkEn=(pwh#(4)::cmpEQ(read5_addr[3:0],INDEX)) & read_clkEn;
+  assign read6_clkEn=(pwh#(4)::cmpEQ(read6_addr[3:0],INDEX)) & read_clkEn;
+  assign read7_clkEn=(pwh#(4)::cmpEQ(read7_addr[3:0],INDEX)) & read_clkEn;
+  assign read8_clkEn=(pwh#(4)::cmpEQ(read8_addr[3:0],INDEX)) & read_clkEn;
 
   always @(posedge clk)
     begin
@@ -394,15 +394,15 @@ module reginfl_ram_placeholder(
         end
       else
         if (read_clkEn) begin
-          read0_en<=read0_addr[3:0]==INDEX && ~read0_constEn;
-          read1_en<=read1_addr[3:0]==INDEX && ~read1_constEn;
-          read2_en<=read2_addr[3:0]==INDEX && ~read2_constEn;
-          read3_en<=read3_addr[3:0]==INDEX && ~read3_constEn;
-          read4_en<=read4_addr[3:0]==INDEX && ~read4_constEn;
-          read5_en<=read5_addr[3:0]==INDEX && ~read5_constEn;
-          read6_en<=read6_addr[3:0]==INDEX && ~read6_constEn;
-          read7_en<=read7_addr[3:0]==INDEX && ~read7_constEn;
-          read8_en<=read8_addr[3:0]==INDEX && ~read8_constEn;
+          read0_en<=pwh#(4)::cmpEQ(read0_addr[3:0],INDEX) && ~read0_constEn;
+          read1_en<=pwh#(4)::cmpEQ(read1_addr[3:0],INDEX) && ~read1_constEn;
+          read2_en<=pwh#(4)::cmpEQ(read2_addr[3:0],INDEX) && ~read2_constEn;
+          read3_en<=pwh#(4)::cmpEQ(read3_addr[3:0],INDEX) && ~read3_constEn;
+          read4_en<=pwh#(4)::cmpEQ(read4_addr[3:0],INDEX) && ~read4_constEn;
+          read5_en<=pwh#(4)::cmpEQ(read5_addr[3:0],INDEX) && ~read5_constEn;
+          read6_en<=pwh#(4)::cmpEQ(read6_addr[3:0],INDEX) && ~read6_constEn;
+          read7_en<=pwh#(4)::cmpEQ(read7_addr[3:0],INDEX) && ~read7_constEn;
+          read8_en<=pwh#(4)::cmpEQ(read8_addr[3:0],INDEX) && ~read8_constEn;
         end
     end
 endmodule

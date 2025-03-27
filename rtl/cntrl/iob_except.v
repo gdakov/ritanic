@@ -232,15 +232,15 @@ module iob_except(
         read_addr,
         read_data[k],
   
-        write0_addr[9:4],write0_data,write0_wen && write0_addr[3:0]==k,
-        write1_addr[9:4],write1_data,write1_wen && write1_addr[3:0]==k,
-        write2_addr[9:4],write2_data,write2_wen && write2_addr[3:0]==k,
-        write3_addr[9:4],write3_data,write3_wen && write3_addr[3:0]==k,
-        write4_addr[9:4],write4_data,write4_wen && write4_addr[3:0]==k,
-        write5_addr[9:4],write5_data,write5_wen && write5_addr[3:0]==k,
-        write6_addr[9:4],write6_data,write6_wen && write6_addr[3:0]==k,
-        write7_addr[9:4],write7_data,write7_wen && write7_addr[3:0]==k,
-        write8_addr[9:4],write8_data,write8_wen && write8_addr[3:0]==k,
+        write0_addr[9:4],write0_data,write0_wen && pwh#(4)::cmpEQ(write0_addr[3:0],k),
+        write1_addr[9:4],write1_data,write1_wen && pwh#(4)::cmpEQ(write1_addr[3:0],k),
+        write2_addr[9:4],write2_data,write2_wen && pwh#(4)::cmpEQ(write2_addr[3:0],k),
+        write3_addr[9:4],write3_data,write3_wen && pwh#(4)::cmpEQ(write3_addr[3:0],k),
+        write4_addr[9:4],write4_data,write4_wen && pwh#(4)::cmpEQ(write4_addr[3:0],k),
+        write5_addr[9:4],write5_data,write5_wen && pwh#(4)::cmpEQ(write5_addr[3:0],k),
+        write6_addr[9:4],write6_data,write6_wen && pwh#(4)::cmpEQ(write6_addr[3:0],k),
+        write7_addr[9:4],write7_data,write7_wen && pwh#(4)::cmpEQ(write7_addr[3:0],k),
+        write8_addr[9:4],write8_data,write8_wen && pwh#(4)::cmpEQ(write8_addr[3:0],k),
         writeInit_addr,writeInit_data[k],writeInit_wen
         );
     end
