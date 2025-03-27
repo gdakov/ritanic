@@ -251,7 +251,7 @@ module cmlb(
   
   pwire read_clkEn_reg;
 
-  assign read_hit=(|read_hit_way || addr[43:40]==4'b1110) & ~init_pending;
+  assign read_hit=(|read_hit_way || pwh#(4)::cmpEQ(addr[43:40],4'b1110)) & ~init_pending;
   assign LRU_hit=read_hit ? 3'bz : 3'b00;
   assign read_data=(|read_hit_way) ? 'z : read_data_pmm;
 

@@ -134,13 +134,13 @@ module jump_decoder(
   assign isLongCondJump=(pwh#(8)::cmpEQ(opcode_main,8'd180))&magic[0];
   assign isCLeave=(pwh#(8)::cmpEQ(opcode_main,8'd235) || pwh#(8)::cmpEQ(opcode_main,8'd236) || pwh#(8)::cmpEQ(opcode_main,8'd238)) & magic[0];
   assign isUncondJump=(pwh#(8)::cmpEQ(opcode_main,8'd181))&magic[0];
-  assign isIndirJump=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd0)&magic[0];
-  assign isCall=(pwh#(8)::cmpEQ(opcode_main,8'd182) && (instr[15:13]==3'd1 || instr[15:13]==3'd2))&magic[0];
-  assign isRet=(pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd3)&magic[0];
+  assign isIndirJump=(pwh#(8)::cmpEQ(opcode_main,8'd182) && pwh#(3)::cmpEQ(instr[15:13],3'd0))&magic[0];
+  assign isCall=(pwh#(8)::cmpEQ(opcode_main,8'd182) && (pwh#(3)::cmpEQ(instr[15:13],3'd1) || pwh#(3)::cmpEQ(instr[15:13],3'd2)))&magic[0];
+  assign isRet=(pwh#(8)::cmpEQ(opcode_main,8'd182) && pwh#(3)::cmpEQ(instr[15:13],3'd3))&magic[0];
   assign subIsCJ=(pwh#(4)::cmpEQ(opcode_main[5:2],4'b1100))&~magic[0];
   assign isShlAddMulLike=(pwh#(8)::cmpEQ(opcode_main,8'd210) || pwh#(8)::cmpEQ(opcode_main,8'd211)) && pwh#(2)::cmpEQ(magic[1:0],2'b01);
 
- // assign isCmpTestExtra=(pwh#(32)::cmpEQ(opcode_main,198) && pwh#(2)::cmpEQ(magic[1:0],2'b01) && instr[31:29]==3'd1)&magic[0];
+ // assign isCmpTestExtra=(pwh#(32)::cmpEQ(opcode_main,198) && pwh#(2)::cmpEQ(magic[1:0],2'b01) && pwh#(3)::cmpEQ(instr[31:29],3'd1))&magic[0];
   
   
   assign isBasicSysInstr=(pwh#(8)::cmpEQ(opcode_main,8'hff))&magic[0];
@@ -213,11 +213,11 @@ module jump_decoder(
           cloop_is=1'b1;
       end else if (isBasicSysInstr) begin
           if (instr[30:16]==15'd23 && ~magic[0]) halt=thread;
-          if (instr[15:13]==3'b0) begin
+          if (pwh#(3)::cmpEQ(instr[15:13],3'b0)) begin
         //  if (magic[0]) error=1;
               jumpType=5'b11001;
               constant={48'b0,thread,instr[30:16]};
-          end else if (instr[15:13]==3'd2) begin
+          end else if (pwh#(3)::cmpEQ(instr[15:13],3'd2)) begin
               jumpType=5'b10001;
               constant={48'b0,thread,instr[30:16]};
           end

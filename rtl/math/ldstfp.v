@@ -123,15 +123,15 @@ module ldS2nativeS(
   assign A_z=A[22:0]==23'b0;
   assign resX=(A[30:23]==0 && ~A_z) ? {exp[7],A[31],exp[8],exp[6:0],denor} :  33'bz;
   assign resX=(A[30:23]!=0 && A[30:23]!=8'hff) ? {A[29],A[31],A[30],~A[30],A[28:23],A[22:0]} : 33'bz;
-  assign resX=(A[30:23]==8'hff) ? {A[30],A[31],A[30:24],~A_z,A[22:0]} : 33'bz;
+  assign resX=(pwh#(8)::cmpEQ(A[30:23],8'hff)) ? {A[30],A[31],A[30:24],~A_z,A[22:0]} : 33'bz;
   assign resX=(A[30:23]==0 && A_z) ? {1'b0,A[31],8'b0,denor} :  33'bz;
   assign resY=(A[30:23]==0 && ~A_z) ? {exp[7],A[31],exp[8],{3{~exp[8]}},exp[6:0],denor,29'b0} :  65'bz;
   assign resY=(A[30:23]!=0 && A[30:23]!=8'hff) ? {A[29],A[31],A[30],{4{~A[30]}},A[28:23],A[22:0],29'b0} : 65'bz;
-  assign resY=(A[30:23]==8'hff) ? {A[30],A[31],{4{A[30]}},A[29:24],~A_z,A[22:0],29'b0} : 65'bz;
+  assign resY=(pwh#(8)::cmpEQ(A[30:23],8'hff)) ? {A[30],A[31],{4{A[30]}},A[29:24],~A_z,A[22:0],29'b0} : 65'bz;
   assign resY=(A[30:23]==0 && A_z) ? {1'b0,A[31],11'b0,denor,29'b0} :  65'bz;
   assign resZ=(A[30:23]==0 && ~A_z) ? {exp[7],A[31],exp[8],{7{~exp[8]}},exp[6:0],1'b0,denor,40'b0} :  81'bz;
   assign resZ=(A[30:23]!=0 && A[30:23]!=8'hff)  ? {A[29],A[31],A[30],{8{~A[30]}},A[28:23],1'b1,A[22:0],40'b0} : 81'bz;
-  assign resZ=(A[30:23]==8'hff) ? {A[29],A[31],A[30],{8{A[30]}},A[28:24],~A_z,1'b1,A[22:0],40'b0} : 81'bz;
+  assign resZ=(pwh#(8)::cmpEQ(A[30:23],8'hff)) ? {A[29],A[31],A[30],{8{A[30]}},A[28:24],~A_z,1'b1,A[22:0],40'b0} : 81'bz;
   assign resZ=(A[30:23]==0 && A_z) ? {1'b0,A[31],15'b0,1'b0,denor,40'b0} :  81'bz;
   assign res[32:0]=(en&to_sngl) ? resX : 33'bz;
   assign res[65:0]=(en&to_dbl) ? {resY[64:32],1'b0,resY[31:0]} : 66'bz;

@@ -677,10 +677,10 @@ module tbuf_way(
   
   assign IP_wbits=nextIP_reg[14:5];
   
-  assign sc0P=(scupd_hit && scupd_addr[12:11]==2'd0) ? scupd_sc0 : extra_data[`btbExtra_satCount0];
-  assign sc1P=(scupd_hit && scupd_addr[12:11]==2'd1) ? scupd_sc1 : extra_data[`btbExtra_satCount1];
-  assign sc2P=(scupd_hit && scupd_addr[12:11]==2'd2) ? scupd_sc2 : extra_data[`btbExtra_satCount2];
-  assign sc3P=(scupd_hit && scupd_addr[12:11]==2'd3) ? scupd_sc3 : extra_data[`btbExtra_satCount3];
+  assign sc0P=(scupd_hit && pwh#(2)::cmpEQ(scupd_addr[12:11],2'd0)) ? scupd_sc0 : extra_data[`btbExtra_satCount0];
+  assign sc1P=(scupd_hit && pwh#(2)::cmpEQ(scupd_addr[12:11],2'd1)) ? scupd_sc1 : extra_data[`btbExtra_satCount1];
+  assign sc2P=(scupd_hit && pwh#(2)::cmpEQ(scupd_addr[12:11],2'd2)) ? scupd_sc2 : extra_data[`btbExtra_satCount2];
+  assign sc3P=(scupd_hit && pwh#(2)::cmpEQ(scupd_addr[12:11],2'd3)) ? scupd_sc3 : extra_data[`btbExtra_satCount3];
     
   assign do_save=upd_eq0 & update_use_reg[0] & upd_eq1 & update_use_reg[1]
     & ~upd_eq01 || (upd_eq0 & update_use_reg[0] || upd_eq1 & update_use_reg[1])
@@ -703,17 +703,17 @@ module tbuf_way(
     && update_use_reg[1] && ~has_saved;
   assign upd_idS=has_saved;
   
-  assign upd_j0[0]=~has_saved && update_use_reg[0] && update_addr0_reg[12:11]==2'd0 && ~update_dis[0];
-  assign upd_j0[1]=~has_saved && update_use_reg[1] && update_addr1_reg[12:11]==2'd0 && ~update_dis[1];
+  assign upd_j0[0]=~has_saved && update_use_reg[0] && pwh#(2)::cmpEQ(update_addr0_reg[12:11],2'd0) && ~update_dis[0];
+  assign upd_j0[1]=~has_saved && update_use_reg[1] && pwh#(2)::cmpEQ(update_addr1_reg[12:11],2'd0) && ~update_dis[1];
 
-  assign upd_j1[0]=~has_saved && update_use_reg[0] && update_addr0_reg[12:11]==2'd1 && ~update_dis[0];
-  assign upd_j1[1]=~has_saved && update_use_reg[1] && update_addr1_reg[12:11]==2'd1 && ~update_dis[1];
+  assign upd_j1[0]=~has_saved && update_use_reg[0] && pwh#(2)::cmpEQ(update_addr0_reg[12:11],2'd1) && ~update_dis[0];
+  assign upd_j1[1]=~has_saved && update_use_reg[1] && pwh#(2)::cmpEQ(update_addr1_reg[12:11],2'd1) && ~update_dis[1];
 
-  assign upd_j2[0]=~has_saved && update_use_reg[0] && update_addr0_reg[12:11]==2'd2 && ~update_dis[0];
-  assign upd_j2[1]=~has_saved && update_use_reg[1] && update_addr1_reg[12:11]==2'd2 && ~update_dis[1];
+  assign upd_j2[0]=~has_saved && update_use_reg[0] && pwh#(2)::cmpEQ(update_addr0_reg[12:11],2'd2) && ~update_dis[0];
+  assign upd_j2[1]=~has_saved && update_use_reg[1] && pwh#(2)::cmpEQ(update_addr1_reg[12:11],2'd2) && ~update_dis[1];
 
-  assign upd_j3[0]=~has_saved && update_use_reg[0] && update_addr0_reg[12:11]==2'd3 && ~update_dis[0];
-  assign upd_j3[1]=~has_saved && update_use_reg[1] && update_addr1_reg[12:11]==2'd3 && ~update_dis[1];
+  assign upd_j3[0]=~has_saved && update_use_reg[0] && pwh#(2)::cmpEQ(update_addr0_reg[12:11],2'd3) && ~update_dis[0];
+  assign upd_j3[1]=~has_saved && update_use_reg[1] && pwh#(2)::cmpEQ(update_addr1_reg[12:11],2'd3) && ~update_dis[1];
 
   assign update_addr_new=( upd_id0 & ~init) ? update_addr0_reg[10:1] : 10'bz;
   assign update_addr_new=( upd_id1 & ~init) ? update_addr1_reg[10:1] : 10'bz;
@@ -1038,16 +1038,16 @@ module tbuf_way(
 
 //up to here.
 //dataJ includes taken and computed jmask.
-  assign sve_j0[0]=has_saved && saved_addr0[12:11]==2'd0 && saved_use[0];    
+  assign sve_j0[0]=has_saved && pwh#(2)::cmpEQ(saved_addr0[12:11],2'd0) && saved_use[0];    
   assign sve_j0[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd0) && saved_use[1];    
 
-  assign sve_j1[0]=has_saved && saved_addr0[12:11]==2'd1 && saved_use[0];    
+  assign sve_j1[0]=has_saved && pwh#(2)::cmpEQ(saved_addr0[12:11],2'd1) && saved_use[0];    
   assign sve_j1[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd1) && saved_use[1];    
 
-  assign sve_j2[0]=has_saved && saved_addr0[12:11]==2'd2 && saved_use[0];    
+  assign sve_j2[0]=has_saved && pwh#(2)::cmpEQ(saved_addr0[12:11],2'd2) && saved_use[0];    
   assign sve_j2[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd2) && saved_use[1];    
 
-  assign sve_j3[0]=has_saved && saved_addr0[12:11]==2'd3 && saved_use[0];    
+  assign sve_j3[0]=has_saved && pwh#(2)::cmpEQ(saved_addr0[12:11],2'd3) && saved_use[0];    
   assign sve_j3[1]=has_saved && pwh#(2)::cmpEQ(saved_addr1,2'd3) && saved_use[1];    
 
   assign sve_taken[0]=|(sve_j0 & saved_tk);

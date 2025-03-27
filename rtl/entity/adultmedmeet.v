@@ -397,9 +397,9 @@ module smallInstr_decoder(
   assign isSelfTestCJump=pwh#(8)::cmpEQ(opcode_main,8'd178) || pwh#(8)::cmpEQ(opcode_main,8'd179);
   assign isLongCondJump=pwh#(8)::cmpEQ(opcode_main,8'd180);
   assign isUncondJump=pwh#(8)::cmpEQ(opcode_main,8'd181);
-  assign isIndirJump=pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd0;
-  assign isCall=pwh#(8)::cmpEQ(opcode_main,8'd182) && (instr[15:13]==3'd1 || instr[15:13]==3'd2);
-  assign isRet=pwh#(8)::cmpEQ(opcode_main,8'd182) && instr[15:13]==3'd3;
+  assign isIndirJump=pwh#(8)::cmpEQ(opcode_main,8'd182) && pwh#(3)::cmpEQ(instr[15:13],3'd0);
+  assign isCall=pwh#(8)::cmpEQ(opcode_main,8'd182) && (pwh#(3)::cmpEQ(instr[15:13],3'd1) || pwh#(3)::cmpEQ(instr[15:13],3'd2));
+  assign isRet=pwh#(8)::cmpEQ(opcode_main,8'd182) && pwh#(3)::cmpEQ(instr[15:13],3'd3);
   assign isMovOrExtB=pwh#(8)::cmpEQ(opcode_main,8'd183) || pwh#(6)::cmpEQ(opcode_main[7:2],6'b101110) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd189) || pwh#(8)::cmpEQ(opcode_main[7:0],8'd210);
   assign isMovOrExtA=pwh#(8)::cmpEQ(opcode_main,8'd188) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd95) || pwh#(7)::cmpEQ(opcode_main[7:1],7'd96);
   assign isMovOrExtExcept=pwh#(2)::cmpEQ(magic[1:0],2'b11) && opcode_main!=8'd183 && opcode_main[7:1]!=7'd92;
@@ -434,12 +434,12 @@ module smallInstr_decoder(
 
   assign isGA=pwh#(8)::cmpEQ(opcode_main,8'd237);
 
-  assign isBasicFPUScalarA=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[13:12]==2'b0;
-  assign isBasicFPUScalarB=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[13:12]==2'b1;
-  assign isBasicFPUScalarC=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[15:12]==4'd2;
-  assign isBasicFPUScalarCmp=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[15:12]==4'd6;
-  assign isBasicFPUScalarCmp2=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0] !=14 && instr[15:12]==4'd10;
-  assign isBasicFPUScalarCmp3=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && instr[15:12]==4'd12;
+  assign isBasicFPUScalarA=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && pwh#(2)::cmpEQ(instr[13:12],2'b0);
+  assign isBasicFPUScalarB=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && pwh#(2)::cmpEQ(instr[13:12],2'b1);
+  assign isBasicFPUScalarC=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && pwh#(4)::cmpEQ(instr[15:12],4'd2);
+  assign isBasicFPUScalarCmp=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && pwh#(4)::cmpEQ(instr[15:12],4'd6);
+  assign isBasicFPUScalarCmp2=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0] !=14 && pwh#(4)::cmpEQ(instr[15:12],4'd10);
+  assign isBasicFPUScalarCmp3=pwh#(4)::cmpEQ(opcode_main[7:4],4'hf) && opcode_main[3:0]!=14 && pwh#(4)::cmpEQ(instr[15:12],4'd12);
   //fpu bit[3] is contdition subselect (set to change condition to LT unsigned)
   //fpu bit[2] is conditional (condition LE unsigned)
   //when only bit 3 is set then the condition is overflow
@@ -678,7 +678,7 @@ module smallInstr_decoder(
         stsz_out={1'b1,3'b11,!instr[1]};
     end else if (isBasicALU | isBasicShift) begin
         stsz_out={1'b1,3'b11,!instr[1]};
-    end else if (isBasicFPUScalarA && instr[13:9]==5'd3 || instr[13:9]==5'd4) begin
+    end else if (isBasicFPUScalarA && pwh#(5)::cmpEQ(instr[13:9],5'd3) || pwh#(5)::cmpEQ(instr[13:9],5'd4)) begin
         stsz=5'hd;
     end else if (isBasicFPUScalarA) begin
         stsz_out=5'h1;
@@ -946,7 +946,7 @@ module smallInstr_decoder(
        puseRs[6]=1'b1;
        prAlloc[6]=1'b1;
        pport[6]=PORT_VANY;
-       if (~prevSpecLoad || instr[15:12]==4'd15) begin
+       if (~prevSpecLoad || pwh#(4)::cmpEQ(instr[15:12],4'd15)) begin
            prA[6]={1'b0,instr[11:8]};
            prT[6]={1'b0,instr[11:8]};
            prB[6]={1'b0,instr[15:12]};
@@ -1809,7 +1809,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
           poperation[31][0]=instr[18];
           poperation[31][7:1]=instr[22] ? 7'd5 : 7'd7;
           poperation[31][12]=~instr[23];
-          perror[31]={1'b0,instr[31:24]==8'd0};
+          perror[31]={1'b0,pwh#(8)::cmpEQ(instr[31:24],8'd0)};
           if (magic[1:0]!=2'b01) perror[31]=2'b1;
       end 
  
@@ -1822,15 +1822,15 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prB_isV[32]=1'b1;
       prT_isV[32]=1'b1;
       prAlloc[32]=1'b1;
-      if ((instr[13:11]==3'd0 || instr[13:8]==6'd8 || instr[13:8]==6'd9) & ~instr[16]) begin
+      if ((pwh#(3)::cmpEQ(instr[13:11],3'd0) || pwh#(6)::cmpEQ(instr[13:8],6'd8) || pwh#(6)::cmpEQ(instr[13:8],6'd9)) & ~instr[16]) begin
           //add(s) sub(s) min max
-          pport[32]=(instr[13:9]==5'b0) ? PORT_VADD : PORT_VCMP;
+          pport[32]=(pwh#(5)::cmpEQ(instr[13:9],5'b0)) ? PORT_VADD : PORT_VCMP;
           poperation[32][5:0]=instr[13:8];
           poperation[32][7:6]=instr[15:14];
           prA[32]=instr[21:17];
           prB[32]=instr[26:22]; 
           prT[32]=instr[31:27];
-      end else if (instr[13:12]==2'b1 && ~instr[16]) begin
+      end else if (pwh#(2)::cmpEQ(instr[13:12],2'b1) && ~instr[16]) begin
           pport[32]=PORT_VCMP;
           poperation[32][5:0]=`simd_cmp;
           poperation[32][7:6]=instr[15:14];
@@ -1838,24 +1838,24 @@ opcode_main[0] ? `op_add64 : `op_add32;
           prA[32]=instr[21:17];
           prB[32]=instr[26:22];
           prT[32]=instr[31:27];
-      end else if ((instr[13:8]==6'd10 || instr[13:8]==6'd11) & ~instr[16]) begin
+      end else if ((pwh#(6)::cmpEQ(instr[13:8],6'd10) || pwh#(6)::cmpEQ(instr[13:8],6'd11)) & ~instr[16]) begin
           //bitwise
           pport[32]=PORT_VADD;
-          poperation[32][7:0]=(instr[13:8]==6'd10) ? {6'b100,instr[15:14]} : {6'b101,instr[15:14]};
+          poperation[32][7:0]=(pwh#(6)::cmpEQ(instr[13:8],6'd10)) ? {6'b100,instr[15:14]} : {6'b101,instr[15:14]};
           prA[32]=instr[21:17];
           prB[32]=instr[26:22];
           prT[32]=instr[31:27];
-	  if (instr[15:14]==2'd3) prA_useF[32]=0;
-	  if (instr[15:14]==2'd3 && instr[21:17]!=0) perror[32]=1;
-      end else if ((instr[13:9]==5'b0 || instr[13:8]==6'b10) & instr[16]) begin
+	  if (pwh#(2)::cmpEQ(instr[15:14],2'd3)) prA_useF[32]=0;
+	  if (pwh#(2)::cmpEQ(instr[15:14],2'd3) && instr[21:17]!=0) perror[32]=1;
+      end else if ((pwh#(5)::cmpEQ(instr[13:9],5'b0) || pwh#(6)::cmpEQ(instr[13:8],6'b10)) & instr[16]) begin
           pport[32]=PORT_VCMP;
-          poperation[32][5:0]=(instr[13:8]==6'b10) ? 6'd11 : {5'd6,instr[8]};
+          poperation[32][5:0]=(pwh#(6)::cmpEQ(instr[13:8],6'b10)) ? 6'd11 : {5'd6,instr[8]};
           poperation[32][6]=instr[14];
           perror[32]={1'b0,instr[15]}; //no 32and 64 bit shift for now
           prA[32]=instr[21:17];
           prB[32]=instr[26:22];
           prT[32]=instr[31:27];
-      end else if (instr[13:8]==6'b11 & instr[16]) begin
+      end else if (pwh#(6)::cmpEQ(instr[13:8],6'b11) & instr[16]) begin
           // rA_isAnyV=1'b1;
           prA_useF[32]=1'b0;
           prBT_copyV[32]=1'b1;
@@ -1957,8 +1957,8 @@ opcode_main[0] ? `op_add64 : `op_add32;
       endcase
       
       trien[35]=(magic[0] && isBasicSysInstr);
-         // if (instr[15:8]==8'hff && ~magic[0]) halt=1'b1;
-      if (instr[15:13]==3'b0) begin //write CSR
+         // if (pwh#(8)::cmpEQ(instr[15:8],8'hff) && ~magic[0]) halt=1'b1;
+      if (pwh#(3)::cmpEQ(instr[15:13],3'b0)) begin //write CSR
         // constant=instr[31:16];
           prB_use[35]=1'b1;
           puseBConst[35]=1'b0;
@@ -1970,7 +1970,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
           pjumpType[35]=5'b11001;
           poperation[35][12]=1'b1;
           perror[35]={2{~can_write_csr}};
-      end else if (instr[15:13]==3'd1) begin //read_CSR
+      end else if (pwh#(3)::cmpEQ(instr[15:13],3'd1)) begin //read_CSR
           puseRs[35]=1'b1;
           prB_use[35]=1'b1;
           puseBConst[35]=1'b1;
@@ -1982,7 +1982,7 @@ opcode_main[0] ? `op_add64 : `op_add32;
           prAlloc[35]=1'b1;
           perror[35]={2{~can_read_csr}};
 	  //pconstant[35]=instr[79:16];
-      end else if (instr[15:13]==3'd2) begin //iret
+      end else if (pwh#(3)::cmpEQ(instr[15:13],3'd2)) begin //iret
           puseRs[35]=1'b1;
           prB_use[35]=1'b1;
           puseBConst[35]=1'b1;
