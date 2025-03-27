@@ -4287,7 +4287,7 @@ module backend(
   
 //  rs_save #(1) saveAlt1_mod(
 //  .clk(clk),.rst(rst),
-//  .oldData(outOp[8][11]&&outOp[8][7:3]==4'hf),.newData(fxAlt1),
+//  .oldData(outOp[8][11]&&pwh#(4)::cmpEQ(outOp[8][7:3],4'hf)),.newData(fxAlt1),
 //  .save(1'b0),.en(outEn[8][0])
 //  );
 
@@ -5600,16 +5600,16 @@ dcache1 L1D_mod(
   .has_xbreak(retM_xbreak_has)
   );
 
-  assign fretX[0]=fretA_regn[0][1:0]==2'd1 ? fretA_regn[0] : 'z;
-  assign fretX[0]=fretA_regn[0][1:0]!=2'd1 && fretB[0][1:0]==2'd1 ? fretB[0] : 'z;
+  assign fretX[0]=pwh#(2)::cmpEQ(fretA_regn[0][1:0],2'd1) ? fretA_regn[0] : 'z;
+  assign fretX[0]=fretA_regn[0][1:0]!=2'd1 && pwh#(2)::cmpEQ(fretB[0][1:0],2'd1) ? fretB[0] : 'z;
   assign fretX[0]=fretA_regn[0][1:0]!=2'd1 &&	fretB[0][1:0]!=2'd1 ? {fretA_regn[0][13:3]|fretB[0][13:3],fretA_regn[0][2:0]} : 'z;
  
-  assign fretX[2]=fretA_regn[2][1:0]==2'd1 ? fretA_regn[2] : 'z;
-  assign fretX[2]=fretA_regn[2][1:0]!=2'd1 && fretB[2][1:0]==2'd1 ? fretB[2] : 'z;
+  assign fretX[2]=pwh#(2)::cmpEQ(fretA_regn[2][1:0],2'd1) ? fretA_regn[2] : 'z;
+  assign fretX[2]=fretA_regn[2][1:0]!=2'd1 && pwh#(2)::cmpEQ(fretB[2][1:0],2'd1) ? fretB[2] : 'z;
   assign fretX[2]=fretA_regn[2][1:0]!=2'd1 &&	fretB[2][1:0]!=2'd1 ? {fretA_regn[2][13:3]|fretB[2][13:3],fretA_regn[2][2:0]} : 'z;
  
-  assign fretX[4]=fretA_regn[4][1:0]==2'd1 ? fretA_regn[4] : 'z;
-  assign fretX[4]=fretA_regn[4][1:0]!=2'd1 && fretB[4][1:0]==2'd1 ? fretB[4] : 'z;
+  assign fretX[4]=pwh#(2)::cmpEQ(fretA_regn[4][1:0],2'd1) ? fretA_regn[4] : 'z;
+  assign fretX[4]=fretA_regn[4][1:0]!=2'd1 && pwh#(2)::cmpEQ(fretB[4][1:0],2'd1) ? fretB[4] : 'z;
   assign fretX[4]=fretA_regn[4][1:0]!=2'd1 &&	fretB[4][1:0]!=2'd1 ? {fretA_regn[4][13:3]|fretB[4][13:3],fretA_regn[4][2:0]} : 'z;
  
   assign stall_alloc=|{doStall_rs[3:0],doStall_LSQ,doStall_LDQ,doStall_STQ,doStall_cntrl,doStall_WQ,doStall_alloc2,stall_clkREF};
@@ -7168,7 +7168,7 @@ dcache1 L1D_mod(
 		  0,12,7: ;
 		  default: fxLD_dbl_t[k]=1'b1; 
 	      endcase
-	      fxLD_spair_t[k]=outOp_reg2[k][5:1]==5'ha;
+	      fxLD_spair_t[k]=pwh#(5)::cmpEQ(outOp_reg2[k][5:1],5'ha);
 	      fxLD_dblext[k]=fxLD_dbl[k]|fxLD_ext[k];
 	      if (k!=3) fxFRT_alten_reg[k]<=fxFRT_alten[k];
 	      if (k!=3) fxFRT_alten_reg2[k]<=fxFRT_alten_reg[k];

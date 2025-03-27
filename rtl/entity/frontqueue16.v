@@ -856,8 +856,8 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           assign write_data[65*(k+4)+64]=^bus_data_cvt[64*(k+4)+:64];
                     
           assign jmp_moff[k]=jmp_magic[k][0] ? 4'd1 : 4'bz;
-          assign jmp_moff[k]=(jmp_magic[k][1:0]==2'b10) ? 4'd2 : 4'bz;
-          assign jmp_moff[k]=(jmp_magic[k][2:0]==3'b100) ? 4'd3 : 4'bz;
+          assign jmp_moff[k]=(pwh#(2)::cmpEQ(jmp_magic[k][1:0],2'b10)) ? 4'd2 : 4'bz;
+          assign jmp_moff[k]=(pwh#(3)::cmpEQ(jmp_magic[k][2:0],3'b100)) ? 4'd3 : 4'bz;
           assign jmp_moff[k]=(pwh#(4)::cmpEQ(jmp_magic[k][3:0],4'b1000)) ? 4'd4 : 4'bz;
           assign jmp_moff[k]=(pwh#(4)::cmpEQ(jmp_magic[k][3:0],4'b0)) ? 4'd5 : 4'bz;
           

@@ -1134,26 +1134,26 @@ module dcache1(
       end
       for (p=0;p<4;p=p+1) begin
               assign rddata2[p]=rxdata[p][255:128];
-	      assign rxdata0[p]=read_data_strip[255:0]&{256{read_beginA_reg[p][4:2]==3'd0}};
-              assign rxerr0[p]=read_errP_reg2[7:0]&read_banks[p][7:0]&{8{read_beginA_reg[p][4:2]==3'd0}};
-	      assign rxdata1[p]=read_data_strip[128+255:128]&{256{read_beginA_reg[p][4:2]==3'd1}};
-              assign rxerr1[p]=read_errP_reg2[11:4]&read_banks[p][11:4]&{8{read_beginA_reg[p][4:2]==3'd1}};
-	      assign rxdata2[p]=read_data_strip[511:256]&{256{read_beginA_reg[p][4:2]==3'd2}};
-              assign rxerr2[p]=read_errP_reg2[15:8]&read_banks[p][15:8]&{8{read_beginA_reg[p][4:2]==3'd2}};
-	      assign rxdata3[p]=read_data_strip[128+511:128+256]&{256{read_beginA_reg[p][4:2]==3'd3}};
-              assign rxerr3[p]=read_errP_reg2[19:12]&read_banks[p][19:12]&{8{read_beginA_reg[p][4:2]==3'd3}};
-	      assign rxdata4[p]=read_data_strip[767:512]&{256{read_beginA_reg[p][4:2]==3'd4}};
-              assign rxerr4[p]=read_errP_reg2[23:16]&read_banks[p][23:16]&{8{read_beginA_reg[p][4:2]==3'd4}};
-	      assign rxdata5[p]=read_data_strip[767+128:128+512]&{256{read_beginA_reg[p][4:2]==3'd5}};
-              assign rxerr5[p]=read_errP_reg2[27:20]&read_banks[p][27:20]&{8{read_beginA_reg[p][4:2]==3'd5}};
-	      assign rxdata6[p]=read_data_strip[1023:768]&{256{read_beginA_reg[p][4:2]==3'd6}};
-              assign rxerr6[p]=read_errP_reg2[31:24]&read_banks[p][31:24]&{8{read_beginA_reg[p][4:2]==3'd6}};
+	      assign rxdata0[p]=read_data_strip[255:0]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd0)}};
+              assign rxerr0[p]=read_errP_reg2[7:0]&read_banks[p][7:0]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd0)}};
+	      assign rxdata1[p]=read_data_strip[128+255:128]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd1)}};
+              assign rxerr1[p]=read_errP_reg2[11:4]&read_banks[p][11:4]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd1)}};
+	      assign rxdata2[p]=read_data_strip[511:256]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd2)}};
+              assign rxerr2[p]=read_errP_reg2[15:8]&read_banks[p][15:8]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd2)}};
+	      assign rxdata3[p]=read_data_strip[128+511:128+256]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd3)}};
+              assign rxerr3[p]=read_errP_reg2[19:12]&read_banks[p][19:12]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd3)}};
+	      assign rxdata4[p]=read_data_strip[767:512]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd4)}};
+              assign rxerr4[p]=read_errP_reg2[23:16]&read_banks[p][23:16]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd4)}};
+	      assign rxdata5[p]=read_data_strip[767+128:128+512]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd5)}};
+              assign rxerr5[p]=read_errP_reg2[27:20]&read_banks[p][27:20]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd5)}};
+	      assign rxdata6[p]=read_data_strip[1023:768]&{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd6)}};
+              assign rxerr6[p]=read_errP_reg2[31:24]&read_banks[p][31:24]&{8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd6)}};
 	      assign rxdata7[p]={read_data_strip[127:0],read_data_strip[1023:768+128]}&
-		{256{read_beginA_reg[p][4:2]==3'd7}};
+		{256{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd7)}};
               assign rxerr7[p]={4'b0,read_errP_reg2[31:28]}&{read_banks[p][31:28]}&
-                {8{read_beginA_reg[p][4:2]==3'd7}};
+                {8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd7)}};
               assign rxerr7B[p]={read_errP_reg2[3:0],4'b0}&{read_banks[p][3:0],4'b0}&
-                {8{read_beginA_reg[p][4:2]==3'd7}};
+                {8{pwh#(3)::cmpEQ(read_beginA_reg[p][4:2],3'd7)}};
 	      assign rxdata[p]=rxdata0[p]|rxdata1[p]|rxdata2[p]|rxdata3[p]|
 		rxdata4[p]|rxdata5[p]|rxdata6[p]|rxdata7[p];
 	      assign rxerr[p]=rxerr0[p]|rxerr1[p]|rxerr2[p]|rxerr3[p]|
@@ -1237,10 +1237,10 @@ module dcache1(
   assign read_dataA2=read_dataA[2];
   assign read_dataA3=read_dataA[3];
 
-  assign read_dataX0={128{read_sz_reg[0][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[0],5'd14)}}&rddata2[0];
-  assign read_dataX1={128{read_sz_reg[1][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[1],5'd14)}}&rddata2[0];
-  assign read_dataX2={128{read_sz_reg[2][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[2],5'd14)}}&rddata2[0];
-  assign read_dataX3={128{read_sz_reg[3][4:1]==4'd6 || pwh#(5)::cmpEQ(read_sz_reg[3],5'd14)}}&rddata2[0];
+  assign read_dataX0={128{pwh#(4)::cmpEQ(read_sz_reg[0][4:1],4'd6) || pwh#(5)::cmpEQ(read_sz_reg[0],5'd14)}}&rddata2[0];
+  assign read_dataX1={128{pwh#(4)::cmpEQ(read_sz_reg[1][4:1],4'd6) || pwh#(5)::cmpEQ(read_sz_reg[1],5'd14)}}&rddata2[0];
+  assign read_dataX2={128{pwh#(4)::cmpEQ(read_sz_reg[2][4:1],4'd6) || pwh#(5)::cmpEQ(read_sz_reg[2],5'd14)}}&rddata2[0];
+  assign read_dataX3={128{pwh#(4)::cmpEQ(read_sz_reg[3][4:1],4'd6) || pwh#(5)::cmpEQ(read_sz_reg[3],5'd14)}}&rddata2[0];
  
   assign ways_gen[0].read_dataP={LINE_WIDTH{1'B0}}; 
   assign ways_gen[0].read_pbit0P=2'b0;
