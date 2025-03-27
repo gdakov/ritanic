@@ -167,10 +167,10 @@ module ght3_bank(
   //  assign start[1]=pwh#(2)::cmpEQ(jumpMask[1:0],2'b00);
   //  assign start[0]=pwh#(2)::cmpEQ(jumpMask[1:0],2'b10) || pwh#(4)::cmpEQ(jumpMask,4'b1000);    
 
-    assign curJump[0]=(read_addr[7:6] ^ INDEX[2:1])==2'd0 && read_addr[0]==INDEX[0];
-    assign curJump[1]=(read_addr[7:6] ^ INDEX[2:1])==2'd1 && read_addr[0]==INDEX[0];
-    assign curJump[2]=(read_addr[7:6] ^ INDEX[2:1])==2'd2 && read_addr[0]==INDEX[0];
-    assign curJump[3]=(read_addr[7:6] ^ INDEX[2:1])==2'd3 && read_addr[0]==INDEX[0];
+    assign curJump[0]=pwh#(2)::cmpEQ((read_addr[7:6] ^ INDEX[2:1]),2'd0) && read_addr[0]==INDEX[0];
+    assign curJump[1]=pwh#(2)::cmpEQ((read_addr[7:6] ^ INDEX[2:1]),2'd1) && read_addr[0]==INDEX[0];
+    assign curJump[2]=pwh#(2)::cmpEQ((read_addr[7:6] ^ INDEX[2:1]),2'd2) && read_addr[0]==INDEX[0];
+    assign curJump[3]=pwh#(2)::cmpEQ((read_addr[7:6] ^ INDEX[2:1]),2'd3) && read_addr[0]==INDEX[0];
     
     assign otherPred0X=(curJump[0] & ~AbtbPred[0] & jumpMask[0]) ? GHT0_sc : 2'bz;
     assign otherPred0X=(curJump[0] & AbtbPred[0] || ~jumpMask[0]) ? (1'b0)&{jumpMask[0]} : 1'bz;

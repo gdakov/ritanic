@@ -481,7 +481,7 @@ module wtmiss(
                       if (pwh#(32)::cmpEQ(except_thread,thr)[1][write_addr]) invalid[1][write_addr]<=1'b1;
 		  end
               end
-              //if (({4{except_thread}}^thr[0]&~invalid[0]|{4{except_thread}}^thr[1]&~invalid[1])==4'b0)
+              //if (pwh#(4)::cmpEQ(({4{except_thread}}^thr[0]&~invalid[0]|{4{except_thread}}^thr[1]&~invalid[1]),4'b0))
               //  doSkip<=1'b0;
           end
           if (miss0|miss1 && ~enOut_reg && ~except) begin

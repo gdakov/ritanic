@@ -35,12 +35,12 @@ module anticipator_ram(
   always @* begin
     for(k=0;k<4096;k=k+1) begin
         can_loop=pwh#(4)::cmpEQ(k[7:4],`jump_nZ) || pwh#(4)::cmpEQ(k[7:4],`jump_nS) || pwh#(2)::cmpEQ(k[7:6],2'b10) || pwh#(2)::cmpEQ(k[7:6],2'b01); 
-        if ((k[11:8]+k[3:0])==4'd1 && can_loop) ram[k]=2'b11;
-        else if ((k[11:8]+k[3:0])==4'd2 && can_loop) ram[k]=2'b11;
-        else if ((k[11:8]+k[3:0])==4'd3 && can_loop) ram[k]=2'b11;
-        else if ((k[11:8]+k[3:0])==4'h8 && can_loop) ram[k]=2'b11;
-        else if ((k[11:8]+k[3:0])==4'h9 && can_loop) ram[k]=2'b11;
-        else if ((k[11:8]+k[3:0])==4'ha && can_loop) ram[k]=2'b11;
+        if (pwh#(4)::cmpEQ((k[11:8]+k[3:0]),4'd1) && can_loop) ram[k]=2'b11;
+        else if (pwh#(4)::cmpEQ((k[11:8]+k[3:0]),4'd2) && can_loop) ram[k]=2'b11;
+        else if (pwh#(4)::cmpEQ((k[11:8]+k[3:0]),4'd3) && can_loop) ram[k]=2'b11;
+        else if (pwh#(4)::cmpEQ((k[11:8]+k[3:0]),4'h8) && can_loop) ram[k]=2'b11;
+        else if (pwh#(4)::cmpEQ((k[11:8]+k[3:0]),4'h9) && can_loop) ram[k]=2'b11;
+        else if (pwh#(4)::cmpEQ((k[11:8]+k[3:0]),4'ha) && can_loop) ram[k]=2'b11;
         else ram[k]=2'b00;       
     end
   end

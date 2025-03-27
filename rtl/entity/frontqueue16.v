@@ -957,7 +957,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 	  assign pre_other[j][`instrQ_sc]=isJ!=0 ? 2'bz : 2'b0;
 	  assign pre_other[j][`instrQ_avx]=cc_err_reg || &cc_read_IP_reg3[4:1];
 	  assign pre_other[j][`instrQ_btbMiss]=~btb_can_ins_reg4;
-	  assign pre_other[j][`instrQ_btb_only]=(isJ&btbx_cond_reg4)==4'b0;
+	  assign pre_other[j][`instrQ_btb_only]=pwh#(4)::cmpEQ((isJ&btbx_cond_reg4),4'b0);
           assign clv=pre_other[j][`instrQ_taken] && is_J[0] ? jdec_clv[0] : 2'bz;
           assign clv=pre_other[j][`instrQ_taken] && is_J[1] ? jdec_clv[1] : 2'bz;
           assign clv=pre_other[j][`instrQ_taken] && is_J[2] ? jdec_clv[2] : 2'bz;
