@@ -481,7 +481,7 @@ module smallInstr_decoder(
   assign qconstant[17]={1'b0,pconstant[28]};
   assign qtrien   [17]=trien    [28];
   assign qconstant[0]={1'b0,pconstant[0]};
-  assign qtrien   [0]=qtrien[17:1]==11'b0;
+  assign qtrien   [0]=pwh#(11)::cmpEQ(qtrien[17:1],11'b0);
   
   //triens that set const
   //3,8,9,10,13,18,20,25,26,30, 35

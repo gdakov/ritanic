@@ -212,7 +212,7 @@ module jump_decoder(
           cloopntk=~instr[8];
           cloop_is=1'b1;
       end else if (isBasicSysInstr) begin
-          if (instr[30:16]==15'd23 && ~magic[0]) halt=thread;
+          if (pwh#(15)::cmpEQ(instr[30:16],15'd23) && ~magic[0]) halt=thread;
           if (pwh#(3)::cmpEQ(instr[15:13],3'b0)) begin
         //  if (magic[0]) error=1;
               jumpType=5'b11001;

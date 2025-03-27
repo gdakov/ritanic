@@ -1035,7 +1035,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign btb_attr=btb_in_ret & ~(p_invoke&thread) ? rstack_dataR[67:64] : 4'bz;
   assign btb_attr=(p_invoke&thread) ? mflags[`mflags_pinvoke_priv] : 4'bz;
 
-  assign p_invoke=~halted ? msrss_en && msrss_addr[14:0]==15'd22 & ~p_inv_stored[4] : p_inv_stored[4];
+  assign p_invoke=~halted ? msrss_en && pwh#(15)::cmpEQ(msrss_addr[14:0],15'd22) & ~p_inv_stored[4] : p_inv_stored[4];
   assign p_address=~halted ? {20'b0,msrss_data[43:0]} : {20'b0,p_inv_st_data[4]};
 
   assign btbx_tgt=btb_tgt;
@@ -1681,7 +1681,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
       if (rst) begin
          p_inv_stored=5'b0;
          p_inv_data=0;
-      end else if ((msrss_en && msrss_addr[14:0]==15'd22) | halted && thread) begin
+      end else if ((msrss_en && pwh#(15)::cmpEQ(msrss_addr[14:0],15'd22)) | halted && thread) begin
          if (halted && p_inv_stored) begin
              p_inv_stored=p_inv_stored<<1;
              p_inv_data[4]=p_inv_data[3];
@@ -1689,7 +1689,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
              p_inv_data[2]=p_inv_data[1];
              p_inv_data[1]=p_inv_data[0];
          end
-         if ((msrss_en && msrss_addr[14:0]==15'd22) && thread) begin
+         if ((msrss_en && pwh#(15)::cmpEQ(msrss_addr[14:0],15'd22)) && thread) begin
              p_index=2;
              if (p_inv_stored[4]) p_index=3;
              if (p_inv_stored[3]) p_index=2;

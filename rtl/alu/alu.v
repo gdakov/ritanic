@@ -235,7 +235,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign valRes1[31:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_and32) || pwh#(12)::cmpEQ(operation[11:0],`op_and64)) && nDataAlt) ? val_and[31:0] : 32'bz;   
   
 
-  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_or64) || operation[11:1]==11'd29) && nDataAlt) ? val_or[63:32] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_or64) || pwh#(11)::cmpEQ(operation[11:1],11'd29)) && nDataAlt) ? val_or[63:32] : 32'bz;   
   assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_or32)) && nDataAlt) ? 32'b0  : 32'bz;   
   assign valRes1[31:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_or32) || pwh#(12)::cmpEQ(operation[11:0],`op_or64)) && nDataAlt) ? val_or[31:0] : 32'bz;   
   
@@ -252,9 +252,9 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
 
   assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && nDataAlt) ? val2[1][63:32] : 32'bz;   
   assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov32)) && nDataAlt) ? 32'b0 : 32'bz;   
-  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov16) || (pwh#(8)::cmpEQ(operation[7:0],`op_mov8) || operation[11:1]==11'd3)&~operation[11]) && nDataAlt) ? val1[1][63:32] : 32'bz;   
+  assign valRes1[63:32]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov16) || (pwh#(8)::cmpEQ(operation[7:0],`op_mov8) || pwh#(11)::cmpEQ(operation[11:1],11'd3))&~operation[11]) && nDataAlt) ? val1[1][63:32] : 32'bz;   
   assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov32) || pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && nDataAlt) ? val2[1][31:16] : 16'bz;   
-  assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov16) || (pwh#(8)::cmpEQ(operation[7:0],`op_mov8) || operation[11:1]==11'd3)&~operation[11]) && nDataAlt) ? val1[1][31:16] : 16'bz;   
+  assign valRes1[31:16]=((pwh#(12)::cmpEQ(operation[11:0],`op_mov16) || (pwh#(8)::cmpEQ(operation[7:0],`op_mov8) || pwh#(11)::cmpEQ(operation[11:1],11'd3))&~operation[11]) && nDataAlt) ? val1[1][31:16] : 16'bz;   
   assign valRes1[15:0]=((((operation[9:0]==`op_mov16) && ~operation[10]) || pwh#(12)::cmpEQ(operation[11:0],`op_mov32) || pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && nDataAlt) ?
     val2[1][15:0] : 16'bz;   
   assign valRes1[15:0]=((((operation[9:0]==`op_mov16) && operation[10])) && nDataAlt) ?
@@ -312,9 +312,9 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
 
   assign valRes1[63:8]=((pwh#(32)::cmpEQ(smallOP,`op_cset) || pwh#(32)::cmpEQ(smallOP,`op_csetn)) && ~operation[11]) ? 56'b0 : 56'bz;
  
-  assign is_ptr=val1[0][64]|val2[0][64]|(operation[11:0]==12'd58) && ~(val1[0][64]&val2[0][64]&is_sub||val2[0][64]&is_sub) && (add_en&~operation[8])|logic_en|
-    (cmov_en&&(doJmp&val2[1][64]||~doJmp&val1[1][64]))|(operation[11:0]==12'd58)|(pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && 
-    ((pwh#(2)::cmpEQ(operation[1:0],2'b0) && pwh#(3)::cmpEQ(operation[7:5],3'b0)|(pwh#(6)::cmpEQ(operation[7:2],6'b001000)))||cmov_en||operation[11:1]==11'd29);
+  assign is_ptr=val1[0][64]|val2[0][64]|(pwh#(12)::cmpEQ(operation[11:0],12'd58)) && ~(val1[0][64]&val2[0][64]&is_sub||val2[0][64]&is_sub) && (add_en&~operation[8])|logic_en|
+    (cmov_en&&(doJmp&val2[1][64]||~doJmp&val1[1][64]))|(pwh#(12)::cmpEQ(operation[11:0],12'd58))|(pwh#(12)::cmpEQ(operation[11:0],`op_mov64)) && 
+    ((pwh#(2)::cmpEQ(operation[1:0],2'b0) && pwh#(3)::cmpEQ(operation[7:5],3'b0)|(pwh#(6)::cmpEQ(operation[7:2],6'b001000)))||cmov_en||pwh#(11)::cmpEQ(operation[11:1],11'd29));
 
   assign is_sub=pwh#(8)::cmpEQ(operation[7:0],`op_sub64);
 
@@ -348,9 +348,9 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   except_jump_cmp jcmp2_mod (valS,{1'b0,cond[3:0]},doJmp2);
   
  
-  assign flag64_ZF=(valRes[63:1]==64'b0);
-  assign flag32_ZF=(valRes[31:1]==32'b0);
-  assign flag16_ZF=(valRes[15:1]==16'b0);
+  assign flag64_ZF=(pwh#(64)::cmpEQ(valRes[63:1],64'b0));
+  assign flag32_ZF=(pwh#(32)::cmpEQ(valRes[31:1],32'b0));
+  assign flag16_ZF=(pwh#(16)::cmpEQ(valRes[15:1],16'b0));
   assign flag8_ZF=(pwh#(7)::cmpEQ(valRes[7:1],8'b0));
 
   
@@ -370,7 +370,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_add64)) && ~(retOp[2]&operation_reg[8]) && isFlags_reg) ? 
       {carryAdd64_reg&~is_ptr_reg,flagAdd64_OF_reg&~is_ptr_reg,carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
   assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_add32) || pwh#(8)::cmpEQ(retOp[7:0],`op_sub32)) && isFlags_reg) ? {carryAdd32_reg,flagAdd32_OF_reg,carryAdd4LL_reg,valRes_reg[31],flag32_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((pwh#(7)::cmpEQ(retOp[7:1],7'd23)) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:47]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],valRes_reg[63:47]==17'b0,
+  assign flags_COASZP=((pwh#(7)::cmpEQ(retOp[7:1],7'd23)) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:47]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],pwh#(17)::cmpEQ(valRes_reg[63:47],17'b0),
      valRes_reg[0]} : 6'bz;
   
   assign flags_COASZP=((pwh#(8)::cmpEQ(retOp[7:0],`op_sub64)) && isFlags_reg && is_ptr_sub) ? {carryAdd44_reg,flagSub44_OF_reg,~carryAdd4LL_reg,valRes_reg[43],flag64_ZF_reg,valRes_reg[0]} : 6'bz;

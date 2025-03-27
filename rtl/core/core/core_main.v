@@ -1035,7 +1035,7 @@ module heptane_core_single(
 
   assign dc2_rhitExpW0=dc2_hitE0_reg3 | dc2_hitO0_reg2 | dc2_hitE1_reg3 | dc2_hitO1_reg3 && dc2_io0_reg3 | dc2_io_reg3;
   
-//  assign except=1'b0;//iAvail[0] && instr0[15:0]==16'h0023;
+//  assign except=1'b0;//iAvail[0] && pwh#(16)::cmpEQ(instr0[15:0],16'h0023);
   assign rbusANOut_signals[`rbusAN_second]=dc2_rhitExp_reg && L1_expAddr_en_reg6 && ~dc2_rhitExpW_reg;
   assign rbusANOut_signals[`rbusAN_used]=dc2_rhitExp & L1_expAddr_en_reg5 || dc2_rhitExp_reg & L1_expAddr_en_reg6 & ~dc2_rhitExpW_reg;
   assign rbusANOut_signals[`rbusAN_mem_reply]=dc2_rhitExp | dc2_rhitExp_reg;

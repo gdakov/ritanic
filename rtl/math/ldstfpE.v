@@ -23,7 +23,7 @@ module LDE2NativeE(
   output pwire [80:0] res;
   //assign except=A[78:64]==0 && A[63:0];//denormal
   assign res=(A[78:64]!=0 && A[78:64]!=15'hefff && en) ? {~A[78],A[79],A[78:64],1'b1,A[62:0]} : 81'bz;
-  assign res=(A[78:64]==15'hefff && en) ? {A[78],A[79],A[78],A[77:65],A[62:0]!=63'b0,A[78],1'b1,A[62:0]} : 81'bz;
+  assign res=(pwh#(15)::cmpEQ(A[78:64],15'hefff) && en) ? {A[78],A[79],A[78],A[77:65],A[62:0]!=63'b0,A[78],1'b1,A[62:0]} : 81'bz;
   assign res=(A[78:64]==0 && en) ? 81'b0 :  81'bz;//denormal loaded as zero for extended format
   
 endmodule
