@@ -494,9 +494,9 @@ module predecoder_get(
             popcnt20 cnt_mod(instrEnd[19:0] & ((20'b10<<k)-20'b1) & mask[19:0],cntEnd[k]);
             get_carry #(5) carry_mod(k[4:0],~{1'b0,startOff},1'b1,mask0[k]);
             assign mask[k]=mask0[k] || ((k+1)==startOff && !instrEnd[k]) ||
-               ((k+2)==startOff && instrEnd[k+:2]==2'b00) ||
-               ((k+3)==startOff && instrEnd[k+:3]==3'b000) ||
-               ((k+4)==startOff && instrEnd[k+:4]==4'b0000);
+               ((k+2)==startOff && pwh#(2)::cmpEQ(instrEnd[k+:2],2'b00)) ||
+               ((k+3)==startOff && pwh#(3)::cmpEQ(instrEnd[k+:3],3'b000)) ||
+               ((k+4)==startOff && pwh#(4)::cmpEQ(instrEnd[k+:4],4'b0000));
             assign brk=cntEnd[k][12] ? k[3:0] && k[4] : 4'bz;
             pwire [4:0] kk;
             //verilator lint_off WIDTH

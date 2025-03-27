@@ -2372,9 +2372,9 @@ module decoder(
           else assign dec_afterTaken[0]=1'b0;
           
           if (k<9) begin
-              assign dec_lspecR_d=(iUsed[k+:2]==2'b01) ? dec_lspec[k] : 1'bz;
-              assign instr_save_d=(iUsed[k+:2]==2'b01) ? instr[k] : 15'bz;
-              assign was_FMA_last_d=(iUsed[k+:2]==2'b01) ? instrQ[`instrQ_class+`iclass_store2] : 1'bz;
+              assign dec_lspecR_d=(pwh#(2)::cmpEQ(iUsed[k+:2],2'b01)) ? dec_lspec[k] : 1'bz;
+              assign instr_save_d=(pwh#(2)::cmpEQ(iUsed[k+:2],2'b01)) ? instr[k] : 15'bz;
+              assign was_FMA_last_d=(pwh#(2)::cmpEQ(iUsed[k+:2],2'b01)) ? instrQ[`instrQ_class+`iclass_store2] : 1'bz;
           end else begin
               assign dec_lspecR_d=iUsed[k] ? dec_lspec[k] : 1'bz;
               assign instr_save_d=iUsed[k] ? instr[k] : 15'bz;

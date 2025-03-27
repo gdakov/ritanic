@@ -142,7 +142,7 @@ module reg_alloc(
   assign pop_max[2]=(pop3[0][2] | pop3[1][2] | pop3[2][2]) && (~pop3[0][3] & ~pop3[1][3] & ~pop3[2][3]); 
   assign pop_max[1]=(pop3[0][1] | pop3[1][1] | pop3[2][1]) && (!pop3[0][3:2] & !pop3[1][3:2] & !pop3[2][3:2]); 
   assign pop_max[0]=pop3[0][0] & pop3[1][0] & pop3[2][0];
-  assign step=pop_max[3] || (pos[thread] && pop_max[2]) || (pos[thread]==3'd2 && pop_max[1]); 
+  assign step=pop_max[3] || (pos[thread] && pop_max[2]) || (pwh#(3)::cmpEQ(pos[thread],3'd2) && pop_max[1]); 
   
   popcnt3 pop0_mod({rs0i0_en,rs0i1_en,rs0i2_en},pop3[0]);
   popcnt3 pop1_mod({rs1i0_en,rs1i1_en,rs1i2_en},pop3[1]);
