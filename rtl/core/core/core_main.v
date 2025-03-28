@@ -1131,7 +1131,7 @@ module heptane_core_single(
   .readI_io(dc2_io_en),.readI_dataIO(dc2_dataIO),
   .readI_ins_A(rinsBus_A),.readI_ins_B(rinsBus_B),
   .readI_code(),
-  .miss_en(({dc2_rhitA0,dc2_rhitB0,dc2_rhitB1}==3'b0)|(~dc2_rExcl&dc2_want_excl_reg4) && dc2_rdEnX_reg4),
+  .miss_en((pwh#(3)::cmpEQ({dc2_rhitA0,dc2_rhitB0,dc2_rhitB1},3'b0))|(~dc2_rExcl&dc2_want_excl_reg4) && dc2_rdEnX_reg4),
   .miss_addr(dc2_rd_addr_reg3),.miss_req(dc2_req_rd_reg4),
   .miss_dupl(~dc2_rExcl&dc2_want_excl_reg4&(dc2_rhitA0|dc2_rhitB0|dc2_rhitB1)||dc2_dupl_rd_reg4),
   .miss_want_excl(dc2_want_excl_reg4),

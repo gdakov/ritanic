@@ -94,13 +94,13 @@ module rs_write_forward_ALU(
   assign newDataFuu_d=(fuuFwd[3] && |fuuFwd[2:0]) ? FU9_reg : 'z;  
 
 
-  assign newData_d[15:0]=({fuFwd,fuuFwd}==8'hff) ? oldData[15:0] : 'z;  
+  assign newData_d[15:0]=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff)) ? oldData[15:0] : 'z;  
   assign newData_d[15:0]=(fuFwd!=4'hf) ? newDataFu_d[15:0] : 'z;  
   assign newData_d[15:0]=(fuuFwd!=4'hf) ? newDataFuu_d[15:0] : 'z;  
-  assign newData_d[64]=({fuFwd,fuuFwd}==8'hff) ? oldData[64] : 1'BZ;  
+  assign newData_d[64]=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff)) ? oldData[64] : 1'BZ;  
   assign newData_d[64]=(fuFwd!=4'hf) ? newDataFu_d[64] : 1'BZ;  
   assign newData_d[64]=(fuuFwd!=4'hf) ? newDataFuu_d[64] : 1'BZ;  
-  assign newData_d[63:16]=({fuFwd,fuuFwd}==8'hff && ~sxtEn) ? oldData[63:16] : 'z;  
+  assign newData_d[63:16]=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff) && ~sxtEn) ? oldData[63:16] : 'z;  
   assign newData_d[63:16]=(fuFwd!=4'hf && ~sxtEn) ? newDataFu_d[63:16] : 'z;  
   assign newData_d[63:16]=(fuuFwd!=4'hf || sxtEn) ? (newDataFuu_d[63:16]|{48{D&sxtEn}})&{48{D|~sxtEn}} : 'z;  
 
@@ -192,7 +192,7 @@ module rs_write_forward(
   assign newDataFuu_d=(fuuFwd[3] && |fuuFwd[2:0]) ? FU9_reg : 'z;  
 
 
-  assign newData_d=({fuFwd,fuuFwd}==8'hff) ? oldData : 'z;  
+  assign newData_d=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff)) ? oldData : 'z;  
   assign newData_d=(fuFwd!=4'hf) ? newDataFu_d : 'z;  
   assign newData_d=(fuuFwd!=4'hf) ? newDataFuu_d : 'z;  
 
@@ -277,7 +277,7 @@ module rs_write_forwardF(
   assign newDataFuu_d=(fuuFwd[3] && |fuuFwd[2:0]) ? FU9_reg : 'z;  
 
 
-  assign newData_d=({fuFwd,fuuFwd}==8'hff) ? oldData : 'z;  
+  assign newData_d=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff)) ? oldData : 'z;  
   assign newData_d=(fuFwd!=4'hf) ? newDataFu_d : 'z;  
   assign newData_d=(fuuFwd!=4'hf) ? newDataFuu_d : 'z;  
 
@@ -366,7 +366,7 @@ module rs_write_forward_JALR(
   assign newDataFuu_d=(auxEn) ? auxData : 'z;  
 
 
-  assign newData_d=({fuFwd,fuuFwd}==8'hff) ? oldData : 'z;  
+  assign newData_d=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff)) ? oldData : 'z;  
   assign newData_d=(fuFwd!=4'hf) ? newDataFu_d : 'z;  
   assign newData_d=(fuuFwd!=4'hf) ? newDataFuu_d : 'z;  
 
@@ -453,7 +453,7 @@ module rs_writeiS_forward(
   assign newDataFuu_d=(fuuFwd[3] && |fuuFwd[2:0]) ? FU9_reg : 'z;  
 
 
-  assign newData=({fuFwd,fuuFwd}==8'hff) ? oldData_reg : 'z;  
+  assign newData=(pwh#(8)::cmpEQ({fuFwd,fuuFwd},8'hff)) ? oldData_reg : 'z;  
   assign newData=(fuFwd!=4'hf) ? newDataFu_d : 'z;  
   assign newData=(fuuFwd!=4'hf) ? newDataFuu_d : 'z;  
 
@@ -670,7 +670,7 @@ module rs_write_forward_nxt(
     'z;  
 
 
-  assign newData=({fuFwd_reg,fuuFwd_reg}==8'hff) ? oldData_reg : 'z;  
+  assign newData=(pwh#(8)::cmpEQ({fuFwd_reg,fuuFwd_reg},8'hff)) ? oldData_reg : 'z;  
   assign newData=(fuFwd_reg!=4'hf) ? newDataFu_d : 'z;  
   assign newData=(fuuFwd_reg!=4'hf) ? newDataFuu_d : 'z;  
 
