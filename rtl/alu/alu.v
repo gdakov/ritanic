@@ -259,10 +259,10 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
     val2[1][15:0] : 16'bz;   
   assign valRes1[15:0]=((((pwh#(10)::cmpEQ(operation[9:0],`op_mov16)) && operation[10])) && nDataAlt) ?
     val2[1][31:16] : 16'bz;   
-  assign valRes1[15:0]=((operation[9:0]=={2'b000,8'd`op_mov8}) && nDataAlt) ? {val1[1][15:8],val2[1][7:0]} : 16'bz;   
-  assign valRes1[15:0]=((operation[9:0]=={2'b01,8'd`op_mov8}) && nDataAlt) ? {val1[1][15:8],val2[1][15:8]} : 16'bz;   
-  assign valRes1[15:0]=((operation[9:0]=={2'b10,8'd`op_mov8}) && nDataAlt) ? {val2[1][7:0],val1[1][7:0]} : 16'bz;   
-  assign valRes1[15:0]=((operation[9:0]=={2'b11,8'd`op_mov8}) && nDataAlt) ? {val2[1][15:8],val1[1][7:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(10)::cmpEQ(operation[9:0],{2'b000,8'd`op_mov8})) && nDataAlt) ? {val1[1][15:8],val2[1][7:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(10)::cmpEQ(operation[9:0],{2'b01,8'd`op_mov8})) && nDataAlt) ? {val1[1][15:8],val2[1][15:8]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(10)::cmpEQ(operation[9:0],{2'b10,8'd`op_mov8})) && nDataAlt) ? {val2[1][7:0],val1[1][7:0]} : 16'bz;   
+  assign valRes1[15:0]=((pwh#(10)::cmpEQ(operation[9:0],{2'b11,8'd`op_mov8})) && nDataAlt) ? {val2[1][15:8],val1[1][7:0]} : 16'bz;   
   assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_or8)) && nDataAlt) ? {val1[1][15:8],val_or[7:0]} : 16'bz;   
   assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_or16)) && nDataAlt) ? {val_or[15:0]} : 16'bz;   
   assign valRes1[15:0]=((pwh#(12)::cmpEQ(operation[11:0],`op_and8)) && nDataAlt) ? {val1[15:8],val_and[7:0]} : 16'bz;   
