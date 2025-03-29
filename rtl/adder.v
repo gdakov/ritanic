@@ -890,6 +890,8 @@ endmodule
   pwire [11:0] exbits2;
   pwire is_ptr;
   pwire err;
+  
+  pwire [9:0] exxbits; 
 
   pwire [2:0] pos_flip;
   pwire [2:0] neg_flip;
@@ -901,7 +903,7 @@ endmodule
   
   genvar i;
   
-  assign bitEn={{21{ben[1]&en}},{11{ben[0]&en}},{16{en}},{8{ben[-1]&en}},{8{ben[-2]&en}}};
+  assign bitEn={{10{ben[1]&en&~sxtEn}},{11{ben[1]&en}},{11{ben[0]&en}},{16{en}},{8{ben[-1]&en}},{8{ben[-2]&en}}};
   
   
 
@@ -919,17 +921,12 @@ endmodule
   assign out[64]=en ? is_ptr : 1'bz;
   assign out[65]=en ? ^out[64:0] : 1'bz;
 //65th bit offset by 4 phases in regfile and alu!
-  /* magic voodo adder trickery to get sign extend with no extra delay.
-     forwarder does set upper bits A=all0 B=all1 to make it all carry propagate.
-     Then we only need to boost and shift the X and nX values which takes no extra delay.
-     Not completely free- probably one row of cells increase.
-  */
 
-  assign X1=sxtEn ? {{32{X[31]}},X[31:0]} : X;
-  assign nX1=sxtEn ? {{32{nX[31]}},nX[31:0]} : nX;
+  assign X1=X;
+  assign nX1= nX;
 
   assign exbits=is_ptr ? ptr[63:44]: ~&ben[-1:-2] ? a[63:44] : 20'b0;
-
+  assign exxbits=sxtEn ? {ptr[63],ptr[55:54]-2'd3,sz[4:0],ptr[55:0]} : exbits[19:10];
   assign exbits2=~&ben[-1:2] ? a[43:32] : 12'b0;;
 
   addrcalcsec_shift nih_mod(ptr[`ptr_exp],C[41:10],cout_sec0);
@@ -1071,7 +1068,8 @@ endmodule
 	
 	if (1)
 	  begin
-	    assign out[63:44]=(en&~ben[1]&!pooh) ? exbits : 21'bz; 
+	    assign out[63:54]=(en&~ben[1]&!pooh) ? exxbits : 10'bz; 
+	    assign out[53:44]=(en&~ben[1]&!pooh) ? exbits[9:0] : 10'bz; 
 	    assign out[42:32]=(en&~ben[0]) ? exbits2 : 12'bz; 
             assign out[31:16]=(en&~ben[-1]) ? a[31:16] : 16'bz;
             assign out[15:8]=(en&~ben[-2]) ? a[15:8] : 8'bz;
