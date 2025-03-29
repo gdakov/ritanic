@@ -148,8 +148,8 @@ module dcache1_tag(
   input pwire rst;
   input pwire read_clkEn;
   input pwire read_en;
-  input pwire [PADDR_WIDTH-9:0] read_addrOdd;
-  input pwire [PADDR_WIDTH-9:0] read_addrEven;
+  input pwire [PADDR_WIDTH-8:0] read_addrOdd; //top bit==pointer cookie based
+  input pwire [PADDR_WIDTH-8:0] read_addrEven;  //top bit==pointer cookie based
   input pwire read_odd;
   input pwire read_split;
   input pwire read_invl;
@@ -265,8 +265,8 @@ module dcache1_tag(
 
   assign  tagR0_IP={tagR0_data[`dc1Tag_addr_43_14],read_addrEven_reg[5:0]};
   assign  tagR1_IP={tagR1_data[`dc1Tag_addr_43_14],read_addrOdd_reg[5:0]};
-//  assign  tagR0_valid=tagR0_data[`dc1Tag_valid] & ~err_tag0;
-//  assign  tagR1_valid=tagR1_data[`dc1Tag_valid] & ~err_tag1;
+  assign  tagR0_valid=tagR0_data[`dc1Tag_valid] & ~err_tag0;
+  assign  tagR1_valid=tagR1_data[`dc1Tag_valid] & ~err_tag1;
   assign  tagR0_exclusive=tagR0_data[`dc1Tag_exclusive] & ~err_tag0;
   assign  tagR1_exclusive=tagR1_data[`dc1Tag_exclusive] & ~err_tag1;
 
@@ -301,8 +301,8 @@ module dcache1_tag(
   assign errH=err_tag0;
   assign errL=err_tag1;
   
- // assign read_excl[0]=(read_hitH_odd  | read_hitL_odd) ? tagR1_exclusive : 1'bz; 
- // assign read_excl[1]=(read_hitH_even  | read_hitL_even) ? tagR0_exclusive : 1'bz; 
+ assign read_excl[0]=(read_hitH_odd  | read_hitL_odd) ? tagR1_exclusive : 1'bz; 
+ assign read_excl[1]=(read_hitH_even  | read_hitL_even) ? tagR0_exclusive : 1'bz; 
   
   assign read_hit_odd=hit_odd;
   assign read_hit_even=hit_even;
