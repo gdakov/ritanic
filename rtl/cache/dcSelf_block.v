@@ -1032,13 +1032,13 @@ module dcache1(
           if (w) dcache1_way #(w-1) way_mod(
           clk,
           rst,
-          read_addrE0, read_addrO0, read_bank0, read_clkEn0, read_hit0_way[w-1], 
+          {read_cookieE0,read_addrE0}, {read_cookieO0,read_addrO0}, read_bank0, read_clkEn0, read_hit0_way[w-1], 
             read_odd0, read_split0, ways_gen[w].read_pbit0P, ways_gen[w-1].read_pbit0P, read_errT0[w-1],
-          read_addrE1, read_addrO1, read_bank1, read_clkEn1, read_hit1_way[w-1],   
+          {read_cookieE1,read_addrE1}, {read_cookieO1,read_addrO1}, read_bank1, read_clkEn1, read_hit1_way[w-1],   
             read_odd1, read_split1, ways_gen[w].read_pbit1P, ways_gen[w-1].read_pbit1P, read_errT1[w-1],
-          read_addrE2, read_addrO2, read_bank2, read_clkEn2, read_hit2_way[w-1],   
+          {read_cookieE2,read_addrE2}, {read_cookieO2,read_addrO2}, read_bank2, read_clkEn2, read_hit2_way[w-1],   
             read_odd2, read_split2, ways_gen[w].read_pbit2P, ways_gen[w-1].read_pbit2P, read_errT2[w-1],
-          read_addrE3, read_addrO3, read_bank3, read_clkEn3, read_hit3_way[w-1],   
+          {read_cookieE3,read_addrE3}, {read_cookieO3,read_addrO3}, read_bank3, read_clkEn3, read_hit3_way[w-1],   
             read_odd3, read_split3, ways_gen[w].read_pbit3P, ways_gen[w-1].read_pbit3P, read_errT3[w-1],
           read_bankNoRead,
           read_invalidate_reg,
@@ -1236,6 +1236,11 @@ module dcache1(
   assign read_dataA1=read_dataA[1];
   assign read_dataA2=read_dataA[2];
   assign read_dataA3=read_dataA[3];
+
+  assign read_cookieO0=read_addrO0[62:61]==read_addrO0[55:54]-2'd3;
+  assign read_cookieO1=read_addrO1[62:61]==read_addrO1[55:54]-2'd3;
+  assign read_cookieO2=read_addrO2[62:61]==read_addrO2[55:54]-2'd3;
+  assign read_cookieO3=read_addrO3[62:61]==read_addrO3[55:54]-2'd3;
 
   assign read_dataX0={128{pwh#(4)::cmpEQ(read_sz_reg[0][4:1],4'd6) || pwh#(5)::cmpEQ(read_sz_reg[0],5'd14)}}&rddata2[0];
   assign read_dataX1={128{pwh#(4)::cmpEQ(read_sz_reg[1][4:1],4'd6) || pwh#(5)::cmpEQ(read_sz_reg[1],5'd14)}}&rddata2[0];
@@ -1479,7 +1484,7 @@ module dcache1(
               read_beginA_reg[v]<=read_beginA[v];
               pwndata[v]<=0;
            if (read3_pf[v][0]) begin
-               pwndata[v][55:0]<=read3_addrMain[v][43:0];
+               pwndata[v][53:0]<=read3_addrMain[v][53:0];
                pwndata[v][`ptr_low]<={read3_addrMain[v][`ptr_hi+5]-2'b3,read_sz[v]};
                pwndata[v][`ptr_on_low]=read3_pf[v][2]; //out of range bit
            end
